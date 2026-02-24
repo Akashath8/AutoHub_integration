@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documents Uploads - LOS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        /* Modern Sidebar */
+        .sidebar {
+            background: white;
+            min-height: 100vh;
+            border-right: 1px solid var(--border-color);
+            width: 260px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            padding-top: 1rem;
+        }
+
+        .logo-area {
+            padding: 0 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--primary-color);
+            border-radius: 8px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .timeline-step {
+            position: relative;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: #adb5bd;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .timeline-step::before {
+            content: '';
+            position: absolute;
+            left: 28px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #e9ecef;
+            z-index: -1;
+        }
+
+        .timeline-step:first-child::before {
+            top: 50%;
+        }
+
+        .timeline-step:last-child::before {
+            bottom: 50%;
+        }
+
+        .step-indicator {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #e9ecef;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .timeline-step.active {
+            color: #212529;
+        }
+
+        .timeline-step.active .step-indicator {
+            background: var(--primary-color);
+        }
+
+        .timeline-step.completed .step-indicator {
+            background: var(--primary-color);
+        }
+
+        .timeline-step.active::before,
+        .timeline-step.completed::before {
+            background: var(--primary-color);
+        }
+
+        /* Main Content Area */
+        .main-content {
+            margin-left: 260px;
+            padding: 2rem;
+            background: #f8f9fa;
+            min-height: 100vh;
+        }
+
+        /* Tabs */
+        .doc-tabs {
+            border-bottom: 2px solid #e9ecef;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .doc-tab {
+            padding-bottom: 0.8rem;
+            color: #6c757d;
+            font-weight: 500;
+            cursor: pointer;
+            position: relative;
+            text-decoration: none;
+        }
+
+        .doc-tab.active {
+            color: var(--primary-color);
+        }
+
+        .doc-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary-color);
+        }
+
+        /* Document Table */
+        .doc-table {
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+            overflow: hidden;
+        }
+
+        .doc-row {
+            display: flex;
+            align-items: center;
+            justify-content: location;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .doc-row:last-child {
+            border-bottom: none;
+        }
+
+        .doc-name {
+            flex-grow: 1;
+            font-weight: 500;
+            color: #495057;
+            font-size: 0.95rem;
+        }
+
+        .doc-action {
+            min-width: 150px;
+            text-align: right;
+        }
+
+        /* Upload Button */
+        .btn-upload {
+            background: #6f42c1;
+            color: white;
+            border-radius: 6px;
+            padding: 0.4rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            border: none;
+            transition: background 0.2s;
+        }
+
+        .btn-upload:hover {
+            background: #5a32a3;
+            color: white;
+        }
+
+        /* File Preview */
+        .file-preview {
+            border: 1px dashed #ced4da;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            background: #f8f9fa;
+        }
+
+        .file-icon {
+            width: 24px;
+        }
+
+        /* Top Applicant Toggle */
+        .applicant-toggle {
+            background: #e0e7ff;
+            color: var(--primary-color);
+            padding: 0.5rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-block;
+        }
+
+        .co-applicant-toggle {
+            color: #adb5bd;
+            padding: 0.5rem 1.5rem;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .alert-custom {
+            border-radius: 8px;
+            font-size: 0.9rem;
+            padding: 0.8rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert-success-custom {
+            background: #e8f5e9;
+            color: #198754;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-warning-custom {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo-area">
+            <div class="logo-icon"><i class="fas fa-cubes"></i></div> LOS
+        </div>
+
+        <div class="timeline-step completed">
+            <div class="step-indicator">1</div> Application
+        </div>
+        <div class="timeline-step active">
+            <div class="step-indicator">2</div> Documents Uploads
+        </div>
+        <div class="timeline-step">
+            <div class="step-indicator">3</div> Loan Details
+        </div>
+        <div class="timeline-step">
+            <div class="step-indicator">4</div> Check Offers & Apply
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="d-flex align-items-center gap-3">
+                <button class="btn btn-link text-dark p-0" onclick="history.back()"><i
+                        class="fas fa-arrow-left"></i></button>
+                <h4 class="mb-0 fw-bold">Documents Uploads</h4>
+            </div>
+            <div class="bg-white rounded px-2 py-1 shadow-sm d-flex">
+                <div class="applicant-toggle">Applicant</div>
+                <div class="co-applicant-toggle">Co-Applicant</div>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <i class="fas fa-bell text-muted" style="font-size: 1.2rem;"></i>
+                <img src="https://ui-avatars.com/api/?name=Satish+L&background=f0ad4e&color=fff" class="rounded-circle"
+                    width="35">
+                <span class="fw-bold small">Satish L</span>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="doc-tabs">
+            <a href="#" class="doc-tab active" data-target="kyc">KYC Documents</a>
+            <a href="#" class="doc-tab" data-target="address">Address Documents</a>
+            <a href="#" class="doc-tab" data-target="financial">Financial Documents</a>
+            <a href="#" class="doc-tab" data-target="employment">Employment Documents</a>
+            <a href="#" class="doc-tab" data-target="bank">Bank Documents</a>
+        </div>
+
+        <!-- Content Area -->
+        <div id="kyc" class="tab-content-area">
+            <div class="alert-custom alert-success-custom mb-4">
+                <i class="fas fa-check-circle"></i> Required documents uploaded. Please proceed to upload the next
+                document.
+            </div>
+
+            <div class="doc-table">
+                <div class="bg-light p-3 border-bottom fw-bold text-muted small">Document Name</div>
+
+                <!-- PAN -->
+                <div class="doc-row">
+                    <div class="doc-name">PAN Card</div>
+                    <div class="doc-action">
+                        <div class="file-preview">
+                            <i class="fas fa-file-image text-primary"></i>
+                            <span class="small me-auto">PAN.jpg</span>
+                            <i class="fas fa-check-circle text-success" style="font-size: 1.1rem;"></i>
+                            <i class="fas fa-eye text-warning" style="cursor:pointer"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Aadhaar -->
+                <div class="doc-row">
+                    <div class="doc-name">Aadhaar Card</div>
+                    <div class="doc-action">
+                        <div class="file-preview">
+                            <i class="fas fa-file-image text-primary"></i>
+                            <span class="small me-auto">Aadhaar.jpg</span>
+                            <i class="fas fa-check-circle text-success" style="font-size: 1.1rem;"></i>
+                            <i class="fas fa-eye text-warning" style="cursor:pointer"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Driving License -->
+                <div class="doc-row">
+                    <div class="doc-name">Driving Licences</div>
+                    <div class="doc-action d-flex justify-content-end">
+                        <button class="btn-upload"><i class="fas fa-cloud-upload-alt"></i> Upload</button>
+                    </div>
+                </div>
+
+                <!-- Voter ID -->
+                <div class="doc-row">
+                    <div class="doc-name">Voter ID</div>
+                    <div class="doc-action d-flex justify-content-end">
+                        <button class="btn-upload"><i class="fas fa-cloud-upload-alt"></i> Upload</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-end mt-4">
+                <button class="btn btn-upload px-5 py-2 save-next-btn" data-next="address">Save</button>
+            </div>
+        </div>
+
+        <!-- Address Tab Hidden Content (Example for structure) -->
+        <div id="address" class="tab-content-area d-none">
+            <div class="alert-custom alert-warning-custom mb-4">
+                <i class="fas fa-exclamation-triangle"></i> Please upload any one document as address proof to proceed
+                further.
+            </div>
+            <div class="doc-table">
+                <div class="bg-light p-3 border-bottom fw-bold text-muted small">Document Name</div>
+                <div class="doc-row">
+                    <div class="doc-name">Utility Bill</div>
+                    <div class="doc-action d-flex justify-content-end gap-2">
+                        <button class="btn-upload"><i class="fas fa-cloud-upload-alt"></i> Upload</button>
+                    </div>
+                </div>
+                <div class="doc-row">
+                    <div class="doc-name">Rent Agreement</div>
+                    <div class="doc-action d-flex justify-content-end">
+                        <button class="btn-upload"><i class="fas fa-cloud-upload-alt"></i> Upload</button>
+                    </div>
+                </div>
+            </div>
+            <div class="text-end mt-4">
+                <button class="btn btn-upload px-5 py-2 save-next-btn" data-next="financial">Save</button>
+            </div>
+        </div>
+
+        <!-- Financial Tab -->
+        <div id="financial" class="tab-content-area d-none">
+            <div class="alert-custom alert-warning-custom mb-4">
+                <i class="fas fa-exclamation-triangle"></i> Please upload mandatory financial document to proceed
+                further.
+            </div>
+            <div class="doc-table" id="financialDocsList">
+                <div class="bg-light p-3 border-bottom fw-bold text-muted small">Document Name</div>
+                <!-- Dynamic Content -->
+            </div>
+            <div class="text-end mt-4">
+                <button class="btn btn-upload px-5 py-2 save-next-btn" data-next="employment">Save</button>
+            </div>
+        </div>
+
+        <!-- Employment Tab -->
+        <div id="employment" class="tab-content-area d-none">
+            <div class="alert-custom alert-success-custom mb-4">
+                <i class="fas fa-check-circle"></i> Required documents uploaded. Please proceed to upload the next
+                document.
+            </div>
+            <div class="doc-table">
+                <div class="bg-light p-3 border-bottom fw-bold text-muted small">Document Name</div>
+                <div class="doc-row">
+                    <div class="doc-name">Employee ID</div>
+                    <div class="doc-action d-flex justify-content-end">
+                        <button class="btn-upload"><i class="fas fa-cloud-upload-alt"></i> Upload</button>
+                    </div>
+                </div>
+                <div class="doc-row">
+                    <div class="doc-name">Appointment Letter</div>
+                    <div class="doc-action d-flex justify-content-end">
+                        <button class="btn-upload"><i class="fas fa-cloud-upload-alt"></i> Upload</button>
+                    </div>
+                </div>
+            </div>
+            <div class="text-end mt-4">
+                <button class="btn btn-upload px-5 py-2 save-next-btn" data-next="bank">Save</button>
+            </div>
+        </div>
+
+        <!-- Bank Tab -->
+        <div id="bank" class="tab-content-area d-none">
+            <div class="alert-custom alert-warning-custom mb-4">
+                <i class="fas fa-exclamation-triangle"></i> Please upload bank document to proceed further.
+            </div>
+            <div class="doc-table">
+                <div class="bg-light p-3 border-bottom fw-bold text-muted small">Document Name</div>
+                <div class="doc-row">
+                    <div class="doc-name">Bank Statement (6 Months)</div>
+                    <div class="doc-action d-flex justify-content-end">
+                        <button class="btn-upload"><i class="fas fa-cloud-upload-alt"></i> Upload</button>
+                    </div>
+                </div>
+            </div>
+            <div class="text-end mt-4">
+                <button class="btn btn-upload px-5 py-2" id="finalSaveBtn">Save</button>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="d-flex justify-content-end gap-3 mt-5 pt-5 border-top">
+            <button class="btn btn-outline-secondary px-5" onclick="history.back()">Back</button>
+            <button class="btn btn-primary px-5" id="globalNextBtn" style="background: #b197fc; border: none;"
+                onclick="window.location.href='loan-details.html'" disabled>Next</button>
+        </div>
+
+    </div>
+
+    <!-- Hidden input for simulation -->
+    <input type="file" id="fileInput" hidden>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/store.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Tab Logic
+            const tabs = document.querySelectorAll('.doc-tab');
+            const contents = document.querySelectorAll('.tab-content-area');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    tabs.forEach(t => t.classList.remove('active'));
+                    contents.forEach(c => c.classList.add('d-none'));
+
+                    tab.classList.add('active');
+                    const target = tab.getAttribute('data-target');
+                    const targetEl = document.getElementById(target);
+                    if (targetEl) targetEl.classList.remove('d-none');
+                });
+            });
+
+            // Upload Logic
+            let currentUploadBtn = null;
+            const fileInput = document.getElementById('fileInput');
+
+            document.body.addEventListener('click', (e) => {
+                if (e.target.closest('.btn-upload')) {
+                    const btn = e.target.closest('.btn-upload');
+                    // Only trigger if it's an upload button inside a row (not Save)
+                    if (btn.closest('.doc-action')) {
+                        currentUploadBtn = btn;
+                        fileInput.click();
+                    }
+                }
+            });
+
+            fileInput.addEventListener('change', () => {
+                if (fileInput.files.length > 0 && currentUploadBtn) {
+                    const file = fileInput.files[0];
+                    const actionDiv = currentUploadBtn.parentElement;
+
+                    // Replace button with preview
+                    actionDiv.innerHTML = `
+                        <div class="file-preview">
+                            <i class="fas fa-file-alt text-primary"></i> 
+                            <span class="small me-auto">${file.name}</span>
+                            <i class="fas fa-check-circle text-success" style="font-size: 1.1rem;"></i>
+                            <i class="fas fa-times-circle text-danger ms-2" style="cursor:pointer" onclick="this.closest('.file-preview').remove();"></i>
+                        </div>
+                     `;
+
+                    // If it's utility bill (mock check), show Add button
+                    if (currentUploadBtn.closest('.doc-row').querySelector('.doc-name').textContent.includes('Utility')) {
+                        const addBtn = document.createElement('button');
+                        addBtn.className = 'btn btn-primary btn-sm ms-2';
+                        addBtn.innerHTML = '+ Add';
+                        actionDiv.appendChild(addBtn);
+                    }
+                }
+            });
+            // Dynamic Financial Docs
+            const app = store.getApplication();
+            const finDocsList = document.getElementById('financialDocsList');
+            const empType = app.empType || 'salaried'; // Default to salaried if not set
+
+            let finHtml = '';
+            if (empType === 'salaried') {
+                finHtml = `
+                    <div class="doc-row">
+                        <div class="doc-name">Last 3 months salary slips <span class="text-danger">*</span></div>
+                        <div class="doc-action d-flex justify-content-end"><button class="btn-upload"><i class="fas fa-cloud-upload-alt"></i> Upload</button></div>
+                    </div>
+                    <div class="doc-row">
+                        <div class="doc-name">Form 16 / ITR (Latest) <span class="text-danger">*</span></div>
+                        <div class="doc-action d-flex justify-content-end"><button class="btn-upload"><i class="fas fa-cloud-upload-alt"></i> Upload</button></div>
+                    </div>
+                `;
+            } else {
+                finHtml = `
+                    <div class="doc-row">
+                        <div class="doc-name">ITR (Last 2 Years) <span class="text-danger">*</span></div>
+                        <div class="doc-action d-flex justify-content-end"><button class="btn-upload"><i class="fas fa-cloud-upload-alt"></i> Upload</button></div>
+                    </div>
+                    <div class="doc-row">
+                        <div class="doc-name">P&L Statement <span class="text-danger">*</span></div>
+                        <div class="doc-action d-flex justify-content-end"><button class="btn-upload"><i class="fas fa-cloud-upload-alt"></i> Upload</button></div>
+                    </div>
+                     <div class="doc-row">
+                        <div class="doc-name">Business Registration Proof <span class="text-danger">*</span></div>
+                        <div class="doc-action d-flex justify-content-end"><button class="btn-upload"><i class="fas fa-cloud-upload-alt"></i> Upload</button></div>
+                    </div>
+                `;
+            }
+            // Append after header
+            finDocsList.innerHTML += finHtml;
+
+
+            // Sequential Tab Navigation via "Save"
+            document.querySelectorAll('.save-next-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const nextTabId = btn.getAttribute('data-next');
+                    const nextTabLink = document.querySelector(`.doc-tab[data-target="${nextTabId}"]`);
+                    if (nextTabLink) {
+                        nextTabLink.click();
+                        window.scrollTo(0, 0);
+                    }
+                });
+            });
+
+            // Final Save
+            // Final Save
+            document.getElementById('finalSaveBtn')?.addEventListener('click', () => {
+                const nextBtn = document.getElementById('globalNextBtn');
+                nextBtn.disabled = false;
+                nextBtn.style.background = 'var(--primary-color)';
+                alert('All documents saved! You can now proceed to the next step.');
+            });
+
+        });
+    </script>
+</body>
+
+</html>

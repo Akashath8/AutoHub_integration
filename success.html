@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Success - LOS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        .success-card {
+            background: white;
+            border-radius: 16px;
+            padding: 3rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .success-icon {
+            font-size: 5rem;
+            color: var(--success-color);
+            margin-bottom: 2rem;
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-light d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+
+    <div class="success-card">
+        <div class="success-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <h2 class="fw-bold mb-3">Application Submitted!</h2>
+        <p class="text-muted mb-4">
+            Your loan application has been successfully submitted to <strong id="bankName">Bank</strong>.
+        </p>
+
+        <div class="bg-light p-3 rounded mb-4 text-start">
+            <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">Application ID:</span>
+                <span class="fw-bold" id="appId">APP-XXXXXX</span>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">Loan Amount:</span>
+                <span class="fw-bold" id="amount">₹ 0</span>
+            </div>
+            <div class="d-flex justify-content-between">
+                <span class="text-muted">Status:</span>
+                <span class="badge bg-info text-dark">Submitted</span>
+            </div>
+        </div>
+
+        <div class="d-grid gap-3">
+            <button class="btn btn-outline-secondary"><i class="fas fa-download me-2"></i> Download Summary</button>
+            <a href="orders.html" class="btn btn-primary" id="finishBtn">Go to Order History</a>
+        </div>
+    </div>
+
+    <script src="js/store.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const app = store.getApplication();
+
+            // Generate Application ID
+            const appId = 'APP-' + Math.floor(100000 + Math.random() * 900000);
+
+            if (app) {
+                document.getElementById('bankName').textContent = app.selectedOffer?.bank || 'Bank';
+                document.getElementById('appId').textContent = appId;
+                document.getElementById('amount').textContent = '₹ ' + (app.loanAmount || 0).toLocaleString('en-IN');
+
+                // Create Order if not exists (Logic to prevent duplicate orders on refresh would ideally be UUID based check)
+                // For demo, we just check if we have a flag
+
+                if (!sessionStorage.getItem('orderCreated')) {
+                    const order = {
+                        id: 'ORD-' + Date.now(),
+                        date: new Date().toLocaleDateString(),
+                        items: [{
+                            id: app.productId,
+                            name: app.productName,
+                            price: app.productPrice,
+                            image: 'https://via.placeholder.com/150' // simplified
+                        }],
+                        total: app.productPrice, // Order value is product price
+                        paymentMode: 'Finance',
+                        loanStatus: 'Submitted',
+                        loanAppId: appId,
+                        loanDetails: {
+                            bank: app.selectedOffer?.bank,
+                            amount: app.loanAmount,
+                            tenure: app.tenure
+                        },
+                        status: 'Processing'
+                    };
+
+                    store.addOrder(order);
+                    store.clearCart(); // Clear cart as order is placed
+                    sessionStorage.setItem('orderCreated', 'true');
+                }
+            }
+
+            // Auto redirect fallback
+            // setTimeout(() => window.location.href = 'orders.html', 10000);
+        });
+    </script>
+</body>
+
+</html>

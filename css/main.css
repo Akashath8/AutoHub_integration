@@ -1,0 +1,269 @@
+/* AutoHub Marketplace - Global Styles */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    /* Primary Palette - Deep Navy based */
+    --primary-color: #1a1a2e; 
+    --secondary-color: #16213e; 
+    --accent-color: #e94560; /* Vibrant Red/Pink for specific callouts */
+    
+    /* Functional Colors */
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --bg-light: #f8f9fa;
+    --bg-white: #ffffff;
+    --border-color: #e0e0e0;
+    
+    /* Branding */
+    --brand-blue: #0d6efd; /* For standard links/buttons */
+
+    /* Status */
+    --success-color: #2ecc71;
+    --warning-color: #f1c40f;
+    --danger-color: #e74c3c;
+
+    /* Shadows */
+    --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --hover-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-primary);
+    background-color: var(--bg-light);
+    line-height: 1.6;
+}
+
+/* Typography Overrides */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    color: var(--primary-color);
+    letter-spacing: -0.02em;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    padding: 0.6rem 1.5rem;
+    font-weight: 500;
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.btn-danger {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+.btn-danger:hover {
+    background-color: #d6304b;
+    border-color: #d6304b;
+}
+
+/* Cards */
+.card {
+    border: 1px solid rgba(0,0,0,0.08);
+    box-shadow: var(--card-shadow);
+    transition: transform 0.2s, box-shadow 0.2s;
+    border-radius: 0.75rem;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--hover-shadow);
+}
+
+.card-img-top {
+    border-top-left-radius: 0.75rem;
+    border-top-right-radius: 0.75rem;
+    object-fit: cover;
+    height: 200px;
+}
+
+/* Navbar */
+.navbar {
+    background-color: var(--primary-color) !important;
+    padding: 1rem 0;
+}
+
+.navbar-brand {
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: #fff !important;
+}
+
+.nav-link {
+    color: rgba(255,255,255,0.85) !important;
+    font-weight: 500;
+    margin-right: 1rem;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: #fff !important;
+}
+
+/* Utilities */
+.text-accent {
+    color: var(--accent-color);
+}
+
+.bg-light-gray {
+    background-color: #f3f4f6;
+}
+
+/* Loading Spinner Overlay */
+#loading-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none; /* Hidden by default */
+}
+
+/* =====================================================
+   NEW FEATURE STYLES
+   ===================================================== */
+
+/* --- Navbar Location Dropdown --- */
+#navLocationBtn {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: #fff !important;
+    border-radius: 20px;
+    padding: 0.35rem 0.85rem;
+    font-size: 0.88rem;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: background 0.2s;
+}
+#navLocationBtn:hover {
+    background: rgba(255, 255, 255, 0.22);
+}
+.location-dropdown-menu {
+    min-width: 220px;
+    border-radius: 12px;
+    border: 0;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    padding: 0.5rem;
+}
+.location-dropdown-menu .dropdown-item {
+    border-radius: 8px;
+    padding: 0.5rem 0.8rem;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+.location-dropdown-menu .dropdown-item:hover {
+    background: rgba(233,69,96,0.08);
+    color: var(--accent-color);
+}
+.location-dropdown-menu .dropdown-header {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #aaa;
+    padding: 0.4rem 0.8rem;
+}
+
+/* --- Buy / Rent / Sell Navbar Buttons --- */
+.nav-mode-btn {
+    color: rgba(255,255,255,0.88) !important;
+    font-weight: 600;
+    padding: 0.3rem 0.9rem !important;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.2);
+    font-size: 0.88rem;
+    margin-right: 0.3rem;
+    transition: background 0.2s, color 0.2s;
+    line-height: 1.5;
+}
+.nav-mode-btn:hover {
+    background: rgba(255,255,255,0.15) !important;
+    color: #fff !important;
+}
+.nav-mode-btn.buy-btn:hover  { background: rgba(46,204,113,0.2) !important; }
+.nav-mode-btn.sell-btn:hover { background: rgba(233,69,96,0.25) !important; }
+.nav-mode-btn.rent-btn:hover { background: rgba(52,152,219,0.2) !important; }
+
+/* --- Notification Bell --- */
+.nav-bell-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.nav-bell-wrap .nav-link {
+    font-size: 1.05rem;
+    padding: 0.4rem 0.6rem !important;
+}
+.bell-badge {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 16px;
+    height: 16px;
+    background: var(--accent-color);
+    color: #fff;
+    font-size: 0.6rem;
+    font-weight: 700;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--primary-color);
+    pointer-events: none;
+}
+
+/* --- Dashboard Hero Mode Buttons --- */
+.hero-mode-tabs {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+.hero-mode-tab {
+    padding: 0.5rem 1.6rem;
+    border-radius: 25px;
+    border: 2px solid rgba(255,255,255,0.6);
+    background: transparent;
+    color: rgba(255,255,255,0.85);
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.hero-mode-tab:hover,
+.hero-mode-tab.active {
+    background: #fff;
+    color: var(--primary-color);
+    border-color: #fff;
+}
+
+/* --- City Selection Modal --- */
+.city-modal-content {
+    border-radius: 18px;
+    border: 0;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+.city-location-banner {
+    background: #f8f9fa;
+    border: 1px solid #eee;
+}
+.city-more-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+.city-more-grid .btn {
+    border-radius: 20px;
+    font-size: 0.82rem;
+    padding: 0.3rem 0.75rem;
+}

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Offers - LOS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        .sidebar {
+            background: white;
+            min-height: 100vh;
+            border-right: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+        }
+
+        .step-item {
+            padding: 1rem 1.5rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            opacity: 0.7;
+        }
+
+        .step-item.active {
+            opacity: 1;
+            color: var(--primary-color);
+            background: #f8f9fa;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .step-item.completed {
+            color: var(--success-color);
+            opacity: 1;
+        }
+
+        .step-circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .active .step-circle {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .completed .step-circle {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .offer-card {
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .offer-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .offer-card.recommended {
+            border: 2px solid var(--success-color);
+            background: #f0fff4;
+        }
+
+        .bank-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <div class="sidebar d-none d-lg-block" style="width: 280px;">
+            <div class="p-4 border-bottom">
+                <a class="navbar-brand text-dark" href="#">LOS <span class="text-primary">System</span></a>
+            </div>
+            <div class="py-4">
+                <div class="step-item completed">
+                    <div class="step-circle"><i class="fas fa-check"></i></div> Application Details
+                </div>
+                <div class="step-item completed">
+                    <div class="step-circle"><i class="fas fa-check"></i></div> Document Uploads
+                </div>
+                <div class="step-item completed">
+                    <div class="step-circle"><i class="fas fa-check"></i></div> Loan Details
+                </div>
+                <div class="step-item active">
+                    <div class="step-circle">4</div> Check Offers
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-grow-1 bg-light">
+            <nav class="navbar navbar-expand bg-white border-bottom px-4">
+                <h5 class="mb-0">Select Offer</h5>
+                <div class="ms-auto d-flex align-items-center gap-2">
+                    <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center"
+                        style="width:35px; height:35px;">U</div>
+                    <span class="fw-bold small" id="userName">User</span>
+                </div>
+            </nav>
+
+            <div class="container p-5" style="max-width: 1100px;">
+
+                <h4 class="mb-4">Offers for you</h4>
+
+                <div class="row g-4 justify-content-center">
+
+                    <!-- Offer 1 -->
+                    <div class="col-md-4">
+                        <div class="card offer-card recommended h-100 p-3">
+                            <div class="badge bg-success position-absolute top-0 end-0 m-3">Recommended</div>
+                            <div class="card-body text-center">
+                                <div class="bank-logo text-primary mb-3"><i class="fas fa-university me-2"></i> HDFC
+                                    Bank</div>
+                                <h3 class="fw-bold mb-0">8.5%</h3>
+                                <p class="text-muted small">Interest Rate</p>
+                                <hr>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span class="text-muted small">Loan Amount</span>
+                                    <span class="fw-bold" id="amt1">₹ 5,00,000</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span class="text-muted small">Tenure</span>
+                                    <span class="fw-bold" id="tenure1">24 Months</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-3">
+                                    <span class="text-muted small">Processing Fee</span>
+                                    <span class="fw-bold">₹ 2,000</span>
+                                </div>
+                                <button class="btn btn-primary w-100 apply-btn" data-bank="HDFC Bank"
+                                    data-roi="8.5%">Apply Now</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Offer 2 -->
+                    <div class="col-md-4">
+                        <div class="card offer-card h-100 p-3">
+                            <div class="card-body text-center">
+                                <div class="bank-logo text-danger mb-3"><i class="fas fa-university me-2"></i> ICICI
+                                    Bank</div>
+                                <h3 class="fw-bold mb-0">8.75%</h3>
+                                <p class="text-muted small">Interest Rate</p>
+                                <hr>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span class="text-muted small">Loan Amount</span>
+                                    <span class="fw-bold" id="amt2">₹ 5,00,000</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span class="text-muted small">Tenure</span>
+                                    <span class="fw-bold" id="tenure2">24 Months</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-3">
+                                    <span class="text-muted small">Processing Fee</span>
+                                    <span class="fw-bold">₹ 1,500</span>
+                                </div>
+                                <button class="btn btn-outline-primary w-100 apply-btn" data-bank="ICICI Bank"
+                                    data-roi="8.75%">Apply Now</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Offer 3 -->
+                    <div class="col-md-4">
+                        <div class="card offer-card h-100 p-3">
+                            <div class="card-body text-center">
+                                <div class="bank-logo text-info mb-3"><i class="fas fa-university me-2"></i> SBI</div>
+                                <h3 class="fw-bold mb-0">8.40%</h3>
+                                <p class="text-muted small">Interest Rate</p>
+                                <hr>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span class="text-muted small">Loan Amount</span>
+                                    <span class="fw-bold" id="amt3">₹ 5,00,000</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span class="text-muted small">Tenure</span>
+                                    <span class="fw-bold" id="tenure3">24 Months</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-3">
+                                    <span class="text-muted small">Processing Fee</span>
+                                    <span class="fw-bold">₹ 2,500</span>
+                                </div>
+                                <button class="btn btn-outline-primary w-100 apply-btn" data-bank="SBI"
+                                    data-roi="8.40%">Apply Now</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/store.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = store.getUser();
+            if (user) document.getElementById('userName').textContent = user.firstName;
+
+            const app = store.getApplication();
+            if (app) {
+                const amtStr = '₹ ' + (app.loanAmount || 0).toLocaleString('en-IN');
+                const tenureStr = (app.tenure || 24) + ' Months';
+
+                ['amt1', 'amt2', 'amt3'].forEach(id => document.getElementById(id).textContent = amtStr);
+                ['tenure1', 'tenure2', 'tenure3'].forEach(id => document.getElementById(id).textContent = tenureStr);
+            }
+
+            document.querySelectorAll('.apply-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const bank = e.target.dataset.bank;
+                    const roi = e.target.dataset.roi;
+
+                    // Save Selection
+                    app.selectedOffer = { bank, roi };
+                    app.step = 5;
+                    store.saveApplication(app);
+
+                    window.location.href = 'success.html';
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

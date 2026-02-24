@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart - AutoHub Marketplace</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <div class="d-flex align-items-center gap-2">
+                <a class="navbar-brand" href="index.html">AutoHub <span class="text-accent">Marketplace</span></a>
+                <div class="dropdown d-none d-lg-block">
+                    <button class="btn nav-link" id="navLocationBtn" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-map-marker-alt me-1 text-accent"></i> Select City <i
+                            class="fas fa-chevron-down ms-1" style="font-size:0.7rem;"></i>
+                    </button>
+                    <ul class="dropdown-menu location-dropdown-menu">
+                        <li><span class="dropdown-header">Popular Cities</span></li>
+                        <li><a class="dropdown-item" href="#" data-nav-city="Bangalore"><i
+                                    class="fas fa-city me-2 text-muted small"></i>Bangalore</a></li>
+                        <li><a class="dropdown-item" href="#" data-nav-city="Chennai"><i
+                                    class="fas fa-city me-2 text-muted small"></i>Chennai</a></li>
+                        <li><a class="dropdown-item" href="#" data-nav-city="Pune"><i
+                                    class="fas fa-city me-2 text-muted small"></i>Pune</a></li>
+                        <li><a class="dropdown-item" href="#" data-nav-city="Mumbai"><i
+                                    class="fas fa-city me-2 text-muted small"></i>Mumbai</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#" data-nav-city="Delhi"><i
+                                    class="fas fa-city me-2 text-muted small"></i>Delhi</a></li>
+                        <li><a class="dropdown-item" href="#" data-nav-city="Hyderabad"><i
+                                    class="fas fa-city me-2 text-muted small"></i>Hyderabad</a></li>
+                        <li><a class="dropdown-item" href="#" data-nav-city="Ahmedabad"><i
+                                    class="fas fa-city me-2 text-muted small"></i>Ahmedabad</a></li>
+                    </ul>
+                </div>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link nav-mode-btn buy-btn" href="#" data-mode="buy">Buy</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-mode-btn rent-btn" href="#" data-mode="rent">Rent</a>
+                    </li>
+                    <li class="nav-item me-2">
+                        <a class="nav-link nav-mode-btn sell-btn" href="#" data-mode="sell">Sell</a>
+                    </li>
+                    <li class="nav-item me-1 nav-bell-wrap">
+                        <a class="nav-link" href="#" title="Notifications"><i class="fas fa-bell"></i></a>
+                        <span class="bell-badge" id="bellCount">0</span>
+                    </li>
+                    <li class="nav-item me-2 position-relative">
+                        <a class="nav-link active" href="cart.html">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                id="cartCount">0</span>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
+                            data-bs-toggle="dropdown">
+                            <i class="fas fa-user-circle fa-lg"></i> <span id="userName">User</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="orders.html"><i class="fas fa-box me-2 text-muted"></i>My
+                                    Orders</a></li>
+                            <li><a class="dropdown-item" href="my-quotes.html"><i
+                                        class="fas fa-file-invoice me-2 text-muted"></i>My Quotations</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item text-danger" href="#" id="logoutBtn"><i
+                                        class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <h2 class="mb-4">Shopping Cart</h2>
+
+        <div class="row">
+            <div class="col-lg-8" id="cartItemsContainer">
+                <!-- Items injected here -->
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">Order Summary</h5>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span class="text-muted">Subtotal</span>
+                            <span class="fw-bold" id="cartSubtotal">₹ 0</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span class="text-muted">Taxes & Fees (est.)</span>
+                            <span class="fw-bold">₹ 5,000</span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between mb-4">
+                            <span class="h5">Total</span>
+                            <span class="h5 text-danger" id="cartTotal">₹ 0</span>
+                        </div>
+                        <a href="payment.html" class="btn btn-primary w-100 btn-lg" id="checkoutBtn">Proceed to
+                            Checkout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/location.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = store.getUser();
+            if (!user) { window.location.href = 'login.html'; return; }
+            document.getElementById('userName').textContent = user.firstName;
+
+            // Logout
+            document.getElementById('logoutBtn').addEventListener('click', () => {
+                store.logoutUser();
+                window.location.href = 'login.html';
+            });
+
+            // Render Cart
+            const cart = store.getCart();
+            document.getElementById('cartCount').textContent = cart.items.length;
+
+            const container = document.getElementById('cartItemsContainer');
+
+            if (cart.items.length === 0) {
+                container.innerHTML = `<div class="alert alert-info py-5 text-center">Your cart is empty. <br><br> <a href="listing.html" class="btn btn-outline-primary">Browse Vehicles</a></div>`;
+                document.getElementById('checkoutBtn').classList.add('disabled');
+                return;
+            }
+
+            container.innerHTML = '';
+            let subtotal = 0;
+
+            cart.items.forEach((item, index) => {
+                subtotal += item.price; // Assume qty 1 for vehicles
+                const html = `
+                    <div class="card mb-3 border-0 shadow-sm">
+                        <div class="row g-0 align-items-center">
+                            <div class="col-md-3">
+                                <img src="${item.image}" class="img-fluid rounded-start h-100 object-fit-cover" alt="${item.name}" style="max-height: 150px;">
+                            </div>
+                            <div class="col-md-9">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <h5 class="card-title">${item.name}</h5>
+                                        <button class="btn btn-link text-danger p-0 delete-btn" data-index="${index}"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                    <p class="card-text text-muted small">${item.year} | ${item.fuel}</p>
+                                    <h6 class="text-danger fw-bold">₹ ${item.price.toLocaleString('en-IN')}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += html;
+            });
+
+            const total = subtotal + 5000;
+            document.getElementById('cartSubtotal').textContent = '₹ ' + subtotal.toLocaleString('en-IN');
+            document.getElementById('cartTotal').textContent = '₹ ' + total.toLocaleString('en-IN');
+
+            // Handle Delete (Simplified implementation for demo)
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const idx = e.currentTarget.dataset.index;
+                    cart.items.splice(idx, 1);
+                    store.saveCart(cart);
+                    location.reload();
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

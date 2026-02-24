@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Options - AutoHub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        .payment-card {
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .payment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .payment-card.selected {
+            border-color: var(--primary-color);
+            background-color: #f8f9ff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar Simplified -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">AutoHub <span class="text-accent">Marketplace</span></a>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <h3 class="mb-4 text-center">Choose Payment Method</h3>
+
+        <div class="row justify-content-center g-4">
+
+            <!-- Option 1: Self Payment -->
+            <div class="col-md-5">
+                <div class="card payment-card h-100 p-4 text-center" onclick="selectOption('self')">
+                    <div class="card-body">
+                        <i class="fas fa-wallet text-primary mb-3" style="font-size: 3rem;"></i>
+                        <h4>Pay Full Amount</h4>
+                        <p class="text-muted">Pay the complete amount now using Netbanking, UPI, or Credit Card.</p>
+                        <h5 class="text-danger fw-bold mt-3" id="totalAmountDisplay">₹ 0</h5>
+                        <button class="btn btn-outline-primary mt-3 w-100">Pay Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Option 2: Finance (LOS) -->
+            <div class="col-md-5">
+                <div class="card payment-card h-100 p-4 text-center" onclick="selectOption('finance')">
+                    <div class="card-body">
+                        <i class="fas fa-hand-holding-usd text-success mb-3" style="font-size: 3rem;"></i>
+                        <h4>Apply for Loan</h4>
+                        <p class="text-muted">Get instant financing with our partner banks. Minimal documentation
+                            required.</p>
+                        <ul class="text-start small text-muted mt-3 mb-3">
+                            <li><i class="fas fa-check text-success me-2"></i> Instant Approval</li>
+                            <li><i class="fas fa-check text-success me-2"></i> Low Interest Rates</li>
+                            <li><i class="fas fa-check text-success me-2"></i> Paperless Process</li>
+                        </ul>
+                        <button class="btn btn-success mt-1 w-100">Apply for Finance</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Payment Processing Modal -->
+    <div class="modal fade" id="processingModal" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-center p-5">
+                <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;"></div>
+                <h5>Processing Payment...</h5>
+                <p class="text-muted">Please do not refresh the page.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/store.js"></script>
+    <script>
+        const cart = store.getCart();
+        const total = (cart.total || 0) + 5000; // Adding dummy tax/fees
+        document.getElementById('totalAmountDisplay').textContent = '₹ ' + total.toLocaleString('en-IN');
+
+        function selectOption(type) {
+            if (type === 'self') {
+                // Simulate Payment
+                const modal = new bootstrap.Modal(document.getElementById('processingModal'));
+                modal.show();
+
+                setTimeout(() => {
+                    // Success -> Create Order
+                    const order = {
+                        id: 'ORD-' + Date.now(),
+                        date: new Date().toLocaleDateString(),
+                        items: cart.items,
+                        total: total,
+                        status: 'Completed',
+                        paymentMode: 'Self',
+                        loanStatus: null
+                    };
+                    store.addOrder(order);
+                    store.clearCart();
+                    window.location.href = 'orders.html';
+                }, 2000); // 2s delay
+
+            } else if (type === 'finance') {
+                // Initiate LOS Application
+                // We create a new application record in store
+                const loanApp = {
+                    productId: cart.items[0]?.id || 'unknown',
+                    productName: cart.items[0]?.name || 'Vehicle',
+                    productPrice: cart.items[0]?.price || 0,
+                    loanAmount: cart.items[0]?.price || 0, // Default to full price
+                    status: 'Draft',
+                    applicant: { ...store.getUser() }, // Pre-fill with user data
+                    documents: {},
+                    step: 1
+                };
+
+                store.saveApplication(loanApp);
+
+                // Redirect to LOS
+                window.location.href = 'application.html';
+            }
+        }
+    </script>
+</body>
+
+</html>

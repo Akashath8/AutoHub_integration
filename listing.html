@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicles - AutoHub Marketplace</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        .filter-sidebar {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            position: sticky;
+            top: 100px;
+        }
+
+        .vehicle-card img {
+            height: 220px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <!-- Brand + Location Dropdown -->
+            <div class="d-flex align-items-center gap-2">
+                <a class="navbar-brand" href="index.html">AutoHub <span class="text-accent">Marketplace</span></a>
+                <div class="dropdown d-none d-lg-block">
+                    <button class="btn nav-link" id="navLocationBtn" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-map-marker-alt me-1 text-accent"></i> Select City <i
+                            class="fas fa-chevron-down ms-1" style="font-size:0.7rem;"></i>
+                    </button>
+                    <ul class="dropdown-menu location-dropdown-menu">
+                        <li><span class="dropdown-header">Popular Cities</span></li>
+                        <li><a class="dropdown-item" href="#" data-nav-city="Bangalore"><i
+                                    class="fas fa-city me-2 text-muted small"></i>Bangalore</a></li>
+                        <li><a class="dropdown-item" href="#" data-nav-city="Chennai"><i
+                                    class="fas fa-city me-2 text-muted small"></i>Chennai</a></li>
+                        <li><a class="dropdown-item" href="#" data-nav-city="Pune"><i
+                                    class="fas fa-city me-2 text-muted small"></i>Pune</a></li>
+                        <li><a class="dropdown-item" href="#" data-nav-city="Mumbai"><i
+                                    class="fas fa-city me-2 text-muted small"></i>Mumbai</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#" data-nav-city="Delhi"><i
+                                    class="fas fa-city me-2 text-muted small"></i>Delhi</a></li>
+                        <li><a class="dropdown-item" href="#" data-nav-city="Hyderabad"><i
+                                    class="fas fa-city me-2 text-muted small"></i>Hyderabad</a></li>
+                        <li><a class="dropdown-item" href="#" data-nav-city="Ahmedabad"><i
+                                    class="fas fa-city me-2 text-muted small"></i>Ahmedabad</a></li>
+                    </ul>
+                </div>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <div class="mx-auto" style="width: 35%;">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0"><i
+                                class="fas fa-search text-muted"></i></span>
+                        <input type="text" id="searchInput" class="form-control border-start-0"
+                            placeholder="Search cars, brands...">
+                    </div>
+                </div>
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link nav-mode-btn buy-btn active" href="#" data-mode="buy">Buy</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-mode-btn rent-btn" href="#" data-mode="rent">Rent</a>
+                    </li>
+                    <li class="nav-item me-2">
+                        <a class="nav-link nav-mode-btn sell-btn" href="#" data-mode="sell">Sell</a>
+                    </li>
+                    <li class="nav-item me-1 nav-bell-wrap">
+                        <a class="nav-link" href="#" title="Notifications"><i class="fas fa-bell"></i></a>
+                        <span class="bell-badge" id="bellCount">0</span>
+                    </li>
+                    <li class="nav-item me-2 position-relative">
+                        <a class="nav-link" href="cart.html">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                id="cartCount">0</span>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
+                            data-bs-toggle="dropdown">
+                            <i class="fas fa-user-circle fa-lg"></i> <span id="userName">User</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="orders.html"><i class="fas fa-box me-2 text-muted"></i>My
+                                    Orders</a></li>
+                            <li><a class="dropdown-item" href="my-quotes.html"><i
+                                        class="fas fa-file-invoice me-2 text-muted"></i>My Quotations</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item text-danger" href="#" id="logoutBtn"><i
+                                        class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-4">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-lg-3 mb-4">
+                <div class="filter-sidebar shadow-sm">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="mb-0">Filters</h5>
+                        <button class="btn btn-link text-decoration-none p-0" id="resetFilters">Reset</button>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Location</label>
+                        <select class="form-select" id="locationFilter">
+                            <option value="">All Cities</option>
+                            <option value="Pune">Pune</option>
+                            <option value="Mumbai">Mumbai</option>
+                            <option value="Delhi">Delhi</option>
+                            <option value="Bangalore">Bangalore</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Brand</label>
+                        <select class="form-select" id="brandFilter">
+                            <option value="">All Brands</option>
+                            <option value="Hyundai">Hyundai</option>
+                            <option value="Toyota">Toyota</option>
+                            <option value="Honda">Honda</option>
+                            <option value="Mahindra">Mahindra</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Price Range</label>
+                        <select class="form-select" id="priceFilter">
+                            <option value="">Any Price</option>
+                            <option value="0-1000000">Under 10 Lakh</option>
+                            <option value="1000000-2000000">10 - 20 Lakh</option>
+                            <option value="2000000-5000000">Above 20 Lakh</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grid -->
+            <div class="col-lg-9">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="mb-0">All Vehicles <span class="text-muted fs-6" id="resultCount">(0)</span></h4>
+                    <select class="form-select w-auto">
+                        <option>Sort by: Newest</option>
+                        <option>Sort by: Price High to Low</option>
+                        <option>Sort by: Price Low to High</option>
+                    </select>
+                </div>
+
+                <div class="row g-4" id="vehicleGrid">
+                    <!-- Vehicles populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/location.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = store.getUser();
+            if (!user) { window.location.href = 'login.html'; return; }
+            document.getElementById('userName').textContent = user.firstName;
+            document.getElementById('cartCount').textContent = store.getCart().items.length;
+
+            // Logout
+            document.getElementById('logoutBtn').addEventListener('click', () => {
+                store.logoutUser();
+                window.location.href = 'login.html';
+            });
+
+            // Filtering
+            const grid = document.getElementById('vehicleGrid');
+            const resultCount = document.getElementById('resultCount');
+            const searchInput = document.getElementById('searchInput');
+            const locationFilter = document.getElementById('locationFilter');
+            const brandFilter = document.getElementById('brandFilter');
+            const priceFilter = document.getElementById('priceFilter');
+            const resetBtn = document.getElementById('resetFilters');
+
+            function renderVehicles(vehicles) {
+                grid.innerHTML = '';
+                resultCount.textContent = `(${vehicles.length})`;
+
+                if (vehicles.length === 0) {
+                    grid.innerHTML = '<div class="col-12 text-center py-5"><h5>No vehicles found.</h5></div>';
+                    return;
+                }
+
+                vehicles.forEach(car => {
+                    const card = `
+                        <div class="col-md-4">
+                            <div class="card h-100 border-0 shadow-sm vehicle-card">
+                                <div class="position-relative">
+                                    <img src="${car.image}" class="card-img-top" alt="${car.name}">
+                                    <button class="btn btn-light btn-sm position-absolute top-0 end-0 m-2 rounded-circle shadow-sm">
+                                        <i class="far fa-heart text-danger"></i>
+                                    </button>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title text-truncate">${car.name}</h5>
+                                    <h6 class="text-danger fw-bold mb-2">₹ ${car.price.toLocaleString('en-IN')}</h6>
+                                    <div class="d-flex justify-content-between text-muted small mb-3">
+                                        <span>${car.year}</span>
+                                        <span>${car.fuel}</span>
+                                        <span>${car.km} km</span>
+                                    </div>
+                                    <div class="d-grid gap-2">
+                                        <a href="details.html?id=${car.id}" class="btn btn-primary btn-sm">View Details</a>
+                                        <button class="btn btn-outline-secondary btn-sm request-quote-btn" data-id="${car.id}">Request Quote</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    grid.innerHTML += card;
+                });
+
+                // Attach event listeners to new buttons
+                document.querySelectorAll('.request-quote-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.stopPropagation(); // prevent card click
+                        window.location.href = `quotation.html?id=${btn.dataset.id}`;
+                    });
+                });
+            }
+
+            function applyFilters() {
+                let filtered = VEHICLES;
+
+                // Search
+                const query = searchInput.value.toLowerCase();
+                if (query) {
+                    filtered = filtered.filter(v => v.name.toLowerCase().includes(query) || v.brand.toLowerCase().includes(query));
+                }
+
+                // Filters
+                const loc = locationFilter.value;
+                if (loc) filtered = filtered.filter(v => v.location === loc);
+
+                const brand = brandFilter.value;
+                if (brand) filtered = filtered.filter(v => v.brand === brand);
+
+                const priceRange = priceFilter.value;
+                if (priceRange) {
+                    const [min, max] = priceRange.split('-').map(Number);
+                    filtered = filtered.filter(v => v.price >= min && v.price <= max);
+                }
+
+                renderVehicles(filtered);
+            }
+
+            // Event Listeners
+            searchInput.addEventListener('input', applyFilters);
+            locationFilter.addEventListener('change', applyFilters);
+            brandFilter.addEventListener('change', applyFilters);
+            priceFilter.addEventListener('change', applyFilters);
+            resetBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                locationFilter.value = '';
+                brandFilter.value = '';
+                priceFilter.value = '';
+                applyFilters();
+            });
+
+            // Initial Render
+            renderVehicles(VEHICLES);
+        });
+    </script>
+</body>
+
+</html>

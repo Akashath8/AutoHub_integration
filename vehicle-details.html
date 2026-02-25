@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Details — LOS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        body {
+            background: #f4f6fb;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        /* ── LOS Sidebar ── */
+        .sidebar {
+            background: white;
+            min-height: 100vh;
+            border-right: 1px solid #e8e8e8;
+            width: 220px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            padding-top: 1.5rem;
+        }
+
+        .logo-area {
+            padding: 0 1.25rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: #5b2ec9;
+        }
+
+        .logo-icon {
+            width: 30px;
+            height: 30px;
+            background: #5b2ec9;
+            border-radius: 7px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+        }
+
+        .timeline-step {
+            position: relative;
+            padding: 0.85rem 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            color: #adb5bd;
+            font-size: 0.88rem;
+            font-weight: 500;
+        }
+
+        .timeline-step::before {
+            content: '';
+            position: absolute;
+            left: 24px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #e9ecef;
+            z-index: -1;
+        }
+
+        .timeline-step:first-child::before {
+            top: 50%;
+        }
+
+        .timeline-step:last-child::before {
+            bottom: 50%;
+        }
+
+        .step-indicator {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #e9ecef;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            z-index: 1;
+        }
+
+        .timeline-step.active {
+            color: #212529;
+        }
+
+        .timeline-step.active .step-indicator,
+        .timeline-step.completed .step-indicator {
+            background: #5b2ec9;
+        }
+
+        .timeline-step.active::before,
+        .timeline-step.completed::before {
+            background: #5b2ec9;
+        }
+
+        /* ── Main ── */
+        .main-content {
+            margin-left: 220px;
+            padding: 0;
+        }
+
+        .los-topbar {
+            background: #fff;
+            border-bottom: 1px solid #e8e8e8;
+            padding: 0.65rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 5;
+        }
+
+        .los-brand {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #5b2ec9;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .los-brand-icon {
+            background: #5b2ec9;
+            color: #fff;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+        }
+
+        .los-search {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 0.4rem 0.9rem;
+            font-size: 0.85rem;
+            background: #f8f8f8;
+            outline: none;
+            width: 180px;
+        }
+
+        .los-avatar {
+            width: 32px;
+            height: 32px;
+            background: #e8e0fb;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #5b2ec9;
+            font-weight: 700;
+            font-size: 0.8rem;
+        }
+
+        .page-body {
+            padding: 2rem 2.5rem 5rem;
+            max-width: 980px;
+        }
+
+        .page-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #222;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .back-link {
+            color: #555;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .back-link:hover {
+            color: #5b2ec9;
+        }
+
+        /* ── Vehicle Type Toggle ── */
+        .vehicle-type-toggle {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .vehicle-radio-wrap {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .vehicle-radio-wrap input[type="radio"] {
+            accent-color: #5b2ec9;
+            width: 17px;
+            height: 17px;
+            cursor: pointer;
+        }
+
+        /* ── Form Card ── */
+        .form-card {
+            background: #fff;
+            border-radius: 14px;
+            padding: 1.75rem 2rem;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-section-title {
+            color: #5b2ec9;
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem 1.5rem;
+        }
+
+        .form-group label {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 0.3rem;
+            display: block;
+        }
+
+        .form-group label .req {
+            color: #dc3545;
+        }
+
+        .form-control,
+        .form-select {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 0.55rem 0.85rem;
+            font-size: 0.85rem;
+            color: #333;
+            background: #fff;
+            outline: none;
+            width: 100%;
+            transition: border-color 0.15s;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #5b2ec9;
+            box-shadow: 0 0 0 2px rgba(91, 46, 201, 0.1);
+        }
+
+        .form-control::placeholder {
+            color: #bbb;
+        }
+
+        .form-control.autofilled {
+            background: #f8f6ff;
+            border-color: #c5b3f0;
+        }
+
+        .form-control.autofilled:focus {
+            border-color: #5b2ec9;
+        }
+
+        /* Verify reg field */
+        .reg-input-wrap {
+            position: relative;
+        }
+
+        .verify-btn {
+            position: absolute;
+            right: 6px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: 1.5px solid #5b2ec9;
+            color: #5b2ec9;
+            border-radius: 6px;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.78rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .verify-btn:hover {
+            background: #5b2ec9;
+            color: #fff;
+        }
+
+        .verify-btn.verified {
+            border-color: #198754;
+            color: #198754;
+            cursor: default;
+        }
+
+        .verify-btn.verified:hover {
+            background: none;
+            color: #198754;
+        }
+
+        #regInput {
+            padding-right: 80px;
+        }
+
+        /* Bottom Nav */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 220px;
+            right: 0;
+            background: #fff;
+            border-top: 1px solid #eee;
+            padding: 1rem 2.5rem;
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            z-index: 10;
+        }
+
+        .btn-back {
+            border: 1.5px solid #bbb;
+            background: none;
+            color: #555;
+            border-radius: 8px;
+            padding: 0.55rem 2rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-back:hover {
+            border-color: #5b2ec9;
+            color: #5b2ec9;
+        }
+
+        .btn-next {
+            background: #5b2ec9;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 0.55rem 2.5rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-next:hover {
+            background: #4820a8;
+        }
+
+        /* Help FAB */
+        .help-fab {
+            position: fixed;
+            bottom: 80px;
+            right: 1.5rem;
+            width: 42px;
+            height: 42px;
+            background: #5b2ec9;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(91, 46, 201, 0.35);
+            z-index: 20;
+        }
+
+        /* Spinner overlay */
+        .verify-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.6);
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .verify-overlay.active {
+            display: flex;
+        }
+
+        .spinner-ring {
+            border: 4px solid #e0d0ff;
+            border-top-color: #5b2ec9;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo-area">
+            <div class="logo-icon"><i class="fas fa-home"></i></div> LOS
+        </div>
+        <div class="timeline-step completed">
+            <div class="step-indicator">1</div> Application
+        </div>
+        <div class="timeline-step completed">
+            <div class="step-indicator">2</div> Documents Uploads
+        </div>
+        <div class="timeline-step active">
+            <div class="step-indicator">3</div> Vehicle Details
+        </div>
+        <div class="timeline-step">
+            <div class="step-indicator">4</div> Loan Details
+        </div>
+        <div class="timeline-step">
+            <div class="step-indicator">5</div> Check Offers &amp; Apply
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="main-content">
+        <!-- Top Bar -->
+        <div class="los-topbar">
+            <div class="los-brand">
+                <div class="los-brand-icon"><i class="fas fa-home"></i></div> LOS
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <input class="los-search" placeholder="🔍  Search">
+                <i class="fas fa-bell text-muted" style="font-size:1.1rem;"></i>
+                <span class="badge rounded-pill bg-danger" style="margin-left:-0.75rem;font-size:0.6rem;">3</span>
+                <div class="los-avatar">SL</div>
+                <span style="font-size:0.85rem;font-weight:600;color:#333;">Satish L.</span>
+            </div>
+        </div>
+
+        <div class="page-body">
+            <div class="page-title">
+                <span class="back-link" onclick="history.back()"><i class="fas fa-arrow-left"></i></span>
+                Vehicle Details
+            </div>
+
+            <!-- Vehicle Type -->
+            <div class="vehicle-type-toggle">
+                <label class="vehicle-radio-wrap">
+                    <input type="radio" name="vehicleType" value="new" id="radioNew" disabled>
+                    <span style="color:#bbb;">New</span>
+                </label>
+                <label class="vehicle-radio-wrap">
+                    <input type="radio" name="vehicleType" value="preowned" id="radioPreowned" checked>
+                    <span>Pre-Owned</span>
+                </label>
+            </div>
+
+            <div class="form-card">
+                <div class="form-section-title">Vehicle Details</div>
+                <div class="form-grid">
+
+                    <!-- Row 1 -->
+                    <div class="form-group">
+                        <label>Vehicle Registration No.<span class="req">*</span></label>
+                        <div class="reg-input-wrap">
+                            <input type="text" class="form-control" id="regInput" placeholder="Enter"
+                                oninput="this.value=this.value.toUpperCase()" maxlength="15">
+                            <button class="verify-btn" id="verifyBtn" onclick="verifyRegistration()">Verify</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Name Of Dealer<span class="req">*</span></label>
+                        <input type="text" class="form-control" id="fDealer" placeholder="Enter">
+                    </div>
+                    <div class="form-group">
+                        <label>Vehicle Manufacturer<span class="req">*</span></label>
+                        <select class="form-select" id="fManufacturer">
+                            <option value="">Select</option>
+                            <option>Maruti</option>
+                            <option>Hyundai</option>
+                            <option>Honda</option>
+                            <option>Toyota</option>
+                            <option>Tata</option>
+                            <option>Mahindra</option>
+                            <option>Ford</option>
+                            <option>Volkswagen</option>
+                            <option>Renault</option>
+                            <option>Kia</option>
+                        </select>
+                    </div>
+
+                    <!-- Row 2 -->
+                    <div class="form-group">
+                        <label>Model Name<span class="req">*</span></label>
+                        <select class="form-select" id="fModel">
+                            <option value="">Select</option>
+                            <option>Swift</option>
+                            <option>Baleno</option>
+                            <option>Creta</option>
+                            <option>i20</option>
+                            <option>City</option>
+                            <option>Nexon</option>
+                            <option>Punch</option>
+                            <option>Brezza</option>
+                            <option>Dzire</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Years Of Manufacturing<span class="req">*</span></label>
+                        <input type="text" class="form-control" id="fYear" placeholder="Enter">
+                    </div>
+                    <div class="form-group">
+                        <label>Vehicle Type<span class="req">*</span></label>
+                        <select class="form-select" id="fVehicleType">
+                            <option value="">Select Type</option>
+                            <option>Private</option>
+                            <option>Commercial</option>
+                            <option>Two Wheeler</option>
+                        </select>
+                    </div>
+
+                    <!-- Row 3 -->
+                    <div class="form-group">
+                        <label>Chassis No.<span class="req">*</span></label>
+                        <input type="text" class="form-control" id="fChassis" placeholder="Enter">
+                    </div>
+                    <div class="form-group">
+                        <label>Insurance No.<span class="req">*</span></label>
+                        <input type="text" class="form-control" id="fInsurance" placeholder="Enter">
+                    </div>
+                    <div class="form-group">
+                        <label>KMS Driven<span class="req">*</span></label>
+                        <input type="number" class="form-control" id="fKms" placeholder="Enter">
+                    </div>
+
+                    <!-- Row 4 -->
+                    <div class="form-group">
+                        <label>Name Of Seller<span class="req">*</span></label>
+                        <input type="text" class="form-control" id="fSellerName" placeholder="Enter">
+                    </div>
+                    <div class="form-group">
+                        <label>Contact No. Of Seller<span class="req">*</span></label>
+                        <input type="tel" class="form-control" id="fSellerContact" placeholder="Enter" maxlength="10">
+                    </div>
+                    <div class="form-group">
+                        <label>Deal Value (₹)<span class="req">*</span></label>
+                        <input type="number" class="form-control" id="fDealValue" placeholder="Enter">
+                    </div>
+
+                    <!-- Row 5 -->
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label>Seller Address<span class="req">*</span></label>
+                        <input type="text" class="form-control" id="fSellerAddr" placeholder="Enter Address Line 1">
+                    </div>
+                    <div class="form-group">
+                        <label>Pin Code</label>
+                        <input type="text" class="form-control" id="fPincode" placeholder="Enter Pincode" maxlength="6"
+                            oninput="this.value=this.value.replace(/\D/,'')">
+                    </div>
+
+                    <!-- Row 6 -->
+                    <div class="form-group">
+                        <label>Area</label>
+                        <input type="text" class="form-control" id="fArea" placeholder="Enter Area">
+                    </div>
+                    <div class="form-group">
+                        <label>City</label>
+                        <input type="text" class="form-control" id="fCity" placeholder="Enter City">
+                    </div>
+                    <div class="form-group">
+                        <label>District</label>
+                        <input type="text" class="form-control" id="fDistrict" placeholder="Enter District">
+                    </div>
+
+                    <!-- Row 7 -->
+                    <div class="form-group">
+                        <label>State</label>
+                        <input type="text" class="form-control" id="fState" placeholder="Enter State">
+                    </div>
+                    <div class="form-group">
+                        <label>Country</label>
+                        <input type="text" class="form-control" id="fCountry" placeholder="Enter Country" value="India">
+                    </div>
+
+                </div><!-- /form-grid -->
+            </div><!-- /form-card -->
+        </div>
+    </div>
+
+    <!-- Verify loading overlay -->
+    <div class="verify-overlay" id="verifyOverlay">
+        <div class="spinner-ring"></div>
+    </div>
+
+    <!-- Help FAB -->
+    <div class="help-fab" title="Help"><i class="fas fa-question"></i></div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <button class="btn-back" onclick="history.back()">Back</button>
+        <button class="btn-next" onclick="goNext()">Next</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/store.js"></script>
+    <script>
+
+        // ── Mock Vehicle Database ──────────────────────────────
+        // Each registration maps to a set of vehicle details
+        const VEHICLE_DB = {
+            'MH12GH5555': {
+                dealer: 'Ankit Kapile',
+                manufacturer: 'Maruti',
+                model: 'Swift',
+                year: '2025',
+                vehicleType: 'Private',
+                chassis: 'CS£S2025659990201',
+                insurance: 'QQ999999A',
+            },
+            'KA03AB1234': {
+                dealer: 'Sharma Motors',
+                manufacturer: 'Hyundai',
+                model: 'Creta',
+                year: '2023',
+                vehicleType: 'Private',
+                chassis: 'MALAM51CLPM204521',
+                insurance: 'HIC202300456A',
+            },
+            'DL01CA9876': {
+                dealer: 'Capital Auto',
+                manufacturer: 'Honda',
+                model: 'City',
+                year: '2022',
+                vehicleType: 'Private',
+                chassis: 'MAKGE61KDPM234567',
+                insurance: 'ICR202212099B',
+            },
+        };
+
+        function verifyRegistration() {
+            const regRaw = document.getElementById('regInput').value.trim().replace(/\s+/g, '');
+            if (!regRaw) {
+                document.getElementById('regInput').focus();
+                return;
+            }
+
+            // Show loading
+            document.getElementById('verifyOverlay').classList.add('active');
+
+            setTimeout(() => {
+                document.getElementById('verifyOverlay').classList.remove('active');
+
+                const key = regRaw.toUpperCase().replace(/-/g, '');
+                const data = VEHICLE_DB[key];
+
+                if (data) {
+                    // Auto-fill fields
+                    fillField('fDealer', data.dealer);
+                    fillSelect('fManufacturer', data.manufacturer);
+                    fillSelect('fModel', data.model);
+                    fillField('fYear', data.year);
+                    fillSelect('fVehicleType', data.vehicleType);
+                    fillField('fChassis', data.chassis);
+                    fillField('fInsurance', data.insurance);
+
+                    // Update verify button to ✓ Verify
+                    const btn = document.getElementById('verifyBtn');
+                    btn.innerHTML = '<i class="fas fa-check-circle"></i> Verify';
+                    btn.classList.add('verified');
+                    btn.onclick = null;
+                } else {
+                    // Unknown reg — just mark as verified without auto-fill
+                    const btn = document.getElementById('verifyBtn');
+                    btn.innerHTML = '<i class="fas fa-check-circle"></i> Verify';
+                    btn.classList.add('verified');
+                    btn.onclick = null;
+                    showToast('Vehicle verified. Please fill in the remaining details manually.');
+                }
+            }, 1500);
+        }
+
+        function fillField(id, value) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.value = value;
+            el.classList.add('autofilled');
+        }
+
+        function fillSelect(id, value) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            for (let opt of el.options) {
+                if (opt.value === value || opt.text === value) {
+                    opt.selected = true;
+                    break;
+                }
+            }
+            el.classList.add('autofilled');
+        }
+
+        function showToast(msg) {
+            const t = document.createElement('div');
+            t.style.cssText = 'position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:0.6rem 1.5rem;border-radius:8px;font-size:0.85rem;z-index:999;animation:fadeIn 0.3s';
+            t.textContent = msg;
+            document.body.appendChild(t);
+            setTimeout(() => t.remove(), 3000);
+        }
+
+        function goNext() {
+            const reg = document.getElementById('regInput').value.trim();
+            if (!reg) { alert('Please enter a vehicle registration number.'); return; }
+            window.location.href = 'loan-details.html';
+        }
+
+        // Allow Enter key on reg field to trigger verify
+        document.getElementById('regInput').addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') verifyRegistration();
+        });
+    </script>
+</body>
+
+</html>

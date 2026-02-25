@@ -83,16 +83,19 @@
             </div>
             <div class="py-4">
                 <div class="step-item active">
-                    <div class="step-circle">1</div> Application Details
+                    <div class="step-circle">1</div> Application
                 </div>
                 <div class="step-item">
-                    <div class="step-circle">2</div> Document Uploads
+                    <div class="step-circle">2</div> Documents Uploads
                 </div>
                 <div class="step-item">
-                    <div class="step-circle">3</div> Loan Details
+                    <div class="step-circle">3</div> Vehicle Details
                 </div>
                 <div class="step-item">
-                    <div class="step-circle">4</div> Check Offers
+                    <div class="step-circle">4</div> Loan Details
+                </div>
+                <div class="step-item">
+                    <div class="step-circle">5</div> Check Offers &amp; Apply
                 </div>
             </div>
         </div>
@@ -225,48 +228,138 @@
 
                 <!-- SECTION 3: Occupation & Financial -->
                 <div id="section-3" class="section-container">
-                    <h4 class="mb-4">Occupation & Financials</h4>
+                    <h4 class="mb-4">Occupation &amp; Financials</h4>
                     <div class="card p-4">
-                        <div class="mb-4">
-                            <label class="form-label d-block fw-bold">Employment Type</label>
-                            <div class="btn-group" role="group">
-                                <input type="radio" class="btn-check" name="empType" id="salaried" autocomplete="off"
-                                    checked>
-                                <label class="btn btn-outline-primary" for="salaried">Salaried</label>
 
-                                <input type="radio" class="btn-check" name="empType" id="selfEmp" autocomplete="off">
-                                <label class="btn btn-outline-primary" for="selfEmp">Self-Employed</label>
+                        <!-- Employment Type Radio -->
+                        <div class="d-flex align-items-center gap-4 mb-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="empType" id="salaried"
+                                    value="salaried" checked>
+                                <label class="form-check-label fw-500" for="salaried">Salaried</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="empType" id="selfEmp"
+                                    value="selfEmployed">
+                                <label class="form-check-label fw-500" for="selfEmp">Self Employed</label>
                             </div>
                         </div>
 
-                        <div class="row g-3" id="financialForm">
-                            <div class="col-md-6">
-                                <label class="form-label">Employer Name</label>
-                                <input type="text" class="form-control" placeholder="Company Name">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Total Work Experience (Years)</label>
-                                <input type="number" class="form-control" value="5">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Net Monthly Income</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">₹</span>
-                                    <input type="number" class="form-control" value="75000">
+                        <!-- Salaried Fields -->
+                        <div id="salariedFields">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Employer Name <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" placeholder="Company Name">
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Existing EMI Obligations</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">₹</span>
-                                    <input type="number" class="form-control" value="12000">
+                                <div class="col-md-6">
+                                    <label class="form-label">Total Work Experience (Years)</label>
+                                    <input type="number" class="form-control" value="5">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Net Monthly Income <span
+                                            class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">&#8377;</span>
+                                        <input type="number" class="form-control" value="75000">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Existing EMI Obligations</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">&#8377;</span>
+                                        <input type="number" class="form-control" value="12000">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+
+                        <!-- Self Employed Fields (hidden by default) -->
+                        <div id="selfEmpFields" class="d-none">
+                            <h6 class="fw-bold text-primary mb-3">Business Details</h6>
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <label class="form-label">Name Of Business <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" placeholder="Enter Name">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Type of Business <span
+                                            class="text-danger">*</span></label>
+                                    <select class="form-select">
+                                        <option value="">Select Type</option>
+                                        <option>Proprietorship</option>
+                                        <option>Partnership</option>
+                                        <option>Private Limited</option>
+                                        <option>LLP</option>
+                                        <option>Public Limited</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Nature of Business <span
+                                            class="text-danger">*</span></label>
+                                    <select class="form-select">
+                                        <option value="">Select Type</option>
+                                        <option>Manufacturing</option>
+                                        <option>Trading</option>
+                                        <option>Services</option>
+                                        <option>Agriculture</option>
+                                        <option>Retail</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Business Start Date <span
+                                            class="text-danger">*</span></label>
+                                    <input type="date" class="form-control" id="bizStartDate">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Do you have GST Number?</label>
+                                    <div class="d-flex align-items-center gap-3 mt-1">
+                                        <div class="form-check mb-0">
+                                            <input class="form-check-input" type="radio" name="hasGst" id="gstYes"
+                                                value="yes" checked onchange="toggleGstin(true)">
+                                            <label class="form-check-label" for="gstYes">Yes</label>
+                                        </div>
+                                        <div class="form-check mb-0">
+                                            <input class="form-check-input" type="radio" name="hasGst" id="gstNo"
+                                                value="no" onchange="toggleGstin(false)">
+                                            <label class="form-check-label" for="gstNo">No</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">GSTIN <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="gstinField" placeholder="Enter"
+                                        maxlength="15" oninput="this.value=this.value.toUpperCase()">
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Business Address <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" placeholder="Enter Address Line 1">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">Pin Code</label>
+                                    <input type="text" class="form-control" placeholder="Enter Pincode" maxlength="6">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">City</label>
+                                    <input type="text" class="form-control" placeholder="Enter City">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">District</label>
+                                    <input type="text" class="form-control" placeholder="Enter District">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">State</label>
+                                    <input type="text" class="form-control" placeholder="Enter State">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div><!-- /card -->
                     <div class="d-flex justify-content-between mt-4">
                         <button class="btn btn-outline-secondary px-4" onclick="nextStep(2)">Back</button>
-                        <button class="btn btn-primary px-5" onclick="finishApplication()">Save & Continue to
+                        <button class="btn btn-primary px-5" onclick="finishApplication()">Save &amp; Continue to
                             Uploads</button>
                     </div>
                 </div>
@@ -285,11 +378,18 @@
         }
 
         function finishApplication() {
-            // Save state to store
             const app = store.getApplication();
-            app.step = 2; // Move to Documents
+            // Save employment type
+            const empTypeEl = document.querySelector('input[name="empType"]:checked');
+            if (empTypeEl) app.empType = empTypeEl.value === 'selfEmployed' ? 'selfEmployed' : 'salaried';
+            app.step = 2;
             store.saveApplication(app);
             window.location.href = 'documents.html';
+        }
+
+        function toggleGstin(show) {
+            const el = document.getElementById('gstinField');
+            if (el) { el.disabled = !show; el.placeholder = show ? 'Enter' : 'N/A'; }
         }
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -334,6 +434,14 @@
                     btn.disabled = true;
                     document.getElementById('addressDisplay').classList.remove('d-none');
                 }, 1500);
+            });
+            // Salaried / Self Employed toggle
+            document.querySelectorAll('input[name="empType"]').forEach(radio => {
+                radio.addEventListener('change', function () {
+                    const isSelf = this.value === 'selfEmployed';
+                    document.getElementById('salariedFields').classList.toggle('d-none', isSelf);
+                    document.getElementById('selfEmpFields').classList.toggle('d-none', !isSelf);
+                });
             });
         });
     </script>

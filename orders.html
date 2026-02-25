@@ -156,16 +156,20 @@
                     else statusBadge = 'bg-warning text-dark';
                 }
 
+                const isFinance = order.paymentMode === 'Finance';
                 const tr = `
                     <tr>
                         <td class="ps-4 fw-bold text-primary">${order.id}</td>
                         <td>${vehicleName}</td>
                         <td>${order.date}</td>
                         <td class="fw-bold">₹ ${order.total.toLocaleString('en-IN')}</td>
-                        <td>${order.paymentMode}</td>
+                        <td>${order.paymentMode}${isFinance ? ' <span class="badge bg-light text-purple border" style="font-size:0.65rem;color:#5b2ec9;">Loan App.</span>' : ''}</td>
                         <td><span class="badge ${statusBadge}">${statusText}</span></td>
                         <td class="text-end pe-4">
-                            <button class="btn btn-sm btn-outline-primary">View Details</button>
+                            <div class="d-flex gap-2 justify-content-end">
+                                <button class="btn btn-sm btn-outline-primary">View Details</button>
+                                ${isFinance ? `<a href="loan-status.html" class="btn btn-sm text-white" style="background:#5b2ec9;font-size:0.8rem;">View Loan Status <i class="fas fa-arrow-right ms-1"></i></a>` : ''}
+                            </div>
                         </td>
                     </tr>
                 `;

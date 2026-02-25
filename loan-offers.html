@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Offers — AutoHub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        body {
+            background: #f4f6fb;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        /* —— LOS Navbar —— */
+        .los-navbar {
+            background: #fff;
+            border-bottom: 1px solid #e8e8e8;
+            padding: 0.65rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .los-brand {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #5b2ec9;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .los-brand-icon {
+            background: #5b2ec9;
+            color: #fff;
+            width: 30px;
+            height: 30px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+
+        .los-nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .los-search {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 0.4rem 0.9rem;
+            font-size: 0.85rem;
+            background: #f8f8f8;
+            outline: none;
+            width: 200px;
+        }
+
+        .los-avatar {
+            width: 34px;
+            height: 34px;
+            background: #e8e0fb;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #5b2ec9;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        /* —— LOS Sidebar Steps —— */
+        .los-sidebar {
+            width: 220px;
+            flex-shrink: 0;
+            padding: 2rem 1rem 2rem 1.5rem;
+        }
+
+        .los-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .los-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 12px;
+            top: 28px;
+            width: 2px;
+            height: calc(100% + 0.75rem);
+            background: #5b2ec9;
+        }
+
+        .los-step-num {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #5b2ec9;
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            z-index: 1;
+        }
+
+        .los-step-num.inactive {
+            background: #ddd;
+            color: #888;
+        }
+
+        .los-step-label {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #333;
+            padding-top: 0.3rem;
+        }
+
+        .los-step-label.active {
+            color: #5b2ec9;
+        }
+
+        /* —— Main content —— */
+        .los-main {
+            flex: 1;
+            padding: 2rem 2rem 2rem 1rem;
+        }
+
+        .los-layout {
+            display: flex;
+            min-height: calc(100vh - 60px);
+        }
+
+        .page-heading {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #222;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .page-heading .back-link {
+            color: #555;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .page-heading .back-link:hover {
+            color: #5b2ec9;
+        }
+
+        /* —— Loan Offers Tab Header —— */
+        .offers-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.25rem;
+        }
+
+        .offers-tab-label {
+            color: #5b2ec9;
+            font-weight: 700;
+            font-size: 1rem;
+            border-bottom: 2px solid #5b2ec9;
+            padding-bottom: 0.2rem;
+        }
+
+        .compare-btn {
+            background: #5b2ec9;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 0.45rem 1.25rem;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .compare-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .compare-btn:not(:disabled):hover {
+            opacity: 0.85;
+        }
+
+        /* —— Offer Card —— */
+        .offer-card {
+            background: #fff;
+            border-radius: 14px;
+            padding: 0;
+            margin-bottom: 1.25rem;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+            border: 2px solid transparent;
+            transition: border-color 0.15s;
+            position: relative;
+        }
+
+        .offer-card.selected {
+            border-color: #5b2ec9;
+        }
+
+        .offer-card-header {
+            background: linear-gradient(135deg, #1a3a5c 60%, #0e7a72 100%);
+            color: #fff;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .offer-bank-name {
+            font-weight: 700;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .bank-flag {
+            background: #dc3545;
+            color: #fff;
+            font-size: 0.65rem;
+            padding: 0.15rem 0.4rem;
+            border-radius: 3px;
+        }
+
+        .offer-amount {
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .offer-body {
+            padding: 1.25rem 1.5rem;
+        }
+
+        .recommended-badge {
+            background: #fff7e0;
+            color: #b88a00;
+            font-size: 0.7rem;
+            font-weight: 700;
+            border: 1px solid #ffe08a;
+            border-radius: 5px;
+            padding: 0.1rem 0.45rem;
+            vertical-align: middle;
+            margin-left: 0.4rem;
+        }
+
+        /* 3-column terms layout */
+        .offer-terms {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .offer-terms-section h6 {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 0.75rem;
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 0.4rem;
+        }
+
+        .term-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.82rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .term-label {
+            color: #666;
+        }
+
+        .term-value {
+            font-weight: 600;
+            color: #222;
+            text-align: right;
+        }
+
+        .offer-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            border-top: 1px solid #f0f0f0;
+            background: #fafafa;
+        }
+
+        .offer-footer .terms-note {
+            font-size: 0.75rem;
+            color: #888;
+        }
+
+        .offer-actions {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .btn-view-details {
+            border: 1.5px solid #5b2ec9;
+            color: #5b2ec9;
+            background: none;
+            border-radius: 8px;
+            padding: 0.45rem 1rem;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-view-details:hover {
+            background: #f5f0ff;
+        }
+
+        .btn-apply-loan {
+            background: #5b2ec9;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 0.45rem 1.25rem;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-apply-loan:hover {
+            background: #4820a8;
+        }
+
+        .offer-checkbox-wrap {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            z-index: 10;
+        }
+
+        .offer-checkbox {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #5b2ec9;
+        }
+
+        /* —— View Details Screen —— */
+        #viewDetailsScreen,
+        #applySuccessScreen {
+            display: none;
+        }
+
+        /* —— Compare Modal Styles —— */
+        .compare-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .compare-modal-overlay.active {
+            display: flex;
+        }
+
+        .compare-modal {
+            background: #fff;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 780px;
+            padding: 2rem;
+            position: relative;
+            max-height: 85vh;
+            overflow-y: auto;
+            animation: modalIn 0.2s ease-out;
+        }
+
+        @keyframes modalIn {
+            from {
+                transform: scale(0.94);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .compare-modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #eee;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .compare-modal-title {
+            color: #5b2ec9;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .compare-filter-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+            flex-wrap: wrap;
+        }
+
+        .compare-input {
+            border: 1.5px solid #ddd;
+            border-radius: 8px;
+            padding: 0.5rem 0.85rem;
+            font-size: 0.85rem;
+            outline: none;
+            width: 180px;
+        }
+
+        .compare-input:focus {
+            border-color: #5b2ec9;
+        }
+
+        .compare-label {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #444;
+        }
+
+        .compare-tenure-wrap {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .compare-slider {
+            accent-color: #5b2ec9;
+            width: 160px;
+        }
+
+        .compare-search-btn {
+            background: #5b2ec9;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 0.5rem 1.25rem;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .compare-table th {
+            background: #f8f8f8;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #555;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .compare-table td {
+            padding: 0.85rem 1rem;
+            border-bottom: 1px solid #f3f3f3;
+            font-size: 0.85rem;
+            vertical-align: middle;
+        }
+
+        .compare-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .compare-table .btn-view {
+            border: 1.5px solid #5b2ec9;
+            color: #5b2ec9;
+            background: none;
+            border-radius: 7px;
+            padding: 0.35rem 0.85rem;
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .compare-table .btn-apply {
+            background: #5b2ec9;
+            color: #fff;
+            border: none;
+            border-radius: 7px;
+            padding: 0.35rem 0.85rem;
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .tcc-help {
+            font-size: 0.7rem;
+            color: #aaa;
+            cursor: help;
+        }
+
+        /* —— Apply Success Screen —— */
+        .success-screen {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .success-icon-wrap {
+            width: 90px;
+            height: 90px;
+            background: #ede9fb;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+
+        .success-icon-wrap i {
+            font-size: 2.5rem;
+            color: #5b2ec9;
+        }
+
+        .success-screen h2 {
+            font-weight: 800;
+            color: #222;
+        }
+
+        .success-screen .sub {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .success-loan-badge {
+            display: inline-block;
+            background: #ede9fb;
+            color: #5b2ec9;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border-radius: 10px;
+            padding: 0.4rem 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .success-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-success-primary {
+            background: #5b2ec9;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 0.75rem 2rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .btn-success-secondary {
+            background: #fff;
+            color: #5b2ec9;
+            border: 2px solid #5b2ec9;
+            border-radius: 10px;
+            padding: 0.75rem 2rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- LOS Navbar -->
+    <div class="los-navbar">
+        <div class="los-brand">
+            <div class="los-brand-icon"><i class="fas fa-home"></i></div>
+            LOS
+        </div>
+        <div class="los-nav-right">
+            <input class="los-search" placeholder="🔍  Search">
+            <i class="fas fa-bell text-muted" style="font-size:1.1rem;cursor:pointer;"></i>
+            <span class="badge rounded-pill bg-danger" style="margin-left:-0.75rem;font-size:0.6rem;">3</span>
+            <div class="los-avatar">SL</div>
+            <span style="font-size:0.85rem;font-weight:600;color:#333;">Satish L.</span>
+        </div>
+    </div>
+
+    <div class="los-layout">
+        <!-- Sidebar -->
+        <div class="los-sidebar">
+            <div class="los-step">
+                <div class="los-step-num">1</div>
+                <div class="los-step-label">Application</div>
+            </div>
+            <div class="los-step">
+                <div class="los-step-num">2</div>
+                <div class="los-step-label">Documents Uploads</div>
+            </div>
+            <div class="los-step">
+                <div class="los-step-num">3</div>
+                <div class="los-step-label">Loan Details</div>
+            </div>
+            <div class="los-step">
+                <div class="los-step-num active">4</div>
+                <div class="los-step-label active">Check Offers & Apply</div>
+            </div>
+        </div>
+
+        <!-- Main -->
+        <div class="los-main">
+            <div class="page-heading">
+                <a href="javascript:history.back()" class="back-link"><i class="fas fa-arrow-left me-1"></i></a>
+                Complete Your Loan Journey
+            </div>
+
+            <!-- ═══════ OFFERS LIST (default view) ═══════ -->
+            <div id="offersListView">
+                <div class="offers-header">
+                    <span class="offers-tab-label">Loan Offers</span>
+                    <div class="d-flex align-items-center gap-2">
+                        <small class="text-muted" id="selectedCount">Select offers to compare</small>
+                        <button class="compare-btn" id="compareBtn" disabled
+                            onclick="openCompareModal()">Compare</button>
+                    </div>
+                </div>
+
+                <!-- Offer 1: HDFC (Recommended) -->
+                <div class="offer-card" id="offerCard0">
+                    <div class="offer-checkbox-wrap">
+                        <input type="checkbox" class="offer-checkbox" data-offer-idx="0" onchange="onCheckboxChange()">
+                    </div>
+                    <div class="offer-card-header">
+                        <div class="offer-bank-name"><span class="bank-flag">🏦</span> HDFC Bank <span
+                                class="recommended-badge">Recommended</span></div>
+                        <div class="offer-amount">Loan Amount : ₹ 5,00,000</div>
+                    </div>
+                    <div class="offer-body">
+                        <div class="offer-terms">
+                            <div class="offer-terms-section">
+                                <h6>Payment Terms</h6>
+                                <div class="term-row"><span class="term-label">Loan Amount</span><span
+                                        class="term-value">₹ 5,00,000</span></div>
+                                <div class="term-row"><span class="term-label">Annual Interest Rate</span><span
+                                        class="term-value">8.5 %</span></div>
+                                <div class="term-row"><span class="term-label">Other Upfront Charges</span><span
+                                        class="term-value">₹ 1000.00</span></div>
+                                <div class="term-row"><span class="term-label">Processing Fees</span><span
+                                        class="term-value">₹ 231.00</span></div>
+                                <div class="term-row"><span class="term-label">Insurance Charges</span><span
+                                        class="term-value">₹ 231.00</span></div>
+                                <div class="term-row"><span class="term-label">Financial Model</span><span
+                                        class="term-value">PID</span></div>
+                                <div class="term-row"><span class="term-label">Tenure of Loan</span><span
+                                        class="term-value">24 Months</span></div>
+                            </div>
+                            <div class="offer-terms-section">
+                                <h6>Repayment and Other Terms</h6>
+                                <div class="term-row"><span class="term-label">Repayment Period</span><span
+                                        class="term-value">30 Days</span></div>
+                                <div class="term-row"><span class="term-label">Cooling Off</span><span
+                                        class="term-value">12 Days</span></div>
+                                <div class="term-row"><span class="term-label">Co-Applicant Name</span><span
+                                        class="term-value">Bhupendra Jogi</span></div>
+                                <div class="term-row"><span class="term-label">Type of KYC</span><span
+                                        class="term-value">Online</span></div>
+                            </div>
+                            <div class="offer-terms-section">
+                                <h6>Contingent</h6>
+                                <div class="term-row"><span class="term-label">Annualised Penal Charges</span><span
+                                        class="term-value">₹ 20,000</span></div>
+                                <div class="term-row"><span class="term-label">Annualised Other Penal
+                                        Charges</span><span class="term-value">₹ 20,000</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="offer-footer">
+                        <span class="terms-note">Terms & Conditions apply*</span>
+                        <div class="offer-actions">
+                            <button class="btn-view-details" onclick="openOfferDetails(0)">View Details</button>
+                            <button class="btn-apply-loan" onclick="applyOffer(0)">Apply for Loan →</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Offer 2: IDBI -->
+                <div class="offer-card" id="offerCard1">
+                    <div class="offer-checkbox-wrap">
+                        <input type="checkbox" class="offer-checkbox" data-offer-idx="1" onchange="onCheckboxChange()">
+                    </div>
+                    <div class="offer-card-header">
+                        <div class="offer-bank-name"><span class="bank-flag">🏦</span> IDBI Bank</div>
+                        <div class="offer-amount">Loan Amount : ₹ 5,00,000</div>
+                    </div>
+                    <div class="offer-body">
+                        <div class="offer-terms">
+                            <div class="offer-terms-section">
+                                <h6>Payment Terms</h6>
+                                <div class="term-row"><span class="term-label">Loan Amount</span><span
+                                        class="term-value">₹ 5,00,000</span></div>
+                                <div class="term-row"><span class="term-label">Annual Interest Rate</span><span
+                                        class="term-value">8.6 %</span></div>
+                                <div class="term-row"><span class="term-label">Other Upfront Charges</span><span
+                                        class="term-value">₹ 1100.00</span></div>
+                                <div class="term-row"><span class="term-label">Processing Fees</span><span
+                                        class="term-value">₹ 350.00</span></div>
+                                <div class="term-row"><span class="term-label">Insurance Charges</span><span
+                                        class="term-value">₹ 275.00</span></div>
+                                <div class="term-row"><span class="term-label">Financial Model</span><span
+                                        class="term-value">PID</span></div>
+                                <div class="term-row"><span class="term-label">Tenure of Loan</span><span
+                                        class="term-value">24 Months</span></div>
+                            </div>
+                            <div class="offer-terms-section">
+                                <h6>Repayment and Other Terms</h6>
+                                <div class="term-row"><span class="term-label">Repayment Period</span><span
+                                        class="term-value">30 Days</span></div>
+                                <div class="term-row"><span class="term-label">Cooling Off</span><span
+                                        class="term-value">10 Days</span></div>
+                                <div class="term-row"><span class="term-label">Co-Applicant Name</span><span
+                                        class="term-value">Bhupendra Jogi</span></div>
+                                <div class="term-row"><span class="term-label">Type of KYC</span><span
+                                        class="term-value">Online</span></div>
+                            </div>
+                            <div class="offer-terms-section">
+                                <h6>Contingent</h6>
+                                <div class="term-row"><span class="term-label">Annualised Penal Charges</span><span
+                                        class="term-value">₹ 22,000</span></div>
+                                <div class="term-row"><span class="term-label">Annualised Other Penal
+                                        Charges</span><span class="term-value">₹ 22,000</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="offer-footer">
+                        <span class="terms-note">Terms & Conditions apply*</span>
+                        <div class="offer-actions">
+                            <button class="btn-view-details" onclick="openOfferDetails(1)">View Details</button>
+                            <button class="btn-apply-loan" onclick="applyOffer(1)">Apply for Loan →</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Offer 3: ICICI -->
+                <div class="offer-card" id="offerCard2">
+                    <div class="offer-checkbox-wrap">
+                        <input type="checkbox" class="offer-checkbox" data-offer-idx="2" onchange="onCheckboxChange()">
+                    </div>
+                    <div class="offer-card-header">
+                        <div class="offer-bank-name"><span class="bank-flag">🏦</span> ICICI Bank</div>
+                        <div class="offer-amount">Loan Amount : ₹ 5,00,000</div>
+                    </div>
+                    <div class="offer-body">
+                        <div class="offer-terms">
+                            <div class="offer-terms-section">
+                                <h6>Payment Terms</h6>
+                                <div class="term-row"><span class="term-label">Loan Amount</span><span
+                                        class="term-value">₹ 5,00,000</span></div>
+                                <div class="term-row"><span class="term-label">Annual Interest Rate</span><span
+                                        class="term-value">8.7 %</span></div>
+                                <div class="term-row"><span class="term-label">Other Upfront Charges</span><span
+                                        class="term-value">₹ 1200.00</span></div>
+                                <div class="term-row"><span class="term-label">Processing Fees</span><span
+                                        class="term-value">₹ 420.00</span></div>
+                                <div class="term-row"><span class="term-label">Insurance Charges</span><span
+                                        class="term-value">₹ 310.00</span></div>
+                                <div class="term-row"><span class="term-label">Financial Model</span><span
+                                        class="term-value">PID</span></div>
+                                <div class="term-row"><span class="term-label">Tenure of Loan</span><span
+                                        class="term-value">24 Months</span></div>
+                            </div>
+                            <div class="offer-terms-section">
+                                <h6>Repayment and Other Terms</h6>
+                                <div class="term-row"><span class="term-label">Repayment Period</span><span
+                                        class="term-value">30 Days</span></div>
+                                <div class="term-row"><span class="term-label">Cooling Off</span><span
+                                        class="term-value">10 Days</span></div>
+                                <div class="term-row"><span class="term-label">Co-Applicant Name</span><span
+                                        class="term-value">Bhupendra Jogi</span></div>
+                                <div class="term-row"><span class="term-label">Type of KYC</span><span
+                                        class="term-value">Video</span></div>
+                            </div>
+                            <div class="offer-terms-section">
+                                <h6>Contingent</h6>
+                                <div class="term-row"><span class="term-label">Annualised Penal Charges</span><span
+                                        class="term-value">₹ 24,000</span></div>
+                                <div class="term-row"><span class="term-label">Annualised Other Penal
+                                        Charges</span><span class="term-value">₹ 24,000</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="offer-footer">
+                        <span class="terms-note">Terms & Conditions apply*</span>
+                        <div class="offer-actions">
+                            <button class="btn-view-details" onclick="openOfferDetails(2)">View Details</button>
+                            <button class="btn-apply-loan" onclick="applyOffer(2)">Apply for Loan →</button>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /offersListView -->
+
+            <!-- ═══════ APPLY SUCCESS SCREEN ═══════ -->
+            <div id="applySuccessScreen">
+                <div class="success-screen">
+                    <div class="success-icon-wrap"><i class="fas fa-check-circle"></i></div>
+                    <h2>Loan Application Submitted!</h2>
+                    <div class="success-loan-badge" id="successLoanRef">REF: LOS/HDFC/2025/00124</div>
+                    <p class="sub">
+                        Your loan application has been successfully submitted to <strong id="successBankName">HDFC
+                            Bank</strong>.<br>
+                        Our team will review it and update you within 24–48 business hours.
+                    </p>
+                    <div class="success-actions">
+                        <button class="btn-success-primary" onclick="goToStatus()">
+                            <i class="fas fa-chart-line me-1"></i> View Application Status
+                        </button>
+                        <button class="btn-success-secondary" onclick="goToAutohub()">
+                            <i class="fas fa-home me-1"></i> Back to AutoHub
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /los-main -->
+    </div><!-- /los-layout -->
+
+    <!-- ═══════ COMPARE MODAL ═══════ -->
+    <div class="compare-modal-overlay" id="compareModalOverlay">
+        <div class="compare-modal">
+            <button class="compare-modal-close" onclick="closeCompareModal()">✕</button>
+            <div class="compare-modal-title">Compare Offers</div>
+            <div class="compare-filter-row">
+                <span class="compare-label">Loan Amount ₹</span>
+                <input class="compare-input" id="compareAmtInput" placeholder="Enter Amount" value="5,00,000">
+                <span class="compare-label ms-2">Tenure (Months)</span>
+                <div class="compare-tenure-wrap">
+                    <input type="range" class="compare-slider" id="compareSlider" min="6" max="60" value="12"
+                        oninput="document.getElementById('compareSliderVal').textContent=this.value">
+                    <span id="compareSliderVal" style="font-weight:700;min-width:24px;">12</span>
+                </div>
+                <button class="compare-search-btn" onclick="runCompareSearch()">Search</button>
+            </div>
+            <table class="compare-table">
+                <thead>
+                    <tr>
+                        <th>Bank Name</th>
+                        <th>Interest p.a.</th>
+                        <th>EMI/Month</th>
+                        <th>Total Payable</th>
+                        <th>TCC <span class="tcc-help" title="Total Cost of Credit">ⓘ</span></th>
+                        <th colspan="2"></th>
+                    </tr>
+                </thead>
+                <tbody id="compareTableBody">
+                    <!-- Populated by JS -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/store.js"></script>
+    <script>
+        // ─── Offer Data ─────────────────────────────
+        const OFFERS = [
+            { bank: 'HDFC Bank', recommended: true, rate: 8.50, emi: 17200, total: 543518, tcc: 43518, loanAmt: 500000, tenure: 24 },
+            { bank: 'IDBI Bank', recommended: false, rate: 8.60, emi: 17300, total: 545276, tcc: 45276, loanAmt: 500000, tenure: 24 },
+            { bank: 'ICICI Bank', recommended: false, rate: 8.70, emi: 17500, total: 547265, tcc: 47265, loanAmt: 500000, tenure: 24 },
+        ];
+
+        let selectedOffers = new Set();
+        let appliedBankIdx = 0;
+
+        // ─── Checkbox Logic ─────────────────────────
+        function onCheckboxChange() {
+            selectedOffers.clear();
+            document.querySelectorAll('.offer-checkbox:checked').forEach(cb => {
+                const idx = parseInt(cb.dataset.offerIdx);
+                selectedOffers.add(idx);
+                document.getElementById('offerCard' + idx).classList.add('selected');
+            });
+            document.querySelectorAll('.offer-checkbox:not(:checked)').forEach(cb => {
+                document.getElementById('offerCard' + cb.dataset.offerIdx).classList.remove('selected');
+            });
+            const count = selectedOffers.size;
+            const compareBtn = document.getElementById('compareBtn');
+            document.getElementById('selectedCount').textContent = count >= 2 ? count + ' offers selected' : 'Select 2+ to compare';
+            compareBtn.disabled = count < 2;
+        }
+
+        // ─── Offer Details View ──────────────────────
+        function openOfferDetails(idx) {
+            // Just scroll to the card (already visible on page)
+            document.getElementById('offerCard' + idx).scrollIntoView({ behavior: 'smooth', block: 'center' });
+            document.getElementById('offerCard' + idx).style.boxShadow = '0 0 0 3px #5b2ec9';
+            setTimeout(() => document.getElementById('offerCard' + idx).style.boxShadow = '', 2000);
+        }
+
+        // ─── Apply ──────────────────────────────────
+        function applyOffer(idx) {
+            appliedBankIdx = idx;
+            const offer = OFFERS[idx];
+            document.getElementById('successBankName').textContent = offer.bank;
+            document.getElementById('successLoanRef').textContent = 'REF: LOS/' + offer.bank.replace(' Bank', '').toUpperCase() + '/2025/' + (10000 + Math.floor(Math.random() * 90000));
+
+            // Save loan application status
+            if (typeof store !== 'undefined') {
+                const loanApp = {
+                    id: 'LOAN-' + Date.now(),
+                    bank: offer.bank,
+                    loanAmount: '₹ 5,00,000',
+                    status: 'Submitted',
+                    appliedDate: new Date().toLocaleDateString('en-IN'),
+                    rate: offer.rate,
+                    tenure: offer.tenure,
+                    emi: offer.emi
+                };
+                try {
+                    let apps = JSON.parse(localStorage.getItem('autohub_loan_apps') || '[]');
+                    apps.push(loanApp);
+                    localStorage.setItem('autohub_loan_apps', JSON.stringify(apps));
+                } catch (e) { }
+            }
+
+            closeCompareModal();
+            document.getElementById('offersListView').style.display = 'none';
+            document.getElementById('applySuccessScreen').style.display = 'block';
+        }
+
+        function goToStatus() { window.location.href = 'loan-status.html'; }
+        function goToAutohub() { window.location.href = 'orders.html'; }
+
+        // ─── Compare Modal ───────────────────────────
+        function openCompareModal() {
+            populateCompareTable(OFFERS.filter((_, i) => selectedOffers.has(i)));
+            document.getElementById('compareModalOverlay').classList.add('active');
+        }
+        function closeCompareModal() {
+            document.getElementById('compareModalOverlay').classList.remove('active');
+        }
+        function runCompareSearch() {
+            const slider = document.getElementById('compareSlider').value;
+            // Recalculate EMI for new tenure
+            const tenure = parseInt(slider);
+            const loanAmt = 500000;
+            const recalc = OFFERS.filter((_, i) => selectedOffers.has(i)).map(o => {
+                const r = o.rate / 100 / 12;
+                const n = tenure;
+                const emi = Math.round(loanAmt * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1));
+                return { ...o, emi, total: emi * n, tcc: (emi * n) - loanAmt, tenure };
+            });
+            populateCompareTable(recalc);
+        }
+        function populateCompareTable(offers) {
+            const tbody = document.getElementById('compareTableBody');
+            tbody.innerHTML = offers.map((o, i) => `
+            <tr>
+                <td><strong>${o.bank}</strong>${o.recommended ? ' <span class="recommended-badge">Recommended</span>' : ''}</td>
+                <td>${o.rate.toFixed(2)}%</td>
+                <td>₹ ${o.emi.toLocaleString('en-IN')}/-</td>
+                <td>₹ ${o.total.toLocaleString('en-IN')}/-</td>
+                <td>₹ ${o.tcc.toLocaleString('en-IN')}/-</td>
+                <td><button class="btn-view" onclick="openOfferDetails(${OFFERS.indexOf(o)});closeCompareModal()">View Details</button></td>
+                <td><button class="btn-apply" onclick="applyOffer(${OFFERS.indexOf(o)})">Apply</button></td>
+            </tr>
+        `).join('');
+        }
+
+        // Close compare on overlay click
+        document.getElementById('compareModalOverlay').addEventListener('click', function (e) {
+            if (e.target === this) closeCompareModal();
+        });
+    </script>
+</body>
+
+</html>

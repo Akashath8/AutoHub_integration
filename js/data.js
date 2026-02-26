@@ -15,6 +15,7 @@ const VEHICLES = [
         transmission: 'Manual',
         owner: '2nd Owner',
         location: 'Pune',
+        sellerName: 'Deshpande Auto, Pune',
         image: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&q=80&w=400',
         description: 'Compact and efficient city car with modern features.',
         specs: {
@@ -36,6 +37,7 @@ const VEHICLES = [
         transmission: 'Automatic',
         owner: '1st Owner',
         location: 'Mumbai',
+        sellerName: 'Magic Automobiles, Mumbai',
         image: 'https://images.unsplash.com/photo-1626668893632-6f3c4466d22f?auto=format&fit=crop&q=80&w=400',
         description: 'Robust SUV with premium interiors and powerful performance.',
         specs: {
@@ -57,6 +59,7 @@ const VEHICLES = [
         transmission: 'Manual',
         owner: '1st Owner',
         location: 'Bangalore',
+        sellerName: 'Capital Motors, Bangalore',
         image: 'https://images.unsplash.com/photo-1623569567926-47b746654e5a?auto=format&fit=crop&q=80&w=400',
         description: 'Comfortable family MPV known for reliability.',
         specs: {
@@ -78,6 +81,7 @@ const VEHICLES = [
         transmission: 'Automatic',
         owner: '1st Owner',
         location: 'Delhi',
+        sellerName: 'Northwest Dealers, Delhi',
         image: 'https://images.unsplash.com/photo-1609529669235-c07e4e1bd6e9?auto=format&fit=crop&q=80&w=400',
         description: 'Premium sedan with advanced safety features.',
         specs: {

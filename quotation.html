@@ -38,29 +38,8 @@
                     <div class="card border-0 shadow-sm p-4 mb-4">
                         <h4 class="mb-4">Create Quotation</h4>
 
-                        <div class="row g-3 mb-4">
-                            <div class="col-md-3">
-                                <label class="form-label text-muted small">Quantity</label>
-                                <div class="input-group">
-                                    <button class="btn btn-outline-secondary" type="button">-</button>
-                                    <input type="text" class="form-control text-center" value="1" readonly>
-                                    <button class="btn btn-outline-secondary" type="button">+</button>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <label class="form-label text-muted small">Unit</label>
-                                <select class="form-select" disabled>
-                                    <option>Piece</option>
-                                </select>
-                            </div>
-                            <div class="col-md-3">
-                                <label class="form-label text-muted small">Price</label>
-                                <div class="form-control bg-light fw-bold" id="itemPrice">₹ 0</div>
-                            </div>
-                            <div class="col-md-3">
-                                <label class="form-label text-muted small">Total</label>
-                                <div class="form-control bg-light text-danger fw-bold" id="itemTotal">₹ 0</div>
-                            </div>
+                        <div id="quotationItemsContainer">
+                            <!-- Items populated by JS -->
                         </div>
 
                         <div class="mb-4">
@@ -82,28 +61,14 @@
                     </div>
                 </div>
 
-                <!-- Right: Dealers -->
+                <!-- Right: Sellers -->
                 <div class="col-lg-4">
                     <div class="quote-sidebar shadow-sm">
-                        <h5 class="mb-3">Quotes for you</h5>
-                        <div class="text-muted small mb-3">Select dealer from list</div>
+                        <h5 class="mb-3">Sending Quote To</h5>
+                        <div class="text-muted small mb-3">Sellers based on your selection</div>
 
-                        <!-- Mock Dealer List -->
-                        <div class="list-group list-group-flush">
-                            <label class="list-group-item d-flex gap-3 align-items-center">
-                                <input class="form-check-input flex-shrink-0" type="radio" name="dealer" checked>
-                                <div>
-                                    <strong>Magic Automobiles, Mumbai</strong>
-                                    <div class="small text-danger mt-1" id="dealerPrice1">₹ 8,50,000</div>
-                                </div>
-                            </label>
-                            <label class="list-group-item d-flex gap-3 align-items-center">
-                                <input class="form-check-input flex-shrink-0" type="radio" name="dealer">
-                                <div>
-                                    <strong>Deshpande Auto, Pune</strong>
-                                    <div class="small text-danger mt-1" id="dealerPrice2">₹ 8,48,000</div>
-                                </div>
-                            </label>
+                        <div class="list-group list-group-flush" id="sellersList">
+                            <!-- Populated by JS -->
                         </div>
                     </div>
                 </div>
@@ -129,41 +94,109 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
-            const vehicleId = urlParams.get('id');
-            const vehicle = VEHICLES.find(v => v.id === vehicleId);
+            // Support both ?id=v1 and ?ids=v1,v2
+            const idsParam = urlParams.get('ids') || urlParams.get('id');
+            const vehicleIds = idsParam ? idsParam.split(',') : [];
+            let selectedVehicles = [];
+            let totalPrice = 0;
 
-            if (vehicle) {
-                // Populate inputs
-                const priceStr = vehicle.price.toLocaleString('en-IN');
-                document.getElementById('itemPrice').textContent = '₹ ' + priceStr;
-                document.getElementById('itemTotal').textContent = '₹ ' + priceStr;
-                document.getElementById('dealerPrice1').textContent = '₹ ' + priceStr;
-                document.getElementById('dealerPrice2').textContent = '₹ ' + (vehicle.price - 2000).toLocaleString('en-IN');
+            let sellerGroups = {};
+
+            if (vehicleIds.length > 0) {
+                selectedVehicles = VEHICLES.filter(v => vehicleIds.includes(v.id));
+                totalPrice = selectedVehicles.reduce((sum, v) => sum + v.price, 0);
+
+                // Group by Seller
+                selectedVehicles.forEach(v => {
+                    const seller = v.sellerName || 'Verified AutoHub Seller';
+                    if (!sellerGroups[seller]) {
+                        sellerGroups[seller] = {
+                            name: seller,
+                            vehicles: [],
+                            totalPrice: 0
+                        };
+                    }
+                    sellerGroups[seller].vehicles.push(v);
+                    sellerGroups[seller].totalPrice += v.price;
+                });
+
+                // Populate individual rows
+                const container = document.getElementById('quotationItemsContainer');
+                container.innerHTML = '';
+
+                selectedVehicles.forEach(v => {
+                    container.innerHTML += `
+                        <div class="row g-3 mb-4 border-bottom pb-4">
+                            <div class="col-md-5">
+                                <label class="form-label text-muted small">Vehicle Selected</label>
+                                <div class="form-control bg-light text-truncate" title="${v.name}">${v.name}</div>
+                                <div class="small text-muted mt-1"><i class="fas fa-store"></i> ${v.sellerName || 'Verified AutoHub Seller'}</div>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label text-muted small">Quantity</label>
+                                <div class="input-group">
+                                    <button class="btn btn-outline-secondary" type="button" disabled>-</button>
+                                    <input type="text" class="form-control text-center bg-white" value="1" readonly>
+                                    <button class="btn btn-outline-secondary" type="button" disabled>+</button>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label text-muted small">Quote Estimate</label>
+                                <div class="form-control bg-light text-danger fw-bold">₹ ${(v.price).toLocaleString('en-IN')}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                // Populate Sellers List
+                const sellersContainer = document.getElementById('sellersList');
+                sellersContainer.innerHTML = '';
+                Object.values(sellerGroups).forEach(group => {
+                    sellersContainer.innerHTML += `
+                        <div class="list-group-item py-3 border-bottom">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <strong>${group.name}</strong>
+                                <span class="badge bg-secondary rounded-pill">${group.vehicles.length} Vehicle(s)</span>
+                            </div>
+                            <div class="small text-danger fw-bold">₹ ${group.totalPrice.toLocaleString('en-IN')}</div>
+                            <div class="small text-muted mt-1 overflow-hidden" style="max-height: 40px; text-overflow: ellipsis;">
+                                ${group.vehicles.map(v => v.name).join(', ')}
+                            </div>
+                        </div>
+                    `;
+                });
             }
 
             // Handle Submit
             document.getElementById('sendQuoteBtn').addEventListener('click', () => {
+                if (selectedVehicles.length === 0) {
+                    alert('No vehicles selected to quote.');
+                    return;
+                }
+
                 const btn = document.getElementById('sendQuoteBtn');
                 btn.disabled = true;
                 btn.textContent = 'Sending...';
 
-                // Create Quotation Object
-                const quoteId = '#00' + (Math.floor(Math.random() * 90) + 10); // Mock ID
-                const quote = {
-                    id: quoteId,
-                    category: '4 Wheelers', // Mock
-                    type: 'New', // Mock
-                    brand: vehicle.brand || 'Toyota',
-                    productName: vehicle.name,
-                    price: vehicle.price,
-                    offerPrice: vehicle.price * 0.95, // Mock 5% discount
-                    quantity: 1,
-                    receivedDate: new Date().toLocaleDateString('en-GB')
-                };
-
-                store.addQuotation(quote);
-
                 setTimeout(() => {
+                    // Create Quotations for each Seller Group
+                    Object.values(sellerGroups).forEach(group => {
+                        const quote = {
+                            id: 'QT-' + Math.floor(Math.random() * 900000 + 100000),
+                            category: 'Pre-Owned',
+                            type: 'Buy',
+                            brand: group.vehicles.length > 1 ? 'Multiple Brands' : group.vehicles[0].brand,
+                            productName: group.vehicles.length > 1 ? 'Multiple Vehicles' : group.vehicles[0].name,
+                            price: group.totalPrice,
+                            offerPrice: Math.round(group.totalPrice * 0.98), // slightly lower offer
+                            quantity: group.vehicles.length,
+                            vehicles: group.vehicles, // Store the distinct vehicles
+                            sellerName: group.name,
+                            receivedDate: new Date().toLocaleDateString('en-GB')
+                        };
+                        store.addQuotation(quote);
+                    });
+
                     document.getElementById('contentArea').classList.add('d-none');
                     document.getElementById('successMessage').classList.remove('d-none');
 

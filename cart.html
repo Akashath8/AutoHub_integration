@@ -157,21 +157,23 @@
             let subtotal = 0;
 
             cart.items.forEach((item, index) => {
-                subtotal += item.price; // Assume qty 1 for vehicles
                 const html = `
-                    <div class="card mb-3 border-0 shadow-sm">
+                    <div class="card mb-3 border-0 shadow-sm cart-item-card">
                         <div class="row g-0 align-items-center">
-                            <div class="col-md-3">
-                                <img src="${item.image}" class="img-fluid rounded-start h-100 object-fit-cover" alt="${item.name}" style="max-height: 150px;">
+                            <div class="col-md-1 text-center">
+                                <input class="form-check-input cart-item-cb" type="checkbox" value="${item.id}" checked data-price="${item.price}" style="transform: scale(1.5);">
+                            </div>
+                            <div class="col-md-2">
+                                <img src="${item.image}" class="img-fluid rounded h-100 object-fit-cover" alt="${item.name}" style="max-height: 100px;">
                             </div>
                             <div class="col-md-9">
-                                <div class="card-body">
+                                <div class="card-body py-2">
                                     <div class="d-flex justify-content-between">
-                                        <h5 class="card-title">${item.name}</h5>
+                                        <h5 class="card-title mb-1">${item.name}</h5>
                                         <button class="btn btn-link text-danger p-0 delete-btn" data-index="${index}"><i class="fas fa-trash"></i></button>
                                     </div>
-                                    <p class="card-text text-muted small">${item.year} | ${item.fuel}</p>
-                                    <h6 class="text-danger fw-bold">₹ ${item.price.toLocaleString('en-IN')}</h6>
+                                    <p class="card-text text-muted small mb-2">${item.year} | ${item.fuel}</p>
+                                    <h6 class="text-danger fw-bold m-0">₹ ${item.price.toLocaleString('en-IN')}</h6>
                                 </div>
                             </div>
                         </div>
@@ -180,9 +182,35 @@
                 container.innerHTML += html;
             });
 
-            const total = subtotal + 5000;
-            document.getElementById('cartSubtotal').textContent = '₹ ' + subtotal.toLocaleString('en-IN');
-            document.getElementById('cartTotal').textContent = '₹ ' + total.toLocaleString('en-IN');
+            function updateCartTotals() {
+                let currentSubtotal = 0;
+                document.querySelectorAll('.cart-item-cb:checked').forEach(cb => {
+                    currentSubtotal += Number(cb.dataset.price);
+                });
+
+                const cbs = document.querySelectorAll('.cart-item-cb');
+                const checkedCount = document.querySelectorAll('.cart-item-cb:checked').length;
+
+                const currentTotal = checkedCount > 0 ? currentSubtotal + 5000 : 0;
+
+                document.getElementById('cartSubtotal').textContent = '₹ ' + currentSubtotal.toLocaleString('en-IN');
+                document.getElementById('cartTotal').textContent = '₹ ' + currentTotal.toLocaleString('en-IN');
+
+                const checkoutBtn = document.getElementById('checkoutBtn');
+                if (checkedCount === 0) {
+                    checkoutBtn.classList.add('disabled');
+                } else {
+                    checkoutBtn.classList.remove('disabled');
+                }
+            }
+
+            // Attach event listener to checkboxes
+            document.querySelectorAll('.cart-item-cb').forEach(cb => {
+                cb.addEventListener('change', updateCartTotals);
+            });
+
+            // Initial call
+            updateCartTotals();
 
             // Handle Delete (Simplified implementation for demo)
             document.querySelectorAll('.delete-btn').forEach(btn => {
@@ -192,6 +220,20 @@
                     store.saveCart(cart);
                     location.reload();
                 });
+            });
+
+            // Handle Proceed to Checkout
+            document.getElementById('checkoutBtn').addEventListener('click', (e) => {
+                e.preventDefault();
+                // Collect selected items
+                const selectedIds = Array.from(document.querySelectorAll('.cart-item-cb:checked')).map(cb => cb.value);
+                const selectedItems = cart.items.filter(item => selectedIds.includes(item.id));
+
+                // Save selected subset to store
+                store.saveSelectedForFinance(selectedItems);
+
+                // Next page
+                window.location.href = 'payment.html';
             });
         });
     </script>

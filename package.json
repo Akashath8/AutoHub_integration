@@ -11,6 +11,7 @@
     "node": "18"
   },
   "dependencies": {
-    "express": "^4.22.1"
+    "express": "^4.22.1",
+    "jsdom": "^28.1.0"
   }
 }

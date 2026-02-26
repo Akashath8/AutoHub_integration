@@ -128,13 +128,18 @@
                     <h5 class="mb-4">Loan Details</h5>
 
                     <div class="row g-4 align-items-center mb-4">
-                        <div class="col-md-4">
-                            <label class="form-label text-muted">Product</label>
+                        <div class="col-md-6">
+                            <label class="form-label text-muted">Product / Cart</label>
                             <input type="text" class="form-control bg-light" id="productName" readonly>
                         </div>
-                        <div class="col-md-4">
-                            <label class="form-label text-muted">Max Eligible Amount</label>
-                            <input type="text" class="form-control bg-light fw-bold" id="maxAmount" readonly>
+                        <div class="col-md-3">
+                            <label class="form-label text-muted">Total Cart Value</label>
+                            <input type="text" class="form-control bg-light fw-bold" id="cartValueDisplay" readonly>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label text-muted">Max Eligible Loan</label>
+                            <input type="text" class="form-control bg-light fw-bold text-success" id="maxAmount"
+                                readonly>
                         </div>
                     </div>
 
@@ -152,6 +157,18 @@
                         <div class="d-flex justify-content-between text-muted small">
                             <span>₹ 1,00,000</span>
                             <span id="sliderMaxLabel">₹ 5,00,000</span>
+                        </div>
+                    </div>
+
+                    <!-- Own Contribution Display -->
+                    <div class="p-3 bg-light border rounded mb-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="fw-bold">Own Contribution</span>
+                            <span class="fs-5 fw-bold text-danger" id="ownContributionDisplay">₹ 0</span>
+                        </div>
+                        <div class="small text-muted mt-2 fst-italic">
+                            <i class="fas fa-info-circle me-1"></i>Note: Pay own contribution after loan disbursement
+                            and before product delivery.
                         </div>
                     </div>
 
@@ -220,9 +237,11 @@
                 app = { productPrice: 800000, productName: 'Demo Vehicle' };
             }
 
-            const maxAmt = app.productPrice;
+            const cartValue = app.productPrice || 0;
+            const maxAmt = Math.floor(cartValue * 0.90); // Max eligible is 90% of cart value
 
             document.getElementById('productName').value = app.productName;
+            document.getElementById('cartValueDisplay').value = '₹ ' + cartValue.toLocaleString('en-IN');
             document.getElementById('maxAmount').value = '₹ ' + maxAmt.toLocaleString('en-IN');
             document.getElementById('sliderMaxLabel').textContent = '₹ ' + maxAmt.toLocaleString('en-IN');
 
@@ -232,13 +251,21 @@
             const tenureSlider = document.getElementById('tenureSlider');
             const tenureDisplay = document.getElementById('tenureDisplay');
             const checkOffersBtn = document.getElementById('checkOffersBtn');
+            const ownContribEl = document.getElementById('ownContributionDisplay');
 
             amtSlider.max = maxAmt;
-            amtSlider.value = maxAmt * 0.8; // Default 80%
+            amtSlider.value = maxAmt; // Default to max
             amtInput.value = amtSlider.value;
+
+            function updateOwnContribution() {
+                const loanAmt = Number(amtSlider.value);
+                const contrib = cartValue - loanAmt;
+                ownContribEl.textContent = '₹ ' + contrib.toLocaleString('en-IN');
+            }
 
             amtSlider.addEventListener('input', () => {
                 amtInput.value = amtSlider.value;
+                updateOwnContribution();
             });
 
             amtInput.addEventListener('change', () => {
@@ -247,7 +274,10 @@
                 if (val < 100000) val = 100000;
                 amtInput.value = val;
                 amtSlider.value = val;
+                updateOwnContribution();
             });
+
+            updateOwnContribution(); // init
 
             tenureSlider.addEventListener('input', () => {
                 tenureDisplay.textContent = tenureSlider.value;
@@ -258,6 +288,7 @@
                 const newApp = { ...app };
                 newApp.loanAmount = Number(amtInput.value);
                 newApp.tenure = Number(tenureSlider.value);
+                newApp.ownContribution = cartValue - newApp.loanAmount;
                 newApp.step = 4;
 
                 store.saveApplication(newApp);

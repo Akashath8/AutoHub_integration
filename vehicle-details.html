@@ -478,142 +478,50 @@
                 </label>
             </div>
 
-            <div class="form-card">
-                <div class="form-section-title">Vehicle Details</div>
+            <div id="multiVehicleContainer">
+                <!-- Vehicle cards injected via JS -->
+            </div>
+
+            <!-- Shared Seller Location -->
+            <div class="form-card mt-3">
+                <div class="form-section-title">Seller Location Info</div>
                 <div class="form-grid">
-
-                    <!-- Row 1 -->
-                    <div class="form-group">
-                        <label>Vehicle Registration No.<span class="req">*</span></label>
-                        <div class="reg-input-wrap">
-                            <input type="text" class="form-control" id="regInput" placeholder="Enter"
-                                oninput="this.value=this.value.toUpperCase()" maxlength="15">
-                            <button class="verify-btn" id="verifyBtn" onclick="verifyRegistration()">Verify</button>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Name Of Dealer<span class="req">*</span></label>
-                        <input type="text" class="form-control" id="fDealer" placeholder="Enter">
-                    </div>
-                    <div class="form-group">
-                        <label>Vehicle Manufacturer<span class="req">*</span></label>
-                        <select class="form-select" id="fManufacturer">
-                            <option value="">Select</option>
-                            <option>Maruti</option>
-                            <option>Hyundai</option>
-                            <option>Honda</option>
-                            <option>Toyota</option>
-                            <option>Tata</option>
-                            <option>Mahindra</option>
-                            <option>Ford</option>
-                            <option>Volkswagen</option>
-                            <option>Renault</option>
-                            <option>Kia</option>
-                        </select>
-                    </div>
-
-                    <!-- Row 2 -->
-                    <div class="form-group">
-                        <label>Model Name<span class="req">*</span></label>
-                        <select class="form-select" id="fModel">
-                            <option value="">Select</option>
-                            <option>Swift</option>
-                            <option>Baleno</option>
-                            <option>Creta</option>
-                            <option>i20</option>
-                            <option>City</option>
-                            <option>Nexon</option>
-                            <option>Punch</option>
-                            <option>Brezza</option>
-                            <option>Dzire</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Years Of Manufacturing<span class="req">*</span></label>
-                        <input type="text" class="form-control" id="fYear" placeholder="Enter">
-                    </div>
-                    <div class="form-group">
-                        <label>Vehicle Type<span class="req">*</span></label>
-                        <select class="form-select" id="fVehicleType">
-                            <option value="">Select Type</option>
-                            <option>Private</option>
-                            <option>Commercial</option>
-                            <option>Two Wheeler</option>
-                        </select>
-                    </div>
-
-                    <!-- Row 3 -->
-                    <div class="form-group">
-                        <label>Chassis No.<span class="req">*</span></label>
-                        <input type="text" class="form-control" id="fChassis" placeholder="Enter">
-                    </div>
-                    <div class="form-group">
-                        <label>Insurance No.<span class="req">*</span></label>
-                        <input type="text" class="form-control" id="fInsurance" placeholder="Enter">
-                    </div>
-                    <div class="form-group">
-                        <label>KMS Driven<span class="req">*</span></label>
-                        <input type="number" class="form-control" id="fKms" placeholder="Enter">
-                    </div>
-
-                    <!-- Row 4 -->
-                    <div class="form-group">
-                        <label>Name Of Seller<span class="req">*</span></label>
-                        <input type="text" class="form-control" id="fSellerName" placeholder="Enter">
-                    </div>
-                    <div class="form-group">
-                        <label>Contact No. Of Seller<span class="req">*</span></label>
-                        <input type="tel" class="form-control" id="fSellerContact" placeholder="Enter" maxlength="10">
-                    </div>
-                    <div class="form-group">
-                        <label>Deal Value (₹)<span class="req">*</span></label>
-                        <input type="number" class="form-control" id="fDealValue" placeholder="Enter">
-                    </div>
-
-                    <!-- Row 5 -->
                     <div class="form-group" style="grid-column: span 2;">
                         <label>Seller Address<span class="req">*</span></label>
-                        <input type="text" class="form-control" id="fSellerAddr" placeholder="Enter Address Line 1">
+                        <input type="text" class="form-control autofilled" id="fSellerAddr"
+                            value="AutoHub Main Market, Central View" readonly>
                     </div>
                     <div class="form-group">
                         <label>Pin Code</label>
-                        <input type="text" class="form-control" id="fPincode" placeholder="Enter Pincode" maxlength="6"
-                            oninput="this.value=this.value.replace(/\D/,'')">
+                        <input type="text" class="form-control autofilled" id="fPincode" value="400053" readonly>
                     </div>
-
-                    <!-- Row 6 -->
                     <div class="form-group">
                         <label>Area</label>
-                        <input type="text" class="form-control" id="fArea" placeholder="Enter Area">
+                        <input type="text" class="form-control autofilled" id="fArea" value="Andheri West" readonly>
                     </div>
                     <div class="form-group">
                         <label>City</label>
-                        <input type="text" class="form-control" id="fCity" placeholder="Enter City">
+                        <input type="text" class="form-control autofilled" id="fCity" value="Mumbai" readonly>
                     </div>
                     <div class="form-group">
                         <label>District</label>
-                        <input type="text" class="form-control" id="fDistrict" placeholder="Enter District">
+                        <input type="text" class="form-control autofilled" id="fDistrict" value="Mumbai Suburban"
+                            readonly>
                     </div>
-
-                    <!-- Row 7 -->
                     <div class="form-group">
                         <label>State</label>
-                        <input type="text" class="form-control" id="fState" placeholder="Enter State">
+                        <input type="text" class="form-control autofilled" id="fState" value="Maharashtra" readonly>
                     </div>
                     <div class="form-group">
                         <label>Country</label>
-                        <input type="text" class="form-control" id="fCountry" placeholder="Enter Country" value="India">
+                        <input type="text" class="form-control autofilled" id="fCountry" value="India" readonly>
                     </div>
-
-                </div><!-- /form-grid -->
-            </div><!-- /form-card -->
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Verify loading overlay -->
-    <div class="verify-overlay" id="verifyOverlay">
-        <div class="spinner-ring"></div>
-    </div>
+
 
     <!-- Help FAB -->
     <div class="help-fab" title="Help"><i class="fas fa-question"></i></div>
@@ -628,117 +536,95 @@
     <script src="js/store.js"></script>
     <script>
 
-        // ── Mock Vehicle Database ──────────────────────────────
-        // Each registration maps to a set of vehicle details
-        const VEHICLE_DB = {
-            'MH12GH5555': {
-                dealer: 'Ankit Kapile',
-                manufacturer: 'Maruti',
-                model: 'Swift',
-                year: '2025',
-                vehicleType: 'Private',
-                chassis: 'CS£S2025659990201',
-                insurance: 'QQ999999A',
-            },
-            'KA03AB1234': {
-                dealer: 'Sharma Motors',
-                manufacturer: 'Hyundai',
-                model: 'Creta',
-                year: '2023',
-                vehicleType: 'Private',
-                chassis: 'MALAM51CLPM204521',
-                insurance: 'HIC202300456A',
-            },
-            'DL01CA9876': {
-                dealer: 'Capital Auto',
-                manufacturer: 'Honda',
-                model: 'City',
-                year: '2022',
-                vehicleType: 'Private',
-                chassis: 'MAKGE61KDPM234567',
-                insurance: 'ICR202212099B',
-            },
-        };
+        document.addEventListener('DOMContentLoaded', () => {
+            const app = store.getApplication();
+            const vehicles = (app && app.vehicles && app.vehicles.length > 0) ? app.vehicles : [{ id: 'V_DEFAULT', name: 'Standard Vehicle', brand: 'Generic', price: 500000, year: 2023, km: 25000 }];
 
-        function verifyRegistration() {
-            const regRaw = document.getElementById('regInput').value.trim().replace(/\s+/g, '');
-            if (!regRaw) {
-                document.getElementById('regInput').focus();
-                return;
-            }
+            const container = document.getElementById('multiVehicleContainer');
+            container.innerHTML = '';
 
-            // Show loading
-            document.getElementById('verifyOverlay').classList.add('active');
+            vehicles.forEach((v, index) => {
+                const isFirst = index === 0;
 
+                const card = `
+                <div class="form-card mb-3">
+                    <div class="form-section-title d-flex justify-content-between align-items-center mb-0" style="cursor:pointer;" data-bs-toggle="collapse" data-bs-target="#vCol_${index}">
+                        <span>${v.name} Details</span>
+                        <i class="fas ${isFirst ? 'fa-chevron-up' : 'fa-chevron-down'}" id="vIcon_${index}"></i>
+                    </div>
+                    <div id="vCol_${index}" class="collapse ${isFirst ? 'show' : ''} mt-4">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Vehicle Registration No.<span class="req">*</span></label>
+                                <input type="text" class="form-control autofilled" value="MH12XY${1000 + index}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Name Of Dealer<span class="req">*</span></label>
+                                <input type="text" class="form-control autofilled" value="AutoHub Verified" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Vehicle Manufacturer<span class="req">*</span></label>
+                                <input type="text" class="form-control autofilled" value="${v.brand || 'AutoBrand'}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Model Name<span class="req">*</span></label>
+                                <input type="text" class="form-control autofilled" value="${v.name}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Years Of Manufacturing<span class="req">*</span></label>
+                                <input type="text" class="form-control autofilled" value="${v.year || 2023}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Vehicle Type<span class="req">*</span></label>
+                                <input type="text" class="form-control autofilled" value="Private" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Chassis No.<span class="req">*</span></label>
+                                <input type="text" class="form-control autofilled" value="CHAS${Math.floor(Math.random() * 100000) + 50000}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Insurance No.<span class="req">*</span></label>
+                                <input type="text" class="form-control autofilled" value="INS${Math.floor(Math.random() * 100000) + 10000}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>KMS Driven<span class="req">*</span></label>
+                                <input type="text" class="form-control autofilled" value="${v.km || 15000}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Name Of Seller<span class="req">*</span></label>
+                                <input type="text" class="form-control autofilled" value="AutoHub Network seller" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Contact No. Of Seller<span class="req">*</span></label>
+                                <input type="text" class="form-control autofilled" value="9876543210" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Deal Value (₹)<span class="req">*</span></label>
+                                <input type="text" class="form-control autofilled" value="${(v.price || 0).toLocaleString('en-IN')}" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                `;
+                container.innerHTML += card;
+            });
+
+            // Toggling icon on collapse
             setTimeout(() => {
-                document.getElementById('verifyOverlay').classList.remove('active');
-
-                const key = regRaw.toUpperCase().replace(/-/g, '');
-                const data = VEHICLE_DB[key];
-
-                if (data) {
-                    // Auto-fill fields
-                    fillField('fDealer', data.dealer);
-                    fillSelect('fManufacturer', data.manufacturer);
-                    fillSelect('fModel', data.model);
-                    fillField('fYear', data.year);
-                    fillSelect('fVehicleType', data.vehicleType);
-                    fillField('fChassis', data.chassis);
-                    fillField('fInsurance', data.insurance);
-
-                    // Update verify button to ✓ Verify
-                    const btn = document.getElementById('verifyBtn');
-                    btn.innerHTML = '<i class="fas fa-check-circle"></i> Verify';
-                    btn.classList.add('verified');
-                    btn.onclick = null;
-                } else {
-                    // Unknown reg — just mark as verified without auto-fill
-                    const btn = document.getElementById('verifyBtn');
-                    btn.innerHTML = '<i class="fas fa-check-circle"></i> Verify';
-                    btn.classList.add('verified');
-                    btn.onclick = null;
-                    showToast('Vehicle verified. Please fill in the remaining details manually.');
-                }
-            }, 1500);
-        }
-
-        function fillField(id, value) {
-            const el = document.getElementById(id);
-            if (!el) return;
-            el.value = value;
-            el.classList.add('autofilled');
-        }
-
-        function fillSelect(id, value) {
-            const el = document.getElementById(id);
-            if (!el) return;
-            for (let opt of el.options) {
-                if (opt.value === value || opt.text === value) {
-                    opt.selected = true;
-                    break;
-                }
-            }
-            el.classList.add('autofilled');
-        }
-
-        function showToast(msg) {
-            const t = document.createElement('div');
-            t.style.cssText = 'position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:0.6rem 1.5rem;border-radius:8px;font-size:0.85rem;z-index:999;animation:fadeIn 0.3s';
-            t.textContent = msg;
-            document.body.appendChild(t);
-            setTimeout(() => t.remove(), 3000);
-        }
+                vehicles.forEach((v, index) => {
+                    const col = document.getElementById(`vCol_${index}`);
+                    const icon = document.getElementById(`vIcon_${index}`);
+                    if (col && icon) {
+                        col.addEventListener('show.bs.collapse', () => { icon.className = 'fas fa-chevron-up'; });
+                        col.addEventListener('hide.bs.collapse', () => { icon.className = 'fas fa-chevron-down'; });
+                    }
+                });
+            }, 500);
+        });
 
         function goNext() {
-            const reg = document.getElementById('regInput').value.trim();
-            if (!reg) { alert('Please enter a vehicle registration number.'); return; }
             window.location.href = 'loan-details.html';
         }
-
-        // Allow Enter key on reg field to trigger verify
-        document.getElementById('regInput').addEventListener('keydown', function (e) {
-            if (e.key === 'Enter') verifyRegistration();
-        });
     </script>
 </body>
 

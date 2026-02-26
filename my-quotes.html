@@ -165,13 +165,13 @@
                             <tr>
                                 <th class="ps-4">Quotation ID</th>
                                 <th>Category</th>
-                                <th>Type</th>
                                 <th>Brand</th>
                                 <th>Product Name</th>
                                 <th>Price</th>
                                 <th>Offer Price</th>
                                 <th>Quantity</th>
                                 <th>Received Date</th>
+                                <th class="text-end pe-4">Actions</th>
                             </tr>
                         </thead>
                         <tbody id="quotesBody">
@@ -184,6 +184,46 @@
 
         <div class="text-end mt-3 text-muted small">
             Showing <span id="count">0</span> quotations
+        </div>
+    </div>
+
+    <!-- Quotation Details Modal -->
+    <div class="modal fade" id="quoteDetailsModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg">
+                <div class="modal-header border-bottom-0 pb-0">
+                    <h5 class="modal-title fw-bold" id="quoteModalTitle">Quotation Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body pt-3 pb-4">
+                    <div class="mb-4 d-flex justify-content-between">
+                        <div>
+                            <div class="text-muted small">Quotation ID</div>
+                            <div class="fw-bold" id="modalQuoteId">-</div>
+                        </div>
+                        <div class="text-end">
+                            <div class="text-muted small">Seller</div>
+                            <div class="fw-bold" id="modalSellerName">-</div>
+                        </div>
+                    </div>
+
+                    <h6 class="fw-bold mb-3 border-bottom pb-2">Vehicles Included</h6>
+                    <div id="modalVehiclesList">
+                        <!-- Populated by JS -->
+                    </div>
+
+                    <div class="row mt-4 pt-3 border-top">
+                        <div class="col-6">
+                            <div class="text-muted small">Total Value</div>
+                            <h5 class="fw-bold" id="modalTotalPrice">₹ 0</h5>
+                        </div>
+                        <div class="col-6 text-end">
+                            <div class="text-muted small">Offered Price</div>
+                            <h5 class="fw-bold text-success" id="modalOfferPrice">₹ 0</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -207,28 +247,87 @@
             document.getElementById('count').textContent = quotes.length;
 
             if (quotes.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="9" class="text-center py-5 text-muted">No quotations found. <br><a href="listing.html">Browse Vehicles</a> to request one.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="10" class="text-center py-5 text-muted">No quotations found. <br><a href="listing.html">Browse Vehicles</a> to request one.</td></tr>`;
                 return;
             }
 
-            quotes.forEach(q => {
+            quotes.forEach((q, index) => {
+                // Defensive parsing for legacy LocalStorage data that may have corrupt fields
+                const quoteId = q.id || 'N/A';
+                const category = q.category || '-';
+                const brand = q.brand || '-';
+                const productName = q.productName || 'Unknown Vehicle';
+                const price = Number(q.price) || 0;
+                const offerPrice = Number(q.offerPrice) || 0;
+                const quantity = q.quantity || 1;
+                const receivedDate = q.receivedDate || '-';
+
                 const tr = `
                     <tr>
                         <td class="ps-4 fw-bold text-primary">
                             <span class="status-dot dot-green"></span>
-                            <a href="#" class="text-decoration-none">${q.id}</a>
+                            <a href="#" class="text-decoration-none view-details-btn" data-quote-index="${index}">${quoteId}</a>
                         </td>
-                        <td>${q.category}</td>
-                        <td class="fw-bold">${q.type}</td>
-                        <td>${q.brand}</td>
-                        <td class="fw-bold">${q.productName}</td>
-                        <td class="text-muted text-decoration-line-through">₹${q.price.toLocaleString('en-IN')}</td>
-                        <td class="fw-bold">₹${q.offerPrice.toLocaleString('en-IN')}</td>
-                        <td>${q.quantity}</td>
-                        <td>${q.receivedDate}</td>
+                        <td>${category}</td>
+                        <td>${brand}</td>
+                        <td class="fw-bold text-truncate" style="max-width: 150px;" title="${productName}">${productName}</td>
+                        <td class="text-muted text-decoration-line-through">₹${price.toLocaleString('en-IN')}</td>
+                        <td class="fw-bold text-success">₹${offerPrice.toLocaleString('en-IN')}</td>
+                        <td>${quantity}</td>
+                        <td>${receivedDate}</td>
+                        <td class="text-end pe-4">
+                            <button class="btn btn-sm btn-outline-primary rounded-pill px-3 view-details-btn" data-quote-index="${index}">Details</button>
+                        </td>
                     </tr>
                 `;
                 tbody.innerHTML += tr;
+            });
+
+            // Event Delegation for Details Buttons
+            document.getElementById('quotesBody').addEventListener('click', (e) => {
+                const btn = e.target.closest('.view-details-btn');
+                if (!btn) return;
+
+                e.preventDefault();
+                const idx = btn.getAttribute('data-quote-index');
+                if (idx === null) return;
+
+                try {
+                    const quote = quotes[idx];
+                    if (!quote) return;
+
+                    document.getElementById('modalQuoteId').textContent = quote.id || '-';
+                    document.getElementById('modalSellerName').innerHTML = `<i class="fas fa-store text-muted me-1"></i> ${quote.sellerName || 'AutoHub Network Seller'}`;
+                    document.getElementById('modalTotalPrice').textContent = '₹ ' + (Number(quote.price) || 0).toLocaleString('en-IN');
+                    document.getElementById('modalOfferPrice').textContent = '₹ ' + (Number(quote.offerPrice) || 0).toLocaleString('en-IN');
+
+                    const vehiclesList = document.getElementById('modalVehiclesList');
+                    vehiclesList.innerHTML = '';
+
+                    if (quote.vehicles && Array.isArray(quote.vehicles) && quote.vehicles.length > 0) {
+                        quote.vehicles.forEach(v => {
+                            vehiclesList.innerHTML += `
+                                <div class="d-flex align-items-center mb-3">
+                                    <img src="${v.image || ''}" alt="${v.name || 'Vehicle'}" class="rounded" style="width: 60px; height: 40px; object-fit: cover;">
+                                    <div class="ms-3 flex-grow-1">
+                                        <div class="fw-bold">${v.name || 'Unknown'}</div>
+                                        <div class="text-muted small">${v.year || '-'} • ${(Number(v.km) || 0).toLocaleString('en-IN')} km</div>
+                                    </div>
+                                    <div class="fw-bold text-muted">₹${(Number(v.price) || 0).toLocaleString('en-IN')}</div>
+                                </div>
+                            `;
+                        });
+                    } else {
+                        vehiclesList.innerHTML = `<div class="text-muted fst-italic">Vehicle details not available for this legacy quote.</div>`;
+                    }
+
+                    const modalEl = document.getElementById('quoteDetailsModal');
+                    const modal = new bootstrap.Modal(modalEl);
+                    modal.show();
+                } catch (e) {
+                    console.error("Error opening details modal:", e);
+                    alert("Could not display quotation details. Please check console.");
+                }
             });
         });
     </script>

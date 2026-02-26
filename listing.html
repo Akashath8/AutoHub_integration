@@ -21,6 +21,38 @@
             height: 220px;
             object-fit: cover;
         }
+
+        /* Multi-select check box */
+        .vehicle-select-cb {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        /* Sticky summary bar */
+        .selection-summary-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.1);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1050;
+            transform: translateY(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .selection-summary-bar.active {
+            transform: translateY(0);
+        }
     </style>
 </head>
 
@@ -163,17 +195,34 @@
             <div class="col-lg-9">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h4 class="mb-0">All Vehicles <span class="text-muted fs-6" id="resultCount">(0)</span></h4>
-                    <select class="form-select w-auto">
-                        <option>Sort by: Newest</option>
-                        <option>Sort by: Price High to Low</option>
-                        <option>Sort by: Price Low to High</option>
-                    </select>
+                    <div class="d-flex align-items-center gap-3">
+                        <select class="form-select w-auto">
+                            <option>Sort by: Newest</option>
+                            <option>Sort by: Price High to Low</option>
+                            <option>Sort by: Price Low to High</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="row g-4" id="vehicleGrid">
                     <!-- Vehicles populated here -->
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Sticky Summary Bar -->
+    <div class="selection-summary-bar" id="selectionSummaryBar">
+        <div>
+            <span class="fs-5 fw-bold"><span id="selectedCount">0</span> Vehicles Selected</span>
+            <span class="text-muted ms-3">Total Value: <span class="text-danger fw-bold" id="selectedTotalValue">₹
+                    0</span></span>
+        </div>
+        <div class="d-flex gap-2">
+            <button class="btn btn-outline-secondary" id="clearSelectionBtn">Clear Selection</button>
+            <button class="btn btn-success" id="summaryAddToCartBtn" disabled><i class="fas fa-cart-plus me-1"></i>Add
+                to Cart</button>
+            <button class="btn btn-primary" id="summaryRequestQuoteBtn" disabled>Request Quotation</button>
         </div>
     </div>
 
@@ -194,7 +243,7 @@
                 window.location.href = 'login.html';
             });
 
-            // Filtering
+            // Filtering & Multi-select state
             const grid = document.getElementById('vehicleGrid');
             const resultCount = document.getElementById('resultCount');
             const searchInput = document.getElementById('searchInput');
@@ -202,6 +251,49 @@
             const brandFilter = document.getElementById('brandFilter');
             const priceFilter = document.getElementById('priceFilter');
             const resetBtn = document.getElementById('resetFilters');
+
+            // Elements for Selection Summary
+            const selectionSummaryBar = document.getElementById('selectionSummaryBar');
+            const selectedCountEl = document.getElementById('selectedCount');
+            const selectedTotalValueEl = document.getElementById('selectedTotalValue');
+            const summaryRequestQuoteBtn = document.getElementById('summaryRequestQuoteBtn');
+            const summaryAddToCartBtn = document.getElementById('summaryAddToCartBtn');
+            const clearSelectionBtn = document.getElementById('clearSelectionBtn');
+
+            let selectedVehicles = new Set();
+
+            function updateSelectionUI() {
+                const count = selectedVehicles.size;
+                const isMulti = count >= 2;
+
+                // Update sticky bar
+                if (count > 0) {
+                    selectionSummaryBar.classList.add('active');
+                } else {
+                    selectionSummaryBar.classList.remove('active');
+                }
+
+                selectedCountEl.textContent = count;
+                summaryRequestQuoteBtn.disabled = !isMulti;
+                summaryAddToCartBtn.disabled = !isMulti;
+
+                // Calculate total
+                let total = 0;
+                selectedVehicles.forEach(id => {
+                    const v = VEHICLES.find(car => car.id === id);
+                    if (v) total += v.price;
+                });
+                selectedTotalValueEl.textContent = '₹ ' + total.toLocaleString('en-IN');
+            }
+
+            function toggleSelection(id, isChecked) {
+                if (isChecked) {
+                    selectedVehicles.add(id);
+                } else {
+                    selectedVehicles.delete(id);
+                }
+                updateSelectionUI();
+            }
 
             function renderVehicles(vehicles) {
                 grid.innerHTML = '';
@@ -213,12 +305,14 @@
                 }
 
                 vehicles.forEach(car => {
+                    const isChecked = selectedVehicles.has(car.id) ? 'checked' : '';
                     const card = `
                         <div class="col-md-4">
-                            <div class="card h-100 border-0 shadow-sm vehicle-card">
+                            <div class="card h-100 border-0 shadow-sm vehicle-card position-relative">
+                                <input class="form-check-input vehicle-select-cb" type="checkbox" value="${car.id}" ${isChecked}>
                                 <div class="position-relative">
                                     <img src="${car.image}" class="card-img-top" alt="${car.name}">
-                                    <button class="btn btn-light btn-sm position-absolute top-0 end-0 m-2 rounded-circle shadow-sm">
+                                    <button class="btn btn-light btn-sm position-absolute top-0 end-0 m-2 rounded-circle shadow-sm" title="Add to Wishlist">
                                         <i class="far fa-heart text-danger"></i>
                                     </button>
                                 </div>
@@ -230,8 +324,11 @@
                                         <span>${car.fuel}</span>
                                         <span>${car.km} km</span>
                                     </div>
+                                    <div class="d-flex justify-content-between gap-1 mb-2">
+                                        <button class="btn btn-outline-primary btn-sm flex-grow-1 quick-view-btn" data-id="${car.id}">Quick View</button>
+                                        <button class="btn btn-primary btn-sm flex-grow-1 add-to-cart-btn" data-id="${car.id}"><i class="fas fa-cart-plus"></i> Add</button>
+                                    </div>
                                     <div class="d-grid gap-2">
-                                        <a href="details.html?id=${car.id}" class="btn btn-primary btn-sm">View Details</a>
                                         <button class="btn btn-outline-secondary btn-sm request-quote-btn" data-id="${car.id}">Request Quote</button>
                                     </div>
                                 </div>
@@ -241,11 +338,42 @@
                     grid.innerHTML += card;
                 });
 
-                // Attach event listeners to new buttons
+                // Attach event listeners
+                document.querySelectorAll('.vehicle-select-cb').forEach(cb => {
+                    cb.addEventListener('change', (e) => {
+                        toggleSelection(e.target.value, e.target.checked);
+                    });
+                });
+
                 document.querySelectorAll('.request-quote-btn').forEach(btn => {
                     btn.addEventListener('click', (e) => {
-                        e.stopPropagation(); // prevent card click
-                        window.location.href = `quotation.html?id=${btn.dataset.id}`;
+                        e.stopPropagation();
+                        window.location.href = `quotation.html?ids=${btn.dataset.id}`;
+                    });
+                });
+
+                document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        // Find vehicle logic
+                        const v = VEHICLES.find(car => car.id === btn.dataset.id);
+                        if (v) {
+                            store.addToCart(v);
+                            document.getElementById('cartCount').textContent = store.getCart().items.length;
+                            btn.innerHTML = '<i class="fas fa-check"></i> Added';
+                            btn.classList.replace('btn-primary', 'btn-success');
+                            setTimeout(() => {
+                                btn.innerHTML = '<i class="fas fa-cart-plus"></i> Add';
+                                btn.classList.replace('btn-success', 'btn-primary');
+                            }, 2000);
+                        }
+                    });
+                });
+
+                document.querySelectorAll('.quick-view-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        window.location.href = `details.html?id=${btn.dataset.id}`;
                     });
                 });
             }
@@ -286,6 +414,49 @@
                 brandFilter.value = '';
                 priceFilter.value = '';
                 applyFilters();
+            });
+
+            // Multi-select bulk actions
+            clearSelectionBtn.addEventListener('click', () => {
+                selectedVehicles.clear();
+                // re-render to uncheck boxes
+                applyFilters();
+                updateSelectionUI();
+            });
+
+            const handleBulkQuote = () => {
+                const ids = Array.from(selectedVehicles).join(',');
+                window.location.href = `quotation.html?ids=${ids}`;
+            };
+
+            summaryRequestQuoteBtn.addEventListener('click', handleBulkQuote);
+
+            // Handle Bulk Add to Cart
+            summaryAddToCartBtn.addEventListener('click', () => {
+                selectedVehicles.forEach(id => {
+                    const v = VEHICLES.find(car => car.id === id);
+                    if (v) {
+                        const cart = store.getCart();
+                        const existing = cart.items.find(i => i.id === v.id);
+                        if (!existing) {
+                            cart.items.push({ ...v, quantity: 1 });
+                            store.recalculateCartTotal(cart);
+                            store.saveCart(cart);
+                        }
+                    }
+                });
+
+                document.getElementById('cartCount').textContent = store.getCart().items.length;
+                summaryAddToCartBtn.innerHTML = '<i class="fas fa-check me-1"></i>Added';
+                summaryAddToCartBtn.classList.replace('btn-success', 'btn-secondary');
+
+                setTimeout(() => {
+                    summaryAddToCartBtn.innerHTML = '<i class="fas fa-cart-plus me-1"></i>Add to Cart';
+                    summaryAddToCartBtn.classList.replace('btn-secondary', 'btn-success');
+                    selectedVehicles.clear();
+                    applyFilters();
+                    updateSelectionUI();
+                }, 1500);
             });
 
             // Initial Render

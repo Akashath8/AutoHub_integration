@@ -640,9 +640,11 @@
                             Kapile</span></div>
                     <div class="detail-row"><span class="detail-label">PAN</span><span class="detail-value">1234 1234
                             1234</span></div>
-                    <div class="detail-row"><span class="detail-label">Product</span><span
-                            class="detail-value">Business_Loan</span></div>
-                    <div class="detail-row"><span class="detail-label">Loan Amount</span><span class="detail-value">₹
+                    <div class="detail-row"><span class="detail-label">Product / Cart</span><span
+                            class="detail-value text-truncate" id="productDisplay"
+                            style="max-width: 200px;">Business_Loan</span></div>
+                    <div class="detail-row"><span class="detail-label">Total Purchase Value</span><span
+                            class="detail-value" id="purchaseValueDisplay">₹
                             5,00,000</span></div>
                 </div>
                 <div>
@@ -683,7 +685,7 @@
             <div class="detail-grid">
                 <div>
                     <div class="detail-row"><span class="detail-label">Amount Credited</span><span
-                            class="detail-value">₹ 5,00,000</span></div>
+                            class="detail-value text-success" id="disbursedAmountDisplay">₹ 5,00,000</span></div>
                     <div class="detail-row"><span class="detail-label">Date</span><span class="detail-value">25 Aug 2025
                             12:30:00</span></div>
                 </div>
@@ -693,6 +695,29 @@
                     <div class="detail-row"><span class="detail-label">Account</span><span class="detail-value">HDFC
                             Bank ••••0911</span></div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Post-Disbursal Payment (Own Contribution) -->
+        <div class="detail-section border border-primary shadow-sm" id="postDisbursementSection" style="display: none;">
+            <div class="section-title text-primary"><i class="fas fa-exclamation-circle me-1"></i> Pending Payment: Own
+                Contribution</div>
+            <p class="text-muted small mb-3">Your loan has been successfully disbursed. Please pay your own contribution
+                to complete the purchase and begin delivery processes.</p>
+            <div class="d-flex justify-content-between align-items-center bg-light p-3 rounded mb-3">
+                <span class="fw-bold">Total Remaining Balance</span>
+                <span class="fs-4 fw-bold text-danger" id="remainingBalanceDisplay">₹ 0</span>
+            </div>
+            <div class="text-end">
+                <button class="btn btn-primary" id="payRemainingBtn"><i class="fas fa-credit-card me-2"></i>Pay
+                    Now</button>
+            </div>
+
+            <!-- Success state (hidden initially) -->
+            <div id="paymentSuccessState" style="display: none;" class="text-center py-4">
+                <i class="fas fa-check-circle text-success mb-2" style="font-size: 3rem;"></i>
+                <h5 class="fw-bold text-success">Payment Successful</h5>
+                <p class="text-muted">Purchase completed successfully. Vendor has been notified.</p>
             </div>
         </div>
 
@@ -747,7 +772,8 @@
                 <p><strong>To,</strong><br>Ankit Kapile<br>123, Main Street, Bangalore – 560001</p>
                 <p>Dear Ankit Kapile,</p>
                 <p>We are pleased to inform you that your loan application (Ref: LOS/HDFC/2025/00124) has been
-                    <strong>sanctioned</strong> subject to the following terms and conditions:</p>
+                    <strong>sanctioned</strong> subject to the following terms and conditions:
+                </p>
                 <table style="width:100%;border-collapse:collapse;margin:1rem 0;">
                     <tr style="background:#f8f8f8;">
                         <td style="padding:0.4rem 0.75rem;border:1px solid #eee;font-weight:600;">Loan Amount</td>
@@ -834,7 +860,78 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/store.js"></script>
     <script>
+        // ── Post Disbursement Flow ─────────────────────────
+        document.addEventListener("DOMContentLoaded", () => {
+            const app = store.getApplication();
+
+            if (app && app.productName) {
+                document.getElementById('productDisplay').textContent = app.productName;
+                document.getElementById('purchaseValueDisplay').textContent = '₹ ' + (app.productPrice || 0).toLocaleString('en-IN');
+                document.getElementById('disbursedAmountDisplay').textContent = '₹ ' + (app.loanAmount || 0).toLocaleString('en-IN');
+
+                // Post-disbursement Logic
+                const ownContrib = app.ownContribution || 0;
+
+                // In a real app we would check application status. For demo, we assume status is Disbursed.
+                if (ownContrib > 0 && !app.contributionPaid) {
+                    const postSection = document.getElementById('postDisbursementSection');
+                    postSection.style.display = 'block';
+                    document.getElementById('remainingBalanceDisplay').textContent = '₹ ' + ownContrib.toLocaleString('en-IN');
+
+                    document.getElementById('payRemainingBtn').addEventListener('click', () => {
+                        // Create and show simple payment modal
+                        const modalHtml = `
+                        <div class="modal fade" id="paymentProcessModal" tabindex="-1" data-bs-backdrop="static">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content text-center p-5">
+                                    <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem; margin: 0 auto;"></div>
+                                    <h5>Processing Payment...</h5>
+                                    <p class="text-muted">Please do not refresh the page.</p>
+                                </div>
+                            </div>
+                        </div>`;
+                        document.body.insertAdjacentHTML('beforeend', modalHtml);
+                        const pmModal = new bootstrap.Modal(document.getElementById('paymentProcessModal'));
+                        pmModal.show();
+
+                        setTimeout(() => {
+                            pmModal.hide();
+                            document.getElementById('paymentProcessModal').remove();
+                            document.querySelector('.modal-backdrop')?.remove();
+
+                            app.contributionPaid = true;
+                            store.saveApplication(app);
+
+                            // Create Order marking purchase as Complete
+                            const order = {
+                                id: 'ORD-' + Date.now(),
+                                date: new Date().toLocaleDateString(),
+                                items: [{ name: app.productName, price: app.productPrice }], // mockup
+                                total: app.productPrice,
+                                status: 'Completed',
+                                paymentMode: 'Finance + Self',
+                                loanStatus: 'Disbursed'
+                            };
+                            store.addOrder(order);
+
+                            document.getElementById('payRemainingBtn').style.display = 'none';
+                            document.querySelector('#postDisbursementSection > p').style.display = 'none';
+                            document.querySelector('#postDisbursementSection > div.d-flex').style.display = 'none';
+                            document.getElementById('paymentSuccessState').style.display = 'block';
+
+                            setTimeout(() => {
+                                window.location.href = 'orders.html';
+                            }, 2000);
+
+                        }, 2000);
+                    });
+                }
+            }
+        });
+
         // ── Repayment Schedule Generation ──────────────────
         function generateSchedule() {
             const principal = 500000;

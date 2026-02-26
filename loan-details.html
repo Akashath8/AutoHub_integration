@@ -172,6 +172,17 @@
                         </div>
                     </div>
 
+                    <!-- Downpayment Seller Selector (Multi-Seller only) -->
+                    <div class="mb-4" id="downpaymentSellerDiv" style="display: none;">
+                        <label class="form-label fw-bold small text-muted">Assign Downpayment To Seller:</label>
+                        <select class="form-select" id="downpaymentSellerSelect">
+                            <!-- Populated dynamically -->
+                        </select>
+                        <div class="small text-muted mt-1" style="font-size: 0.70rem;">
+                            Directly offset your downpayment against specific seller payouts.
+                        </div>
+                    </div>
+
                     <!-- Tenure Slider -->
                     <div class="mb-4">
                         <div class="d-flex justify-content-between mb-2">
@@ -253,6 +264,18 @@
             const checkOffersBtn = document.getElementById('checkOffersBtn');
             const ownContribEl = document.getElementById('ownContributionDisplay');
 
+            const downpaymentSellerDiv = document.getElementById('downpaymentSellerDiv');
+            const downpaymentSellerSelect = document.getElementById('downpaymentSellerSelect');
+
+            // Populate Sellers Dropdown
+            // Note: `subOrders` is injected in payment.html during step 1
+            const hasMultipleSellers = app.subOrders && app.subOrders.length > 1;
+            if (hasMultipleSellers) {
+                downpaymentSellerSelect.innerHTML = app.subOrders.map(so =>
+                    `<option value="${so.seller_id}">${so.seller_id} (Total: ₹ ${(Number(so.seller_total) || 0).toLocaleString('en-IN')})</option>`
+                ).join('');
+            }
+
             amtSlider.max = maxAmt;
             amtSlider.value = maxAmt; // Default to max
             amtInput.value = amtSlider.value;
@@ -261,6 +284,12 @@
                 const loanAmt = Number(amtSlider.value);
                 const contrib = cartValue - loanAmt;
                 ownContribEl.textContent = '₹ ' + contrib.toLocaleString('en-IN');
+
+                if (contrib > 0 && hasMultipleSellers) {
+                    downpaymentSellerDiv.style.display = 'block';
+                } else {
+                    downpaymentSellerDiv.style.display = 'none';
+                }
             }
 
             amtSlider.addEventListener('input', () => {
@@ -289,6 +318,15 @@
                 newApp.loanAmount = Number(amtInput.value);
                 newApp.tenure = Number(tenureSlider.value);
                 newApp.ownContribution = cartValue - newApp.loanAmount;
+
+                // Bind assigned seller downpayment
+                if (newApp.ownContribution > 0 && hasMultipleSellers) {
+                    newApp.downpaymentSeller = downpaymentSellerSelect.value;
+                } else {
+                    // Fallback to the first available seller if no multi-split needed
+                    newApp.downpaymentSeller = app.subOrders?.[0]?.seller_id || null;
+                }
+
                 newApp.step = 4;
 
                 store.saveApplication(newApp);

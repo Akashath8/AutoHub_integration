@@ -876,57 +876,53 @@
                 const ownContrib = app.ownContribution || 0;
 
                 // In a real app we would check application status. For demo, we assume status is Disbursed.
+                if (!app.orderCreated) {
+                    // Create Master Order marking purchase as Complete (but pending downpayment)
+                    const subOrders = app.subOrders || [];
+                    const computedSubOrders = subOrders.map(so => {
+                        if (so.seller_id === app.downpaymentSeller && ownContrib > 0) {
+                            return {
+                                ...so,
+                                payout_status: 'Pending Downpayment',
+                                pending_downpayment: ownContrib
+                            };
+                        } else {
+                            return {
+                                ...so,
+                                payout_status: 'Paid' // Covered purely by loan
+                            };
+                        }
+                    });
+
+                    const masterOrder = {
+                        id: app.masterOrderId || ('ORD-' + Date.now()),
+                        date: new Date().toLocaleDateString(),
+                        items: app.vehicles || [{ name: app.productName, price: app.productPrice }],
+                        total: app.grandTotal || app.productPrice,
+                        status: ownContrib > 0 ? 'Pending Downpayment' : 'Completed',
+                        paymentMode: 'Finance + Self',
+                        loanStatus: 'Disbursed',
+                        payment_status: ownContrib > 0 ? 'Pending' : 'Paid',
+                        subOrders: computedSubOrders
+                    };
+                    store.addOrder(masterOrder);
+
+                    app.orderCreated = true;
+                    store.saveApplication(app);
+                }
+
                 if (ownContrib > 0 && !app.contributionPaid) {
                     const postSection = document.getElementById('postDisbursementSection');
                     postSection.style.display = 'block';
                     document.getElementById('remainingBalanceDisplay').textContent = '₹ ' + ownContrib.toLocaleString('en-IN');
 
-                    document.getElementById('payRemainingBtn').addEventListener('click', () => {
-                        // Create and show simple payment modal
-                        const modalHtml = `
-                        <div class="modal fade" id="paymentProcessModal" tabindex="-1" data-bs-backdrop="static">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content text-center p-5">
-                                    <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem; margin: 0 auto;"></div>
-                                    <h5>Processing Payment...</h5>
-                                    <p class="text-muted">Please do not refresh the page.</p>
-                                </div>
-                            </div>
-                        </div>`;
-                        document.body.insertAdjacentHTML('beforeend', modalHtml);
-                        const pmModal = new bootstrap.Modal(document.getElementById('paymentProcessModal'));
-                        pmModal.show();
+                    document.querySelector('#postDisbursementSection > p').innerHTML =
+                        '<i class="fas fa-info-circle me-1"></i> Loan amount disbursed to marketplace. Please pay your own contribution from the <strong>My Orders</strong> dashboard to complete the sequence.';
 
-                        setTimeout(() => {
-                            pmModal.hide();
-                            document.getElementById('paymentProcessModal').remove();
-                            document.querySelector('.modal-backdrop')?.remove();
-
-                            app.contributionPaid = true;
-                            store.saveApplication(app);
-
-                            // Create Order marking purchase as Complete
-                            const order = {
-                                id: 'ORD-' + Date.now(),
-                                date: new Date().toLocaleDateString(),
-                                items: [{ name: app.productName, price: app.productPrice }], // mockup
-                                total: app.productPrice,
-                                status: 'Completed',
-                                paymentMode: 'Finance + Self',
-                                loanStatus: 'Disbursed'
-                            };
-                            store.addOrder(order);
-
-                            document.getElementById('payRemainingBtn').style.display = 'none';
-                            document.querySelector('#postDisbursementSection > p').style.display = 'none';
-                            document.querySelector('#postDisbursementSection > div.d-flex').style.display = 'none';
-                            document.getElementById('paymentSuccessState').style.display = 'block';
-
-                            setTimeout(() => {
-                                window.location.href = 'orders.html';
-                            }, 2000);
-
-                        }, 2000);
+                    const payBtn = document.getElementById('payRemainingBtn');
+                    payBtn.textContent = 'Pay Now';
+                    payBtn.addEventListener('click', () => {
+                        window.location.href = 'orders.html';
                     });
                 }
             }

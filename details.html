@@ -86,22 +86,8 @@
                                 id="cartCount">0</span>
                         </a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
-                            data-bs-toggle="dropdown">
-                            <i class="fas fa-user-circle fa-lg"></i> <span id="userName">User</span>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="orders.html"><i class="fas fa-box me-2 text-muted"></i>My
-                                    Orders</a></li>
-                            <li><a class="dropdown-item" href="my-quotes.html"><i
-                                        class="fas fa-file-invoice me-2 text-muted"></i>My Quotations</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item text-danger" href="#" id="logoutBtn"><i
-                                        class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
-                        </ul>
+                    <li class="nav-item ms-2" id="navProfileArea">
+                        <!-- Handled by JS -->
                     </li>
                 </ul>
             </div>
@@ -112,6 +98,63 @@
         <!-- Content injected via JS -->
     </div>
 
+    <!-- Login/Signup Modal (Lazy Auth) -->
+    <div class="modal fade" id="authModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg" style="border-radius: 12px; overflow: hidden;">
+                <div class="row g-0">
+                    <div class="col-md-5 d-none d-md-block"
+                        style="background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));">
+                        <div class="p-4 text-white h-100 d-flex flex-column justify-content-center">
+                            <h4 class="fw-bold mb-3">AutoHub</h4>
+                            <p class="small opacity-75">Your journey to the perfect car starts here. Sign in to save,
+                                shortlist, and buy.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-7 p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h5 class="fw-bold mb-0">Login or Sign Up</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <form id="lazyAuthForm">
+                            <div class="mb-3">
+                                <label class="form-label small text-muted">Email or Mobile Number</label>
+                                <input type="text" id="lazyAuthUser" class="form-control" placeholder="Enter details"
+                                    required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label small text-muted">Password</label>
+                                <input type="password" id="lazyAuthPass" class="form-control" placeholder="••••••••"
+                                    required>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100 fw-bold mb-3"
+                                style="background: #8e44ad; border-color: #8e44ad;">Continue</button>
+
+                            <div class="d-flex align-items-center mb-3">
+                                <hr class="flex-grow-1 m-0">
+                                <span class="mx-3 text-muted small">OR</span>
+                                <hr class="flex-grow-1 m-0">
+                            </div>
+
+                            <button type="button"
+                                class="btn btn-outline-dark w-100 fw-bold mb-4 d-flex align-items-center justify-content-center">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg"
+                                    alt="Google" style="height: 18px; margin-right: 8px;">
+                                Continue with Google
+                            </button>
+
+                            <div class="text-center mt-2">
+                                <span class="text-muted small">New to AutoHub?</span>
+                                <a href="#" class="text-decoration-none fw-bold small ms-1"
+                                    style="color: #8e44ad;">Create New Account</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/store.js"></script>
     <script src="js/data.js"></script>
@@ -119,15 +162,53 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const user = store.getUser();
-            if (!user) { window.location.href = 'login.html'; return; }
-            document.getElementById('userName').textContent = user.firstName;
-            document.getElementById('cartCount').textContent = store.getCart().items.length;
 
-            // Logout logic
-            document.getElementById('logoutBtn').addEventListener('click', () => {
-                store.logoutUser();
-                window.location.href = 'login.html';
+            // Setup Profile Area (Lazy Auth)
+            const profileArea = document.getElementById('navProfileArea');
+            if (user && user.isLoggedIn) {
+                profileArea.innerHTML = `
+                    <div class="dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-user-circle fa-lg text-primary"></i> <span class="fw-bold ms-1">${user.firstName}</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end shadow border-0" style="border-radius: 8px;">
+                            <li><a class="dropdown-item py-2" href="orders.html"><i class="fas fa-box me-3 text-muted"></i>My Orders</a></li>
+                            <li><a class="dropdown-item py-2" href="my-quotes.html"><i class="fas fa-file-invoice me-3 text-muted"></i>My Quotations</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item py-2 text-danger" href="#" id="logoutBtn"><i class="fas fa-sign-out-alt me-3"></i>Logout</a></li>
+                        </ul>
+                    </div>
+                `;
+                document.getElementById('logoutBtn').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    store.logoutUser();
+                    window.location.reload();
+                });
+            } else {
+                profileArea.innerHTML = `
+                    <button class="btn btn-outline-primary btn-sm px-4 rounded-pill fw-bold mt-1" id="navLoginBtn">Login / Sign Up</button>
+                `;
+                document.getElementById('navLoginBtn').addEventListener('click', () => {
+                    const authModal = new bootstrap.Modal(document.getElementById('authModal'));
+                    authModal.show();
+                });
+            }
+
+            // Handle Lazy Login Submit
+            document.getElementById('lazyAuthForm')?.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const u = document.getElementById('lazyAuthUser').value;
+                if (!u) return;
+
+                store.saveUser({
+                    firstName: u.split('@')[0],
+                    email: u,
+                    isLoggedIn: true
+                });
+                window.location.reload();
             });
+
+            document.getElementById('cartCount').textContent = store.getCart().items.length;
 
             // Get ID from URL
             const urlParams = new URLSearchParams(window.location.search);
@@ -220,11 +301,19 @@
 
             // Handlers
             document.getElementById('buyNowBtn').addEventListener('click', () => {
+                if (!store.getUser()?.isLoggedIn) {
+                    new bootstrap.Modal(document.getElementById('authModal')).show();
+                    return;
+                }
                 store.addToCart(vehicle);
                 window.location.href = 'cart.html';
             });
 
             document.getElementById('quoteBtn').addEventListener('click', () => {
+                if (!store.getUser()?.isLoggedIn) {
+                    new bootstrap.Modal(document.getElementById('authModal')).show();
+                    return;
+                }
                 window.location.href = `quotation.html?id=${vehicle.id}`;
             });
         });

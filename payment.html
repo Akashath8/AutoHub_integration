@@ -101,21 +101,54 @@
                 return;
             }
 
+            // 1. Group by Seller for Sub-Orders
+            const sellerGroups = {};
+            selectedItems.forEach(item => {
+                const seller = item.sellerName || 'AutoHub Network Seller';
+                if (!sellerGroups[seller]) {
+                    sellerGroups[seller] = {
+                        seller_id: seller,
+                        items: [],
+                        seller_total: 0
+                    };
+                }
+                sellerGroups[seller].items.push(item);
+                sellerGroups[seller].seller_total += item.price;
+            });
+
+            // 2. Generate Sub-Orders Array
+            const subOrders = Object.values(sellerGroups).map((group, index) => {
+                const commission = group.seller_total * 0.02; // Flat 2% Platform Commission
+                return {
+                    sub_order_id: `SUB-${Date.now()}-${index}`,
+                    seller_id: group.seller_id,
+                    items: group.items,
+                    seller_total: group.seller_total,
+                    commission: commission,
+                    payout_amount: group.seller_total - commission,
+                    payout_status: 'Pending Payout'
+                };
+            });
+
+            const masterOrderId = 'ORD-' + Date.now();
+
             if (type === 'self') {
                 // Simulate Payment
                 const modal = new bootstrap.Modal(document.getElementById('processingModal'));
                 modal.show();
 
                 setTimeout(() => {
-                    // Success -> Create Order
+                    // Success -> Create Master Order
                     const order = {
-                        id: 'ORD-' + Date.now(),
+                        id: masterOrderId,
                         date: new Date().toLocaleDateString(),
                         items: selectedItems,
                         total: total,
                         status: 'Completed',
                         paymentMode: 'Self',
-                        loanStatus: null
+                        loanStatus: null,
+                        payment_status: 'Paid',
+                        subOrders: subOrders // Inject the Sub-Orders
                     };
                     store.addOrder(order);
 
@@ -131,9 +164,10 @@
 
             } else if (type === 'finance') {
                 // Initiate LOS Application
-                // We create a new application record in store handling multiple vehicles
-
                 const combinedName = selectedItems.length > 1 ? `Multiple Vehicles (${selectedItems.length})` : selectedItems[0]?.name;
+
+                // Adjust sub-orders default status for loan
+                const loanSubOrders = subOrders.map(so => ({ ...so, payout_status: 'Pending Loan Disbursement' }));
 
                 const loanApp = {
                     productId: selectedItems.length > 1 ? 'MULTI' : selectedItems[0]?.id,
@@ -144,7 +178,11 @@
                     applicant: { ...store.getUser() }, // Pre-fill with user data
                     documents: {},
                     step: 1,
-                    vehicles: selectedItems // Pass all vehicles for LOS processing
+                    vehicles: selectedItems, // Pass all vehicles for LOS processing
+                    // Inject Master-Sub Order Tracking
+                    masterOrderId: masterOrderId,
+                    grandTotal: total,
+                    subOrders: loanSubOrders
                 };
 
                 store.saveApplication(loanApp);

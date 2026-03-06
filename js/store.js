@@ -11,7 +11,8 @@ class Store {
             LOAN_APP: 'los_application',
             ORDERS: 'autohub_orders',
             QUOTATIONS: 'autohub_quotations',
-            SELECTED_FINANCE: 'los_selected_finance'
+            SELECTED_FINANCE: 'los_selected_finance',
+            TEST_DRIVES: 'autohub_test_drives'
         };
 
         // Initialize empty states if not present
@@ -165,6 +166,30 @@ class Store {
         const quotes = this.getQuotations();
         quotes.unshift(quote);
         this.saveQuotations(quotes);
+    }
+
+    // --- Test Drives Management ---
+    getTestDrives() {
+        return JSON.parse(localStorage.getItem(this.STORAGE_KEYS.TEST_DRIVES)) || [];
+    }
+
+    saveTestDrives(testDrives) {
+        localStorage.setItem(this.STORAGE_KEYS.TEST_DRIVES, JSON.stringify(testDrives));
+    }
+
+    addTestDrive(testDrive) {
+        const drives = this.getTestDrives();
+        drives.unshift(testDrive); // Add to top
+        this.saveTestDrives(drives);
+    }
+
+    updateTestDriveStatus(id, newStatus) {
+        const drives = this.getTestDrives();
+        const driveIndex = drives.findIndex(d => d.id === id);
+        if (driveIndex !== -1) {
+            drives[driveIndex].status = newStatus;
+            this.saveTestDrives(drives);
+        }
     }
 }
 

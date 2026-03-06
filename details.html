@@ -155,6 +155,109 @@
         </div>
     </div>
 
+    <!-- Test Drive Booking Modal -->
+    <div class="modal fade" id="testDriveModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow-lg" style="border-radius: 12px; overflow: hidden;">
+                <div class="modal-header bg-light">
+                    <h5 class="modal-title fw-bold">Book Test Drive</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="row g-0">
+                        <!-- Vehicle Summary -->
+                        <div class="col-md-5 bg-light p-4 border-end">
+                            <img src="" id="tdVehicleImg" class="img-fluid rounded mb-3"
+                                style="width: 100%; height: 200px; object-fit: cover;" alt="Vehicle Image">
+                            <h5 class="fw-bold mb-1" id="tdVehicleName">Vehicle Name</h5>
+                            <p class="text-muted small mb-3"><i class="fas fa-map-marker-alt me-1"></i> <span
+                                    id="tdVehicleLocation">Location</span></p>
+                            <p class="small mb-1"><span class="text-muted">Seller:</span> <span class="fw-bold"
+                                    id="tdVehicleSeller">Seller Name</span></p>
+                            <hr>
+                            <div class="d-flex gap-2">
+                                <span class="badge bg-secondary" id="tdVehicleFuel">Fuel</span>
+                                <span class="badge bg-secondary" id="tdVehicleTransmission">Transmission</span>
+                            </div>
+                        </div>
+                        <!-- form -->
+                        <div class="col-md-7 p-4">
+                            <form id="testDriveForm">
+                                <input type="hidden" id="tdVehicleId">
+                                <div class="row g-3 mb-3">
+                                    <div class="col-md-12">
+                                        <label class="form-label small fw-bold">Full Name *</label>
+                                        <input type="text" class="form-control" id="tdName" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label small fw-bold">Mobile Number *</label>
+                                        <input type="tel" class="form-control" id="tdMobile" required
+                                            pattern="[0-9]{10}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label small fw-bold">Email Address *</label>
+                                        <input type="email" class="form-control" id="tdEmail" required>
+                                    </div>
+                                </div>
+                                <div class="row g-3 mb-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label small fw-bold">Preferred Date *</label>
+                                        <input type="date" class="form-control" id="tdDate" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label small fw-bold">Preferred Time Slot *</label>
+                                        <select class="form-select" id="tdTimeSlot" required>
+                                            <option value="">Select Slot</option>
+                                            <option value="Morning Slot (10 AM – 1 PM)">Morning Slot (10 AM – 1 PM)
+                                            </option>
+                                            <option value="Afternoon Slot (1 PM – 4 PM)">Afternoon Slot (1 PM – 4 PM)
+                                            </option>
+                                            <option value="Evening Slot (4 PM – 7 PM)">Evening Slot (4 PM – 7 PM)
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="form-label small fw-bold">Select Vehicle Location *</label>
+                                        <select class="form-select" id="tdLoc" required>
+                                            <option value="">Select Location</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row g-3 mb-4">
+                                    <div class="col-md-12">
+                                        <label class="form-label small fw-bold">Preferred Driving Route
+                                            (Optional)</label>
+                                        <input type="text" class="form-control" id="tdRoute"
+                                            placeholder="e.g. Highway, City traffic">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="form-label small fw-bold">Special Requests (Optional)</label>
+                                        <textarea class="form-control" id="tdRequests" rows="2"></textarea>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100 fw-bold">Confirm Test Drive</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Toast Container -->
+    <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1060">
+        <div id="tdSuccessToast" class="toast align-items-center text-white bg-success border-0" role="alert"
+            aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    Your test drive has been booked successfully.<br>Our team will contact you shortly.
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/store.js"></script>
     <script src="js/data.js"></script>
@@ -174,6 +277,7 @@
                         <ul class="dropdown-menu dropdown-menu-end shadow border-0" style="border-radius: 8px;">
                             <li><a class="dropdown-item py-2" href="orders.html"><i class="fas fa-box me-3 text-muted"></i>My Orders</a></li>
                             <li><a class="dropdown-item py-2" href="my-quotes.html"><i class="fas fa-file-invoice me-3 text-muted"></i>My Quotations</a></li>
+                            <li><a class="dropdown-item py-2" href="my-test-drives.html"><i class="fas fa-car me-3 text-muted"></i>My Test Drives</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item py-2 text-danger" href="#" id="logoutBtn"><i class="fas fa-sign-out-alt me-3"></i>Logout</a></li>
                         </ul>
@@ -205,8 +309,27 @@
                     email: u,
                     isLoggedIn: true
                 });
-                window.location.reload();
+
+                // If there's a pending test drive vehicle ID, open that modal instead of reloading
+                const pendingTdId = sessionStorage.getItem('pendingTestDriveId');
+                if (pendingTdId) {
+                    sessionStorage.removeItem('pendingTestDriveId');
+                    new bootstrap.Modal(document.getElementById('authModal')).hide();
+                    location.reload();
+                } else {
+                    window.location.reload();
+                }
             });
+
+            // On load, check if there's a pending test drive to open
+            const pdTdIdLoad = sessionStorage.getItem('pendingTestDriveId');
+            if (pdTdIdLoad && store.getUser()?.isLoggedIn) {
+                setTimeout(() => {
+                    const btn = document.getElementById('bookTestDriveBtn');
+                    if (btn) btn.click();
+                    sessionStorage.removeItem('pendingTestDriveId');
+                }, 500); // Give time for render
+            }
 
             document.getElementById('cartCount').textContent = store.getCart().items.length;
 
@@ -292,6 +415,7 @@
                         <div class="d-grid gap-3">
                             <button id="buyNowBtn" class="btn btn-primary btn-lg">Buy Now</button>
                             <button id="quoteBtn" class="btn btn-outline-dark btn-lg">Request Quotation</button>
+                            <button id="bookTestDriveBtn" class="btn btn-outline-secondary btn-lg" data-id="${vehicle.id}">Book Test Drive</button>
                         </div>
                     </div>
                 </div>
@@ -315,6 +439,89 @@
                     return;
                 }
                 window.location.href = `quotation.html?id=${vehicle.id}`;
+            });
+
+            document.getElementById('bookTestDriveBtn').addEventListener('click', () => {
+                if (!store.getUser()?.isLoggedIn) {
+                    sessionStorage.setItem('pendingTestDriveId', vehicle.id);
+                    new bootstrap.Modal(document.getElementById('authModal')).show();
+                    return;
+                }
+
+                // Setup Modal
+                document.getElementById('tdVehicleImg').src = vehicle.image;
+                document.getElementById('tdVehicleName').textContent = `${vehicle.year} ${vehicle.name}`;
+                document.getElementById('tdVehicleLocation').textContent = vehicle.hubLocation;
+                document.getElementById('tdVehicleSeller').textContent = vehicle.sellerName;
+                document.getElementById('tdVehicleFuel').textContent = vehicle.fuel;
+                document.getElementById('tdVehicleTransmission').textContent = vehicle.transmission;
+                document.getElementById('tdVehicleId').value = vehicle.id;
+
+                // Default user values
+                const u = store.getUser();
+                document.getElementById('tdName').value = u.firstName || '';
+                document.getElementById('tdEmail').value = u.email || '';
+
+                // Set minimum date to tomorrow
+                const tmr = new Date();
+                tmr.setDate(tmr.getDate() + 1);
+                document.getElementById('tdDate').min = tmr.toISOString().split("T")[0];
+
+                // Set locations
+                const locSelect = document.getElementById('tdLoc');
+                locSelect.innerHTML = `<option value="">Select Location</option>`;
+
+                const locs = [vehicle.hubLocation];
+                if (!locs[0].includes('Mumbai')) locs.push(vehicle.hubLocation.replace(/,[^,]*$/, ', Mumbai'));
+                if (!locs[0].includes('Bangalore')) locs.push(vehicle.hubLocation.replace(/,[^,]*$/, ', Bangalore'));
+                locs.forEach(l => {
+                    locSelect.innerHTML += `<option value="${l}">${l}</option>`;
+                });
+
+                // Select default Location
+                locSelect.value = vehicle.hubLocation;
+
+                new bootstrap.Modal(document.getElementById('testDriveModal')).show();
+            });
+
+            // Handle Form Submission
+            document.getElementById('testDriveForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const form = e.target;
+                if (!form.checkValidity()) {
+                    form.reportValidity();
+                    return;
+                }
+
+                const vId = document.getElementById('tdVehicleId').value;
+
+                const testDriveData = {
+                    id: 'TD-' + Math.floor(100000 + Math.random() * 900000),
+                    vehicleId: vId,
+                    vehicleName: `${vehicle.year} ${vehicle.name}`,
+                    vehicleImage: vehicle.image,
+                    name: document.getElementById('tdName').value,
+                    mobile: document.getElementById('tdMobile').value,
+                    email: document.getElementById('tdEmail').value,
+                    date: document.getElementById('tdDate').value,
+                    timeSlot: document.getElementById('tdTimeSlot').value,
+                    location: document.getElementById('tdLoc').value,
+                    route: document.getElementById('tdRoute').value,
+                    requests: document.getElementById('tdRequests').value,
+                    sellerContact: vehicle.sellerName,
+                    status: 'Pending Confirmation',
+                    createdAt: new Date().toISOString()
+                };
+
+                store.addTestDrive(testDriveData);
+
+                // Show Success
+                bootstrap.Modal.getInstance(document.getElementById('testDriveModal')).hide();
+                const toast = new bootstrap.Toast(document.getElementById('tdSuccessToast'));
+                toast.show();
+
+                // Reset
+                form.reset();
             });
         });
     </script>

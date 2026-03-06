@@ -137,5 +137,32 @@ const VEHICLES = [
             torque: '300 Nm',
             mileage: '15 kmpl'
         }
+    },
+    {
+        id: 'v6',
+        name: 'Tata Ace Gold',
+        brand: 'Tata',
+        price: 480000,
+        type: 'Commercial Vehicle',
+        year: 2023,
+        km: 5000,
+        fuel: 'Diesel',
+        transmission: 'Manual',
+        owner: '1st Owner',
+        location: 'Pune',
+        sellerName: 'AutoHub Network Dealer',
+        image: 'https://images.unsplash.com/photo-1594042878693-514add1d4411?auto=format&fit=crop&q=80&w=400',
+        description: 'Reliable and durable mini truck for all your business needs.',
+        variant: 'Diesel CX',
+        rto: 'MH-12',
+        emi: '9,500',
+        hubLocation: 'AutoHub Wakad, Pune',
+        conditionTag: 'Business Ready',
+        specs: {
+            engine: '2-Cylinder 700cc',
+            power: '20 hp',
+            torque: '45 Nm',
+            mileage: '22 kmpl'
+        }
     }
 ];

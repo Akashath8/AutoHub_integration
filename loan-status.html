@@ -699,18 +699,16 @@
         </div>
 
         <!-- Post-Disbursal Payment (Own Contribution) -->
-        <div class="detail-section border border-primary shadow-sm" id="postDisbursementSection" style="display: none;">
+        <div class="detail-section border border-primary shadow-sm" id="postDisbursementSection" style="display: block;">
             <div class="section-title text-primary"><i class="fas fa-exclamation-circle me-1"></i> Pending Payment: Own
                 Contribution</div>
-            <p class="text-muted small mb-3">Your loan has been successfully disbursed. Please pay your own contribution
-                to complete the purchase and begin delivery processes.</p>
+            <p class="text-muted small mb-3">Your loan has been successfully sanctioned. Please pay your own contribution (Downpayment) to initiate the dealership delivery and documentation process.</p>
             <div class="d-flex justify-content-between align-items-center bg-light p-3 rounded mb-3">
-                <span class="fw-bold">Total Remaining Balance</span>
-                <span class="fs-4 fw-bold text-danger" id="remainingBalanceDisplay">₹ 0</span>
+                <span class="fw-bold">Required Downpayment</span>
+                <span class="fs-4 fw-bold text-danger" id="remainingBalanceDisplay">₹ 2,50,000</span>
             </div>
             <div class="text-end">
-                <button class="btn btn-primary" id="payRemainingBtn"><i class="fas fa-credit-card me-2"></i>Pay
-                    Now</button>
+                <a href="financial-overview.html" class="btn btn-primary fw-bold"><i class="fas fa-external-link-alt me-2"></i>Proceed to Pay Contribution</a>
             </div>
 
             <!-- Success state (hidden initially) -->

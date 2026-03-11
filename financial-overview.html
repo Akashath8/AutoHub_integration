@@ -224,7 +224,7 @@
                 
                 <!-- Step 1 -->
                 <div class="step-node completed" data-bs-toggle="tooltip" data-bs-html="true" 
-                     title="<b>Product Selected</b><br>Vehicle reserved for checkout process from marketplace inventory.<br><span class='text-success fw-bold'>Completed</span>">
+                     title="<b>Product Selected</b><br>Responsible: <span class='text-info'>Platform</span><br>Vehicle reserved for checkout process from marketplace inventory.<br><span class='text-success fw-bold'>Completed</span>">
                     <div class="node-circle"><i class="fas fa-search"></i></div>
                     <span class="node-title">Product Selected</span>
                     <span class="node-status status-completed">Completed</span>
@@ -232,7 +232,7 @@
                 
                 <!-- Step 2 -->
                 <div class="step-node completed" data-bs-toggle="tooltip" data-bs-html="true"
-                     title="<b>Added to Cart</b><br>Reviewing specifications and initial pricing.<br><span class='text-success fw-bold'>Completed</span>">
+                     title="<b>Added to Cart</b><br>Responsible: <span class='text-info'>Buyer</span><br>Reviewing specifications and initial pricing.<br><span class='text-success fw-bold'>Completed</span>">
                     <div class="node-circle"><i class="fas fa-cart-plus"></i></div>
                     <span class="node-title">Added to Cart</span>
                     <span class="node-status status-completed">Completed</span>
@@ -240,7 +240,7 @@
                 
                 <!-- Step 3 -->
                 <div class="step-node completed" data-bs-toggle="tooltip" data-bs-html="true"
-                     title="<b>Address Selected</b><br>Delivery: 123 Business Park, Bangalore, KA, 560001.<br><span class='text-success fw-bold'>Completed</span>">
+                     title="<b>Address Selected</b><br>Responsible: <span class='text-info'>Buyer</span><br>Delivery: 123 Business Park, Bangalore, KA, 560001.<br><span class='text-success fw-bold'>Completed</span>">
                     <div class="node-circle"><i class="fas fa-map-marker-alt"></i></div>
                     <span class="node-title">Address Selected</span>
                     <span class="node-status status-completed">Completed</span>
@@ -248,7 +248,7 @@
 
                 <!-- Step 4 -->
                 <div class="step-node completed" data-bs-toggle="tooltip" data-bs-html="true"
-                     title="<b>Order Confirmed</b><br>Dealer notified to initiate transaction.<br><span class='text-success fw-bold'>Completed</span>">
+                     title="<b>Order Confirmed</b><br>Responsible: <span class='text-info'>Dealer</span><br>Dealer notified to initiate transaction.<br><span class='text-success fw-bold'>Completed</span>">
                     <div class="node-circle"><i class="fas fa-check-circle"></i></div>
                     <span class="node-title">Order Confirmed</span>
                     <span class="node-status status-completed">Completed</span>
@@ -256,7 +256,7 @@
 
                 <!-- Step 5 -->
                 <div class="step-node completed" data-bs-toggle="tooltip" data-bs-html="true"
-                     title="<b>Payment / Financing</b><br>Mode: Loan Financing<br>Application submitted to partner bank.<br><span class='text-success fw-bold'>Completed</span>">
+                     title="<b>Payment / Financing</b><br>Responsible: <span class='text-info'>Buyer</span><br>Mode: Loan Financing<br>Application submitted to partner bank.<br><span class='text-success fw-bold'>Completed</span>">
                     <div class="node-circle"><i class="fas fa-file-invoice-dollar"></i></div>
                     <span class="node-title">Payment Mode</span>
                     <span class="node-status status-completed">Loan Selected</span>
@@ -264,7 +264,7 @@
 
                 <!-- Step 6 -->
                 <div class="step-node completed" data-bs-toggle="tooltip" data-bs-html="true"
-                     title="<b>Loan Processing</b><br>Bank evaluation of credit profile completed.<br>Approval granted within 24 hours.<br><span class='text-success fw-bold'>Completed</span>">
+                     title="<b>Loan Processing</b><br>Responsible: <span class='text-info'>Bank</span><br>Bank evaluation of credit profile completed.<br>Approval granted within 24 hours.<br><span class='text-success fw-bold'>Completed</span>">
                     <div class="node-circle"><i class="fas fa-university"></i></div>
                     <span class="node-title">Loan Processing</span>
                     <span class="node-status status-completed">Approved</span>
@@ -272,7 +272,7 @@
 
                 <!-- Step 7 -->
                 <div class="step-node completed" data-bs-toggle="tooltip" data-bs-html="true"
-                     title="<b>Payment Settlement</b><br>Buyer contribution and loan amount transferred.<br>Dealer payment confirmed.<br><span class='text-success fw-bold'>Completed</span>">
+                     title="<b>Payment Settlement</b><br>Responsible: <span class='text-info'>Platform</span><br>Buyer contribution and loan amount transferred.<br>Dealer payment confirmed.<br><span class='text-success fw-bold'>Completed</span>">
                     <div class="node-circle"><i class="fas fa-hand-holding-usd"></i></div>
                     <span class="node-title">Settlement</span>
                     <span class="node-status status-completed">Settled</span>
@@ -280,18 +280,32 @@
 
                 <!-- Step 8 -->
                 <div class="step-node active" data-bs-toggle="tooltip" data-bs-html="true"
-                     title="<b>Delivery & Documentation</b><br>Dealer has initiated RC and insurance transfer.<br><span class='text-primary fw-bold'>In Progress</span>">
+                     title="<b>Delivery & Documentation</b><br>Responsible: <span class='text-info'>Dealer</span><br>Dealer has initiated RC and insurance transfer.<br><span class='text-primary fw-bold'>In Progress</span>">
                     <div class="node-circle"><i class="fas fa-file-contract"></i></div>
                     <span class="node-title">Documentation</span>
                     <span class="node-status status-active">Processing</span>
                 </div>
 
                 <!-- Step 9 -->
-                <div class="step-node" data-bs-toggle="tooltip" data-bs-html="true"
-                     title="<b>Final Delivery</b><br>Vehicle handover at your location.<br><span class='text-muted fw-bold'>Pending</span>">
+                <div class="step-node" id="deliveryStepNode" data-bs-toggle="tooltip" data-bs-html="true"
+                     title="<b>Final Delivery</b><br>Responsible: <span class='text-info'>Logistics</span><br>Vehicle handover at your location.<br><span class='text-muted fw-bold'>Pending</span>">
                     <div class="node-circle"><i class="fas fa-key"></i></div>
                     <span class="node-title">Final Delivery</span>
                     <span class="node-status status-pending">Pending</span>
+                </div>
+            </div>
+
+            <!-- Buyer Action for Step 9 -->
+            <div id="deliveryConfirmAction" class="bg-success bg-opacity-10 border border-success border-opacity-25 rounded-3 p-3 mt-4 d-none">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center gap-3">
+                        <i class="fas fa-truck-check text-success fs-4"></i>
+                        <div>
+                            <div class="fw-bold text-success">Vehicle Reached?</div>
+                            <div class="small text-secondary">Confirm receipt to release final settlement and close order.</div>
+                        </div>
+                    </div>
+                    <button class="btn btn-success btn-sm fw-bold px-4" id="confirmDeliveryBtn">Confirm Delivery</button>
                 </div>
             </div>
 
@@ -549,7 +563,31 @@
             return new bootstrap.Tooltip(tooltipTriggerEl, {
                 customClass: 'custom-tooltip'
             })
-        })
+        });
+
+        // Simulate delivery confirmation flow
+        document.getElementById('confirmDeliveryBtn').addEventListener('click', function() {
+            this.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Confirming...';
+            setTimeout(() => {
+                document.getElementById('deliveryConfirmAction').classList.add('d-none');
+                const lastNode = document.getElementById('deliveryStepNode');
+                lastNode.classList.remove('active');
+                lastNode.classList.add('completed');
+                lastNode.querySelector('.node-status').textContent = 'Completed';
+                lastNode.querySelector('.node-status').classList.replace('status-pending', 'status-completed');
+                
+                // Update Progress line
+                document.querySelector('.lifecycle-progress-line').style.width = '95%';
+                
+                alert('Success: Delivery confirmed. Your vehicle purchase lifecycle is now complete!');
+            }, 1500);
+        });
+
+        // Show confirmation box after 3 seconds for demo purposes
+        setTimeout(() => {
+            document.getElementById('deliveryConfirmAction').classList.remove('d-none');
+            document.getElementById('deliveryConfirmAction').classList.add('animate__animated', 'animate__fadeIn');
+        }, 3000);
     </script>
 </body>
 </html>

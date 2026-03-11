@@ -93,15 +93,14 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarContent">
-                <ul class="navbar-nav ms-auto align-items-center">
-                    <li class="nav-item">
-                        <a class="nav-link nav-mode-btn buy-btn" href="#" data-mode="buy">Buy</a>
+                <ul class="navbar-nav ms-auto align-items-center gap-2">
+                    <li class="nav-item me-2 position-relative">
+                        <a class="nav-link" href="#" title="Wishlist">
+                            <i class="fas fa-heart text-danger"></i>
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-mode-btn rent-btn" href="#" data-mode="rent">Rent</a>
-                    </li>
-                    <li class="nav-item me-2">
-                        <a class="nav-link nav-mode-btn sell-btn" href="#" data-mode="sell">Sell</a>
+                        <a class="nav-link nav-mode-btn rent-btn active" href="my-quotes.html">Quotations</a>
                     </li>
                     <li class="nav-item me-1 nav-bell-wrap">
                         <a class="nav-link" href="#" title="Notifications"><i class="fas fa-bell"></i></a>
@@ -115,22 +114,11 @@
                                 id="cartCount">0</span>
                         </a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle active" href="#" id="profileDropdown" role="button"
-                            data-bs-toggle="dropdown">
-                            <i class="fas fa-user-circle fa-lg"></i> <span id="userName">User</span>
+                    <li class="nav-item dropdown" id="navProfileArea">
+                        <a class="nav-link dropdown-toggle active" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-building fa-lg text-primary"></i> <span id="userName" class="fw-bold ms-1">User</span>
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="orders.html"><i class="fas fa-box me-2 text-muted"></i>My
-                                    Orders</a></li>
-                            <li><a class="dropdown-item active" href="my-quotes.html"><i
-                                        class="fas fa-file-invoice me-2 text-muted"></i>My Quotations</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item text-danger" href="#" id="logoutBtn"><i
-                                        class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
-                        </ul>
+                        <!-- Populated by JS -->
                     </li>
                 </ul>
             </div>
@@ -215,12 +203,19 @@
                     <div class="row mt-4 pt-3 border-top">
                         <div class="col-6">
                             <div class="text-muted small">Total Value</div>
-                            <h5 class="fw-bold" id="modalTotalPrice">₹ 0</h5>
+                            <h5 class="fw-bold text-decoration-line-through" id="modalTotalPrice">₹ 0</h5>
                         </div>
                         <div class="col-6 text-end">
                             <div class="text-muted small">Offered Price</div>
                             <h5 class="fw-bold text-success" id="modalOfferPrice">₹ 0</h5>
                         </div>
+                    </div>
+                </div>
+                <div class="modal-footer border-top-0 d-flex justify-content-between">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                    <div id="modalActions">
+                        <button type="button" class="btn btn-warning text-dark px-4 fw-bold me-2">Counter Offer</button>
+                        <button type="button" class="btn btn-success px-4 fw-bold" id="acceptQuoteBtn">Accept & Proceed to Deal</button>
                     </div>
                 </div>
             </div>
@@ -234,12 +229,31 @@
         document.addEventListener('DOMContentLoaded', () => {
             const user = store.getUser();
             if (!user) { window.location.href = 'login.html'; return; }
-            document.getElementById('userName').textContent = user.firstName;
+            document.getElementById('userName').textContent = user.companyName || user.firstName;
             document.getElementById('cartCount').textContent = store.getCart().items.length;
 
-            document.getElementById('logoutBtn').addEventListener('click', () => {
+            const profileArea = document.getElementById('navProfileArea');
+            if(profileArea) {
+                const ul = document.createElement('ul');
+                ul.className = "dropdown-menu dropdown-menu-end shadow border-0";
+                ul.style.borderRadius = "8px";
+                ul.innerHTML = `
+                    ${user.role === 'Dealer' ? '<li><a class="dropdown-item py-2 fw-bold text-primary" href="dealer-dashboard.html"><i class="fas fa-tachometer-alt me-3 text-primary"></i>Dealer Dashboard</a></li>' : ''}
+                    <li><a class="dropdown-item py-2" href="#"><i class="fas fa-user me-3 text-muted"></i>My Profile</a></li>
+                    <li><a class="dropdown-item py-2" href="orders.html"><i class="fas fa-box me-3 text-muted"></i>My Orders</a></li>
+                    <li><a class="dropdown-item py-2 mb-1 bg-light text-primary" href="my-quotes.html"><i class="fas fa-file-invoice me-3 text-primary"></i>Quotations</a></li>
+                    <li><a class="dropdown-item py-2" href="documents.html"><i class="fas fa-folder-open me-3 text-muted"></i>Documents</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item py-2 text-danger" href="#" id="logoutBtn"><i class="fas fa-sign-out-alt me-3"></i>Logout</a></li>
+                `;
+                profileArea.appendChild(ul);
+            }
+
+            document.getElementById('logoutBtn').addEventListener('click', (e) => {
+                e.preventDefault();
                 store.logoutUser();
-                window.location.href = 'login.html';
+                if(user.role === 'Dealer') window.location.href = 'index.html';
+                else window.location.href = 'index.html';
             });
 
             const quotes = store.getQuotations();
@@ -324,6 +338,41 @@
                     const modalEl = document.getElementById('quoteDetailsModal');
                     const modal = new bootstrap.Modal(modalEl);
                     modal.show();
+                    
+                    document.getElementById('acceptQuoteBtn').onclick = () => {
+                        // Mock converting quote to deal
+                        const orderData = {
+                            id: 'DEAL-' + Math.floor(100000 + Math.random() * 900000),
+                            date: new Date().toISOString().split('T')[0],
+                            status: 'Deal Finalized - Pending Payment',
+                            total: Number(quote.offerPrice) || 0,
+                            paymentMode: 'Escrow',
+                            items: quote.vehicles || [{ name: quote.productName, price: quote.offerPrice, image: 'https://via.placeholder.com/150' }],
+                            subOrders: [
+                                {
+                                    sub_order_id: 'SUB-' + Math.floor(1000 + Math.random() * 9000),
+                                    seller_id: quote.sellerName || 'Dealer',
+                                    seller_total: quote.offerPrice,
+                                    commission: Math.floor(quote.offerPrice * 0.02), // 2% marketplace fee
+                                    payout_status: 'Pending Escrow',
+                                    pending_downpayment: quote.offerPrice,
+                                    items: quote.vehicles || [{ name: quote.productName, price: quote.offerPrice }]
+                                }
+                            ]
+                        };
+                        
+                        let currentOrders = store.getOrders() || [];
+                        currentOrders.unshift(orderData);
+                        store.saveOrders(currentOrders);
+                        
+                        // Delete quote after accepting
+                        const allQuotes = store.getQuotations();
+                        allQuotes.splice(idx, 1);
+                        localStorage.setItem('autohub_user_quotes', JSON.stringify(allQuotes));
+                        
+                        modal.hide();
+                        window.location.href = 'orders.html';
+                    };
                 } catch (e) {
                     console.error("Error opening details modal:", e);
                     alert("Could not display quotation details. Please check console.");

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Outstanding Invoices - AutoHub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        body { background-color: #f8fafc; }
+        .dashboard-card { border: none; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        .table-custom th { background-color: #f1f5f9; color: #475569; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #e2e8f0; padding: 12px 16px; }
+        .table-custom td { padding: 16px; vertical-align: middle; color: #1e293b; font-size: 0.95rem; border-bottom: 1px solid #f1f5f9; }
+        .status-badge { padding: 4px 10px; border-radius: 6px; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; }
+        .status-partial { background-color: #fef3c7; color: #92400e; }
+        .status-pending { background-color: #f1f5f9; color: #475569; }
+        .status-overdue { background-color: #fee2e2; color: #991b1b; }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg sticky-top bg-white border-bottom shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html" style="color: var(--dark-bg);">AutoHub <span style="color: var(--pink-accent);">Marketplace</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav ms-auto align-items-center gap-3">
+                    <li class="nav-item"><a class="nav-link fw-bold" href="buyer-dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="orders.html">My Orders</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="outstanding-invoices.html">Outstanding Invoices</a></li>
+                    <li class="nav-item"><a class="nav-link" href="payment-transparency.html">Payment Flow</a></li>
+                    <li class="nav-item ms-3 border-start ps-3">
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="bg-light rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;"><i class="fas fa-user text-secondary"></i></div>
+                            <span class="fw-bold" style="color: var(--dark-bg);">Transport Inc.</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h3 class="fw-bold text-dark mb-1">Outstanding Invoices</h3>
+                <p class="text-secondary mb-0">List of active invoices with pending balances. Payments must be recorded offline by the dealer.</p>
+            </div>
+            <div>
+                <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 px-3 py-2 fs-6">
+                    Total Due: ₹ 23,50,000
+                </span>
+            </div>
+        </div>
+
+        <div class="card dashboard-card bg-white mb-5">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-custom mb-0">
+                        <thead>
+                            <tr>
+                                <th class="ps-4">Invoice No.</th>
+                                <th>Product</th>
+                                <th>Dealer</th>
+                                <th>Invoice Amount</th>
+                                <th>Paid So Far</th>
+                                <th>Outstanding</th>
+                                <th>Payment Status</th>
+                                <th class="text-end pe-4">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="ps-4"><a href="invoice-viewer.html" class="fw-bold text-decoration-none">INV-2023-0145</a><div class="small text-secondary mt-1">Due: 30 Oct 2023</div></td>
+                                <td>Ashok Leyland Dost+</td>
+                                <td>Northwest Commercials</td>
+                                <td class="fw-bold">₹ 7,50,000</td>
+                                <td class="text-success fw-bold">₹ 2,50,000</td>
+                                <td class="text-danger fw-bold">₹ 5,00,000</td>
+                                <td><span class="status-badge status-partial">Partially Paid</span></td>
+                                <td class="text-end pe-4">
+                                    <a href="payment-history.html" class="btn btn-sm btn-outline-primary fw-bold"><i class="fas fa-eye me-1"></i> View Ledger</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="ps-4"><a href="invoice-viewer.html" class="fw-bold text-decoration-none">INV-2023-0162</a><div class="small text-secondary mt-1">Due: 15 Nov 2023</div></td>
+                                <td>Eicher Pro 2049</td>
+                                <td>Global Heavy Equipments</td>
+                                <td class="fw-bold">₹ 13,50,000</td>
+                                <td class="text-muted">₹ 0</td>
+                                <td class="text-danger fw-bold">₹ 13,50,000</td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                                <td class="text-end pe-4">
+                                    <a href="payment-history.html" class="btn btn-sm btn-outline-primary fw-bold"><i class="fas fa-eye me-1"></i> View Ledger</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="ps-4"><a href="invoice-viewer.html" class="fw-bold text-decoration-none">INV-2023-0089</a><div class="small text-danger mt-1">Due: 05 Oct 2023</div></td>
+                                <td>Toyota Innova (Fleet)</td>
+                                <td>Capital Motors</td>
+                                <td class="fw-bold">₹ 29,50,000</td>
+                                <td class="text-success fw-bold">₹ 24,50,000</td>
+                                <td class="text-danger fw-bold">₹ 5,00,000</td>
+                                <td><span class="status-badge status-overdue">Overdue</span></td>
+                                <td class="text-end pe-4">
+                                    <a href="payment-history.html" class="btn btn-sm btn-outline-primary fw-bold"><i class="fas fa-eye me-1"></i> View Ledger</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="alert alert-info border-0 shadow-sm rounded-3">
+            <h6 class="fw-bold mb-2"><i class="fas fa-info-circle me-2 text-primary"></i> Read-Only Financial Tracking</h6>
+            <p class="mb-0 small text-secondary">This dashboard serves as a highly transparent ledger for buyers. The ability to directly make online payments via AutoHub is subjected to platform configurations. For now, offline interactions are monitored and approved by the dealer.</p>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

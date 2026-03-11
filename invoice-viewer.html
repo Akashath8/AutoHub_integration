@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice - AutoHub B2B</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        body { background-color: #f8fafc; }
+        .invoice-card { border: none; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        .invoice-table th { background-color: #f1f5f9; color: #475569; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; border-bottom: 2px solid #e2e8f0; }
+        .invoice-table td { padding: 16px; color: #1e293b; border-bottom: 1px solid #f1f5f9; }
+        .summary-card { background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; }
+        .progress-bar-custom { height: 12px; border-radius: 6px; background-color: #e2e8f0; overflow: hidden; }
+        .progress-filled { height: 100%; background-color: #3b82f6; }
+        .status-badge { padding: 6px 14px; border-radius: 8px; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; }
+        .status-partial { background-color: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg sticky-top bg-white border-bottom shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html" style="color: var(--dark-bg);">AutoHub <span style="color: var(--pink-accent);">Marketplace</span></a>
+            <div class="ms-auto d-flex align-items-center gap-3">
+                <a class="nav-link" href="orders.html"><i class="fas fa-arrow-left me-2"></i>Back to Orders</a>
+                <div class="d-flex align-items-center gap-2 border-start ps-3">
+                    <div class="bg-light rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px;"><i class="fas fa-user text-secondary"></i></div>
+                    <span class="fw-bold" style="color: var(--dark-bg);">Transport Inc.</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h3 class="fw-bold text-dark mb-1">Invoice Viewer</h3>
+                <p class="text-secondary mb-0">Read-only view of the dealer generated invoice and payment status.</p>
+            </div>
+            <div>
+                <a href="payment-history.html" class="btn btn-primary fw-bold px-4 py-2"><i class="fas fa-history me-2"></i>View Payment History</a>
+            </div>
+        </div>
+
+        <div class="card invoice-card bg-white p-5 mb-5">
+            <!-- Header -->
+            <div class="row mb-5">
+                <div class="col-sm-6">
+                    <h2 class="fw-bold text-dark mb-0">INVOICE</h2>
+                    <p class="text-secondary mb-3">INV-2023-0145</p>
+                    <span class="status-badge status-partial"><i class="fas fa-clock me-2"></i>Partially Paid</span>
+                </div>
+                <div class="col-sm-6 text-end">
+                    <p class="text-secondary mb-1">Date of Issue</p>
+                    <h6 class="fw-bold text-dark mb-3">24 Oct, 2023</h6>
+                    <p class="text-secondary mb-1">Order ID</p>
+                    <h6 class="fw-bold text-dark mb-0">ORD-9105</h6>
+                </div>
+            </div>
+
+            <hr class="mb-5">
+
+            <!-- Addresses -->
+            <div class="row mb-5">
+                <div class="col-sm-6">
+                    <p class="text-secondary fw-bold mb-2" style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">Billed To (Buyer)</p>
+                    <h5 class="fw-bold text-dark mb-1">Transport Inc.</h5>
+                    <p class="text-secondary mb-1">104 Logistics Park,</p>
+                    <p class="text-secondary mb-1">Pune, Maharashtra 411014</p>
+                    <p class="text-secondary mb-1">GSTIN: 27AABCT0000A1Z5</p>
+                </div>
+                <div class="col-sm-6 text-end">
+                    <p class="text-secondary fw-bold mb-2" style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;">Issued By (Dealer)</p>
+                    <h5 class="fw-bold text-dark mb-1">Northwest Commercials</h5>
+                    <p class="text-secondary mb-1">Phase 2, Industrial Area,</p>
+                    <p class="text-secondary mb-1">Delhi, 110020</p>
+                    <p class="text-secondary mb-1">GSTIN: 07AABCU0000B1Z6</p>
+                </div>
+            </div>
+
+            <!-- Items Table -->
+            <div class="table-responsive mb-5 border rounded">
+                <table class="table invoice-table mb-0">
+                    <thead>
+                        <tr>
+                            <th class="ps-4">Description</th>
+                            <th class="text-center">HSN/SAC</th>
+                            <th class="text-center">Qty</th>
+                            <th class="text-end">Unit Price</th>
+                            <th class="text-end pe-4">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="ps-4">
+                                <div class="fw-bold text-dark">Ashok Leyland Dost+</div>
+                                <div class="small text-secondary">Variant: LS | Year: 2022 | RTO: DL-01</div>
+                            </td>
+                            <td class="text-center align-middle">8704</td>
+                            <td class="text-center align-middle">1</td>
+                            <td class="text-end align-middle">₹ 6,35,593</td>
+                            <td class="text-end align-middle fw-bold pe-4">₹ 6,35,593</td>
+                        </tr>
+                    </tbody>
+                    <tfoot style="background-color: #f8fafc;">
+                        <tr>
+                            <td colspan="3" class="border-0"></td>
+                            <td class="text-end border-0 pt-4 pb-2 text-secondary">Subtotal</td>
+                            <td class="text-end border-0 pt-4 pb-2 fw-bold pe-4">₹ 6,35,593</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="border-0"></td>
+                            <td class="text-end border-0 py-2 text-secondary">IGST (18%)</td>
+                            <td class="text-end border-0 py-2 fw-bold pe-4">₹ 1,14,407</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="border-0"></td>
+                            <td class="text-end border-0 pt-2 pb-4 fw-bold text-dark fs-5">Invoice Total</td>
+                            <td class="text-end border-0 pt-2 pb-4 fw-bold text-primary fs-5 pe-4">₹ 7,50,000</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <!-- Payment Summary -->
+            <h5 class="fw-bold text-dark mb-3">Payment Summary</h5>
+            <div class="summary-card p-4">
+                <div class="row mb-4">
+                    <div class="col-sm-4">
+                        <p class="text-muted small mb-1 fw-bold text-uppercase">Total Invoice Amount</p>
+                        <h4 class="fw-bold text-dark mb-0">₹ 7,50,000</h4>
+                    </div>
+                    <div class="col-sm-4 border-start ps-sm-4">
+                        <p class="text-muted small mb-1 fw-bold text-uppercase">Total Payments Recorded</p>
+                        <h4 class="fw-bold text-success mb-0">₹ 2,50,000</h4>
+                    </div>
+                    <div class="col-sm-4 border-start ps-sm-4">
+                        <p class="text-muted small mb-1 fw-bold text-uppercase">Remaining Balance</p>
+                        <h4 class="fw-bold text-danger mb-0">₹ 5,00,000</h4>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="mb-2 d-flex justify-content-between">
+                    <span class="small fw-bold text-secondary">Payment Progress</span>
+                    <span class="small fw-bold text-primary">33% Paid</span>
+                </div>
+                <div class="progress-bar-custom mb-3">
+                    <div class="progress-filled" style="width: 33%;"></div>
+                </div>
+                
+                <div class="alert alert-info border-0 bg-info bg-opacity-10 text-dark mb-0" role="alert">
+                    <i class="fas fa-info-circle me-2 text-primary"></i>
+                    <strong>Note:</strong> You have read-only access to this invoice. Payments must be initiated via the dealer or offline arrangements and will be recorded upon receipt. To view all applied payment transactions, please click <strong>View Payment History</strong> at the top of the page.
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

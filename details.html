@@ -64,15 +64,14 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarContent">
-                <ul class="navbar-nav ms-auto align-items-center">
-                    <li class="nav-item">
-                        <a class="nav-link nav-mode-btn buy-btn" href="#" data-mode="buy">Buy</a>
+                <ul class="navbar-nav ms-auto align-items-center gap-2">
+                    <li class="nav-item me-2 position-relative">
+                        <a class="nav-link" href="#" title="Wishlist">
+                            <i class="fas fa-heart text-danger"></i>
+                        </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link nav-mode-btn rent-btn" href="#" data-mode="rent">Rent</a>
-                    </li>
-                    <li class="nav-item me-2">
-                        <a class="nav-link nav-mode-btn sell-btn" href="#" data-mode="sell">Sell</a>
+                    <li class="nav-item d-none" id="navQuotations">
+                        <a class="nav-link nav-mode-btn rent-btn" href="my-quotes.html">Quotations</a>
                     </li>
                     <li class="nav-item me-1 nav-bell-wrap">
                         <a class="nav-link" href="#" title="Notifications"><i class="fas fa-bell"></i></a>
@@ -145,7 +144,7 @@
 
                             <div class="text-center mt-2">
                                 <span class="text-muted small">New to AutoHub?</span>
-                                <a href="#" class="text-decoration-none fw-bold small ms-1"
+                                <a href="register.html" class="text-decoration-none fw-bold small ms-1"
                                     style="color: #8e44ad;">Create New Account</a>
                             </div>
                         </form>
@@ -272,12 +271,14 @@
                 profileArea.innerHTML = `
                     <div class="dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown">
-                            <i class="fas fa-user-circle fa-lg text-primary"></i> <span class="fw-bold ms-1">${user.firstName}</span>
+                            <i class="fas fa-building fa-lg text-primary"></i> <span class="fw-bold ms-1">${user.companyName || user.firstName}</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end shadow border-0" style="border-radius: 8px;">
+                            ${user.role === 'Dealer' ? '<li><a class="dropdown-item py-2 fw-bold text-primary" href="dealer-dashboard.html"><i class="fas fa-tachometer-alt me-3 text-primary"></i>Dealer Dashboard</a></li>' : ''}
+                            <li><a class="dropdown-item py-2" href="#"><i class="fas fa-user me-3 text-muted"></i>My Profile</a></li>
                             <li><a class="dropdown-item py-2" href="orders.html"><i class="fas fa-box me-3 text-muted"></i>My Orders</a></li>
-                            <li><a class="dropdown-item py-2" href="my-quotes.html"><i class="fas fa-file-invoice me-3 text-muted"></i>My Quotations</a></li>
-                            <li><a class="dropdown-item py-2" href="my-test-drives.html"><i class="fas fa-car me-3 text-muted"></i>My Test Drives</a></li>
+                            <li><a class="dropdown-item py-2" href="my-quotes.html"><i class="fas fa-file-invoice me-3 text-muted"></i>Quotations</a></li>
+                            <li><a class="dropdown-item py-2" href="documents.html"><i class="fas fa-folder-open me-3 text-muted"></i>Documents</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item py-2 text-danger" href="#" id="logoutBtn"><i class="fas fa-sign-out-alt me-3"></i>Logout</a></li>
                         </ul>
@@ -286,8 +287,12 @@
                 document.getElementById('logoutBtn').addEventListener('click', (e) => {
                     e.preventDefault();
                     store.logoutUser();
-                    window.location.reload();
+                    if(user.role === 'Dealer') window.location.href = 'index.html';
+                    else window.location.reload();
                 });
+
+                // Unhide guarded links
+                document.getElementById('navQuotations')?.classList.remove('d-none');
             } else {
                 profileArea.innerHTML = `
                     <button class="btn btn-outline-primary btn-sm px-4 rounded-pill fw-bold mt-1" id="navLoginBtn">Login / Sign Up</button>
@@ -371,7 +376,8 @@
                         <h2 class="fw-bold mb-2">${vehicle.name}</h2>
                         <div class="mb-3">
                             <span class="badge bg-light text-dark border me-2"><i class="fas fa-map-marker-alt text-danger"></i> ${vehicle.location}</span>
-                            <span class="badge bg-light text-dark border"><i class="fas fa-user text-primary"></i> ${vehicle.owner}</span>
+                            ${vehicle.dealerTrustStatus === 'Trusted Dealer' ? '<span class="badge bg-success me-2"><i class="fas fa-shield-alt"></i> Trusted Dealer</span>' : '<span class="badge bg-secondary me-2">Non-Trusted Dealer</span>'}
+                            <span class="badge bg-light text-dark border"><i class="fas fa-building text-primary"></i> ${vehicle.sellerName}</span>
                         </div>
                         
                         <h1 class="text-danger fw-bold mb-4">₹ ${vehicle.price.toLocaleString('en-IN')}</h1>
@@ -413,9 +419,15 @@
                         </div>
 
                         <div class="d-grid gap-3">
-                            <button id="buyNowBtn" class="btn btn-primary btn-lg">Buy Now</button>
-                            <button id="quoteBtn" class="btn btn-outline-dark btn-lg">Request Quotation</button>
-                            <button id="bookTestDriveBtn" class="btn btn-outline-secondary btn-lg" data-id="${vehicle.id}">Book Test Drive</button>
+                            ${vehicle.isAuction ? `
+                            <a href="auction-subscription.html" class="btn btn-warning btn-lg fw-bold w-100">Participate in Auction <i class="fas fa-gavel ms-1"></i></a>
+                            ` : `
+                            <div class="d-flex gap-2">
+                                <button id="quoteBtn" class="btn btn-outline-primary btn-lg fw-bold flex-grow-1">Request Quote</button>
+                                <button id="buyNowBtn" class="btn btn-primary btn-lg fw-bold flex-grow-1">Buy Now</button>
+                            </div>
+                            <button id="bookTestDriveBtn" class="btn btn-outline-dark btn-lg fw-bold" data-id="${vehicle.id}">Book Test Drive</button>
+                            `}
                         </div>
                     </div>
                 </div>
@@ -424,65 +436,80 @@
             document.getElementById('detailsContainer').innerHTML = html;
 
             // Handlers
-            document.getElementById('buyNowBtn').addEventListener('click', () => {
-                if (!store.getUser()?.isLoggedIn) {
-                    new bootstrap.Modal(document.getElementById('authModal')).show();
-                    return;
-                }
-                store.addToCart(vehicle);
-                window.location.href = 'cart.html';
-            });
-
-            document.getElementById('quoteBtn').addEventListener('click', () => {
-                if (!store.getUser()?.isLoggedIn) {
-                    new bootstrap.Modal(document.getElementById('authModal')).show();
-                    return;
-                }
-                window.location.href = `quotation.html?id=${vehicle.id}`;
-            });
-
-            document.getElementById('bookTestDriveBtn').addEventListener('click', () => {
-                if (!store.getUser()?.isLoggedIn) {
-                    sessionStorage.setItem('pendingTestDriveId', vehicle.id);
-                    new bootstrap.Modal(document.getElementById('authModal')).show();
-                    return;
-                }
-
-                // Setup Modal
-                document.getElementById('tdVehicleImg').src = vehicle.image;
-                document.getElementById('tdVehicleName').textContent = `${vehicle.year} ${vehicle.name}`;
-                document.getElementById('tdVehicleLocation').textContent = vehicle.hubLocation;
-                document.getElementById('tdVehicleSeller').textContent = vehicle.sellerName;
-                document.getElementById('tdVehicleFuel').textContent = vehicle.fuel;
-                document.getElementById('tdVehicleTransmission').textContent = vehicle.transmission;
-                document.getElementById('tdVehicleId').value = vehicle.id;
-
-                // Default user values
-                const u = store.getUser();
-                document.getElementById('tdName').value = u.firstName || '';
-                document.getElementById('tdEmail').value = u.email || '';
-
-                // Set minimum date to tomorrow
-                const tmr = new Date();
-                tmr.setDate(tmr.getDate() + 1);
-                document.getElementById('tdDate').min = tmr.toISOString().split("T")[0];
-
-                // Set locations
-                const locSelect = document.getElementById('tdLoc');
-                locSelect.innerHTML = `<option value="">Select Location</option>`;
-
-                const locs = [vehicle.hubLocation];
-                if (!locs[0].includes('Mumbai')) locs.push(vehicle.hubLocation.replace(/,[^,]*$/, ', Mumbai'));
-                if (!locs[0].includes('Bangalore')) locs.push(vehicle.hubLocation.replace(/,[^,]*$/, ', Bangalore'));
-                locs.forEach(l => {
-                    locSelect.innerHTML += `<option value="${l}">${l}</option>`;
+            const quoteBtn = document.getElementById('quoteBtn');
+            if (quoteBtn) {
+                quoteBtn.addEventListener('click', () => {
+                    if (!store.getUser()?.isLoggedIn) {
+                        new bootstrap.Modal(document.getElementById('authModal')).show();
+                        return;
+                    }
+                    window.location.href = `quotation.html?ids=${vehicle.id}`;
                 });
+            }
 
-                // Select default Location
-                locSelect.value = vehicle.hubLocation;
+            const buyNowBtn = document.getElementById('buyNowBtn');
+            if (buyNowBtn) {
+                buyNowBtn.addEventListener('click', () => {
+                    if (!store.getUser()?.isLoggedIn) {
+                        new bootstrap.Modal(document.getElementById('authModal')).show();
+                        return;
+                    }
+                    const cart = store.getCart();
+                    const existing = cart.items.find(i => i.id === vehicle.id);
+                    if (!existing) {
+                        cart.items.push({ ...vehicle, quantity: 1 });
+                        store.recalculateCartTotal(cart);
+                        store.saveCart(cart);
+                    }
+                    window.location.href = 'cart.html';
+                });
+            }
 
-                new bootstrap.Modal(document.getElementById('testDriveModal')).show();
-            });
+            const testDriveBtn = document.getElementById('bookTestDriveBtn');
+            if (testDriveBtn) {
+                testDriveBtn.addEventListener('click', () => {
+                    if (!store.getUser()?.isLoggedIn) {
+                        sessionStorage.setItem('pendingTestDriveId', vehicle.id);
+                        new bootstrap.Modal(document.getElementById('authModal')).show();
+                        return;
+                    }
+                    
+                    // Setup Modal
+                    document.getElementById('tdVehicleImg').src = vehicle.image;
+                    document.getElementById('tdVehicleName').textContent = `${vehicle.year} ${vehicle.name}`;
+                    document.getElementById('tdVehicleLocation').textContent = vehicle.hubLocation;
+                    document.getElementById('tdVehicleSeller').textContent = vehicle.sellerName;
+                    document.getElementById('tdVehicleFuel').textContent = vehicle.fuel;
+                    document.getElementById('tdVehicleTransmission').textContent = vehicle.transmission;
+                    document.getElementById('tdVehicleId').value = vehicle.id;
+
+                    // Default user values
+                    const u = store.getUser();
+                    document.getElementById('tdName').value = u.firstName || '';
+                    document.getElementById('tdEmail').value = u.email || '';
+
+                    // Set minimum date to tomorrow
+                    const tmr = new Date();
+                    tmr.setDate(tmr.getDate() + 1);
+                    document.getElementById('tdDate').min = tmr.toISOString().split("T")[0];
+
+                    // Set locations
+                    const locSelect = document.getElementById('tdLoc');
+                    locSelect.innerHTML = `<option value="">Select Location</option>`;
+
+                    const locs = [vehicle.hubLocation];
+                    if (!locs[0].includes('Mumbai')) locs.push(vehicle.hubLocation.replace(/,[^,]*$/, ', Mumbai'));
+                    if (!locs[0].includes('Bangalore')) locs.push(vehicle.hubLocation.replace(/,[^,]*$/, ', Bangalore'));
+                    locs.forEach(l => {
+                        locSelect.innerHTML += `<option value="${l}">${l}</option>`;
+                    });
+
+                    // Select default Location
+                    locSelect.value = vehicle.hubLocation;
+
+                    new bootstrap.Modal(document.getElementById('testDriveModal')).show();
+                });
+            }
 
             // Handle Form Submission
             document.getElementById('testDriveForm').addEventListener('submit', (e) => {

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auction Subscription - AutoHub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        .pricing-card {
+            border: 2px solid transparent;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .pricing-card:hover, .pricing-card.selected {
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .pricing-card.popular {
+            border-color: var(--primary-color);
+            position: relative;
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary-color);
+            color: white;
+            padding: 2px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar Simplified -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">AutoHub <span class="text-accent">Marketplace</span></a>
+            <a href="index.html" class="btn btn-outline-secondary btn-sm"><i class="fas fa-arrow-left me-1"></i> Back to Home</a>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Unlock AutoHub <span class="text-warning">Auctions</span></h2>
+            <p class="text-muted lead">Access exclusive B2B inventory at wholesale prices. Subscribe to participate in daily live auctions.</p>
+        </div>
+
+        <div class="row justify-content-center g-4">
+            <!-- Basic Plan -->
+            <div class="col-md-4">
+                <div class="card pricing-card h-100 p-4 text-center" onclick="selectPlan('basic', 2999)">
+                    <div class="card-body">
+                        <h4 class="fw-bold text-muted mb-3">Monthly Basic</h4>
+                        <h2 class="display-5 fw-bold mb-4">₹2,999<span class="fs-6 text-muted fw-normal">/mo</span></h2>
+                        <ul class="list-unstyled text-start mb-4">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Access to all live auctions</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Standard bidding limits</li>
+                            <li class="mb-2"><i class="fas fa-times text-danger me-2"></i> No Auto-Bid feature</li>
+                            <li class="mb-2"><i class="fas fa-times text-danger me-2"></i> Standard Support</li>
+                        </ul>
+                        <button class="btn btn-outline-primary w-100 fw-bold plan-btn">Select Plan</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pro Plan -->
+            <div class="col-md-4">
+                <div class="card pricing-card popular h-100 p-4 text-center" onclick="selectPlan('pro', 24999)">
+                    <div class="popular-badge">MOST POPULAR</div>
+                    <div class="card-body">
+                        <h4 class="fw-bold text-primary mb-3">Annual Pro</h4>
+                        <h2 class="display-5 fw-bold mb-4">₹24,999<span class="fs-6 text-muted fw-normal">/yr</span></h2>
+                        <ul class="list-unstyled text-start mb-4">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Access to all live auctions</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Unlimited bidding limits</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Auto-Bid feature enabled</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Priority 24/7 Support</li>
+                        </ul>
+                        <button class="btn btn-primary w-100 fw-bold plan-btn text-white">Select Plan</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div class="modal fade" id="paymentModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg">
+                <div class="modal-header border-bottom-0 pb-0">
+                    <h5 class="modal-title fw-bold">Confirm Subscription</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4 text-center">
+                    <i class="fas fa-gem text-warning fa-3x mb-3"></i>
+                    <h4 id="selectedPlanName" class="mb-2">Plan Name</h4>
+                    <p class="text-muted mb-4">Total Amount: <strong class="fs-5 text-dark" id="selectedPlanPrice">₹0</strong></p>
+                    
+                    <button id="paySubBtn" class="btn btn-success w-100 fw-bold py-2 mb-2">Pay & Activate Subscription</button>
+                    <p class="small text-muted mt-2"><i class="fas fa-lock me-1"></i> Secure payment processing</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/store.js"></script>
+    <script>
+        let selectedPlan = null;
+        const paymentModal = new bootstrap.Modal(document.getElementById('paymentModal'));
+
+        function selectPlan(plan, price) {
+            const user = store.getUser();
+            if (!user || !user.isLoggedIn) {
+                alert("Please login to subscribe to auctions.");
+                window.location.href = 'login.html';
+                return;
+            }
+
+            selectedPlan = { plan, price };
+            document.getElementById('selectedPlanName').textContent = plan === 'basic' ? 'Monthly Basic Plan' : 'Annual Pro Plan';
+            document.getElementById('selectedPlanPrice').textContent = '₹' + price.toLocaleString('en-IN');
+            
+            paymentModal.show();
+        }
+
+        document.getElementById('paySubBtn').addEventListener('click', () => {
+            const btn = document.getElementById('paySubBtn');
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Processing...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                const user = store.getUser();
+                user.isAuctionSubscribed = true;
+                user.auctionPlan = selectedPlan.plan;
+                store.saveUser(user);
+
+                alert("Subscription activated successfully! You now have access to Live Auctions.");
+                window.location.href = 'index.html'; // Or redirect to an actual auction portal if built later
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

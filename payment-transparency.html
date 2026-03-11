@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Flow Transparency - AutoHub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        body { background-color: #f8fafc; }
+        .flow-node {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            border: 2px solid transparent;
+            position: relative;
+            z-index: 2;
+            width: 280px;
+        }
+        .node-buyer { border-color: #3b82f6; }
+        .node-dealer { border-color: #8b5cf6; }
+        .node-platform { border-color: #10b981; }
+        
+        .flow-line {
+            width: 2px;
+            background-color: #cbd5e1;
+            margin: 0 auto;
+            height: 40px;
+            position: relative;
+            z-index: 1;
+        }
+        .flow-line::after {
+            content: '\f0dd';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            bottom: -15px;
+            left: -4px;
+            color: #cbd5e1;
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg sticky-top bg-white border-bottom shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html" style="color: var(--dark-bg);">AutoHub <span style="color: var(--pink-accent);">Marketplace</span></a>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav ms-auto align-items-center gap-3">
+                    <li class="nav-item"><a class="nav-link fw-bold" href="buyer-dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="orders.html">My Orders</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="payment-transparency.html">Payment Flow</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold text-dark">How Money Flows on AutoHub</h2>
+            <p class="text-secondary">Understanding our secure, dealer-verified payment ecosystem.</p>
+        </div>
+
+        <div class="d-flex flex-column align-items-center">
+            
+            <!-- Step 1 -->
+            <div class="d-flex align-items-start gap-4 mb-2">
+                <div class="flow-node node-buyer">
+                    <div class="mb-3">
+                        <i class="fas fa-user-circle text-primary" style="font-size: 2.5rem;"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2">1. Buyer Purchase</h5>
+                    <p class="small text-muted mb-0">You explore the marketplace, select commercial vehicles, and finalize the purchase order online.</p>
+                </div>
+            </div>
+            
+            <div class="flow-line"></div>
+
+            <!-- Step 2 -->
+            <div class="d-flex align-items-start gap-4 mb-2">
+                <div class="flow-node node-dealer">
+                    <div class="mb-3">
+                        <i class="fas fa-file-invoice-dollar text-purple" style="font-size: 2.5rem; color:#8b5cf6;"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2">2. Dealer Generates Invoice</h5>
+                    <p class="small text-muted mb-0">The supplier dealer validates the order and structures a formal tax invoice mapped directly to your PO.</p>
+                </div>
+            </div>
+
+            <div class="flow-line"></div>
+
+            <!-- Step 3 -->
+            <div class="d-flex align-items-start gap-4 mb-2">
+                <div class="flow-node node-buyer" style="border-color: #64748b;">
+                    <div class="mb-3">
+                        <i class="fas fa-money-bill-wave text-secondary" style="font-size: 2.5rem;"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2">3. Payment Execution (Offline)</h5>
+                    <p class="small text-muted mb-0">You process the payment via Bank Transfer, RTGS, or Cheque directly to the Dealer's registered bank account.</p>
+                </div>
+            </div>
+
+            <div class="flow-line"></div>
+
+            <!-- Step 4 -->
+            <div class="d-flex align-items-start gap-4 mb-2">
+                <div class="flow-node node-dealer">
+                    <div class="mb-3">
+                        <i class="fas fa-keyboard text-purple" style="font-size: 2.5rem; color:#8b5cf6;"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2">4. Dealer Records Payment</h5>
+                    <p class="small text-muted mb-0">Upon receiving the funds in their bank account, the dealer manually logs the receipt into AutoHub.</p>
+                </div>
+            </div>
+
+            <div class="flow-line"></div>
+
+            <!-- Step 5 -->
+            <div class="d-flex align-items-start gap-4 mb-2">
+                <div class="flow-node node-platform" style="border-width: 3px;">
+                    <div class="mb-3">
+                        <i class="fas fa-check-double text-success" style="font-size: 2.5rem;"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2 text-dark">5. Transaction Settled</h5>
+                    <p class="small text-muted mb-0">AutoHub automatically allocates the recorded payment to the invoice, calculates outstanding balances, and finalizes the ledger.</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

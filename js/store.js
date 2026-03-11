@@ -17,7 +17,7 @@ class Store {
 
         // Initialize empty states if not present
         if (!this.getUser()) {
-            // Mock persistent user for demo if needed, or leave null
+            // No default mock user to force login/register flow, or leave null for demo
         }
         if (!this.getCart()) {
             this.saveCart({ items: [], total: 0 });
@@ -119,37 +119,39 @@ class Store {
             return quotes;
         }
 
-        // Seed with a mock quotation of a single seller having multiple vehicles
+        // Seed with a mock quotation of a dealer having multiple vehicles
         const seededQuotes = [
             {
                 id: 'QT-849201',
                 category: 'Pre-Owned',
-                type: 'Buy',
+                type: 'B2B Purchase',
                 brand: 'Multiple Brands',
                 productName: 'Multiple Vehicles',
                 price: 2450650,
                 offerPrice: 2400000,
                 quantity: 2,
-                sellerName: 'Deshpande Auto, Pune',
+                sellerName: 'Deshpande Commercials, Pune',
+                buyerCompany: 'TechLogistics Corp',
+                status: 'Pending Negotiation',
                 receivedDate: new Date().toLocaleDateString('en-GB'),
                 vehicles: [
                     {
                         id: 'v1',
-                        name: 'Hyundai i10 Neo',
-                        brand: 'Hyundai',
-                        price: 850650,
-                        year: 2022,
-                        km: 42000,
-                        image: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&q=80&w=400'
+                        name: 'Tata Ace Gold',
+                        brand: 'Tata',
+                        price: 480000,
+                        year: 2023,
+                        km: 5000,
+                        image: 'https://images.unsplash.com/photo-1594042878693-514add1d4411?auto=format&fit=crop&q=80&w=400'
                     },
                     {
                         id: 'v5',
-                        name: 'Mahindra Thar',
-                        brand: 'Mahindra',
-                        price: 1600000,
+                        name: 'Ashok Leyland Dost+',
+                        brand: 'Ashok Leyland',
+                        price: 750000,
                         year: 2022,
                         km: 15000,
-                        image: 'https://images.unsplash.com/photo-1606161290610-c529a674d89a?auto=format&fit=crop&q=80&w=400'
+                        image: 'https://images.unsplash.com/photo-1626668893632-6f3c4466d22f?auto=format&fit=crop&q=80&w=400'
                     }
                 ]
             }

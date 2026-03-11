@@ -6,8 +6,15 @@
     /* Primary Palette - Deep Navy based */
     --primary-color: #1a1a2e;
     --secondary-color: #16213e;
-    --accent-color: #e94560;
+    --accent-color: #ff477e;
     /* Vibrant Red/Pink for specific callouts */
+
+    /* New Landing Page Theme Variables */
+    --cyan-accent: #00e5ff;
+    --pink-accent: #ff477e;
+    --orange-accent: #f59e0b;
+    --dark-bg: #0f172a;
+    --dark-card: #1e293b;
 
     /* Functional Colors */
     --text-primary: #333333;
@@ -346,4 +353,54 @@ h6 {
     border-radius: 20px;
     font-size: 0.82rem;
     padding: 0.3rem 0.75rem;
+}
+
+/* --- Landing Page Overhaul Styles --- */
+.bg-dark-navy {
+    background-color: var(--dark-bg);
+}
+.bg-dark-card {
+    background-color: var(--dark-card);
+}
+.text-cyan {
+    color: var(--cyan-accent) !important;
+}
+.text-pink {
+    color: var(--pink-accent) !important;
+}
+.text-orange {
+    color: var(--orange-accent) !important;
+}
+.btn-cyan {
+    background-color: var(--cyan-accent);
+    border-color: var(--cyan-accent);
+    color: #000;
+    font-weight: 600;
+}
+.btn-cyan:hover {
+    background-color: #00b8d4;
+    border-color: #00b8d4;
+    color: #000;
+}
+.btn-pink {
+    background-color: var(--pink-accent);
+    border-color: var(--pink-accent);
+    color: #fff;
+    font-weight: 600;
+}
+.btn-pink:hover {
+    background-color: #e03e6e;
+    border-color: #e03e6e;
+    color: #fff;
+}
+.btn-orange {
+    background-color: var(--orange-accent);
+    border-color: var(--orange-accent);
+    color: #fff;
+    font-weight: 600;
+}
+.btn-orange:hover {
+    background-color: #d97706;
+    border-color: #d97706;
+    color: #fff;
 }

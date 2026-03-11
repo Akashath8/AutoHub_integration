@@ -48,15 +48,14 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarContent">
-                <ul class="navbar-nav ms-auto align-items-center">
-                    <li class="nav-item">
-                        <a class="nav-link nav-mode-btn buy-btn" href="#" data-mode="buy">Buy</a>
+                <ul class="navbar-nav ms-auto align-items-center gap-2">
+                    <li class="nav-item me-2 position-relative">
+                        <a class="nav-link" href="#" title="Wishlist">
+                            <i class="fas fa-heart text-danger"></i>
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-mode-btn rent-btn" href="#" data-mode="rent">Rent</a>
-                    </li>
-                    <li class="nav-item me-2">
-                        <a class="nav-link nav-mode-btn sell-btn" href="#" data-mode="sell">Sell</a>
+                        <a class="nav-link nav-mode-btn rent-btn" href="my-quotes.html">Quotations</a>
                     </li>
                     <li class="nav-item me-1 nav-bell-wrap">
                         <a class="nav-link" href="#" title="Notifications"><i class="fas fa-bell"></i></a>
@@ -70,22 +69,11 @@
                                 id="cartCount">0</span>
                         </a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle active" href="#" id="profileDropdown" role="button"
-                            data-bs-toggle="dropdown">
-                            <i class="fas fa-user-circle fa-lg"></i> <span id="userName">User</span>
+                    <li class="nav-item dropdown" id="navProfileArea">
+                        <a class="nav-link dropdown-toggle active" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-building fa-lg text-primary"></i> <span id="userName" class="fw-bold ms-1">User</span>
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item active" href="orders.html"><i
-                                        class="fas fa-box me-2 text-muted"></i>My Orders</a></li>
-                            <li><a class="dropdown-item" href="my-quotes.html"><i
-                                        class="fas fa-file-invoice me-2 text-muted"></i>My Quotations</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item text-danger" href="#" id="logoutBtn"><i
-                                        class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
-                        </ul>
+                        <!-- Populated by JS -->
                     </li>
                 </ul>
             </div>
@@ -93,7 +81,7 @@
     </nav>
 
     <div class="container py-5">
-        <h3 class="mb-4">My Orders & Applications</h3>
+        <h3 class="mb-4">Transaction Ledger <span class="badge bg-secondary ms-2" style="font-size: 0.9rem;">Powered by LOS</span></h3>
 
         <div class="card shadow-sm border-0">
             <div class="card-body p-0">
@@ -102,16 +90,81 @@
                         <thead class="bg-light">
                             <tr>
                                 <th class="ps-4">Order ID</th>
-                                <th>Vehicle</th>
-                                <th>Date</th>
-                                <th>Amount</th>
-                                <th>Payment Mode</th>
-                                <th>Status</th>
-                                <th class="text-end pe-4">Action</th>
+                                <th>Product Name</th>
+                                <th>Dealer Name</th>
+                                <th>Invoice No.</th>
+                                <th>Invoice Amount</th>
+                                <th>Amt Received</th>
+                                <th>Outstanding</th>
+                                <th>Payment Status</th>
+                                <th class="text-end pe-4">Actions</th>
                             </tr>
                         </thead>
                         <tbody id="ordersBody">
-                            <!-- Populated via JS -->
+                            <!-- Dummy Data for Financial Flow Prototype -->
+                            <tr>
+                                <td class="ps-4 fw-bold text-primary">ORD-9021</td>
+                                <td><div class="text-truncate" style="max-width: 150px;" title="Tata Ace Gold">Tata Ace Gold</div></td>
+                                <td><div class="text-truncate" style="max-width: 150px;" title="Deshpande Commercials">Deshpande Commercials</div></td>
+                                <td>INV-2023-0104</td>
+                                <td class="fw-bold">₹ 4,80,000</td>
+                                <td class="text-success fw-bold">₹ 4,80,000</td>
+                                <td class="text-muted">₹ 0</td>
+                                <td><span class="badge bg-success">Paid</span></td>
+                                <td class="text-end pe-4">
+                                    <div class="dropdown">
+                                        <button class="btn btn-sm btn-light border dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                            Actions
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+                                            <li><a class="dropdown-item" href="invoice-viewer.html"><i class="fas fa-file-invoice text-primary me-2"></i>View Invoice</a></li>
+                                            <li><a class="dropdown-item" href="financial-overview.html"><i class="fas fa-chart-pie text-info me-2"></i>View Financial Details</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="ps-4 fw-bold text-primary">ORD-9105</td>
+                                <td><div class="text-truncate" style="max-width: 150px;" title="Ashok Leyland Dost+">Ashok Leyland Dost+</div></td>
+                                <td><div class="text-truncate" style="max-width: 150px;" title="Northwest Commercials">Northwest Commercials</div></td>
+                                <td>INV-2023-0145</td>
+                                <td class="fw-bold">₹ 7,50,000</td>
+                                <td class="text-success fw-bold">₹ 2,50,000</td>
+                                <td class="text-danger fw-bold">₹ 5,00,000</td>
+                                <td><span class="badge bg-warning text-dark">Partially Paid</span></td>
+                                <td class="text-end pe-4">
+                                    <div class="dropdown">
+                                        <button class="btn btn-sm btn-light border dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                            Actions
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+                                            <li><a class="dropdown-item" href="invoice-viewer.html"><i class="fas fa-file-invoice text-primary me-2"></i>View Invoice</a></li>
+                                            <li><a class="dropdown-item" href="financial-overview.html"><i class="fas fa-chart-pie text-info me-2"></i>View Financial Details</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="ps-4 fw-bold text-primary">ORD-9112</td>
+                                <td><div class="text-truncate" style="max-width: 150px;" title="Eicher Pro 2049">Eicher Pro 2049</div></td>
+                                <td><div class="text-truncate" style="max-width: 150px;" title="Global Heavy Equipments">Global Heavy Eq.</div></td>
+                                <td>INV-2023-0162</td>
+                                <td class="fw-bold">₹ 13,50,000</td>
+                                <td class="text-muted">₹ 0</td>
+                                <td class="text-danger fw-bold">₹ 13,50,000</td>
+                                <td><span class="badge bg-secondary">Pending</span></td>
+                                <td class="text-end pe-4">
+                                    <div class="dropdown">
+                                        <button class="btn btn-sm btn-light border dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                            Actions
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+                                            <li><a class="dropdown-item" href="invoice-viewer.html"><i class="fas fa-file-invoice text-primary me-2"></i>View Invoice</a></li>
+                                            <li><a class="dropdown-item" href="financial-overview.html"><i class="fas fa-chart-pie text-info me-2"></i>View Financial Details</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -124,13 +177,13 @@
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content border-0 shadow-lg">
                 <div class="modal-header border-bottom-0 pb-0">
-                    <h5 class="modal-title fw-bold">Order Details</h5>
+                    <h5 class="modal-title fw-bold">Deal Details</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body pt-3 pb-4">
                     <div class="mb-4 d-flex justify-content-between border-bottom pb-3">
                         <div>
-                            <div class="text-muted small">Master Order ID</div>
+                            <div class="text-muted small">Master Deal ID</div>
                             <div class="fw-bold fs-5 text-primary" id="modalMasterOrderId">-</div>
                         </div>
                         <div class="text-end">
@@ -139,7 +192,7 @@
                         </div>
                     </div>
 
-                    <h6 class="fw-bold mb-3">Seller Sub-Orders</h6>
+                    <h6 class="fw-bold mb-3">Seller Transaction Details</h6>
                     <div id="modalSubOrdersList">
                         <!-- Populated by JS -->
                     </div>
@@ -155,56 +208,36 @@
         document.addEventListener('DOMContentLoaded', () => {
             const user = store.getUser();
             if (!user) { window.location.href = 'login.html'; return; }
-            document.getElementById('userName').textContent = user.firstName;
+            document.getElementById('userName').textContent = user.companyName || user.firstName;
             document.getElementById('cartCount').textContent = store.getCart().items.length;
 
-            document.getElementById('logoutBtn').addEventListener('click', () => {
-                store.logoutUser();
-                window.location.href = 'login.html';
-            });
-
-            const orders = store.getOrders();
-            const tbody = document.getElementById('ordersBody');
-
-            if (orders.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" class="text-center py-5 text-muted">No orders found.</td></tr>`;
-                return;
+            const profileArea = document.getElementById('navProfileArea');
+            if(profileArea) {
+                const ul = document.createElement('ul');
+                ul.className = "dropdown-menu dropdown-menu-end shadow border-0";
+                ul.style.borderRadius = "8px";
+                ul.innerHTML = `
+                    ${user.role === 'Dealer' ? '<li><a class="dropdown-item py-2 fw-bold text-primary" href="dealer-dashboard.html"><i class="fas fa-tachometer-alt me-3 text-primary"></i>Dealer Dashboard</a></li>' : ''}
+                    <li><a class="dropdown-item py-2" href="#"><i class="fas fa-user me-3 text-muted"></i>My Profile</a></li>
+                    <li><a class="dropdown-item py-2 mb-1 bg-light text-primary" href="orders.html"><i class="fas fa-box me-3 text-primary"></i>My Orders</a></li>
+                    <li><a class="dropdown-item py-2" href="my-quotes.html"><i class="fas fa-file-invoice me-3 text-muted"></i>Quotations</a></li>
+                    <li><a class="dropdown-item py-2" href="documents.html"><i class="fas fa-folder-open me-3 text-muted"></i>Documents</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item py-2 text-danger" href="#" id="logoutBtn"><i class="fas fa-sign-out-alt me-3"></i>Logout</a></li>
+                `;
+                profileArea.appendChild(ul);
             }
 
-            orders.forEach((order, index) => {
-                const vehicleName = order.items.map(i => i.name).join(', ');
-
-                // Determine Status Badge Color
-                let statusBadge = 'bg-success';
-                let statusText = order.status;
-                if (order.paymentMode === 'Finance') {
-                    statusText = order.loanStatus || 'Pending';
-                    if (statusText === 'Submitted') statusBadge = 'bg-info text-dark';
-                    else if (statusText === 'Approved') statusBadge = 'bg-success';
-                    else if (statusText === 'Rejected') statusBadge = 'bg-danger';
-                    else statusBadge = 'bg-warning text-dark';
-                }
-
-                const isFinance = order.paymentMode === 'Finance';
-                const tr = `
-                    <tr>
-                        <td class="ps-4 fw-bold text-primary">${order.id}</td>
-                        <td class="text-truncate" style="max-width: 200px;" title="${vehicleName}">${vehicleName}</td>
-                        <td>${order.date}</td>
-                        <td class="fw-bold">₹ ${order.total ? order.total.toLocaleString('en-IN') : 0}</td>
-                        <td>${order.paymentMode}${isFinance ? ' <span class="badge bg-light text-purple border" style="font-size:0.65rem;color:#5b2ec9;">Loan App.</span>' : ''}</td>
-                        <td><span class="badge ${statusBadge}">${statusText}</span></td>
-                        <td class="text-end pe-4">
-                            <div class="d-flex gap-2 justify-content-end">
-                                <button class="btn btn-sm btn-outline-primary view-details-btn" data-order-index="${index}">View Details</button>
-                                ${isFinance ? `<a href="loan-status.html" class="btn btn-sm text-white" style="background:#5b2ec9;font-size:0.8rem;">View Loan Status <i class="fas fa-arrow-right ms-1"></i></a>` : ''}
-                            </div>
-                        </td>
-                    </tr>
-                `;
-                tbody.innerHTML += tr;
+            document.getElementById('logoutBtn').addEventListener('click', (e) => {
+                e.preventDefault();
+                store.logoutUser();
+                if(user.role === 'Dealer') window.location.href = 'index.html';
+                else window.location.href = 'index.html';
             });
 
+            const tbody = document.getElementById('ordersBody');
+
+            // JS data loading commented out for purely static prototype representation
             // Event Delegation for Order Details Modal
             document.getElementById('ordersBody').addEventListener('click', (e) => {
                 const btn = e.target.closest('.view-details-btn');
@@ -228,36 +261,37 @@
                         order.subOrders.forEach(so => {
                             let statusColor = 'text-warning';
                             if (so.payout_status === 'Paid' || so.payout_status === 'Payout Completed') statusColor = 'text-success';
-                            if (so.payout_status === 'Pending Downpayment') statusColor = 'text-danger fw-bold';
+                                if (so.payout_status === 'Pending Escrow') statusColor = 'text-primary fw-bold';
+                                if (so.payout_status === 'Pending Downpayment' || so.payout_status === 'Pending Payment') statusColor = 'text-danger fw-bold';
 
-                            // Generate Items List for this Sub-Order
-                            let itemsHtml = '';
-                            if (so.items && Array.isArray(so.items)) {
-                                so.items.forEach(v => {
-                                    itemsHtml += `
-                                        <div class="d-flex align-items-center mt-3 pt-2 border-top">
-                                            <img src="${v.image || ''}" alt="${v.name || 'Vehicle'}" class="rounded" style="width: 50px; height: 35px; object-fit: cover;">
-                                            <div class="ms-3 flex-grow-1">
-                                                <div class="fw-bold small text-dark">${v.name || 'Unknown'}</div>
-                                                <div class="text-muted" style="font-size: 0.65rem;">${v.year || '-'} | ${(Number(v.km) || 0).toLocaleString('en-IN')} km</div>
+                                // Generate Items List for this Sub-Order
+                                let itemsHtml = '';
+                                if (so.items && Array.isArray(so.items)) {
+                                    so.items.forEach(v => {
+                                        itemsHtml += `
+                                            <div class="d-flex align-items-center mt-3 pt-2 border-top">
+                                                <img src="${v.image || ''}" alt="${v.name || 'Vehicle'}" class="rounded" style="width: 50px; height: 35px; object-fit: cover;">
+                                                <div class="ms-3 flex-grow-1">
+                                                    <div class="fw-bold small text-dark">${v.name || 'Unknown'}</div>
+                                                    <div class="text-muted" style="font-size: 0.65rem;">${v.year || '-'} | ${(Number(v.km) || 0).toLocaleString('en-IN')} km</div>
+                                                </div>
+                                                <div class="fw-bold text-dark small">₹${(Number(v.price) || 0).toLocaleString('en-IN')}</div>
                                             </div>
-                                            <div class="fw-bold text-dark small">₹${(Number(v.price) || 0).toLocaleString('en-IN')}</div>
+                                        `;
+                                    });
+                                }
+
+                                // Action Button
+                                let actionBtnHtml = '';
+                                if ((so.pending_downpayment && so.pending_downpayment > 0) || so.payout_status === 'Pending Escrow') {
+                                    actionBtnHtml = `
+                                        <div class="mt-3 pt-3 border-top text-end">
+                                            <button class="btn btn-sm text-white px-4 pay-downpayment-btn" style="background:#8e44ad;" data-order-idx="${idx}" data-suborder-id="${so.sub_order_id}">
+                                                Proceed to Escrow Payment: ₹ ${(Number(so.pending_downpayment) || 0).toLocaleString('en-IN')}
+                                            </button>
                                         </div>
                                     `;
-                                });
-                            }
-
-                            // Downpayment Action Button
-                            let actionBtnHtml = '';
-                            if (so.pending_downpayment && so.pending_downpayment > 0) {
-                                actionBtnHtml = `
-                                    <div class="mt-3 pt-3 border-top text-end">
-                                        <button class="btn btn-sm text-white px-4 pay-downpayment-btn" style="background:#8e44ad;" data-order-idx="${idx}" data-suborder-id="${so.sub_order_id}">
-                                            Pay Downpayment: ₹ ${(Number(so.pending_downpayment) || 0).toLocaleString('en-IN')}
-                                        </button>
-                                    </div>
-                                `;
-                            }
+                                }
 
                             subOrdersList.innerHTML += `
                                 <div class="card border-0 shadow-sm mb-3">
@@ -313,23 +347,12 @@
                 const subId = btn.getAttribute('data-suborder-id');
 
                 const originalText = btn.innerHTML;
-                btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span> Processing...`;
+                btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span> Redirecting...`;
                 btn.disabled = true;
 
                 setTimeout(() => {
-                    // Update Order in Store
-                    const order = orders[idx];
-                    const subOrder = order.subOrders.find(so => so.sub_order_id === subId);
-
-                    if (subOrder) {
-                        subOrder.pending_downpayment = 0;
-                        subOrder.payout_status = 'Paid';
-                        store.saveOrders(orders);
-
-                        // Fake refresh by simply reloading the modal trigger or page
-                        window.location.reload();
-                    }
-                }, 1500);
+                    window.location.href = `payment.html?dealId=${orders[idx].id}&subId=${subId}`;
+                }, 800);
             });
         });
     </script>

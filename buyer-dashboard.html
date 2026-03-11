@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buyer Dashboard - AutoHub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        body { background-color: #f8fafc; }
+        .dashboard-card { border: none; border-radius: 12px; transition: transform 0.2s; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        .dashboard-card:hover { transform: translateY(-3px); }
+        .icon-circle { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; }
+        .table-custom th { background-color: #f1f5f9; color: #475569; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #e2e8f0; padding: 12px 16px; }
+        .table-custom td { padding: 16px; vertical-align: middle; color: #1e293b; font-size: 0.95rem; border-bottom: 1px solid #f1f5f9; }
+        .status-badge { padding: 4px 10px; border-radius: 6px; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; }
+        .status-paid { background-color: #dcfce7; color: #166534; }
+        .status-partial { background-color: #fef3c7; color: #92400e; }
+        .status-pending { background-color: #f1f5f9; color: #475569; }
+        .status-overdue { background-color: #fee2e2; color: #991b1b; }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg sticky-top bg-white border-bottom shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html" style="color: var(--dark-bg);">AutoHub <span style="color: var(--pink-accent);">Marketplace</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav ms-auto align-items-center gap-3">
+                    <li class="nav-item"><a class="nav-link fw-bold active" href="buyer-dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="orders.html">My Orders</a></li>
+                    <li class="nav-item"><a class="nav-link" href="outstanding-invoices.html">Outstanding Invoices</a></li>
+                    <li class="nav-item"><a class="nav-link" href="payment-transparency.html">Payment Flow</a></li>
+                    <li class="nav-item ms-3 border-start ps-3">
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="icon-circle bg-light" style="width: 36px; height: 36px;"><i class="fas fa-user text-secondary"></i></div>
+                            <span class="fw-bold" style="color: var(--dark-bg);">Transport Inc.</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h3 class="fw-bold text-dark mb-1">Financial Overview</h3>
+                <p class="text-secondary mb-0">Track your purchases, settled invoices, and outstanding balances.</p>
+            </div>
+            <div>
+                <a href="payment-transparency.html" class="btn btn-outline-primary fw-bold bg-white"><i class="fas fa-sitemap me-2"></i>View Platform Payment Flow</a>
+            </div>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="row g-4 mb-5">
+            <!-- Total Purchases -->
+            <div class="col-md col-sm-6">
+                <div class="card dashboard-card h-100 bg-white">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div class="icon-circle text-primary" style="background-color: rgba(13, 110, 253, 0.1);"><i class="fas fa-shopping-bag"></i></div>
+                            <span class="badge bg-light text-secondary border">Lifetime</span>
+                        </div>
+                        <h3 class="fw-bold text-dark mb-1">12</h3>
+                        <p class="text-secondary small fw-semibold mb-0">Total Purchases</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Total Invoice Value -->
+            <div class="col-md col-sm-6">
+                <div class="card dashboard-card h-100 bg-white">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div class="icon-circle text-info" style="background-color: rgba(13, 202, 240, 0.1);"><i class="fas fa-file-invoice-dollar"></i></div>
+                        </div>
+                        <h3 class="fw-bold text-dark mb-1">₹ 42.5 L</h3>
+                        <p class="text-secondary small fw-semibold mb-0">Total Invoice Value</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Total Amount Settled -->
+            <div class="col-md col-sm-6">
+                <div class="card dashboard-card h-100 bg-white">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div class="icon-circle text-success" style="background-color: rgba(25, 135, 84, 0.1);"><i class="fas fa-check-circle"></i></div>
+                        </div>
+                        <h3 class="fw-bold text-dark mb-1">₹ 35.8 L</h3>
+                        <p class="text-secondary small fw-semibold mb-0">Total Amount Settled</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Outstanding Amount -->
+            <div class="col-md col-sm-6">
+                <div class="card dashboard-card h-100 bg-white">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div class="icon-circle text-danger" style="background-color: rgba(220, 53, 69, 0.1);"><i class="fas fa-exclamation-circle"></i></div>
+                        </div>
+                        <h3 class="fw-bold text-danger mb-1">₹ 6.7 L</h3>
+                        <p class="text-secondary small fw-semibold mb-0">Outstanding Amount</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Active Orders -->
+            <div class="col-md col-sm-6">
+                <div class="card dashboard-card h-100 bg-white">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div class="icon-circle text-warning" style="background-color: rgba(255, 193, 7, 0.1);"><i class="fas fa-truck-loading"></i></div>
+                        </div>
+                        <h3 class="fw-bold text-dark mb-1">3</h3>
+                        <p class="text-secondary small fw-semibold mb-0">Active Orders</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Financial Activity -->
+        <div class="card dashboard-card bg-white">
+            <div class="card-header bg-white border-bottom py-3 d-flex justify-content-between align-items-center">
+                <h5 class="fw-bold text-dark mb-0">Recent Financial Activity</h5>
+                <a href="orders.html" class="btn btn-sm btn-link text-decoration-none fw-bold">View All Orders <i class="fas fa-arrow-right ms-1"></i></a>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-custom mb-0">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Product</th>
+                                <th>Dealer</th>
+                                <th>Invoice No.</th>
+                                <th>Invoice Amount</th>
+                                <th>Payment Status</th>
+                                <th class="text-end">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="fw-bold text-primary">ORD-9021</span></td>
+                                <td>Tata Ace Gold</td>
+                                <td>Deshpande Commercials</td>
+                                <td><a href="invoice-viewer.html" class="text-decoration-none">INV-2023-0104</a></td>
+                                <td class="fw-bold">₹ 4,80,000</td>
+                                <td><span class="status-badge status-paid">Paid in Full</span></td>
+                                <td class="text-end">
+                                    <a href="invoice-viewer.html" class="btn btn-sm btn-light border fw-bold text-secondary"><i class="fas fa-file-invoice me-1"></i> Invoice</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="fw-bold text-primary">ORD-9105</span></td>
+                                <td>Ashok Leyland Dost+</td>
+                                <td>Northwest Commercials</td>
+                                <td><a href="invoice-viewer.html" class="text-decoration-none">INV-2023-0145</a></td>
+                                <td class="fw-bold">₹ 7,50,000</td>
+                                <td><span class="status-badge status-partial">Partially Paid</span></td>
+                                <td class="text-end">
+                                    <a href="invoice-viewer.html" class="btn btn-sm btn-light border fw-bold text-secondary"><i class="fas fa-file-invoice me-1"></i> Invoice</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="fw-bold text-primary">ORD-9112</span></td>
+                                <td>Eicher Pro 2049</td>
+                                <td>Global Heavy Equipments</td>
+                                <td><a href="invoice-viewer.html" class="text-decoration-none">INV-2023-0162</a></td>
+                                <td class="fw-bold">₹ 13,50,000</td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                                <td class="text-end">
+                                    <a href="invoice-viewer.html" class="btn btn-sm btn-light border fw-bold text-secondary"><i class="fas fa-file-invoice me-1"></i> Invoice</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="fw-bold text-primary">ORD-8854</span></td>
+                                <td>Toyota Innova (Fleet)</td>
+                                <td>Capital Motors</td>
+                                <td><a href="invoice-viewer.html" class="text-decoration-none">INV-2023-0089</a></td>
+                                <td class="fw-bold">₹ 29,50,000</td>
+                                <td><span class="status-badge status-overdue">Overdue</span></td>
+                                <td class="text-end">
+                                    <a href="invoice-viewer.html" class="btn btn-sm btn-light border fw-bold text-secondary"><i class="fas fa-file-invoice me-1"></i> Invoice</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

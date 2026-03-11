@@ -24,6 +24,12 @@
             border-color: var(--primary-color);
             background-color: #f8f9ff;
         }
+
+        .trust-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+        }
     </style>
 </head>
 
@@ -37,37 +43,41 @@
     </nav>
 
     <div class="container py-5">
-        <h3 class="mb-4 text-center">Choose Payment Method</h3>
+        <h3 class="mb-4 text-center">Complete Transaction Payment</h3>
+
+        <div class="alert alert-info d-none mb-4 mx-auto" style="max-width: 800px;" id="escrowNotice">
+            <!-- Notice removed based on user request to strip escrow wording -->
+        </div>
 
         <div class="row justify-content-center g-4">
 
-            <!-- Option 1: Self Payment -->
+            <!-- Option 1: Settlement -->
             <div class="col-md-5">
-                <div class="card payment-card h-100 p-4 text-center" onclick="selectOption('self')">
+                <div class="card payment-card h-100 p-4 text-center position-relative" onclick="selectOption('settlement')">
+                    <div id="trustBadgeContainer"></div>
                     <div class="card-body">
-                        <i class="fas fa-wallet text-primary mb-3" style="font-size: 3rem;"></i>
-                        <h4>Pay Full Amount</h4>
-                        <p class="text-muted">Pay the complete amount now using Netbanking, UPI, or Credit Card.</p>
+                        <i id="settlementIcon" class="fas fa-university text-primary mb-3" style="font-size: 3rem;"></i>
+                        <h4 id="settlementTitle">Pay</h4>
+                        <p class="text-muted" id="settlementDesc">Direct payment to finalize transaction.</p>
                         <h5 class="text-danger fw-bold mt-3" id="totalAmountDisplay">₹ 0</h5>
-                        <button class="btn btn-outline-primary mt-3 w-100">Pay Now</button>
+                        <button class="btn btn-outline-primary mt-3 w-100">Proceed to Pay</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Option 2: Finance (LOS) -->
+            <!-- Option 2: Finance -->
             <div class="col-md-5">
                 <div class="card payment-card h-100 p-4 text-center" onclick="selectOption('finance')">
                     <div class="card-body">
-                        <i class="fas fa-hand-holding-usd text-success mb-3" style="font-size: 3rem;"></i>
-                        <h4>Apply for Loan</h4>
-                        <p class="text-muted">Get instant financing with our partner banks. Minimal documentation
-                            required.</p>
+                        <i class="fas fa-briefcase text-success mb-3" style="font-size: 3rem;"></i>
+                        <h4>Apply for a loan</h4>
+                        <p class="text-muted">Get B2B financing through our partner banks.</p>
                         <ul class="text-start small text-muted mt-3 mb-3">
-                            <li><i class="fas fa-check text-success me-2"></i> Instant Approval</li>
-                            <li><i class="fas fa-check text-success me-2"></i> Low Interest Rates</li>
-                            <li><i class="fas fa-check text-success me-2"></i> Paperless Process</li>
+                            <li><i class="fas fa-check text-success me-2"></i> High Credit Limits</li>
+                            <li><i class="fas fa-check text-success me-2"></i> Flexible Repayment</li>
+                            <li><i class="fas fa-check text-success me-2"></i> Digital Processing</li>
                         </ul>
-                        <button class="btn btn-success mt-1 w-100">Apply for Finance</button>
+                        <button class="btn btn-success mt-1 w-100">Apply for a loan</button>
                     </div>
                 </div>
             </div>
@@ -88,106 +98,64 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/store.js"></script>
+    <script src="js/data.js"></script>
     <script>
-        // Pull items selected for checkout/finance
-        const selectedItems = store.getSelectedForFinance() || [];
-        const subtotal = selectedItems.reduce((sum, item) => sum + item.price, 0);
-        const total = selectedItems.length > 0 ? subtotal + 5000 : 0; // Adding dummy tax/fees
-        document.getElementById('totalAmountDisplay').textContent = '₹ ' + total.toLocaleString('en-IN');
+        const urlParams = new URLSearchParams(window.location.search);
+        const dealId = urlParams.get('dealId');
+        const subId = urlParams.get('subId');
+
+        let amountToPay = 0;
+        let isTrustedDealer = false;
+        let orderRef = null;
+        let subOrderRef = null;
+
+        if (dealId && subId) {
+            const orders = store.getOrders() || [];
+            orderRef = orders.find(o => o.id === dealId);
+            if (orderRef) {
+                subOrderRef = orderRef.subOrders.find(so => so.sub_order_id === subId);
+                if (subOrderRef) {
+                    amountToPay = subOrderRef.pending_downpayment || subOrderRef.seller_total || orderRef.total || 0;
+
+                    // Update UI
+                    document.getElementById('totalAmountDisplay').textContent = '₹ ' + amountToPay.toLocaleString('en-IN');
+                }
+            }
+        } else {
+            // Fallback for prototype testing if accessed directly without URL params
+            amountToPay = 500000;
+            orderRef = { id: 'DUMMY-ORDER' };
+            subOrderRef = { sub_order_id: 'DUMMY-SUB' };
+            document.getElementById('totalAmountDisplay').textContent = '₹ ' + amountToPay.toLocaleString('en-IN');
+        }
 
         function selectOption(type) {
-            if (selectedItems.length === 0) {
-                alert("No items selected for checkout!");
+            if (!orderRef || !subOrderRef) {
+                alert("Invalid transaction reference.");
                 return;
             }
 
-            // 1. Group by Seller for Sub-Orders
-            const sellerGroups = {};
-            selectedItems.forEach(item => {
-                const seller = item.sellerName || 'AutoHub Network Seller';
-                if (!sellerGroups[seller]) {
-                    sellerGroups[seller] = {
-                        seller_id: seller,
-                        items: [],
-                        seller_total: 0
-                    };
-                }
-                sellerGroups[seller].items.push(item);
-                sellerGroups[seller].seller_total += item.price;
-            });
-
-            // 2. Generate Sub-Orders Array
-            const subOrders = Object.values(sellerGroups).map((group, index) => {
-                const commission = group.seller_total * 0.02; // Flat 2% Platform Commission
-                return {
-                    sub_order_id: `SUB-${Date.now()}-${index}`,
-                    seller_id: group.seller_id,
-                    items: group.items,
-                    seller_total: group.seller_total,
-                    commission: commission,
-                    payout_amount: group.seller_total - commission,
-                    payout_status: 'Pending Payout'
-                };
-            });
-
-            const masterOrderId = 'ORD-' + Date.now();
-
-            if (type === 'self') {
-                // Simulate Payment
+            if (type === 'settlement') {
                 const modal = new bootstrap.Modal(document.getElementById('processingModal'));
                 modal.show();
 
                 setTimeout(() => {
-                    // Success -> Create Master Order
-                    const order = {
-                        id: masterOrderId,
-                        date: new Date().toLocaleDateString(),
-                        items: selectedItems,
-                        total: total,
-                        status: 'Completed',
-                        paymentMode: 'Self',
-                        loanStatus: null,
-                        payment_status: 'Paid',
-                        subOrders: subOrders // Inject the Sub-Orders
-                    };
-                    store.addOrder(order);
+            		// Safe mock routing logic for demo
+                    const orders = store.getOrders() || [];
+                    const orderToUpdate = orders.find(o => o.id === dealId);
+                    if (orderToUpdate) {
+                        const subToUpdate = orderToUpdate.subOrders?.find(so => so.sub_order_id === subId);
 
-                    // Remove purchased items from cart
-                    const cart = store.getCart();
-                    const selectedIds = selectedItems.map(i => i.id);
-                    cart.items = cart.items.filter(i => !selectedIds.includes(i.id));
-                    store.saveCart(cart);
-                    store.clearSelectedForFinance();
-
+                        if (subToUpdate) {
+                            subToUpdate.pending_downpayment = 0;
+                            subToUpdate.payout_status = 'Payout Completed';
+                            orderToUpdate.status = 'Deal Finalized - Processing Delivery';
+                        }
+                        store.saveOrders(orders);
+                    }
                     window.location.href = 'orders.html';
-                }, 2000); // 2s delay
-
+                }, 2000);
             } else if (type === 'finance') {
-                // Initiate LOS Application
-                const combinedName = selectedItems.length > 1 ? `Multiple Vehicles (${selectedItems.length})` : selectedItems[0]?.name;
-
-                // Adjust sub-orders default status for loan
-                const loanSubOrders = subOrders.map(so => ({ ...so, payout_status: 'Pending Loan Disbursement' }));
-
-                const loanApp = {
-                    productId: selectedItems.length > 1 ? 'MULTI' : selectedItems[0]?.id,
-                    productName: combinedName,
-                    productPrice: subtotal, // Cart value (sum of vehicle prices)
-                    loanAmount: subtotal, // Default to full price
-                    status: 'Draft',
-                    applicant: { ...store.getUser() }, // Pre-fill with user data
-                    documents: {},
-                    step: 1,
-                    vehicles: selectedItems, // Pass all vehicles for LOS processing
-                    // Inject Master-Sub Order Tracking
-                    masterOrderId: masterOrderId,
-                    grandTotal: total,
-                    subOrders: loanSubOrders
-                };
-
-                store.saveApplication(loanApp);
-
-                // Redirect to LOS
                 window.location.href = 'application.html';
             }
         }

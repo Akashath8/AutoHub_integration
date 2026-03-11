@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dealer Dashboard - AutoHub B2B</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Icon Font -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        .dashboard-sidebar {
+            background-color: #2c3e50;
+            color: white;
+            min-height: calc(100vh - 70px);
+            padding-top: 2rem;
+        }
+
+        .dashboard-sidebar .nav-link {
+            color: #bdc3c7;
+            padding: 1rem 1.5rem;
+            margin-bottom: 0.5rem;
+            border-radius: 0 25px 25px 0;
+            margin-right: 1rem;
+            transition: all 0.3s;
+        }
+
+        .dashboard-sidebar .nav-link:hover,
+        .dashboard-sidebar .nav-link.active {
+            color: white;
+            background-color: var(--primary-color);
+        }
+
+        .dashboard-card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .verification-banner {
+            background-color: #fdf5e6;
+            border-left: 4px solid #f39c12;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg sticky-top bg-white border-bottom shadow-sm" style="height: 70px;">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand fw-bold" href="index.html">AutoHub <span class="text-accent">B2B Dealer</span></a>
+            
+            <div class="d-flex align-items-center ms-auto">
+                <span class="badge bg-warning text-dark me-3" id="trustBadge">Pending Verification</span>
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" role="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-building fa-lg text-primary"></i>
+                        <span id="dealerName" class="fw-bold">Company Name</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
+                        <li><a class="dropdown-item py-2 text-danger" href="#" id="logoutBtn"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid p-0">
+        <div class="row g-0">
+            <!-- Sidebar -->
+            <div class="col-md-2 dashboard-sidebar">
+                <div class="nav flex-column rounded-0" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link active" id="inventory-tab" data-bs-toggle="pill" href="#inventory" role="tab">
+                        <i class="fas fa-warehouse me-2"></i> Inventory Manager
+                    </a>
+                    <a class="nav-link" id="quotes-tab" data-bs-toggle="pill" href="#quotes" role="tab">
+                        <i class="fas fa-file-invoice-dollar me-2"></i> Quotes & Negotiations
+                    </a>
+                    <a class="nav-link" id="orders-tab" data-bs-toggle="pill" href="#orders" role="tab">
+                        <i class="fas fa-truck-loading me-2"></i> Transactions
+                    </a>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-10 p-4 bg-light">
+                
+                <div class="verification-banner" id="verificationBanner">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <h5 class="mb-1 text-warning"><i class="fas fa-exclamation-triangle me-2"></i>Account Under Verification</h5>
+                            <p class="mb-0 text-muted small">Your business documents are being reviewed by AutoHub administrators. Until approved, you cannot finalize deals.</p>
+                        </div>
+                        <button class="btn btn-warning btn-sm fw-bold">Check Status</button>
+                    </div>
+                </div>
+
+                <!-- Stats Row -->
+                <div class="row g-4 mb-4">
+                    <div class="col-md-3">
+                        <div class="card dashboard-card h-100 p-3">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div>
+                                    <p class="text-muted mb-1 small fw-bold text-uppercase">Active Vehicles</p>
+                                    <h3 class="mb-0 fw-bold">24</h3>
+                                </div>
+                                <div class="stat-icon bg-primary bg-opacity-10 text-primary">
+                                    <i class="fas fa-car-side"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card dashboard-card h-100 p-3">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div>
+                                    <p class="text-muted mb-1 small fw-bold text-uppercase">Pending Quotes</p>
+                                    <h3 class="mb-0 fw-bold text-warning" id="pendingQuotesCount">0</h3>
+                                </div>
+                                <div class="stat-icon bg-warning bg-opacity-10 text-warning">
+                                    <i class="fas fa-comments-dollar"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card dashboard-card h-100 p-3">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div>
+                                    <p class="text-muted mb-1 small fw-bold text-uppercase">completed deals</p>
+                                    <h3 class="mb-0 fw-bold text-success">12</h3>
+                                </div>
+                                <div class="stat-icon bg-success bg-opacity-10 text-success">
+                                    <i class="fas fa-handshake"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card dashboard-card h-100 p-3">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div>
+                                    <p class="text-muted mb-1 small fw-bold text-uppercase">Escrow Payouts</p>
+                                    <h3 class="mb-0 fw-bold" style="color: #8e44ad;">₹ 12.5L</h3>
+                                </div>
+                                <div class="stat-icon bg-opacity-10" style="background-color: rgba(142, 68, 173, 0.1); color: #8e44ad;">
+                                    <i class="fas fa-vault"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Content -->
+                <div class="tab-content" id="dashboard-tabContent">
+                    
+                    <!-- Inventory Manager -->
+                    <div class="tab-pane fade show active" id="inventory" role="tabpanel">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h4 class="mb-0 fw-bold">Vehicle Inventory</h4>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-outline-primary" onclick="window.location.href='sell.html'"><i class="fas fa-plus me-2"></i>Add Single</button>
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bulkUploadModal"><i class="fas fa-file-csv me-2"></i>Bulk Upload (CSV)</button>
+                            </div>
+                        </div>
+
+                        <div class="card shadow-sm border-0">
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table table-hover align-middle mb-0">
+                                        <thead class="bg-light">
+                                            <tr>
+                                                <th class="ps-4">Vehicle</th>
+                                                <th>Category</th>
+                                                <th>Year</th>
+                                                <th>Price</th>
+                                                <th>Status</th>
+                                                <th class="text-end pe-4">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="inventoryList">
+                                            <!-- Hydrated by JS -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quotes & Negotiations -->
+                    <div class="tab-pane fade" id="quotes" role="tabpanel">
+                        <h4 class="mb-4 fw-bold">Incoming Quotations</h4>
+                        <div class="row" id="dealerQuotesList">
+                            <!-- Hydrated by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Transactions Ledger -->
+                    <div class="tab-pane fade" id="orders" role="tabpanel">
+                        <h4 class="mb-4 fw-bold">B2B Transaction Ledger</h4>
+                        <div class="alert alert-info border-0 bg-primary bg-opacity-10 text-primary mb-4">
+                            <i class="fas fa-info-circle me-2"></i> This ledger is synced automatically from the Tri-Party LOS Integration. Activities are display-only here.
+                        </div>
+                        <div class="card shadow-sm border-0">
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table table-hover align-middle mb-0">
+                                        <thead class="bg-light">
+                                            <tr>
+                                                <th class="ps-4">Deal ID</th>
+                                                <th>Buyer Company</th>
+                                                <th>Vehicle(s)</th>
+                                                <th>Amount</th>
+                                                <th>Escrow Status</th>
+                                                <th>Stage</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="dealerOrdersList">
+                                            <!-- Hydrated by JS -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bulk Upload Modal (Simulation) -->
+    <div class="modal fade" id="bulkUploadModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg">
+                <div class="modal-header border-bottom-0 pb-0">
+                    <h5 class="modal-title fw-bold">Bulk Vehicle Upload</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4 text-center">
+                    <div class="p-4 border border-2 border-dashed rounded bg-light mb-3" style="cursor: pointer;" id="uploadDropzone">
+                        <i class="fas fa-cloud-upload-alt fa-3x text-primary mb-3"></i>
+                        <h6>Drag & Drop your CSV/Excel file here</h6>
+                        <p class="text-muted small mb-0">or click to browse from device</p>
+                        <input type="file" id="bulkFileInput" hidden accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                    </div>
+                    <div class="text-start mb-3">
+                        <a href="#" class="text-decoration-none small"><i class="fas fa-download me-1"></i> Download Template</a>
+                    </div>
+                    <div class="progress mb-2 d-none" id="uploadProgressContainer" style="height: 6px;">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" id="uploadProgressBar" style="width: 0%"></div>
+                    </div>
+                    <p class="small text-success fw-bold d-none mb-0" id="uploadSuccessText">Successfully parsed 8 vehicles!</p>
+                </div>
+                <div class="modal-footer border-top-0 pt-0">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="processUploadBtn">Process File</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/data.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = store.getUser();
+            if (!user || user.role !== 'Dealer') {
+                alert("Unauthorized Access. Only Dealers can view this dashboard.");
+                window.location.href = 'index.html';
+                return;
+            }
+
+            document.getElementById('dealerName').textContent = user.companyName || user.firstName;
+            
+            // Verification Banner Logic
+            if(user.verificationStatus === 'Approved') {
+                document.getElementById('verificationBanner').classList.add('d-none');
+                document.getElementById('trustBadge').textContent = user.dealerTrustStatus;
+                document.getElementById('trustBadge').className = user.dealerTrustStatus === 'Trusted Dealer' ? 'badge bg-success me-3' : 'badge bg-secondary me-3';
+            }
+
+            document.getElementById('logoutBtn').addEventListener('click', (e) => {
+                e.preventDefault();
+                store.logoutUser();
+                window.location.href = 'login.html';
+            });
+
+            // Hydrate Inventory (Filter VEHICLES by seller name mock)
+            const inventoryList = document.getElementById('inventoryList');
+            const myVehicles = VEHICLES.filter(v => v.sellerName.includes('Deshpande') || v.sellerName.includes('AutoHub')); // Mock logic for demo
+            
+            if(myVehicles.length > 0) {
+                myVehicles.forEach(v => {
+                    inventoryList.innerHTML += `
+                        <tr>
+                            <td class="ps-4">
+                                <div class="d-flex align-items-center">
+                                    <img src="${v.image}" class="rounded me-3" width="50" height="35" style="object-fit:cover;">
+                                    <div>
+                                        <div class="fw-bold text-dark">${v.name}</div>
+                                        <div class="text-muted small">${v.brand}</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><span class="badge bg-light text-dark border">${v.type}</span></td>
+                            <td>${v.year}</td>
+                            <td class="fw-bold">₹ ${(Number(v.price)).toLocaleString('en-IN')}</td>
+                            <td><span class="badge bg-success">Active</span></td>
+                            <td class="text-end pe-4">
+                                <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-sm btn-outline-danger ms-1"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            } else {
+                inventoryList.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-muted">No vehicles in inventory.</td></tr>`;
+            }
+
+            // Hydrate Quotes
+            const quotes = store.getQuotations();
+            const quotesList = document.getElementById('dealerQuotesList');
+            const dealerQuotes = quotes.filter(q => q.sellerName === user.companyName || q.sellerName.includes('Deshpande'));
+            
+            document.getElementById('pendingQuotesCount').textContent = dealerQuotes.length;
+
+            if(dealerQuotes.length > 0) {
+                dealerQuotes.forEach(q => {
+                    quotesList.innerHTML += `
+                        <div class="col-md-6 mb-4">
+                            <div class="card shadow-sm border-0 h-100">
+                                <div class="card-header bg-white border-bottom-0 pt-3 pb-0 d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold text-primary">${q.id}</span>
+                                    <span class="badge bg-warning text-dark">${q.status || 'Received'}</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <div class="text-muted small">Buyer Company</div>
+                                        <div class="fw-bold">${q.buyerCompany || 'TechLogistics Corp'}</div>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-3 border-bottom pb-3">
+                                        <div>
+                                            <div class="text-muted small">Items</div>
+                                            <div class="fw-bold">${q.vehicles ? q.vehicles.length + ' Vehicles' : q.productName}</div>
+                                        </div>
+                                        <div class="text-end">
+                                            <div class="text-muted small">Total Value</div>
+                                            <div class="fw-bold text-success fs-5">₹ ${(Number(q.price)).toLocaleString('en-IN')}</div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-primary flex-grow-1">Respond with Offer</button>
+                                        <button class="btn btn-outline-danger">Reject</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                quotesList.innerHTML = `<div class="col-12"><div class="p-5 text-center text-muted bg-white rounded border">No incoming quotations.</div></div>`;
+            }
+
+            // Hydrate Orders (Ledger)
+            const ordersList = document.getElementById('dealerOrdersList');
+            // Mock a couple of orders for the ledger
+            const mockOrders = [
+                { id: 'DL-88992', buyer: 'Metro Deliveries Ltd', items: '2x Tata Ace Gold', amount: 960000, escrow: 'Funds in Escrow', stage: 'Pending Delivery' },
+                { id: 'DL-88941', buyer: 'Rapid Logistics Corp', items: '1x Eicher Pro 2049', amount: 1350000, escrow: 'Settled to Bank', stage: 'Completed' }
+            ];
+
+            mockOrders.forEach(o => {
+                ordersList.innerHTML += `
+                    <tr>
+                        <td class="ps-4 fw-bold text-primary">${o.id}</td>
+                        <td><div class="fw-bold">${o.buyer}</div></td>
+                        <td>${o.items}</td>
+                        <td class="fw-bold">₹ ${(o.amount).toLocaleString('en-IN')}</td>
+                        <td>
+                            <span class="badge ${o.escrow === 'Settled to Bank' ? 'bg-success' : 'bg-warning text-dark'}"><i class="fas ${o.escrow === 'Settled to Bank' ? 'fa-check' : 'fa-lock'} me-1"></i>${o.escrow}</span>
+                        </td>
+                        <td><span class="badge bg-light text-dark border">${o.stage}</span></td>
+                    </tr>
+                `;
+            });
+
+            // Bulk Upload Logic
+            const dropzone = document.getElementById('uploadDropzone');
+            const fileInput = document.getElementById('bulkFileInput');
+            const processBtn = document.getElementById('processUploadBtn');
+            const progressContainer = document.getElementById('uploadProgressContainer');
+            const progressBar = document.getElementById('uploadProgressBar');
+            const successText = document.getElementById('uploadSuccessText');
+
+            dropzone.addEventListener('click', () => fileInput.click());
+            
+            fileInput.addEventListener('change', (e) => {
+                if(e.target.files.length > 0) {
+                    dropzone.innerHTML = `<i class="fas fa-file-csv fa-3x text-success mb-3"></i><h6 class="text-success">${e.target.files[0].name} selected</h6>`;
+                }
+            });
+
+            processBtn.addEventListener('click', () => {
+                if(fileInput.files.length === 0) {
+                    alert("Please select a file first.");
+                    return;
+                }
+                processBtn.disabled = true;
+                progressContainer.classList.remove('d-none');
+                
+                let width = 0;
+                const interval = setInterval(() => {
+                    width += 20;
+                    progressBar.style.width = width + '%';
+                    if (width >= 100) {
+                        clearInterval(interval);
+                        successText.classList.remove('d-none');
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1500);
+                    }
+                }, 400);
+            });
+        });
+    </script>
+</body>
+</html>

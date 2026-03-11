@@ -77,33 +77,45 @@
             <!-- Right Side Form -->
             <div class="auth-form-side">
                 <nav class="mb-4">
-                    <span class="text-danger fw-bold">Consumer ></span> <span class="fw-bold">Create New Account</span>
+                    <span class="text-danger fw-bold">Business Registration ></span> <span class="fw-bold">Create New Account</span>
                 </nav>
 
                 <form id="registerForm">
                     <div class="row g-3">
+                        <div class="col-12 mb-2">
+                            <label class="form-label fw-bold">Role</label>
+                            <select class="form-select" id="role" required>
+                                <option value="" disabled selected>Select Business Role</option>
+                                <option value="Buyer">Buyer (Purchasing Assets)</option>
+                                <option value="Dealer">Dealer (Selling & Inventory Mgmt)</option>
+                            </select>
+                        </div>
+
                         <div class="col-md-6">
-                            <label class="form-label">First Name</label>
-                            <input type="text" class="form-control" id="firstName" placeholder="Enter first name"
+                            <label class="form-label">Company Name</label>
+                            <input type="text" class="form-control" id="companyName" placeholder="Enter company name"
                                 required>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label">Last Name</label>
-                            <input type="text" class="form-control" id="lastName" placeholder="Enter last name"
+                            <label class="form-label">Contact Person</label>
+                            <input type="text" class="form-control" id="contactPerson" placeholder="Authorized person name"
                                 required>
                         </div>
 
                         <div class="col-12">
-                            <label class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" placeholder="Enter email" required>
+                            <label class="form-label">Email (Business ID)</label>
+                            <input type="email" class="form-control" id="email" placeholder="name@company.com" required>
                         </div>
 
-                        <!-- PAN Card (Optional logic as per req) -->
-                        <div class="col-12">
-                            <label class="form-label">PAN Card No. <span class="text-muted small">(Optional for instant
-                                    verification)</span></label>
-                            <input type="text" class="form-control text-uppercase" id="pan"
-                                placeholder="Enter PAN number" maxlength="10">
+                        <div class="col-md-6">
+                            <label class="form-label">GST / Tax ID</label>
+                            <input type="text" class="form-control text-uppercase" id="gst"
+                                placeholder="Enter GST Number" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Business Reg. No.</label>
+                            <input type="text" class="form-control text-uppercase" id="regNo"
+                                placeholder="CIN or Reg No." required>
                         </div>
 
                         <div class="col-12">

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>White Papers - AutoHub Marketplace</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Icon Font -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        body { background-color: var(--dark-bg); color: #f8f9fa; }
+        h1, h2, h3, h4, h5, h6 { color: #ffffff; }
+        .text-muted { color: #9ca3af !important; }
+
+        .navbar { background-color: var(--dark-bg) !important; padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .search-input { background-color: rgba(255,255,255,0.08) !important; color: #fff !important; border: none; }
+        .footer-dark { background-color: #111827; padding: 4rem 2rem 2rem; border-top: 1px solid rgba(255,255,255,0.05); }
+        .nav-dropdown-hover:hover { background-color: rgba(255,255,255,0.1) !important; color: var(--pink-accent) !important; }
+
+        .breadcrumb-item a { color: var(--cyan-accent); text-decoration: none; }
+        .breadcrumb-item.active { color: #9ca3af; }
+
+        .wp-card {
+            background-color: var(--dark-card);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+            height: 100%;
+        }
+        .wp-card:hover {
+            border-color: var(--cyan-accent);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .wp-icon-wrapper {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), rgba(6, 182, 212, 0.1));
+            width: 80px;
+            height: 80px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .abstract-line {
+            position: absolute;
+            top: 0;
+            right: 0;
+            opacity: 0.1;
+            font-size: 15rem;
+            transform: translate(20%, -20%);
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <div class="d-flex align-items-center gap-2">
+                <a class="navbar-brand" href="index.html">AutoHub <span class="text-pink">Marketplace</span></a>
+            </div>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"><i class="fas fa-bars text-white"></i></button>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav ms-auto align-items-center gap-3">
+                    <li class="nav-item"><a class="nav-link text-white fw-bold" href="index.html#buySection">Buy</a></li>
+                    <li class="nav-item"><a class="nav-link text-white fw-bold" href="index.html#sellSection">Sell</a></li>
+                    <li class="nav-item"><a class="nav-link text-white fw-bold" href="index.html#auctionSection">Auctions</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-cyan fw-bold" href="#" id="resourcesDropdown" role="button" data-bs-toggle="dropdown">Resources</a>
+                        <ul class="dropdown-menu dropdown-menu-end shadow bg-dark-card border-secondary border-opacity-25" style="border-radius: 8px;">
+                            <li><a class="dropdown-item py-2 text-white nav-dropdown-hover" href="blogs.html">Blogs</a></li>
+                            <li><a class="dropdown-item py-2 text-white nav-dropdown-hover" href="faqs.html">FAQs</a></li>
+                            <li><a class="dropdown-item py-2 text-white nav-dropdown-hover" href="support.html">Support</a></li>
+                            <li><a class="dropdown-item py-2 text-white nav-dropdown-hover" href="articles.html">Articles</a></li>
+                            <li><a class="dropdown-item py-2 text-white nav-dropdown-hover" href="white-papers.html">White Papers</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item" id="navProfileArea"></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-4">
+        <!-- Breadcrumbs -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Resources</a></li>
+                <li class="breadcrumb-item active" aria-current="page">White Papers</li>
+            </ol>
+        </nav>
+
+        <div class="row mb-5 text-center">
+            <div class="col-lg-8 mx-auto">
+                <h2 class="display-5 fw-bold mb-3">Industry <span class="text-pink">White Papers</span></h2>
+                <p class="text-muted lead">Authoritative reports and deep research documents designed to help executives navigate the commercial automotive sector.</p>
+            </div>
+        </div>
+
+        <!-- Featured White Paper -->
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-10">
+                <div class="bg-dark-card border border-secondary border-opacity-25 rounded-4 p-5 position-relative overflow-hidden shadow-lg">
+                    <div class="row align-items-center position-relative z-1">
+                        <div class="col-md-7">
+                            <span class="badge bg-pink mb-3 px-3 py-2">Q4 2025 REPORT</span>
+                            <h3 class="fw-bold text-white mb-3">The State of B2B Commercial Vehicle Marketplaces</h3>
+                            <p class="text-muted mb-4 lead" style="line-height: 1.8;">Our comprehensive annual research breaks down digitalization trends, the shift towards predictive maintenance, and how auction algorithms are stabilizing institutional secondary markets.</p>
+                            <div class="d-flex align-items-center gap-3">
+                                <a href="#" class="btn btn-cyan fw-bold px-4 py-3 rounded"><i class="fas fa-download me-2 text-dark"></i> Download PDF (4.2 MB)</a>
+                                <span class="text-muted small">Free for Pro Members</span>
+                            </div>
+                        </div>
+                        <div class="col-md-5 d-none d-md-block text-center">
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80" alt="Report Graph" class="img-fluid rounded-4 shadow" style="transform: perspective(600px) rotateY(-15deg); border: 1px solid rgba(255,255,255,0.1);">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+            <div class="col-lg-5 col-md-6">
+                <div class="wp-card">
+                    <i class="fas fa-file-pdf text-muted abstract-line"></i>
+                    <div class="wp-icon-wrapper text-cyan">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <span class="text-uppercase small text-muted fw-bold tracking-wide">RESEARCH / 2025</span>
+                    <h4 class="fw-bold text-white mb-3 mt-2">EV Fleet Adoption Curves & TCO</h4>
+                    <p class="text-muted small mb-4">A critical analysis comparing Total Cost of Ownership between legacy diesel models and emerging EV platforms in the last-mile delivery sector.</p>
+                    <a href="#" class="btn btn-outline-light w-100 fw-bold">Download Document <i class="fas fa-arrow-down ms-2"></i></a>
+                </div>
+            </div>
+
+            <div class="col-lg-5 col-md-6">
+                <div class="wp-card" style="border-top: 3px solid var(--warning);">
+                    <i class="fas fa-file-pdf text-muted abstract-line"></i>
+                    <div class="wp-icon-wrapper text-warning">
+                        <i class="fas fa-gavel"></i>
+                    </div>
+                    <span class="text-uppercase small text-muted fw-bold tracking-wide">CASE STUDY / 2024</span>
+                    <h4 class="fw-bold text-white mb-3 mt-2">Institutional Auction Efficiency</h4>
+                    <p class="text-muted small mb-4">How top financial institutions improved disposal yields by 14% moving from traditional sealed bids to real-time digital proxy auctions.</p>
+                    <a href="#" class="btn btn-warning text-dark w-100 fw-bold">Download Document <i class="fas fa-arrow-down ms-2"></i></a>
+                </div>
+            </div>
+
+            <div class="col-lg-5 col-md-6">
+                <div class="wp-card">
+                    <i class="fas fa-file-pdf text-muted abstract-line"></i>
+                    <div class="wp-icon-wrapper text-pink">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <span class="text-uppercase small text-muted fw-bold tracking-wide">POLICY / 2024</span>
+                    <h4 class="fw-bold text-white mb-3 mt-2">Scrappage Policy Implications</h4>
+                    <p class="text-muted small mb-4">Understanding the operational shifts and compliance vectors associated with the new National Vehicle Scrappage Policy for heavy commercial fleets.</p>
+                    <a href="#" class="btn btn-outline-light w-100 fw-bold">Download Document <i class="fas fa-arrow-down ms-2"></i></a>
+                </div>
+            </div>
+
+            <div class="col-lg-5 col-md-6">
+                <div class="wp-card">
+                    <i class="fas fa-file-pdf text-muted abstract-line"></i>
+                    <div class="wp-icon-wrapper" style="color: #10b981;">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <span class="text-uppercase small text-muted fw-bold tracking-wide">FINANCE / 2024</span>
+                    <h4 class="fw-bold text-white mb-3 mt-2">Restructuring Fleet Debt Protocols</h4>
+                    <p class="text-muted small mb-4">A playbook for mid-sized logistics contractors to navigate NBFC loans, leverage their existing RC books, and restructure debt effectively.</p>
+                    <a href="#" class="btn btn-outline-light w-100 fw-bold">Download Document <i class="fas fa-arrow-down ms-2"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-dark text-start mt-5">
+        <div class="container">
+            <div class="row pt-4" style="border-top: 1px solid rgba(255,255,255,0.05);">
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <p class="text-muted small mb-0">&copy; 2025 AutoHub Marketplace. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/store.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = store.getUser();
+            const profileArea = document.getElementById('navProfileArea');
+            if (user && user.isLoggedIn) {
+                profileArea.innerHTML = `<button class="btn btn-cyan rounded-pill px-4" id="profileDropdown" data-bs-toggle="dropdown"><i class="fas fa-building me-1"></i> <span class="fw-bold">${user.companyName || user.firstName}</span></button>`;
+            } else {
+                profileArea.innerHTML = `<button class="btn btn-cyan rounded-pill px-4 fw-bold" id="navLoginBtn"><i class="fas fa-user me-1"></i> Register</button>`;
+            }
+        });
+    </script>
+</body>
+</html>

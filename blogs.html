@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogs - AutoHub Marketplace</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Icon Font -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        body {
+            background-color: var(--dark-bg);
+            color: #f8f9fa;
+        }
+
+        /* Override Bootstrap defaults for dark theme readability */
+        h1, h2, h3, h4, h5, h6 {
+            color: #ffffff;
+        }
+
+        .text-muted {
+            color: #9ca3af !important;
+        }
+
+        /* Navbar Customization */
+        .navbar {
+            background-color: var(--dark-bg) !important;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .search-input {
+            background-color: rgba(255,255,255,0.08) !important;
+            color: #fff !important;
+            border: none;
+        }
+        .search-input::placeholder {
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* Footer */
+        .footer-dark {
+            background-color: #111827;
+            padding: 4rem 2rem 2rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        .footer-dark a {
+            color: #9ca3af;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.2s;
+        }
+        .footer-dark a:hover {
+            color: #fff;
+        }
+
+        .nav-dropdown-hover:hover {
+            background-color: rgba(255,255,255,0.1) !important;
+            color: var(--pink-accent) !important;
+        }
+
+        /* Blog specific styles */
+        .blog-card {
+            background-color: var(--dark-card);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        .blog-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--cyan-accent);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+        }
+        .blog-card img {
+            height: 200px;
+            object-fit: cover;
+            width: 100%;
+        }
+        .breadcrumb-item a {
+            color: var(--cyan-accent);
+            text-decoration: none;
+        }
+        .breadcrumb-item a:hover {
+            text-decoration: underline;
+        }
+        .breadcrumb-item.active {
+            color: #9ca3af;
+        }
+        .featured-blog {
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+        }
+        .featured-blog img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+        .featured-content {
+            background: linear-gradient(to top, rgba(15, 23, 42, 1), rgba(15, 23, 42, 0));
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 3rem 2rem 2rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <!-- Brand + Location Dropdown -->
+            <div class="d-flex align-items-center gap-2">
+                <a class="navbar-brand" href="index.html">AutoHub <span class="text-pink">Marketplace</span></a>
+                <div class="dropdown d-none d-lg-block ms-3">
+                    <button class="btn nav-link px-3 py-1 rounded" id="navLocationBtn" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: rgba(255,255,255,0.08);">
+                        <i class="fas fa-map-marker-alt text-pink me-1"></i> 
+                        <span class="small text-muted d-block" style="font-size: 0.65rem; line-height: 1;">Location</span>
+                        <span style="font-size: 0.85rem; font-weight: 600; color: #fff;">Pune <i class="fas fa-chevron-down ms-1" style="font-size:0.6rem;"></i></span>
+                    </button>
+                    <!-- Location menu will open here -->
+                </div>
+            </div>
+
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <i class="fas fa-bars text-white"></i>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <!-- Center Search -->
+                <div class="ms-4 me-auto" style="width: 40px; border-radius: 6px; overflow:hidden;">
+                    <button class="btn search-input w-100 p-2"><i class="fas fa-search"></i></button>
+                </div>
+
+                <!-- Right nav items -->
+                <ul class="navbar-nav ms-auto align-items-center gap-3">
+                    <li class="nav-item"><a class="nav-link text-white fw-bold" href="index.html#buySection">Buy</a></li>
+                    <li class="nav-item"><a class="nav-link text-white fw-bold" href="index.html#sellSection">Sell</a></li>
+                    <li class="nav-item"><a class="nav-link text-white fw-bold" href="index.html#auctionSection">Auctions</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-cyan fw-bold" href="#" id="resourcesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Resources
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end shadow bg-dark-card border-secondary border-opacity-25" aria-labelledby="resourcesDropdown" style="border-radius: 8px;">
+                            <li><a class="dropdown-item py-2 text-white nav-dropdown-hover" href="blogs.html">Blogs</a></li>
+                            <li><a class="dropdown-item py-2 text-white nav-dropdown-hover" href="faqs.html">FAQs</a></li>
+                            <li><a class="dropdown-item py-2 text-white nav-dropdown-hover" href="support.html">Support</a></li>
+                            <li><a class="dropdown-item py-2 text-white nav-dropdown-hover" href="articles.html">Articles</a></li>
+                            <li><a class="dropdown-item py-2 text-white nav-dropdown-hover" href="white-papers.html">White Papers</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="nav-item ms-3 position-relative">
+                        <a class="nav-link" href="#" title="Notifications">
+                            <i class="fas fa-bell text-warning"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-pink">3</span>
+                        </a>
+                    </li>
+                    <li class="nav-item position-relative">
+                        <a class="nav-link" href="#" title="Wishlist">
+                            <i class="fas fa-heart text-pink"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-pink">0</span>
+                        </a>
+                    </li>
+                    <li class="nav-item me-3 position-relative">
+                        <a class="nav-link" href="cart.html">
+                            <i class="fas fa-shopping-cart text-secondary"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-pink" id="cartCount">0</span>
+                        </a>
+                    </li>
+
+                    <!-- Profile / Login Area -->
+                    <li class="nav-item" id="navProfileArea">
+                        <!-- Handled by JS -->
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container py-4">
+        <!-- Breadcrumbs -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Resources</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Blogs</li>
+            </ol>
+        </nav>
+
+        <div class="row mb-5">
+            <div class="col-12">
+                <h2 class="fw-bold mb-3">AutoHub <span class="text-cyan">Blog</span></h2>
+                <p class="text-muted lead">Stay updated with the latest in the commercial automotive industry, marketplace trends, and fleet management strategies.</p>
+            </div>
+        </div>
+
+        <!-- Featured Blog -->
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="featured-blog shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80" alt="Featured Post">
+                    <div class="featured-content">
+                        <span class="badge bg-cyan mb-2">INDUSTRY TRENDS</span>
+                        <h3 class="fw-bold text-white mb-2">The Future of B2B Vehicle Commerce in India</h3>
+                        <p class="text-muted mb-3 d-none d-md-block" style="max-width: 800px;">Explore how digital platforms are reshaping the commercial vehicle landscape, bringing unprecedented transparency to fleet procurement and disposal.</p>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <span class="text-pink small"><i class="far fa-calendar-alt me-1"></i> Oct 24, 2025</span>
+                            <a href="#" class="btn btn-outline-cyan fw-bold px-4 rounded-pill">Read Article</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Blog Grid -->
+        <div class="row g-4 mb-5">
+            <!-- Blog Card 1 -->
+            <div class="col-md-4">
+                <div class="blog-card">
+                    <div class="position-relative">
+                        <img src="https://images.unsplash.com/photo-1560179707-f14e90ef3623?auto=format&fit=crop&q=80" alt="Blog 1">
+                        <span class="badge bg-pink position-absolute top-0 end-0 m-3">MARKET INSIGHTS</span>
+                    </div>
+                    <div class="p-4 d-flex flex-column h-100">
+                        <h5 class="fw-bold text-white mb-2">Used Truck Valuations: What to Expect in Q4</h5>
+                        <p class="text-muted small mb-4 flex-grow-1">An in-depth analysis of pre-owned heavy commercial vehicle pricing trends as we approach the end of the year.</p>
+                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                            <span class="text-muted small"><i class="far fa-clock me-1"></i> 5 min read</span>
+                            <a href="#" class="text-cyan fw-bold text-decoration-none">Read More <i class="fas fa-arrow-right ms-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Blog Card 2 -->
+            <div class="col-md-4">
+                <div class="blog-card">
+                    <div class="position-relative">
+                        <img src="https://images.unsplash.com/photo-1621293954908-907159247fc8?auto=format&fit=crop&q=80" alt="Blog 2">
+                        <span class="badge bg-warning text-dark position-absolute top-0 end-0 m-3">AUCTIONS</span>
+                    </div>
+                    <div class="p-4 d-flex flex-column h-100">
+                        <h5 class="fw-bold text-white mb-2">Winning Strategies for Institutional Auto Auctions</h5>
+                        <p class="text-muted small mb-4 flex-grow-1">Learn how top dealerships prepare for and secure the best deals during high-stakes disposal events on AutoHub.</p>
+                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                            <span class="text-muted small"><i class="far fa-clock me-1"></i> 8 min read</span>
+                            <a href="#" class="text-cyan fw-bold text-decoration-none">Read More <i class="fas fa-arrow-right ms-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blog Card 3 -->
+            <div class="col-md-4">
+                <div class="blog-card">
+                    <div class="position-relative">
+                        <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80" alt="Blog 3">
+                        <span class="badge" style="background-color: #10b981; position: absolute; top: 0; right: 0; margin: 1rem;">FINANCE</span>
+                    </div>
+                    <div class="p-4 d-flex flex-column h-100">
+                        <h5 class="fw-bold text-white mb-2">Navigating NBFC Loans for Fleet Expansion</h5>
+                        <p class="text-muted small mb-4 flex-grow-1">A comprehensive guide on securing competitive lines of credit to scale your logistics operations without cash flow bottlenecks.</p>
+                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                            <span class="text-muted small"><i class="far fa-clock me-1"></i> 6 min read</span>
+                            <a href="#" class="text-cyan fw-bold text-decoration-none">Read More <i class="fas fa-arrow-right ms-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+             <!-- Blog Card 4 -->
+            <div class="col-md-4">
+                <div class="blog-card">
+                    <div class="position-relative">
+                        <img src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&q=80" alt="Blog 4">
+                        <span class="badge bg-pink position-absolute top-0 end-0 m-3">MARKET INSIGHTS</span>
+                    </div>
+                    <div class="p-4 d-flex flex-column h-100">
+                        <h5 class="fw-bold text-white mb-2">Electric LCVs: Fad or Fleeting Reality?</h5>
+                        <p class="text-muted small mb-4 flex-grow-1">Analyzing adoption curves and total cost of ownership for electric light commercial vehicles in urban delivery.</p>
+                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                            <span class="text-muted small"><i class="far fa-clock me-1"></i> 7 min read</span>
+                            <a href="#" class="text-cyan fw-bold text-decoration-none">Read More <i class="fas fa-arrow-right ms-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Blog Card 5 -->
+            <div class="col-md-4">
+                <div class="blog-card">
+                    <div class="position-relative">
+                        <img src="https://images.unsplash.com/photo-1611750247959-54b3fa6df96b?auto=format&fit=crop&q=80" alt="Blog 5">
+                        <span class="badge bg-secondary position-absolute top-0 end-0 m-3">PRODUCT UPDATE</span>
+                    </div>
+                    <div class="p-4 d-flex flex-column h-100">
+                        <h5 class="fw-bold text-white mb-2">Introducing AutoHub's New Dealer Dashboard</h5>
+                        <p class="text-muted small mb-4 flex-grow-1">Discover the powerful new inventory management and analytics tools we've rolled out for our certified dealer partners.</p>
+                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                            <span class="text-muted small"><i class="far fa-clock me-1"></i> 3 min read</span>
+                            <a href="#" class="text-cyan fw-bold text-decoration-none">Read More <i class="fas fa-arrow-right ms-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Blog Card 6 -->
+            <div class="col-md-4">
+                <div class="blog-card">
+                    <div class="position-relative">
+                        <img src="https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?auto=format&fit=crop&q=80" alt="Blog 6">
+                        <span class="badge bg-cyan position-absolute top-0 end-0 m-3">SELLER TIPS</span>
+                    </div>
+                    <div class="p-4 d-flex flex-column h-100">
+                        <h5 class="fw-bold text-white mb-2">How to Prep Your Assets for Maximum ROI</h5>
+                        <p class="text-muted small mb-4 flex-grow-1">Simple, low-cost maintenance tips that significantly boost your vehicle's valuation score on AutoHub.</p>
+                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                            <span class="text-muted small"><i class="far fa-clock me-1"></i> 4 min read</span>
+                            <a href="#" class="text-cyan fw-bold text-decoration-none">Read More <i class="fas fa-arrow-right ms-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Pagination -->
+        <div class="d-flex justify-content-center mb-5">
+            <nav aria-label="Page navigation">
+              <ul class="pagination pagination-sm">
+                <li class="page-item disabled">
+                  <a class="page-link bg-dark text-muted border-secondary border-opacity-25" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                </li>
+                <li class="page-item"><a class="page-link bg-cyan text-dark fw-bold border-cyan" href="#">1</a></li>
+                <li class="page-item"><a class="page-link bg-dark text-white border-secondary border-opacity-25" href="#">2</a></li>
+                <li class="page-item"><a class="page-link bg-dark text-white border-secondary border-opacity-25" href="#">3</a></li>
+                <li class="page-item">
+                  <a class="page-link bg-dark text-white border-secondary border-opacity-25" href="#">Next</a>
+                </li>
+              </ul>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-dark text-start">
+        <div class="container">
+            <div class="row g-4 mb-5">
+                <div class="col-lg-4 col-md-6 pe-5">
+                    <h4 class="fw-bold mb-3">AutoHub <span class="text-pink">Marketplace</span></h4>
+                    <p class="text-muted small">Premium vehicle marketplace for buying, selling, and leasing with institutional-grade assurance.</p>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <h6 class="text-white fw-bold mb-4">Useful Links</h6>
+                    <a href="#">Home</a>
+                    <a href="#">About Us</a>
+                    <a href="#">Investors</a>
+                    <a href="#">FAQ</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms And Conditions</a>
+                </div>
+                <div class="col-lg-2 col-md-4">
+                    <h6 class="text-white fw-bold mb-4">About Us</h6>
+                    <a href="#">Company Overview</a>
+                    <a href="#">Our Mission</a>
+                    <a href="#">Careers</a>
+                    <a href="#">Press & Media</a>
+                </div>
+                <div class="col-lg-2 col-md-4">
+                    <h6 class="text-white fw-bold mb-4">How It Works</h6>
+                    <a href="#">Buying Guide</a>
+                    <a href="#">Selling Process</a>
+                    <a href="#">Financing Explained</a>
+                    <a href="#">Rental Terms</a>
+                </div>
+                <div class="col-lg-2 col-md-4">
+                    <h6 class="text-white fw-bold mb-4">Solutions</h6>
+                    <a href="#">Buy on Marketplace</a>
+                    <a href="#">Sell on Marketplace</a>
+                    <a href="#">Auction Events</a>
+                    <a href="#">Finance Your Vehicle</a>
+                </div>
+            </div>
+            
+            <div class="row pt-4" style="border-top: 1px solid rgba(255,255,255,0.05);">
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <p class="text-muted small mb-0">&copy; 2025 AutoHub Marketplace. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <span class="text-white fw-bold me-3">Contact Us</span>
+                    <a href="#" class="d-inline-block text-muted me-3"><i class="fas fa-envelope text-pink me-1"></i> support@autohub.com</a>
+                    <a href="#" class="d-inline-block text-muted"><i class="fas fa-phone-alt text-pink me-1"></i> 1800-ELITE-HUB</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/store.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = store.getUser();
+            const cart = store.getCart();
+
+            // Setup Profile Area (Lazy Auth)
+            const profileArea = document.getElementById('navProfileArea');
+            if (user && user.isLoggedIn) {
+                profileArea.innerHTML = `
+                    <div class="dropdown">
+                        <button class="btn btn-cyan rounded-pill px-4" id="profileDropdown" data-bs-toggle="dropdown">
+                            <i class="fas fa-building me-1"></i> <span class="fw-bold">${user.companyName || user.firstName}</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end shadow bg-dark-card border-secondary border-opacity-25" style="border-radius: 8px;">
+                            ${user.role === 'Dealer' ? '<li><a class="dropdown-item py-2 text-white" href="dealer-dashboard.html"><i class="fas fa-tachometer-alt me-3 text-cyan"></i>Dealer Dashboard</a></li>' : ''}
+                            <li><a class="dropdown-item py-2 text-white" href="#"><i class="fas fa-user me-3 text-muted"></i>My Profile</a></li>
+                            <li><a class="dropdown-item py-2 text-white" href="orders.html"><i class="fas fa-box me-3 text-muted"></i>My Orders</a></li>
+                            <li><a class="dropdown-item py-2 text-white" href="my-quotes.html"><i class="fas fa-file-invoice me-3 text-muted"></i>Quotations</a></li>
+                            <li><a class="dropdown-item py-2 text-white" href="my-test-drives.html"><i class="fas fa-car me-3 text-muted"></i>Test Drives</a></li>
+                            <li><hr class="dropdown-divider border-secondary border-opacity-25"></li>
+                            <li><a class="dropdown-item py-2 text-pink fw-bold" href="#" id="logoutBtn"><i class="fas fa-sign-out-alt me-3"></i>Logout</a></li>
+                        </ul>
+                    </div>
+                `;
+                document.getElementById('logoutBtn').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    store.logoutUser();
+                    window.location.reload();
+                });
+            } else {
+                profileArea.innerHTML = `
+                    <button class="btn btn-cyan rounded-pill px-4 fw-bold" id="navLoginBtn"><i class="fas fa-user me-1"></i> Register / Sign In</button>
+                `;
+                document.getElementById('navLoginBtn').addEventListener('click', () => {
+                    window.location.href = 'index.html'; // Auth modal only on index
+                });
+            }
+
+            // Provide Cart Count
+            const cartCounter = document.getElementById('cartCount');
+            if(cartCounter) cartCounter.textContent = cart.items.length || 0;
+        });
+    </script>
+</body>
+</html>

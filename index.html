@@ -176,6 +176,36 @@
         .btn-white:hover {
             background-color: #f3f4f6;
         }
+
+        .service-card {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .service-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--pink-accent) !important;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+        }
+        .service-card .service-icon {
+            transition: all 0.3s ease;
+        }
+        .service-card:hover .service-icon {
+            transform: scale(1.1);
+        }
+
+        .action-switcher-btn {
+            transition: all 0.2s ease;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        .action-switcher-btn.active {
+            background-color: var(--pink-accent) !important;
+            color: #fff !important;
+        }
+        .nav-dropdown-hover:hover {
+            background-color: rgba(255,255,255,0.1) !important;
+            color: var(--pink-accent) !important;
+        }
     </style>
 </head>
 
@@ -210,10 +240,21 @@
 
                 <!-- Right nav items -->
                 <ul class="navbar-nav ms-auto align-items-center gap-3">
-                    <li class="nav-item"><a class="nav-link text-white fw-bold" href="listing.html">Buy</a></li>
-                    <li class="nav-item"><a class="nav-link text-white fw-bold" href="sell-wizard.html">Sell</a></li>
-                    <li class="nav-item"><a class="nav-link text-white fw-bold" href="#" id="navAuctionBtn">Auctions</a></li>
-                    <li class="nav-item"><a class="nav-link text-white fw-bold" href="#">Finance</a></li>
+                    <li class="nav-item"><a class="nav-link text-white fw-bold" href="#buySection">Buy</a></li>
+                    <li class="nav-item"><a class="nav-link text-white fw-bold" href="#sellSection">Sell</a></li>
+                    <li class="nav-item"><a class="nav-link text-white fw-bold" href="#auctionSection">Auctions</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white fw-bold" href="#" id="resourcesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Resources
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end shadow bg-dark-card border-secondary border-opacity-25" aria-labelledby="resourcesDropdown" style="border-radius: 8px;">
+                            <li><a class="dropdown-item py-2 text-white nav-dropdown-hover" href="blogs.html">Blogs</a></li>
+                            <li><a class="dropdown-item py-2 text-white nav-dropdown-hover" href="faqs.html">FAQs</a></li>
+                            <li><a class="dropdown-item py-2 text-white nav-dropdown-hover" href="support.html">Support</a></li>
+                            <li><a class="dropdown-item py-2 text-white nav-dropdown-hover" href="articles.html">Articles</a></li>
+                            <li><a class="dropdown-item py-2 text-white nav-dropdown-hover" href="white-papers.html">White Papers</a></li>
+                        </ul>
+                    </li>
                     
                     <li class="nav-item ms-3 position-relative">
                         <a class="nav-link" href="#" title="Notifications">
@@ -244,327 +285,220 @@
     </nav>
 
     <!-- Hero Section -->
-    <div class="hero-section">
-            <h1 class="display-3 fw-bold mb-1" id="heroTitle">India's Smart <br><span class="text-pink">Vehicle Marketplace</span></h1>
-            <p class="lead mb-4 fw-normal" id="heroSubtitle">Buy, Sell, Auction, or Finance Vehicles in One Platform</p>
-            
-            <div class="d-flex justify-content-center gap-3 mb-4 flex-wrap">
-                <button class="btn btn-pink rounded px-4 py-2" id="buyModeBtn">Buy Vehicle</button>
-                <button class="btn btn-white rounded px-4 py-2" id="sellModeBtn">Sell Vehicle</button>
-                <button id="heroAuctionBtn" class="btn btn-outline-light rounded px-4 py-2 fw-bold" style="border-color: rgba(255,255,255,0.3);">Explore Auctions</button>
-            </div>
-            <p class="small text-muted" id="heroModeNote">Currently showing buyer-focused marketplace content.</p>
+    <div class="hero-section position-relative">
+        <h1 class="display-3 fw-bold mb-2" id="heroTitle">India's Smart <br><span class="text-pink">Vehicle Marketplace</span></h1>
+        <p class="lead mb-0 fw-normal" id="heroSubtitle">The premium platform for B2B automotive commerce.</p>
+    </div>
+
+    <!-- Action Switcher -->
+    <div class="container position-relative" style="margin-top: -30px; z-index: 10;">
+        <div class="bg-dark-card border border-secondary border-opacity-25 rounded-pill shadow-lg p-2 d-flex justify-content-center mx-auto" style="max-width: 450px;">
+            <button class="btn action-switcher-btn active btn-pink rounded-pill flex-fill fw-bold mx-1" onclick="switchTab(this, 'buySection')">Buy</button>
+            <button class="btn action-switcher-btn btn-outline-light text-white border-0 rounded-pill flex-fill fw-bold mx-1" onclick="switchTab(this, 'sellSection')">Sell</button>
+            <button class="btn action-switcher-btn btn-outline-light text-white border-0 rounded-pill flex-fill fw-bold mx-1" onclick="switchTab(this, 'auctionSection')">Auction</button>
         </div>
     </div>
 
-    <!-- Marketplace Listings -->
-    <div id="buyListingsSection" class="container py-5">
-        <div class="text-center mb-5">
-            <h2 class="fw-bold">Marketplace Listings</h2>
-            <p class="text-muted">Direct purchase vehicles and live auction inventory available now.</p>
+    <!-- Explore Our Services Section -->
+    <div class="py-5 mt-4" style="background-color: var(--dark-bg);">
+        <div class="container text-center mb-5">
+            <h2 class="fw-bold">Explore Our Services</h2>
+            <p class="text-muted">Comprehensive solutions for every step of your automotive journey.</p>
         </div>
-
-        <div class="row g-4 justify-content-center" id="listingsGrid">
-            <!-- Dynamically populated by JS to match screenshots -->
-            
-            <!-- Direct Sell Card 1 -->
-            <div class="col-md-4">
-                <div class="card bg-dark-card border-0 h-100 position-relative" style="border-radius: 12px; overflow: hidden;">
-                    <span class="badge position-absolute top-0 start-0 m-3 px-3 py-2" style="background-color: #10b981; border-radius: 20px;">DIRECT SELL</span>
-                    <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&q=80" class="card-img-top" alt="Scania" style="height: 220px; object-fit: cover;">
-                    <div class="card-body p-4">
-                        <h5 class="fw-bold text-white mb-2">2021 Volvo FH16</h5>
-                        <p class="text-muted small mb-3">Heavy Duty &bull; 50,000 km &bull; Pune</p>
-                        <div class="d-flex justify-content-between align-items-end mb-4">
-                            <h4 class="text-pink fw-bold mb-0">₹ 45,00,000</h4>
-                            <small class="text-muted">Certified Vehicle</small>
-                        </div>
-                        <div class="row g-2 mb-2">
-                            <div class="col-6"><button onclick="store.addToCart({id: 'fh16', name: '2021 Volvo FH16', price: 4500000, quantity: 1, image: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&q=80'}); window.location.reload();" class="btn btn-outline-secondary w-100 border-0 bg-dark text-white rounded"><i class="fas fa-shopping-cart text-muted me-2"></i> Add to Cart</button></div>
-                            <div class="col-6"><button onclick="alert('Added to wishlist!')" class="btn btn-outline-secondary w-100 border-0 bg-dark text-white rounded"><i class="fas fa-heart text-muted me-2"></i> Wishlist</button></div>
-                        </div>
-                        <div class="row g-2">
-                            <div class="col-6"><button onclick="window.location.href='cart.html'" class="btn btn-pink w-100 rounded fw-bold"><i class="fas fa-bolt me-1"></i> Buy Now</button></div>
-                            <div class="col-6"><button onclick="window.location.href='my-test-drives.html'" class="btn btn-cyan w-100 rounded fw-bold"><i class="fas fa-car me-1"></i> Book Test Drive</button></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Direct Sell Card 2 -->
-            <div class="col-md-4">
-                <div class="card bg-dark-card border-0 h-100 position-relative" style="border-radius: 12px; overflow: hidden;">
-                    <span class="badge position-absolute top-0 start-0 m-3 px-3 py-2" style="background-color: #10b981; border-radius: 20px;">DIRECT SELL</span>
-                    <img src="https://images.unsplash.com/photo-1559416523-140ddc3d238c?auto=format&fit=crop&q=80" class="card-img-top" alt="Traveller" style="height: 220px; object-fit: cover;">
-                    <div class="card-body p-4">
-                        <h5 class="fw-bold text-white mb-2">2022 Force Traveller</h5>
-                        <p class="text-muted small mb-3">Commercial &bull; 15,000 km &bull; Mumbai</p>
-                        <div class="d-flex justify-content-between align-items-end mb-4">
-                            <h4 class="text-pink fw-bold mb-0">₹ 14,00,000</h4>
-                            <small class="text-muted">Ready for Delivery</small>
-                        </div>
-                        <div class="row g-2 mb-2">
-                            <div class="col-6"><button onclick="store.addToCart({id: 'traveller', name: '2022 Force Traveller', price: 1400000, quantity: 1, image: 'https://images.unsplash.com/photo-1559416523-140ddc3d238c?auto=format&fit=crop&q=80'}); window.location.reload();" class="btn btn-outline-secondary w-100 border-0 bg-dark text-white rounded"><i class="fas fa-shopping-cart text-muted me-2"></i> Add to Cart</button></div>
-                            <div class="col-6"><button onclick="alert('Added to wishlist!')" class="btn btn-outline-secondary w-100 border-0 bg-dark text-white rounded"><i class="fas fa-heart text-muted me-2"></i> Wishlist</button></div>
-                        </div>
-                        <div class="row g-2">
-                            <div class="col-6"><button onclick="window.location.href='cart.html'" class="btn btn-pink w-100 rounded fw-bold"><i class="fas fa-bolt me-1"></i> Buy Now</button></div>
-                            <div class="col-6"><button onclick="window.location.href='my-test-drives.html'" class="btn btn-cyan w-100 rounded fw-bold"><i class="fas fa-car me-1"></i> Book Test Drive</button></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Auction Card -->
-            <div class="col-md-4">
-                <div class="card bg-dark-card border-0 h-100 position-relative" style="border-radius: 12px; overflow: hidden;">
-                    <span class="badge position-absolute top-0 start-0 m-3 px-3 py-2 text-white" style="background-color: var(--orange-accent); border-radius: 20px;">AUCTION</span>
-                    <img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&q=80" class="card-img-top" alt="Scania Touring" style="height: 220px; object-fit: cover;">
-                    <div class="card-body p-4">
-                        <h5 class="fw-bold text-white mb-2">2019 Scania Touring</h5>
-                        <p class="text-muted small mb-3">Passenger &bull; 120,000 km &bull; Live Bid</p>
-                        
-                        <div class="d-flex justify-content-between align-items-center mb-4">
-                            <div>
-                                <small class="text-muted d-block" style="font-size: 0.75rem;">Current Bid</small>
-                                <h4 class="text-pink fw-bold mb-0">₹ 32,50,000</h4>
-                            </div>
-                            <div class="text-end">
-                                <small class="text-muted d-block">12 Bids &bull; Ends in 2h 15m</small>
-                            </div>
-                        </div>
-                        
-                        <div class="row g-2 mt-auto">
-                            <div class="col-6"><button onclick="window.location.href='auction-subscription.html'" class="btn btn-orange w-100 rounded fw-bold"><i class="fas fa-gavel me-1"></i> Place Bid</button></div>
-                            <div class="col-6"><button onclick="alert('Added to wishlist!')" class="btn btn-outline-secondary w-100 border-0 bg-dark text-white rounded"><i class="fas fa-heart text-muted me-2"></i> Wishlist</button></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- Seller Landing Section -->
-    <div id="sellerLandingSection" class="container py-5 hidden">
-        <div class="text-center mb-5">
-            <h2 class="fw-bold">Sell Your Vehicle Faster</h2>
-            <p class="text-muted">Direct listing or dynamic auctions - choose the best route for your business.</p>
-        </div>
-        <div class="row g-4 justify-content-center">
-            <div class="col-md-4">
-                <div class="card bg-dark-card border-secondary border-opacity-25 p-4 h-100 text-center seller-entry-card">
-                    <div class="fs-1 text-pink mb-3"><i class="fas fa-bullhorn"></i></div>
-                    <h5>Step 1: Create Interest</h5>
-                    <p class="text-muted small mb-4">Express your intent to sell and reach thousands of verified B2B buyers instantly.</p>
-                    <button class="btn btn-pink w-100 fw-bold rounded">Get Started</button>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card bg-dark-card border-secondary border-opacity-25 p-4 h-100 text-center seller-entry-card">
-                    <div class="fs-1 text-cyan mb-3"><i class="fas fa-calculator"></i></div>
-                    <h5>Step 2: Add Details</h5>
-                    <p class="text-muted small mb-4">Provide vehicle specs to get an instant market valuation from our dynamic engine.</p>
-                    <button class="btn btn-cyan w-100 fw-bold text-dark rounded">Add Details</button>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card bg-dark-card border-secondary border-opacity-25 p-4 h-100 text-center seller-entry-card">
-                    <div class="fs-1 text-warning mb-3"><i class="fas fa-route"></i></div>
-                    <h5>Step 3: Choose Route</h5>
-                    <p class="text-muted small mb-4">Decide between direct listing or joining an upcoming auction disposal event.</p>
-                    <button class="btn btn-outline-light w-100 fw-bold rounded">Explore Options</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Vehicle Valuation Tool -->
-    <div id="valuationSection" class="container py-5 hidden">
-        <div class="bg-dark-card border border-secondary border-opacity-25 rounded-4 p-5 shadow-lg">
-            <div class="row">
-                <div class="col-lg-7">
-                    <h3 class="fw-bold mb-4">Vehicle Valuation Tool</h3>
-                    <form id="valuationForm">
-                        <div class="row g-3 mb-4">
-                            <div class="col-md-6">
-                                <label class="form-label small text-muted">Vehicle Type</label>
-                                <select class="form-select bg-dark text-white border-secondary border-opacity-25" id="valType">
-                                    <option value="commercial">Commercial Vehicle</option>
-                                    <option value="heavy">Heavy Vehicle</option>
-                                    <option value="passenger">Passenger Vehicle</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label small text-muted">Brand / Model</label>
-                                <input type="text" class="form-control bg-dark text-white border-secondary border-opacity-25" id="valBrand" placeholder="e.g. Tata Ace">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label small text-muted">Registration Year</label>
-                                <input type="number" class="form-control bg-dark text-white border-secondary border-opacity-25" id="valYear" value="2021">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label small text-muted">Odometer (km)</label>
-                                <input type="number" class="form-control bg-dark text-white border-secondary border-opacity-25" id="valKms" placeholder="50000">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label small text-muted">Ownership</label>
-                                <select class="form-select bg-dark text-white border-secondary border-opacity-25" id="valOwner">
-                                    <option value="1">1st Owner</option>
-                                    <option value="2">2nd Owner</option>
-                                    <option value="3">3rd Owner</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label small text-muted">Condition Score (1-10)</label>
-                                <input type="range" class="form-range" min="1" max="10" step="1" id="valCondition">
-                            </div>
-                        </div>
-                        <div class="mb-4">
-                            <label class="form-label small text-muted">Additional Notes</label>
-                            <textarea class="form-control bg-dark text-white border-secondary border-opacity-25" id="valNotes" rows="2" placeholder="Accident history, major repairs..."></textarea>
-                        </div>
-                        <div class="d-flex gap-2">
-                            <button type="button" onclick="getEstimate()" class="btn btn-pink px-4 py-2 fw-bold rounded">Get Estimated Market Value</button>
-                            <button type="button" id="resetValuationBtn" class="btn btn-outline-secondary px-4 py-2 fw-bold text-white rounded">Reset</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="col-lg-5 ps-lg-5 mt-5 mt-lg-0">
-                    <div id="valuationResults" class="hidden">
-                        <div class="valuation-results">
-                            <h5 class="text-white mb-2">Estimated Market Value</h5>
-                            <h2 class="text-pink fw-bold mb-4" id="estimateRange">₹ 0 - ₹ 0</h2>
-                            
-                            <h6 class="text-white mb-3">Dynamic Recommendation Engine</h6>
-                            <div class="d-flex flex-wrap gap-2 mb-4">
-                                <span class="demand-badge" id="demandSignal">Demand Scanning...</span>
-                                <span class="badge bg-secondary bg-opacity-25 text-white" id="suggestedRoute">General Listing</span>
-                            </div>
-                            
-                            <div class="p-3 rounded bg-white bg-opacity-5 border-start border-pink border-4">
-                                <p class="small text-muted mb-0"><i class="fas fa-lightbulb text-warning me-2"></i> <span id="prepTip">Keep inspection reports ready for faster sale.</span></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="valuationPlaceholder" class="h-100 d-flex flex-column justify-content-center align-items-center text-center opacity-50">
-                        <i class="fas fa-chart-line fa-4x mb-3"></i>
-                        <p>Fill out the form to see your <br>vehicle's market value</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Participate in Auctions & Suggested Upcoming Events -->
-    <div id="buyAuctionGrid" class="py-5" style="background-color: var(--dark-bg); border-top: 1px solid rgba(255,255,255,0.05);">
         <div class="container">
-            <ul class="nav nav-tabs auction-tabs mb-4 px-2" id="sellerEventTabs" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active d-flex align-items-center fw-bold" data-bs-toggle="tab" data-bs-target="#seller-live-pane" type="button">
-                        <span class="badge bg-pink bg-opacity-10 text-pink border border-pink border-opacity-25 me-2" style="font-size: 0.70rem; padding: 2px 6px;">LIVE</span> Seller Live Events (2)
-                    </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link d-flex align-items-center fw-bold" data-bs-toggle="tab" data-bs-target="#seller-upcoming-pane" type="button">
-                        <i class="fas fa-calendar-alt me-2"></i> Suggested Upcoming Events (2)
-                    </button>
-                </li>
-            </ul>
+            <div class="row g-4 justify-content-center">
+                <div class="col-lg-3 col-md-6">
+                    <div class="card bg-dark-card border border-secondary border-opacity-25 h-100 p-4 service-card transition-all">
+                        <div class="service-icon mb-3 text-pink fs-1"><i class="fas fa-shopping-cart"></i></div>
+                        <h5 class="fw-bold text-white mb-2">Buy</h5>
+                        <p class="text-muted small mb-4">Discover verified vehicles with transparent pricing and comprehensive inspection reports.</p>
+                        <a href="#buySection" class="text-pink fw-bold text-decoration-none mt-auto">Learn More <i class="fas fa-arrow-right ms-1"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="card bg-dark-card border border-secondary border-opacity-25 h-100 p-4 service-card transition-all" style="--pink-accent: var(--cyan-accent);">
+                        <div class="service-icon mb-3 text-cyan fs-1"><i class="fas fa-tag"></i></div>
+                        <h5 class="fw-bold text-white mb-2">Sell</h5>
+                        <p class="text-muted small mb-4">List your inventory directly to verified buyers or leverage our dynamic valuation engine.</p>
+                        <a href="#sellSection" class="text-cyan fw-bold text-decoration-none mt-auto">Learn More <i class="fas fa-arrow-right ms-1"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="card bg-dark-card border border-secondary border-opacity-25 h-100 p-4 service-card transition-all" style="--pink-accent: var(--orange-accent);">
+                        <div class="service-icon mb-3 text-warning fs-1"><i class="fas fa-gavel"></i></div>
+                        <h5 class="fw-bold text-white mb-2">Auction</h5>
+                        <p class="text-muted small mb-4">Participate in live institutional disposal events and bid on premium stock.</p>
+                        <a href="#auctionSection" class="text-warning fw-bold text-decoration-none mt-auto">Learn More <i class="fas fa-arrow-right ms-1"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="card bg-dark-card border border-secondary border-opacity-25 h-100 p-4 service-card transition-all" style="--pink-accent: #10b981;">
+                        <div class="service-icon mb-3 text-success fs-1"><i class="fas fa-wallet"></i></div>
+                        <h5 class="fw-bold text-white mb-2">Finance</h5>
+                        <p class="text-muted small mb-4">Secure competitive loans with leading NBFCs for your fleet expansion projects.</p>
+                        <a href="#" class="text-success fw-bold text-decoration-none mt-auto">Learn More <i class="fas fa-arrow-right ms-1"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-            <div class="tab-content" id="myTabContent">
-                <!-- Seller Live Pane -->
-                <div class="tab-pane fade show active" id="seller-live-pane" role="tabpanel">
-                    <h4 id="auctionSectionTitle" class="fw-bold mb-2 text-white">Participate in Auctions & Suggested Upcoming Events</h4>
-                    <p id="auctionSectionSubtitle" class="text-muted mb-4">Seller mode highlights live events for viewing only, while upcoming events support view, join, and participate actions.</p>
-                    
-                    <div class="row g-4 mb-4" id="sellAuctionGrid">
-                        <!-- Card 1 -->
+    <!-- Buy Section -->
+    <div id="buySection" class="py-5" style="background-color: var(--dark-bg); border-top: 1px solid rgba(255,255,255,0.05);">
+        <div class="container py-4">
+            <div class="row align-items-center">
+                <div class="col-lg-5 mb-5 mb-lg-0 pe-lg-5">
+                    <span class="badge bg-pink bg-opacity-10 text-pink border border-pink border-opacity-25 px-3 py-2 mb-3 rounded-pill fw-bold" style="letter-spacing: 1px;">BUY VEHICLES</span>
+                    <h2 class="fw-bold mb-3">Discover Verified Inventory</h2>
+                    <p class="text-muted mb-4" style="line-height: 1.8;">Find the perfect commercial or passenger vehicles for your business. Every vehicle on AutoHub comes with a comprehensive inspection report, verified ownership history, and transparent pricing. Explore flexible financing options to scale your fleet seamlessly.</p>
+                    <ul class="list-unstyled text-muted mb-4">
+                        <li class="mb-2"><i class="fas fa-check-circle text-pink me-2"></i> 150+ point inspection checks</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-pink me-2"></i> Pre-approved financing available</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-pink me-2"></i> Dedicated RTO & paperwork support</li>
+                    </ul>
+                    <div class="d-flex align-items-center gap-4 mb-4">
+                        <div class="pe-4 border-end border-secondary border-opacity-50">
+                            <h3 class="fw-bold text-white mb-0">5,000+</h3>
+                            <small class="text-muted">Verified Vehicles</small>
+                        </div>
+                        <div>
+                            <h3 class="fw-bold text-white mb-0">98%</h3>
+                            <small class="text-muted">Satisfaction Rate</small>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <a href="listing.html" class="btn btn-pink px-4 py-3 fw-bold rounded shadow">Browse Inventory</a>
+                        <a href="listing.html" class="text-pink fw-bold ms-4 text-decoration-none">View More <i class="fas fa-arrow-right ms-1"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="row g-3">
                         <div class="col-md-6">
-                            <div class="card bg-dark-card border border-secondary border-opacity-25 shadow-sm rounded-4 p-4 h-100">
-                                <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <h6 class="fw-bold mb-0 text-white">Commercial Fleet Seller Auction</h6>
-                                    <span class="fw-bold text-muted" style="font-size: 0.9rem;">Seller Window Open</span>
-                                </div>
-                                <span class="badge bg-pink bg-opacity-10 text-pink border border-pink border-opacity-25 px-2 py-1 mb-3" style="font-size: 0.7rem; width: fit-content;">LIVE</span>
-                                <p class="text-muted text-sm mb-4">View the active event details and understand current buyer interest, timelines, and seller criteria.</p>
-                                <div class="d-flex align-items-center text-muted small mb-4">
-                                    <i class="fas fa-map-marker-alt me-2 text-white"></i> <span class="fw-bold text-white">Pune Yard</span> 
-                                    <i class="fas fa-clock ms-3 me-2 text-white"></i> <span class="fw-bold text-white">Intake closed for live seller entries</span>
-                                </div>
-                                <div>
-                                    <button class="btn btn-pink px-4 py-2 fw-bold text-white rounded"><i class="fas fa-eye me-2"></i> View Event</button>
+                            <div class="card bg-dark-card border border-secondary border-opacity-25 h-100 position-relative" style="border-radius: 12px; overflow: hidden;">
+                                <span class="badge position-absolute top-0 start-0 m-3 px-3 py-2" style="background-color: #10b981; border-radius: 20px;">DIRECT SELL</span>
+                                <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&q=80" class="card-img-top" alt="Scania" style="height: 200px; object-fit: cover;">
+                                <div class="card-body p-4">
+                                    <h6 class="fw-bold text-white mb-2">2021 Volvo FH16</h6>
+                                    <p class="text-muted small mb-3">Heavy Duty &bull; 50,000 km &bull; Pune</p>
+                                    <h5 class="text-pink fw-bold mb-0">₹ 45,00,000</h5>
                                 </div>
                             </div>
                         </div>
-                        <!-- Card 2 -->
                         <div class="col-md-6">
-                            <div class="card bg-dark-card border border-secondary border-opacity-25 shadow-sm rounded-4 p-4 h-100">
-                                <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <h6 class="fw-bold mb-0 text-white">Institutional Bus Disposal Event</h6>
-                                    <span class="fw-bold text-muted" style="font-size: 0.9rem;">Reserve Setup Available</span>
-                                </div>
-                                <span class="badge bg-pink bg-opacity-10 text-pink border border-pink border-opacity-25 px-2 py-1 mb-3" style="font-size: 0.7rem; width: fit-content;">LIVE</span>
-                                <p class="text-muted text-sm mb-4">Review the event structure, reserve trends, and lot performance, but do not allow live seller participation.</p>
-                                <div class="d-flex align-items-center text-muted small mb-4">
-                                    <i class="fas fa-map-marker-alt me-2 text-white"></i> <span class="fw-bold text-white">Bengaluru</span> 
-                                    <i class="fas fa-clock ms-3 me-2 text-white"></i> <span class="fw-bold text-white">Live seller entry unavailable</span>
-                                </div>
-                                <div>
-                                    <button class="btn btn-pink px-4 py-2 fw-bold text-white rounded"><i class="fas fa-eye me-2"></i> View Event</button>
+                            <div class="card bg-dark-card border border-secondary border-opacity-25 h-100 position-relative" style="border-radius: 12px; overflow: hidden;">
+                                <span class="badge position-absolute top-0 start-0 m-3 px-3 py-2" style="background-color: #10b981; border-radius: 20px;">DIRECT SELL</span>
+                                <img src="https://images.unsplash.com/photo-1559416523-140ddc3d238c?auto=format&fit=crop&q=80" class="card-img-top" alt="Traveller" style="height: 200px; object-fit: cover;">
+                                <div class="card-body p-4">
+                                    <h6 class="fw-bold text-white mb-2">2022 Force Traveller</h6>
+                                    <p class="text-muted small mb-3">Commercial &bull; 15,000 km &bull; Mumbai</p>
+                                    <h5 class="text-pink fw-bold mb-0">₹ 14,00,000</h5>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
 
-
+    <!-- Sell Section -->
+    <div id="sellSection" class="py-5" style="background-color: #111827; border-top: 1px solid rgba(255,255,255,0.05);">
+        <div class="container py-4">
+            <div class="row align-items-center flex-lg-row-reverse">
+                <div class="col-lg-5 mb-5 mb-lg-0 ps-lg-5">
+                    <span class="badge bg-cyan bg-opacity-10 text-cyan border border-cyan border-opacity-25 px-3 py-2 mb-3 rounded-pill fw-bold" style="letter-spacing: 1px;">SELL VEHICLES</span>
+                    <h2 class="fw-bold mb-3">Sell Your Vehicle Faster</h2>
+                    <p class="text-muted mb-4" style="line-height: 1.8;">Maximize your returns with our intelligent selling tools. Whether you're a private seller or a dealer managing bulk inventory, our platform connects you with thousands of verified B2B buyers across India.</p>
+                    <ul class="list-unstyled text-muted mb-4">
+                        <li class="mb-2"><i class="fas fa-check-circle text-cyan me-2"></i> Dynamic AI-driven valuation engine</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-cyan me-2"></i> Seamless dealer & private seller flow</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-cyan me-2"></i> Direct marketplace listing or auction options</li>
+                    </ul>
+                    <div class="d-flex align-items-center gap-4 mb-4">
+                        <div class="pe-4 border-end border-secondary border-opacity-50">
+                            <h3 class="fw-bold text-white mb-0">24h</h3>
+                            <small class="text-muted">Avg. Time to Sell</small>
+                        </div>
+                        <div>
+                            <h3 class="fw-bold text-white mb-0">15K+</h3>
+                            <small class="text-muted">Active Buyers</small>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <a href="sell-wizard.html" class="btn btn-cyan px-4 py-3 fw-bold rounded shadow text-dark">Start Selling Now</a>
+                        <a href="sell-wizard.html" class="text-cyan fw-bold ms-4 text-decoration-none">View More <i class="fas fa-arrow-right ms-1"></i></a>
+                    </div>
                 </div>
+                <div class="col-lg-7 text-center">
+                    <div class="position-relative d-inline-block w-100" style="max-width: 600px;">
+                        <img src="https://images.unsplash.com/photo-1560179707-f14e90ef3623?auto=format&fit=crop&q=80" alt="Sell Vehicle" class="img-fluid rounded-4 shadow-lg border border-secondary border-opacity-25 w-100" style="height: 380px; object-fit: cover;">
+                        <div class="position-absolute bottom-0 start-0 m-4 bg-dark-card border border-secondary border-opacity-25 rounded-4 p-3 shadow-lg d-flex align-items-center text-start">
+                            <div class="bg-cyan bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 48px; height: 48px;">
+                                <i class="fas fa-chart-line text-cyan fs-5"></i>
+                            </div>
+                            <div>
+                                <p class="text-white fw-bold mb-0">Get Instant Value</p>
+                                <p class="text-muted small mb-0">AI-powered valuation engine</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                <!-- Seller Upcoming Pane -->
-                <div class="tab-pane fade" id="seller-upcoming-pane" role="tabpanel">
-                    <h4 class="fw-bold mb-2 text-white">Suggested Upcoming Events</h4>
-                    <p class="text-muted mb-4">These upcoming events support view, join, and participate actions for approved sellers.</p>
-                    
-                    <div class="row g-4">
-                        <!-- Card 3 -->
+    <!-- Auction Section -->
+    <div id="auctionSection" class="py-5" style="background-color: var(--dark-bg); border-top: 1px solid rgba(255,255,255,0.05);">
+        <div class="container py-4">
+            <div class="row align-items-center">
+                <div class="col-lg-5 mb-5 mb-lg-0 pe-lg-5">
+                    <span class="badge bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25 px-3 py-2 mb-3 rounded-pill fw-bold" style="letter-spacing: 1px;">AUCTION EVENTS</span>
+                    <h2 class="fw-bold mb-3">Live Bidding & Transparent Pricing</h2>
+                    <p class="text-muted mb-4" style="line-height: 1.8;">Access exclusive institutional and fleet disposal events. Our dynamic auction engine provides a fair, transparent environment for dealers and enterprise buyers to secure the best inventory at market-driven prices.</p>
+                    <ul class="list-unstyled text-muted mb-4">
+                        <li class="mb-2"><i class="fas fa-check-circle text-warning me-2"></i> Real-time live bidding dashboard</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-warning me-2"></i> Transparent reserve pricing & lot details</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-warning me-2"></i> Nationwide delivery assistance</li>
+                    </ul>
+                    <div class="d-flex align-items-center gap-4 mb-4">
+                        <div class="pe-4 border-end border-secondary border-opacity-50">
+                            <h3 class="fw-bold text-white mb-0">50+</h3>
+                            <small class="text-muted">Weekly Events</small>
+                        </div>
+                        <div>
+                            <h3 class="fw-bold text-white mb-0">100%</h3>
+                            <small class="text-muted">Secure Bidding</small>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <a href="listing.html?type=auction" class="btn btn-warning px-4 py-3 fw-bold rounded shadow text-dark">View Live Events</a>
+                        <a href="listing.html?type=auction" class="text-warning fw-bold ms-4 text-decoration-none">View More <i class="fas fa-arrow-right ms-1"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="row g-3">
                         <div class="col-md-6">
-                            <div class="card bg-dark-card border border-secondary border-opacity-25 shadow-sm rounded-4 p-4 h-100">
-                                <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <h6 class="fw-bold mb-0 text-white">Upcoming Construction Auction</h6>
-                                    <span class="fw-bold text-muted" style="font-size: 0.9rem;">High Buyer Demand</span>
-                                </div>
-                                <span class="badge bg-cyan bg-opacity-10 text-cyan border border-cyan border-opacity-25 px-2 py-1 mb-3" style="font-size: 0.7rem; width: fit-content;">RECOMMENDED</span>
-                                <p class="text-muted text-sm mb-4">Ideal for tippers, loaders, and site equipment. Sellers can review, join, and participate before the event starts.</p>
-                                <div class="d-flex align-items-center text-muted small mb-4">
-                                    <i class="fas fa-map-marker-alt me-2 text-white"></i> <span class="fw-bold text-white">Hyderabad</span> 
-                                    <i class="fas fa-calendar-alt ms-3 me-2 text-white"></i> <span class="fw-bold text-white">Tomorrow, 11:00 AM</span>
-                                </div>
-                                <div class="d-flex gap-2">
-                                    <button class="btn btn-cyan px-4 py-2 fw-bold text-dark rounded"><i class="fas fa-eye me-2"></i> View Event</button>
-                                    <button class="btn btn-outline-light px-4 py-2 fw-bold rounded"><i class="fas fa-user-plus me-2"></i> Join</button>
-                                    <button class="btn btn-pink px-4 py-2 fw-bold text-white rounded"><i class="fas fa-gavel me-2"></i> Participate</button>
+                            <div class="card bg-dark-card border border-secondary border-opacity-25 h-100 position-relative" style="border-radius: 12px; overflow: hidden;">
+                                <span class="badge position-absolute top-0 start-0 m-3 px-3 py-2 text-dark" style="background-color: var(--bs-warning); border-radius: 20px;">LIVE AUCTION</span>
+                                <img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&q=80" class="card-img-top" alt="Scania Touring" style="height: 200px; object-fit: cover;">
+                                <div class="card-body p-4">
+                                    <h6 class="fw-bold text-white mb-2">2019 Scania Touring</h6>
+                                    <p class="text-muted small mb-3">Passenger &bull; Ends in 2h 15m</p>
+                                    <div class="d-flex justify-content-between align-items-end">
+                                        <h5 class="text-pink fw-bold mb-0">₹ 32,50,000</h5>
+                                        <small class="text-muted">12 Bids</small>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- Card 4 -->
                         <div class="col-md-6">
-                            <div class="card bg-dark-card border border-secondary border-opacity-25 shadow-sm rounded-4 p-4 h-100">
-                                <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <h6 class="fw-bold mb-0 text-white">Dealer Exchange Weekend Event</h6>
-                                    <span class="fw-bold text-muted" style="font-size: 0.9rem;">Fast Turnaround</span>
+                            <div class="card bg-dark-card border border-secondary border-opacity-25 h-100 position-relative p-4 d-flex flex-column justify-content-center align-items-center text-center w-100" style="border-radius: 12px; border-style: dashed !important;">
+                                <div class="bg-warning bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center mb-3 text-warning" style="width: 64px; height: 64px;">
+                                    <i class="fas fa-calendar-alt fs-3"></i>
                                 </div>
-                                <span class="badge bg-cyan bg-opacity-10 text-cyan border border-cyan border-opacity-25 px-2 py-1 mb-3" style="font-size: 0.7rem; width: fit-content;">SUGGESTED</span>
-                                <p class="text-muted text-sm mb-4">Best suited for dealer stock rotation and aged inventory. Sellers can review, join, and enroll inventory in advance.</p>
-                                <div class="d-flex align-items-center text-muted small mb-4">
-                                    <i class="fas fa-map-marker-alt me-2 text-white"></i> <span class="fw-bold text-white">Chennai</span> 
-                                    <i class="fas fa-calendar-alt ms-3 me-2 text-white"></i> <span class="fw-bold text-white">Friday, 3:00 PM</span>
-                                </div>
-                                <div class="d-flex gap-2">
-                                    <button class="btn btn-cyan px-4 py-2 fw-bold text-dark rounded"><i class="fas fa-eye me-2"></i> View Event</button>
-                                    <button class="btn btn-outline-light px-4 py-2 fw-bold rounded"><i class="fas fa-user-plus me-2"></i> Join</button>
-                                    <button class="btn btn-pink px-4 py-2 fw-bold text-white rounded"><i class="fas fa-gavel me-2"></i> Participate</button>
-                                </div>
+                                <h6 class="text-white fw-bold">Upcoming: Dealer Exchange</h6>
+                                <p class="text-muted small mb-3">Explore 50+ vehicles listed for tomorrow's live auction.</p>
+                                <a href="listing.html?type=auction" class="btn btn-outline-warning btn-sm fw-bold px-3">Join Event</a>
                             </div>
                         </div>
                     </div>
@@ -871,40 +805,38 @@
             const heroAuctionBtn = document.getElementById('heroAuctionBtn');
             if (heroAuctionBtn) heroAuctionBtn.addEventListener('click', handleAuctionClick);
 
-            // --- SELLER MODE LOGIC ---
-            const heroTitle = document.getElementById('heroTitle');
-            const heroSubtitle = document.getElementById('heroSubtitle');
-            const heroModeNote = document.getElementById('heroModeNote');
-            const buyModeBtn = document.getElementById('buyModeBtn');
-            const sellModeBtn = document.getElementById('sellModeBtn');
-            const buyListingsSection = document.getElementById('buyListingsSection');
-            const sellerLandingSection = document.getElementById('sellerLandingSection');
-            const valuationSection = document.getElementById('valuationSection');
-            const buyAuctionGrid = document.getElementById('buyAuctionGrid');
-            const sellAuctionGrid = document.getElementById('sellAuctionGrid');
-            const auctionSectionTitle = document.getElementById('auctionSectionTitle');
-            const auctionSectionSubtitle = document.getElementById('auctionSectionSubtitle');
-            const howWorksTitle = document.getElementById('howWorksTitle');
-            const howWorksGrid = document.getElementById('howWorksGrid');
+            // --- SWITCH ACTIONS LOGIC ---
+            window.switchTab = function(btn, targetId) {
+                document.querySelectorAll('.action-switcher-btn').forEach(b => {
+                    b.classList.remove('active', 'btn-pink');
+                    b.classList.add('btn-outline-light', 'text-white', 'border-0');
+                });
+                btn.classList.remove('btn-outline-light', 'text-white', 'border-0');
+                btn.classList.add('active', 'btn-pink');
+                
+                // Get navbar height for offset
+                const navHeight = document.querySelector('.navbar').offsetHeight;
+                const targetElement = document.getElementById(targetId);
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - navHeight;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: "smooth"
+                });
+            };
 
             const buySteps = [
                 { number:'01', title:'Browse Vehicles', desc: 'Explore thousands of certified cars and commercial vehicles with transparent pricing.', icon: 'fas fa-search', color: '#a78bfa'},
                 { number:'02', title:'Compare Details', desc: 'Check inspection reports, photos, ownership records, and price benchmarks.', icon: 'fas fa-list-alt', color: '#60a5fa'},
                 { number:'03', title:'Apply for Finance', desc: 'Review finance options, pre-approvals, and institutional assistance.', icon: 'fas fa-university', color: '#9ca3af'},
-                { number:'04', title:'Add & Checkout', desc: 'Add vehicles to cart, save to wishlist, buy instantly, or place bids.', icon: 'fas fa-shopping-cart', color: '#94a3b8'},
+                { number:'04', title:'Checkout or Bid', desc: 'Add vehicles to cart, save to wishlist, buy instantly, or place bids.', icon: 'fas fa-shopping-cart', color: '#94a3b8'},
                 { number:'05', title:'RC & Delivery', desc: 'Complete documentation, transfer ownership, and schedule delivery.', icon: 'fas fa-truck', color: '#fbbf24'}
             ];
 
-            const sellSteps = [
-                { number:'01', title:'Share Vehicle Details', desc: 'Provide basic info about your vehicle to start the selling process.', icon: 'fas fa-file-alt', color: '#ec4899'},
-                { number:'02', title:'Get Instant Value', desc: 'Use our dynamic valuation tool to see the current market price.', icon: 'fas fa-calculator', color: '#06b6d4'},
-                { number:'03', title:'Prepare Documents', desc: 'Gather your RC, insurance, and service history for buyer verification.', icon: 'fas fa-folder-open', color: '#9ca3af'},
-                { number:'04', title:'Choose Sale Route', desc: 'Select between direct marketplace listing or auction disposal.', icon: 'fas fa-route', color: '#f59e0b'},
-                { number:'05', title:'List and Close Sale', desc: 'Go live on AutoHub and finalize the transaction with verified buyers.', icon: 'fas fa-check-circle', color: '#10b981'}
-            ];
-
-            function renderSteps(steps) {
-                howWorksGrid.innerHTML = steps.map(s => `
+            const howWorksGrid = document.getElementById('howWorksGrid');
+            if (howWorksGrid) {
+                howWorksGrid.innerHTML = buySteps.map(s => `
                     <div class="col">
                         <div class="process-card">
                             <div class="step-number">${s.number}</div>
@@ -915,147 +847,6 @@
                     </div>
                 `).join('');
             }
-
-            function setSellMode() {
-                heroTitle.innerHTML = `Sell Faster with <br><span class="text-pink">AutoHub Seller Tools</span>`;
-                heroSubtitle.textContent = 'Get an instant vehicle value, understand seller options, and review upcoming auction opportunities';
-                heroModeNote.textContent = 'Currently showing seller-focused content on the same landing page.';
-
-                buyModeBtn.className = 'btn btn-outline-light rounded px-4 py-2 fw-bold';
-                sellModeBtn.className = 'btn btn-pink rounded px-4 py-2 fw-bold';
-
-                buyListingsSection.classList.add('hidden');
-                sellerLandingSection.classList.remove('hidden');
-                valuationSection.classList.remove('hidden');
-
-                // buyAuctionGrid contains the tabs, we keep it but change labels/grid
-                // Wait, based on user prompt, buyAuctionGrid is hidden and sellAuctionGrid is shown
-                // But in existing code buyAuctionGrid IS the Participating In Auctions section.
-                // I'll follow the user prompt's logic:
-                // buyAuctionGrid.classList.add('hidden');
-                // sellAuctionGrid.classList.remove('hidden');
-                // However, the tab structure is inside buyAuctionGrid. 
-                // I'll adjust: hide the BUYER specific auction grid if any, and show the SELLER one.
-                // Actually, I'll just change the titles/content as setSellMode does.
-
-                auctionSectionTitle.textContent = 'Participate in Auctions & Suggested Upcoming Events';
-                auctionSectionSubtitle.textContent = 'Seller mode highlights live events for viewing only, while upcoming events support view, join, and participate actions.';
-
-                howWorksTitle.textContent = 'How Selling Works';
-                renderSteps(sellSteps);
-
-                // Scroll to seller content
-                sellerLandingSection.scrollIntoView({behavior:"smooth"});
-                
-                // Set active FAQ
-                setActiveFaqTab('sellers');
-            }
-
-            function setBuyMode() {
-                heroTitle.innerHTML = `India's Smart <br><span class="text-pink">Vehicle Marketplace</span>`;
-                heroSubtitle.textContent = 'Buy, Sell, Auction, or Finance Vehicles in One Platform';
-                heroModeNote.textContent = 'Currently showing buyer-focused marketplace content.';
-
-                buyModeBtn.className = 'btn btn-pink rounded px-4 py-2 fw-bold';
-                sellModeBtn.className = 'btn btn-white rounded px-4 py-2 fw-bold';
-
-                buyListingsSection.classList.remove('hidden');
-                sellerLandingSection.classList.add('hidden');
-                valuationSection.classList.add('hidden');
-
-                auctionSectionTitle.textContent = 'Marketplace Auction Events';
-                howWorksTitle.textContent = 'How Buying Works';
-                renderSteps(buySteps);
-
-                setActiveFaqTab('buyers');
-            }
-
-            function setActiveFaqTab(tab) {
-                const buttons = document.querySelectorAll('.bg-dark-card.rounded-pill button');
-                buttons.forEach(btn => {
-                    if (btn.textContent.toLowerCase().includes(tab)) {
-                        btn.className = 'btn btn-cyan rounded-pill px-4 fw-bold';
-                    } else {
-                        btn.className = 'btn text-white px-4';
-                    }
-                });
-            }
-
-            // Expose globally for buttons
-            window.getEstimate = function() {
-                const year = parseInt(document.getElementById('valYear').value) || 2021;
-                const kms = parseInt(document.getElementById('valKms').value) || 50000;
-                const owner = parseInt(document.getElementById('valOwner').value) || 1;
-                const condition = parseInt(document.getElementById('valCondition').value) || 7;
-                
-                let base = 2500000; // Base for commercial/heavy
-                const type = document.getElementById('valType').value;
-                if (type === 'passenger') base = 1200000;
-                
-                const age = 2025 - year;
-                
-                // User logic:
-                base -= age * 90000;
-                base -= (kms / 1000) * 2000;
-                base -= (owner - 1) * 50000;
-                base += (condition - 5) * 30000;
-
-                const min = Math.max(base * 0.9, 50000);
-                const max = base * 1.1;
-
-                document.getElementById('estimateRange').textContent = `₹ ${Math.round(min).toLocaleString('en-IN')} - ₹ ${Math.round(max).toLocaleString('en-IN')}`;
-                
-                // Recommendation items
-                const demandSignal = document.getElementById('demandSignal');
-                const suggestedRoute = document.getElementById('suggestedRoute');
-                const prepTip = document.getElementById('prepTip');
-
-                if (condition > 7) {
-                    demandSignal.textContent = 'High demand in active hubs';
-                    suggestedRoute.textContent = 'Premium Auction Recommended';
-                    prepTip.textContent = 'Certified vehicles sell 20% faster - book an inspection.';
-                } else {
-                    demandSignal.textContent = 'Steady B2B demand';
-                    suggestedRoute.textContent = 'Direct Sale Recommended';
-                    prepTip.textContent = 'Keep service history logs ready for buyer review.';
-                }
-
-                document.getElementById('valuationPlaceholder').classList.add('hidden');
-                document.getElementById('valuationResults').classList.remove('hidden');
-            };
-
-            // Event Listeners
-            buyModeBtn.addEventListener('click', setBuyMode);
-            sellModeBtn.addEventListener('click', setSellMode);
-
-            // Entry point connectors
-            document.querySelectorAll('.seller-entry-card button').forEach((btn, idx) => {
-                if (idx === 1) { // Add Details button
-                    btn.addEventListener('click', () => {
-                        valuationSection.scrollIntoView({behavior:"smooth"});
-                    });
-                }
-            });
-
-            // Navbar Sell Link
-            const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
-            navLinks.forEach(link => {
-                if (link.textContent === 'Sell') {
-                    link.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        setSellMode();
-                    });
-                }
-            });
-
-            document.getElementById('resetValuationBtn').addEventListener('click', () => {
-                document.getElementById('valuationForm').reset();
-                document.getElementById('valuationResults').classList.add('hidden');
-                document.getElementById('valuationPlaceholder').classList.remove('hidden');
-            });
-
-            // Initial Render
-            renderSteps(buySteps);
         });
     </script>
 </body>

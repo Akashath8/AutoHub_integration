@@ -177,47 +177,153 @@
 
     <!-- Quotation Details Modal -->
     <div class="modal fade" id="quoteDetailsModal" tabindex="-1">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content border-0 shadow-lg">
-                <div class="modal-header border-bottom-0 pb-0">
-                    <h5 class="modal-title fw-bold" id="quoteModalTitle">Quotation Details</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-header bg-light border-bottom">
+                    <h5 class="modal-title fw-bold">
+                        Quotation Details
+                        <span id="modalStatusBadge" class="badge bg-secondary ms-2 align-middle" style="font-size: 0.75rem;">Status</span>
+                    </h5>
+                    <div class="d-flex gap-2 align-items-center">
+                        <button class="btn btn-sm btn-outline-primary" title="Download Quotation PDF"><i class="fas fa-download"></i></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
                 </div>
-                <div class="modal-body pt-3 pb-4">
-                    <div class="mb-4 d-flex justify-content-between">
-                        <div>
-                            <div class="text-muted small">Quotation ID</div>
-                            <div class="fw-bold" id="modalQuoteId">-</div>
+                <div class="modal-body p-4 bg-white">
+                    
+                    <!-- Top Summary Cards -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-3 col-6">
+                            <div class="p-3 bg-light rounded border h-100">
+                                <div class="text-muted small text-uppercase fw-bold mb-1" style="font-size: 0.7rem;">Quote ID</div>
+                                <div class="fw-bold text-dark" id="modalQuoteId">-</div>
+                            </div>
                         </div>
-                        <div class="text-end">
-                            <div class="text-muted small">Seller</div>
-                            <div class="fw-bold" id="modalSellerName">-</div>
+                        <div class="col-md-5 col-12">
+                            <div class="p-3 bg-light rounded border h-100">
+                                <div class="text-muted small text-uppercase fw-bold mb-1" style="font-size: 0.7rem;">Seller Details</div>
+                                <div class="fw-bold text-dark text-truncate" id="modalSellerName" title="">-</div>
+                                <div class="text-muted small mt-1" id="modalBuyerCompany">Buyer: -</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-6">
+                            <div class="p-3 bg-light rounded border h-100">
+                                <div class="text-muted small text-uppercase fw-bold mb-1" style="font-size: 0.7rem;">Received On</div>
+                                <div class="fw-bold text-dark" id="modalReceivedDate">-</div>
+                                <div class="text-muted small mt-1" id="modalValidUntil">Valid until: -</div>
+                            </div>
                         </div>
                     </div>
 
-                    <h6 class="fw-bold mb-3 border-bottom pb-2">Vehicles Included</h6>
-                    <div id="modalVehiclesList">
+                    <!-- Main Content Split -->
+                    <div class="row g-4 mb-4">
+                        <!-- Vehicles List -->
+                        <div class="col-lg-7">
+                            <h6 class="fw-bold text-uppercase text-muted mb-3" style="font-size: 0.8rem; letter-spacing: 0.5px;">Vehicles Included</h6>
+                            <div id="modalVehiclesList" class="d-flex flex-column gap-3">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+
+                        <!-- Pricing Summary -->
+                        <div class="col-lg-5">
+                            <div class="card border border-primary border-opacity-25 shadow-sm">
+                                <div class="card-header bg-primary bg-opacity-10 border-bottom-0 py-3">
+                                    <h6 class="fw-bold text-primary mb-0 text-uppercase" style="font-size: 0.8rem; letter-spacing: 0.5px;">Pricing Summary</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span class="text-muted">Listed Value</span>
+                                        <span class="fw-bold" id="modalTotalPrice">₹ 0</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-2 pb-2 border-bottom">
+                                        <span class="text-muted">Negotiated Savings</span>
+                                        <span class="fw-bold text-success" id="modalSavingsValue">- ₹ 0</span>
+                                    </div>
+                                    
+                                    <div class="d-flex justify-content-between align-items-center mt-3 pt-2">
+                                        <div>
+                                            <span class="d-block fw-bold text-dark" style="font-size: 1.1rem;">Current Offer</span>
+                                            <small class="text-muted d-block">Includes escrow fees estimate</small>
+                                        </div>
+                                        <h4 class="fw-bold text-primary mb-0" id="modalOfferPrice">₹ 0</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Negotiation Timeline -->
+                    <h6 class="fw-bold text-uppercase text-muted mb-3 mt-2" style="font-size: 0.8rem; letter-spacing: 0.5px;">Activity Log</h6>
+                    <div class="bg-light p-3 rounded border" id="modalActivityLog">
                         <!-- Populated by JS -->
                     </div>
 
-                    <div class="row mt-4 pt-3 border-top">
-                        <div class="col-6">
-                            <div class="text-muted small">Total Value</div>
-                            <h5 class="fw-bold text-decoration-line-through" id="modalTotalPrice">₹ 0</h5>
-                        </div>
-                        <div class="col-6 text-end">
-                            <div class="text-muted small">Offered Price</div>
-                            <h5 class="fw-bold text-success" id="modalOfferPrice">₹ 0</h5>
-                        </div>
+                </div>
+                <div class="modal-footer bg-light border-top p-3 d-flex justify-content-between align-items-center">
+                    <div class="d-flex gap-2">
+                        <button type="button" class="btn btn-outline-danger fw-bold" id="rejectQuoteBtn">Reject</button>
+                        <button type="button" class="btn btn-outline-primary fw-bold" title="Start Chat with Seller"><i class="fas fa-comment-dots me-2"></i>Contact Seller</button>
+                    </div>
+                    <div id="modalActions" class="d-flex gap-2">
+                        <button type="button" class="btn btn-outline-secondary fw-bold" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-warning text-dark px-4 fw-bold" id="openCounterModalBtn">Counter Offer</button>
+                        <button type="button" class="btn btn-primary px-4 fw-bold shadow-sm" id="acceptQuoteBtn">Accept & Proceed</button>
                     </div>
                 </div>
-                <div class="modal-footer border-top-0 d-flex justify-content-between">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                    <div id="modalActions">
-                        <button type="button" class="btn btn-warning text-dark px-4 fw-bold me-2">Counter Offer</button>
-                        <button type="button" class="btn btn-success px-4 fw-bold" id="acceptQuoteBtn">Accept & Proceed to Deal</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Counter Offer Modal -->
+    <div class="modal fade" id="counterOfferModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg">
+                <div class="modal-header bg-light border-bottom">
+                    <h5 class="modal-title fw-bold">Make a Counter Offer</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="mb-3">
+                        <label class="form-label text-muted small fw-bold text-uppercase">Current Seller Offer</label>
+                        <h4 class="fw-bold text-primary" id="counterCurrentOffer">₹ 0</h4>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="form-label text-dark fw-bold">Your Counter Amount (₹)</label>
+                        <div class="input-group input-group-lg shadow-sm">
+                            <span class="input-group-text bg-white border-end-0 text-muted">₹</span>
+                            <input type="number" class="form-control border-start-0 fw-bold" id="counterAmountInput" placeholder="Enter amount">
+                        </div>
+                        <div class="d-flex gap-2 mt-2">
+                            <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill fw-bold quick-adjust-btn" data-adjust="-10000">- 10k</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill fw-bold quick-adjust-btn" data-adjust="-50000">- 50k</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill fw-bold quick-adjust-btn" data-adjust="-100000">- 1L</button>
+                        </div>
+                        <div class="form-text text-danger mt-1 d-none" id="counterErrorText">Please enter a valid amount.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label text-dark fw-bold">Notes / Reason (Optional)</label>
+                        <textarea class="form-control" id="counterNotesInput" rows="3" placeholder="E.g., Price is slightly high based on the age of the vehicle."></textarea>
                     </div>
                 </div>
+                <div class="modal-footer border-top p-3 bg-light">
+                    <button type="button" class="btn btn-outline-secondary fw-bold" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary px-4 fw-bold shadow-sm" id="submitCounterBtn">Submit Counter Offer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Toast -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="successToast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    <i class="fas fa-check-circle me-2"></i> <span id="toastMessage">Action completed successfully!</span>
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
         </div>
     </div>
@@ -256,46 +362,85 @@
                 else window.location.href = 'index.html';
             });
 
-            const quotes = store.getQuotations();
+            const allQuotes = store.getQuotations();
             const tbody = document.getElementById('quotesBody');
-            document.getElementById('count').textContent = quotes.length;
+            
+            // Tab Elements
+            const tabs = document.querySelectorAll('.tab-btn');
+            let currentFilter = 'New'; // default tab
 
-            if (quotes.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="10" class="text-center py-5 text-muted">No quotations found. <br><a href="listing.html">Browse Vehicles</a> to request one.</td></tr>`;
-                return;
+            function renderQuotes(filterType) {
+                tbody.innerHTML = '';
+                
+                let filteredQuotes = [];
+                if (filterType === 'New') {
+                    filteredQuotes = allQuotes.filter(q => q.status !== 'Countered' && q.status !== 'Accepted' && q.status !== 'Rejected');
+                } else if (filterType === 'Counter') {
+                    filteredQuotes = allQuotes.filter(q => q.status === 'Countered');
+                } else if (filterType === 'Accepted') {
+                    filteredQuotes = allQuotes.filter(q => q.status === 'Accepted');
+                } else if (filterType === 'Rejected') {
+                    filteredQuotes = allQuotes.filter(q => q.status === 'Rejected');
+                }
+
+                document.getElementById('count').textContent = filteredQuotes.length;
+
+                if (filteredQuotes.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="10" class="text-center py-5 text-muted">No ${filterType.toLowerCase()} quotations found.</td></tr>`;
+                    return;
+                }
+
+                filteredQuotes.forEach(q => {
+                    // Find actual index in main array for reference
+                    const actualIndex = allQuotes.findIndex(og => og.id === q.id);
+                    
+                    const quoteId = q.id || 'N/A';
+                    const category = q.category || '-';
+                    const brand = q.brand || '-';
+                    const productName = q.productName || 'Unknown Vehicle';
+                    const price = Number(q.price) || 0;
+                    const offerPrice = Number(q.offerPrice) || 0;
+                    const quantity = q.quantity || 1;
+                    const receivedDate = q.receivedDate || '-';
+                    
+                    let dotColor = 'dot-yellow';
+                    if (q.status === 'Accepted') dotColor = 'dot-green';
+                    else if (q.status === 'Rejected') dotColor = 'bg-danger';
+
+                    const tr = `
+                        <tr>
+                            <td class="ps-4 fw-bold text-primary">
+                                <span class="status-dot ${dotColor}"></span>
+                                <a href="#" class="text-decoration-none view-details-btn" data-quote-index="${actualIndex}">${quoteId}</a>
+                            </td>
+                            <td>${category}</td>
+                            <td>${brand}</td>
+                            <td class="fw-bold text-truncate" style="max-width: 150px;" title="${productName}">${productName}</td>
+                            <td class="text-muted text-decoration-line-through">₹${price.toLocaleString('en-IN')}</td>
+                            <td class="fw-bold text-success">₹${offerPrice.toLocaleString('en-IN')}</td>
+                            <td>${quantity}</td>
+                            <td>${receivedDate}</td>
+                            <td class="text-end pe-4">
+                                <button class="btn btn-sm btn-outline-primary rounded-pill px-3 view-details-btn" data-quote-index="${actualIndex}">Details</button>
+                            </td>
+                        </tr>
+                    `;
+                    tbody.innerHTML += tr;
+                });
             }
 
-            quotes.forEach((q, index) => {
-                // Defensive parsing for legacy LocalStorage data that may have corrupt fields
-                const quoteId = q.id || 'N/A';
-                const category = q.category || '-';
-                const brand = q.brand || '-';
-                const productName = q.productName || 'Unknown Vehicle';
-                const price = Number(q.price) || 0;
-                const offerPrice = Number(q.offerPrice) || 0;
-                const quantity = q.quantity || 1;
-                const receivedDate = q.receivedDate || '-';
-
-                const tr = `
-                    <tr>
-                        <td class="ps-4 fw-bold text-primary">
-                            <span class="status-dot dot-green"></span>
-                            <a href="#" class="text-decoration-none view-details-btn" data-quote-index="${index}">${quoteId}</a>
-                        </td>
-                        <td>${category}</td>
-                        <td>${brand}</td>
-                        <td class="fw-bold text-truncate" style="max-width: 150px;" title="${productName}">${productName}</td>
-                        <td class="text-muted text-decoration-line-through">₹${price.toLocaleString('en-IN')}</td>
-                        <td class="fw-bold text-success">₹${offerPrice.toLocaleString('en-IN')}</td>
-                        <td>${quantity}</td>
-                        <td>${receivedDate}</td>
-                        <td class="text-end pe-4">
-                            <button class="btn btn-sm btn-outline-primary rounded-pill px-3 view-details-btn" data-quote-index="${index}">Details</button>
-                        </td>
-                    </tr>
-                `;
-                tbody.innerHTML += tr;
+            // Tab Click Events
+            tabs.forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    e.target.classList.add('active');
+                    currentFilter = e.target.textContent.trim();
+                    renderQuotes(currentFilter);
+                });
             });
+
+            // Initial render
+            renderQuotes('New');
 
             // Event Delegation for Details Buttons
             document.getElementById('quotesBody').addEventListener('click', (e) => {
@@ -307,33 +452,114 @@
                 if (idx === null) return;
 
                 try {
-                    const quote = quotes[idx];
+                    const quote = allQuotes[idx];
                     if (!quote) return;
 
+                    // Header Info
                     document.getElementById('modalQuoteId').textContent = quote.id || '-';
                     document.getElementById('modalSellerName').innerHTML = `<i class="fas fa-store text-muted me-1"></i> ${quote.sellerName || 'AutoHub Network Seller'}`;
-                    document.getElementById('modalTotalPrice').textContent = '₹ ' + (Number(quote.price) || 0).toLocaleString('en-IN');
-                    document.getElementById('modalOfferPrice').textContent = '₹ ' + (Number(quote.offerPrice) || 0).toLocaleString('en-IN');
+                    document.getElementById('modalBuyerCompany').textContent = quote.buyerCompany ? `Buyer: ${quote.buyerCompany}` : 'Buyer: Details Unavailable';
+                    document.getElementById('modalReceivedDate').textContent = quote.receivedDate || '-';
+                    
+                    const validUntil = new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('en-GB');
+                    document.getElementById('modalValidUntil').textContent = `Valid until: ${validUntil}`;
+                    
+                    const statusBadge = document.getElementById('modalStatusBadge');
+                    statusBadge.textContent = quote.status || 'Pending';
+                    statusBadge.className = 'badge ms-2 align-middle ';
+                    if (quote.status === 'Accepted') statusBadge.classList.add('bg-success');
+                    else if (quote.status === 'Rejected') statusBadge.classList.add('bg-danger');
+                    else statusBadge.classList.add('bg-warning', 'text-dark');
 
+                    // Pricing Summary
+                    const basePrice = Number(quote.price) || 0;
+                    const offerPrice = Number(quote.offerPrice) || 0;
+                    const savings = basePrice - offerPrice;
+
+                    document.getElementById('modalTotalPrice').textContent = '₹ ' + basePrice.toLocaleString('en-IN');
+                    document.getElementById('modalOfferPrice').textContent = '₹ ' + offerPrice.toLocaleString('en-IN');
+                    
+                    const savingsEl = document.getElementById('modalSavingsValue');
+                    if (savings > 0) {
+                        savingsEl.textContent = '- ₹ ' + savings.toLocaleString('en-IN');
+                        savingsEl.className = 'fw-bold text-success';
+                    } else if (savings < 0) {
+                        savingsEl.textContent = '+ ₹ ' + Math.abs(savings).toLocaleString('en-IN');
+                        savingsEl.className = 'fw-bold text-danger';
+                    } else {
+                        savingsEl.textContent = '₹ 0';
+                        savingsEl.className = 'fw-bold text-muted';
+                    }
+
+                    // Vehicles Included
                     const vehiclesList = document.getElementById('modalVehiclesList');
                     vehiclesList.innerHTML = '';
 
                     if (quote.vehicles && Array.isArray(quote.vehicles) && quote.vehicles.length > 0) {
                         quote.vehicles.forEach(v => {
                             vehiclesList.innerHTML += `
-                                <div class="d-flex align-items-center mb-3">
-                                    <img src="${v.image || ''}" alt="${v.name || 'Vehicle'}" class="rounded" style="width: 60px; height: 40px; object-fit: cover;">
-                                    <div class="ms-3 flex-grow-1">
-                                        <div class="fw-bold">${v.name || 'Unknown'}</div>
-                                        <div class="text-muted small">${v.year || '-'} • ${(Number(v.km) || 0).toLocaleString('en-IN')} km</div>
+                                <div class="d-flex align-items-center bg-light border p-2 rounded">
+                                    <div style="width: 80px; height: 50px; flex-shrink: 0;" class="bg-white rounded border overflow-hidden d-flex align-items-center justify-content-center">
+                                        ${v.image ? `<img src="${v.image}" alt="${v.name}" style="width: 100%; height: 100%; object-fit: cover;">` : `<i class="fas fa-car text-muted"></i>`}
                                     </div>
-                                    <div class="fw-bold text-muted">₹${(Number(v.price) || 0).toLocaleString('en-IN')}</div>
+                                    <div class="ms-3 flex-grow-1">
+                                        <div class="fw-bold text-dark" style="font-size: 0.9rem;">${v.name || 'Unknown Vehicle'}</div>
+                                        <div class="text-muted" style="font-size: 0.75rem;">${v.year || '-'} • ${(Number(v.km) || 0).toLocaleString('en-IN')} km</div>
+                                    </div>
+                                    <div class="fw-bold text-primary pe-2" style="font-size: 0.9rem;">₹${(Number(v.price) || 0).toLocaleString('en-IN')}</div>
                                 </div>
                             `;
                         });
                     } else {
-                        vehiclesList.innerHTML = `<div class="text-muted fst-italic">Vehicle details not available for this legacy quote.</div>`;
+                        vehiclesList.innerHTML = `
+                            <div class="p-3 bg-light border border-dashed rounded text-center">
+                                <i class="fas fa-info-circle text-muted mb-2 fs-5"></i>
+                                <div class="text-muted small fw-bold">Legacy Quote</div>
+                                <div class="text-muted" style="font-size: 0.75rem;">Vehicle breakdown details are unavailable. Refer to pricing summary.</div>
+                            </div>`;
                     }
+
+                    // Activity Log
+                    const logContainer = document.getElementById('modalActivityLog');
+                    let logHtml = '';
+                    
+                    // Create mock log if empty to satisfy UI requirement
+                    const logs = quote.historyLog || [
+                        { type: 'created', actor: 'Seller', date: quote.receivedDate || new Date().toLocaleDateString('en-GB'), amount: quote.price, note: 'Initial quotation generated.' }
+                    ];
+
+                    logs.forEach((log, i) => {
+                        const isLast = i === logs.length - 1;
+                        let icon = 'fa-file-invoice';
+                        let color = 'primary';
+                        if (log.type === 'counter') { icon = 'fa-undo'; color = 'warning'; }
+                        if (log.type === 'accepted') { icon = 'fa-check'; color = 'success'; }
+                        if (log.type === 'rejected') { icon = 'fa-times'; color = 'danger'; }
+
+                        logHtml += `
+                            <div class="d-flex mb-${isLast ? '0' : '3'} position-relative">
+                                ${!isLast ? '<div class="position-absolute" style="left: 15px; top: 30px; bottom: -15px; width: 2px; background-color: #dee2e6;"></div>' : ''}
+                                <div class="bg-${color} bg-opacity-10 text-${color} rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 32px; height: 32px; z-index: 1;">
+                                    <i class="fas ${icon} fa-sm"></i>
+                                </div>
+                                <div class="ms-3 flex-grow-1">
+                                    <div class="d-flex justify-content-between">
+                                        <span class="fw-bold" style="font-size: 0.85rem;">${log.actor} <span class="text-muted fw-normal">(${log.type})</span></span>
+                                        <span class="text-muted" style="font-size: 0.75rem;">${log.date}</span>
+                                    </div>
+                                    ${log.amount ? `<div class="fw-bold text-dark mt-1" style="font-size: 0.85rem;">₹ ${Number(log.amount).toLocaleString('en-IN')}</div>` : ''}
+                                    ${log.note ? `<div class="text-muted mt-1 fst-italic" style="font-size: 0.8rem;">"${log.note}"</div>` : ''}
+                                </div>
+                            </div>
+                        `;
+                    });
+                    logContainer.innerHTML = logHtml;
+
+                    // Button States
+                    const isClosed = quote.status === 'Accepted' || quote.status === 'Rejected';
+                    document.getElementById('acceptQuoteBtn').style.display = isClosed ? 'none' : 'block';
+                    document.getElementById('openCounterModalBtn').style.display = isClosed ? 'none' : 'block';
+                    document.getElementById('rejectQuoteBtn').style.display = isClosed ? 'none' : 'block';
 
                     const modalEl = document.getElementById('quoteDetailsModal');
                     const modal = new bootstrap.Modal(modalEl);
@@ -368,10 +594,100 @@
                         // Delete quote after accepting
                         const allQuotes = store.getQuotations();
                         allQuotes.splice(idx, 1);
-                        localStorage.setItem('autohub_user_quotes', JSON.stringify(allQuotes));
+                        store.saveQuotations(allQuotes);
                         
+                        // Show Success Toast
+                        const toastEl = document.getElementById('successToast');
+                        const toast = new bootstrap.Toast(toastEl);
+                        document.getElementById('toastMessage').textContent = "Deal finalized! Redirecting to orders...";
+                        toast.show();
+                        
+                        setTimeout(() => {
+                            modal.hide();
+                            window.location.href = 'orders.html';
+                        }, 1500);
+                    };
+
+                    // Action: Open Counter Modal
+                    document.getElementById('openCounterModalBtn').onclick = () => {
                         modal.hide();
-                        window.location.href = 'orders.html';
+                        document.getElementById('counterCurrentOffer').textContent = '₹ ' + offerPrice.toLocaleString('en-IN');
+                        const input = document.getElementById('counterAmountInput');
+                        input.value = offerPrice;
+                        document.getElementById('counterNotesInput').value = '';
+                        document.getElementById('counterErrorText').classList.add('d-none');
+                        
+                        const counterModal = new bootstrap.Modal(document.getElementById('counterOfferModal'));
+                        counterModal.show();
+
+                        // Quick Adjust Buttons
+                        document.querySelectorAll('.quick-adjust-btn').forEach(btn => {
+                            btn.onclick = (ev) => {
+                                const adjust = parseInt(ev.target.getAttribute('data-adjust'));
+                                let currentVal = parseInt(input.value) || offerPrice;
+                                input.value = Math.max(0, currentVal + adjust);
+                            };
+                        });
+
+                        // Submit Counter
+                        document.getElementById('submitCounterBtn').onclick = () => {
+                            const newAmount = parseInt(input.value);
+                            if (!newAmount || newAmount <= 0) {
+                                document.getElementById('counterErrorText').classList.remove('d-none');
+                                return;
+                            }
+                            
+                            const notes = document.getElementById('counterNotesInput').value;
+                            
+                            // Update quote object
+                            quote.offerPrice = newAmount;
+                            quote.status = 'Countered';
+                            quote.historyLog = quote.historyLog || [
+                                { type: 'created', actor: 'Seller', date: quote.receivedDate || new Date().toLocaleDateString('en-GB'), amount: quote.price, note: 'Initial quotation generated.' }
+                            ];
+                            quote.historyLog.push({
+                                type: 'counter', 
+                                actor: user.companyName || user.firstName, 
+                                date: new Date().toLocaleDateString('en-GB'), 
+                                amount: newAmount, 
+                                note: notes || 'Counter offer submitted.'
+                            });
+
+                            // Save to store
+                            const allQuotes = store.getQuotations();
+                            allQuotes[idx] = quote;
+                            store.saveQuotations(allQuotes);
+
+                            counterModal.hide();
+                            
+                            // Show Toast
+                            const toastEl = document.getElementById('successToast');
+                            const toast = new bootstrap.Toast(toastEl);
+                            document.getElementById('toastMessage').textContent = "Counter offer submitted successfully!";
+                            toast.show();
+
+                            setTimeout(() => window.location.reload(), 2000);
+                        };
+                    };
+
+                    // Action: Reject Quote
+                    document.getElementById('rejectQuoteBtn').onclick = () => {
+                        if (confirm("Are you sure you want to reject this quotation? This action cannot be undone.")) {
+                            quote.status = 'Rejected';
+                            quote.historyLog = quote.historyLog || [];
+                            quote.historyLog.push({
+                                type: 'rejected',
+                                actor: user.companyName || user.firstName,
+                                date: new Date().toLocaleDateString('en-GB'),
+                                amount: null,
+                                note: 'Quotation rejected by buyer.'
+                            });
+                            const allQuotes = store.getQuotations();
+                            allQuotes[idx] = quote;
+                            store.saveQuotations(allQuotes);
+                            modal.hide();
+                            window.location.reload();
+                        }
                     };
                 } catch (e) {
                     console.error("Error opening details modal:", e);

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Articles - AutoHub Marketplace</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Icon Font -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        body { background-color: var(--dark-bg); color: #f8f9fa; }
+        h1, h2, h3, h4, h5, h6 { color: #ffffff; }
+        .text-muted { color: #9ca3af !important; }
+
+        .navbar { background-color: var(--dark-bg) !important; padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .search-input { background-color: rgba(255,255,255,0.08) !important; color: #fff !important; border: none; }
+        .search-input::placeholder { color: rgba(255,255,255,0.5); }
+        .footer-dark { background-color: #111827; padding: 4rem 2rem 2rem; border-top: 1px solid rgba(255,255,255,0.05); }
+        .nav-dropdown-hover:hover { background-color: rgba(255,255,255,0.1) !important; color: var(--pink-accent) !important; }
+
+        .breadcrumb-item a { color: var(--cyan-accent); text-decoration: none; }
+        .breadcrumb-item a:hover { text-decoration: underline; }
+        .breadcrumb-item.active { color: #9ca3af; }
+
+        .article-card {
+            background-color: var(--dark-card);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .article-card:hover {
+            border-color: var(--pink-accent);
+            transform: translateY(-3px);
+            background-color: rgba(255,255,255,0.02);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .topic-tag {
+            background-color: rgba(255,255,255,0.05);
+            color: #ccc;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            transition: all 0.2s;
+        }
+        .topic-tag:hover {
+            background-color: rgba(255,255,255,0.1);
+            color: #fff;
+            cursor: pointer;
+        }
+        
+        .sidebar-link {
+            color: #9ca3af;
+            text-decoration: none;
+            padding: 8px 16px;
+            display: block;
+            border-radius: 6px;
+            margin-bottom: 4px;
+            transition: all 0.2s;
+        }
+        .sidebar-link:hover, .sidebar-link.active {
+            background-color: rgba(255,255,255,0.05);
+            color: var(--cyan-accent);
+            padding-left: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <div class="d-flex align-items-center gap-2">
+                <a class="navbar-brand" href="index.html">AutoHub <span class="text-pink">Marketplace</span></a>
+            </div>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"><i class="fas fa-bars text-white"></i></button>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav ms-auto align-items-center gap-3">
+                    <li class="nav-item"><a class="nav-link text-white fw-bold" href="index.html#buySection">Buy</a></li>
+                    <li class="nav-item"><a class="nav-link text-white fw-bold" href="index.html#sellSection">Sell</a></li>
+                    <li class="nav-item"><a class="nav-link text-white fw-bold" href="index.html#auctionSection">Auctions</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-cyan fw-bold" href="#" id="resourcesDropdown" role="button" data-bs-toggle="dropdown">Resources</a>
+                        <ul class="dropdown-menu dropdown-menu-end shadow bg-dark-card border-secondary border-opacity-25" style="border-radius: 8px;">
+                            <li><a class="dropdown-item py-2 text-white nav-dropdown-hover" href="blogs.html">Blogs</a></li>
+                            <li><a class="dropdown-item py-2 text-white nav-dropdown-hover" href="faqs.html">FAQs</a></li>
+                            <li><a class="dropdown-item py-2 text-white nav-dropdown-hover" href="support.html">Support</a></li>
+                            <li><a class="dropdown-item py-2 text-white nav-dropdown-hover" href="articles.html">Articles</a></li>
+                            <li><a class="dropdown-item py-2 text-white nav-dropdown-hover" href="white-papers.html">White Papers</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item" id="navProfileArea"></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-4">
+        <!-- Breadcrumbs -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Resources</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Articles</li>
+            </ol>
+        </nav>
+
+        <div class="row mb-5">
+            <div class="col-12">
+                <h2 class="fw-bold mb-3">Knowledge <span class="text-pink">Center</span></h2>
+                <p class="text-muted lead">Deep dive into technical, operational, and financial insights curated by our automotive experts.</p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Sidebar Navigation -->
+            <div class="col-lg-3 d-none d-lg-block">
+                <div class="bg-dark-card border border-secondary border-opacity-25 rounded-4 p-4 sticky-top" style="top: 100px;">
+                    <h6 class="text-white fw-bold mb-3 text-uppercase" style="letter-spacing: 1px; font-size: 0.85rem;">Categories</h6>
+                    <nav class="nav flex-column mb-4">
+                        <a class="sidebar-link active" href="#">All Articles</a>
+                        <a class="sidebar-link" href="#">Buying Strategies</a>
+                        <a class="sidebar-link" href="#">Selling & Disposal</a>
+                        <a class="sidebar-link" href="#">Auction Mastery</a>
+                        <a class="sidebar-link" href="#">Financing & Tax</a>
+                        <a class="sidebar-link" href="#">Vehicle Maintenance</a>
+                    </nav>
+
+                    <h6 class="text-white fw-bold mb-3 mt-4 text-uppercase" style="letter-spacing: 1px; font-size: 0.85rem;">Popular Tags</h6>
+                    <div class="d-flex flex-wrap">
+                        <span class="topic-tag">Logistics</span>
+                        <span class="topic-tag">EVs</span>
+                        <span class="topic-tag">Valuation</span>
+                        <span class="topic-tag">Tax Benefits</span>
+                        <span class="topic-tag">Compliance</span>
+                        <span class="topic-tag">OEM</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Articles Content -->
+            <div class="col-lg-9">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="article-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-file-alt text-pink fs-4 me-3"></i>
+                                <span class="text-muted small">Buying Strategies &bull; 10 min read</span>
+                            </div>
+                            <h5 class="fw-bold text-white mb-3">Maximizing Fleet Life Cycles</h5>
+                            <p class="text-muted small mb-4 flex-grow-1">Learn to map out the perfect acquisition and disposal timeline for medium-duty trucks, ensuring your cash flow stays positive while minimizing maintenance downtime.</p>
+                            <div>
+                                <span class="topic-tag">Fleet Management</span>
+                                <span class="topic-tag">Logistics</span>
+                            </div>
+                            <a href="#" class="text-pink fw-bold text-decoration-none mt-4">Continue Reading <i class="fas fa-arrow-right ms-1"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="article-card" style="border-top: 2px solid var(--cyan-accent);">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-file-alt text-cyan fs-4 me-3"></i>
+                                <span class="text-muted small">Financing &bull; 15 min read</span>
+                            </div>
+                            <h5 class="fw-bold text-white mb-3">Understanding Depreciation Benefits</h5>
+                            <p class="text-muted small mb-4 flex-grow-1">A detailed breakdown of Section 32 of the Income Tax Act for fleet owners. See real-world tax savings models on commercial vehicle acquisitions.</p>
+                            <div>
+                                <span class="topic-tag">Tax</span>
+                                <span class="topic-tag">Finance</span>
+                            </div>
+                            <a href="#" class="text-cyan fw-bold text-decoration-none mt-4">Continue Reading <i class="fas fa-arrow-right ms-1"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="article-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-file-alt text-warning fs-4 me-3"></i>
+                                <span class="text-muted small">Auction Mastery &bull; 7 min read</span>
+                            </div>
+                            <h5 class="fw-bold text-white mb-3">Reading the Room: Digital Bidding Theory</h5>
+                            <p class="text-muted small mb-4 flex-grow-1">Psychological and statistical strategies employed by top dealers on the AutoHub Live Auction platform to snipe premium inventory without overpaying.</p>
+                            <div>
+                                <span class="topic-tag">Bidding</span>
+                                <span class="topic-tag">Strategy</span>
+                            </div>
+                            <a href="#" class="text-warning fw-bold text-decoration-none mt-4">Continue Reading <i class="fas fa-arrow-right ms-1"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="article-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-file-alt text-success fs-4 me-3"></i>
+                                <span class="text-muted small">Vehicle Maintenance &bull; 12 min read</span>
+                            </div>
+                            <h5 class="fw-bold text-white mb-3">Electric LCVs: Battery Degradation Curves</h5>
+                            <p class="text-muted small mb-4 flex-grow-1">Analyze data across 1,500 active electric commercial vehicles. Understand true battery lifespan and how charging habits impact resale value down the line.</p>
+                            <div>
+                                <span class="topic-tag">EVs</span>
+                                <span class="topic-tag">Maintenance</span>
+                            </div>
+                            <a href="#" class="text-success fw-bold text-decoration-none mt-4">Continue Reading <i class="fas fa-arrow-right ms-1"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="article-card">
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-file-alt text-pink fs-4 me-3"></i>
+                                <span class="text-muted small">Selling & Disposal &bull; 8 min read</span>
+                            </div>
+                            <h5 class="fw-bold text-white mb-3">The Importance of Service Logs</h5>
+                            <p class="text-muted small mb-4 flex-grow-1">How verified OEM service histories directly translate to a 10-15% bump in valuation on the AutoHub marketplace. A dealer's guide to documentation.</p>
+                            <div>
+                                <span class="topic-tag">Valuation</span>
+                                <span class="topic-tag">Selling</span>
+                            </div>
+                            <a href="#" class="text-pink fw-bold text-decoration-none mt-4">Continue Reading <i class="fas fa-arrow-right ms-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer-dark text-start mt-5">
+        <div class="container">
+            <div class="row pt-4" style="border-top: 1px solid rgba(255,255,255,0.05);">
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <p class="text-muted small mb-0">&copy; 2025 AutoHub Marketplace. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/store.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = store.getUser();
+            const profileArea = document.getElementById('navProfileArea');
+            if (user && user.isLoggedIn) {
+                profileArea.innerHTML = `<button class="btn btn-cyan rounded-pill px-4" id="profileDropdown" data-bs-toggle="dropdown"><i class="fas fa-building me-1"></i> <span class="fw-bold">${user.companyName || user.firstName}</span></button>`;
+            } else {
+                profileArea.innerHTML = `<button class="btn btn-cyan rounded-pill px-4 fw-bold" id="navLoginBtn"><i class="fas fa-user me-1"></i> Register</button>`;
+            }
+        });
+    </script>
+</body>
+</html>

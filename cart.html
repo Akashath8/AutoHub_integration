@@ -1,155 +1,272 @@
 <!DOCTYPE html>
+
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cart - AutoHub Marketplace</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- FontAwesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/main.css">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cart - AutoHub Marketplace</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<!-- FontAwesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<link href="css/main.css" rel="stylesheet"/>
+
+<style id="super-mega-menu-css">
+        /* Mega Menu Styles */
+        .dropdown-mega { position: static; }
+        .mega-menu {
+            position: absolute; top: 100%; left: 0; right: 0; margin: 0 auto;
+            width: 96%; max-width: 1100px; background: #ffffff;
+            border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            padding: 30px; display: none; z-index: 1050; border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+        .dropdown-mega:hover .mega-menu { display: block; animation: fadeInMega 0.2s ease-in-out; }
+        .mega-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .mega-item h6 { font-weight: 700; margin-bottom: 15px; color: #111827; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
+        .mega-item p { font-size: 13px; color: #6b7280; line-height: 1.4; transition: color 0.2s; }
+        .mega-item a { transition: all 0.2s ease; border-radius: 6px; padding: 8px; margin: -8px; }
+        .mega-item a:hover { background-color: #f8fafc; }
+        .mega-item a:hover .fs-6 { color: var(--pink-accent, #ec4899); }
+        .mega-item a:hover p { color: #4b5563; }
+        @keyframes fadeInMega { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* Responsive Mobile Behavior */
+        @media (max-width: 991px) {
+            .mega-menu { position: static; width: 100%; box-shadow: none; padding: 15px; display: none; margin-top: 10px; }
+            .dropdown-mega.show .mega-menu { display: block; }
+            .mega-grid { grid-template-columns: 1fr; gap: 20px; }
+        }
+    </style>
 </head>
+<body class="bg-theme-secondary text-main">
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg sticky-top bg-theme-primary border-bottom border-theme">
+<div class="container">
+<div class="d-flex align-items-center gap-2">
+<a class="navbar-brand text-main" href="index.html">AutoHub <span class="text-accent">Marketplace</span></a>
+<div class="dropdown d-none d-lg-block">
+<button aria-expanded="false" class="btn nav-link" data-bs-toggle="dropdown" id="navLocationBtn">
+<i class="fas fa-map-marker-alt me-1 text-accent"></i> Select City <i class="fas fa-chevron-down ms-1" style="font-size:0.7rem;"></i>
+</button>
+<ul class="dropdown-menu location-dropdown-menu">
+<li><span class="dropdown-header">Popular Cities</span></li>
+<li><a class="dropdown-item" data-nav-city="Bangalore" href="#"><i class="fas fa-city me-2 text-muted small"></i>Bangalore</a></li>
+<li><a class="dropdown-item" data-nav-city="Chennai" href="#"><i class="fas fa-city me-2 text-muted small"></i>Chennai</a></li>
+<li><a class="dropdown-item" data-nav-city="Pune" href="#"><i class="fas fa-city me-2 text-muted small"></i>Pune</a></li>
+<li><a class="dropdown-item" data-nav-city="Mumbai" href="#"><i class="fas fa-city me-2 text-muted small"></i>Mumbai</a></li>
+<li>
+<hr class="dropdown-divider"/>
+</li>
+<li><a class="dropdown-item" data-nav-city="Delhi" href="#"><i class="fas fa-city me-2 text-muted small"></i>Delhi</a></li>
+<li><a class="dropdown-item" data-nav-city="Hyderabad" href="#"><i class="fas fa-city me-2 text-muted small"></i>Hyderabad</a></li>
+<li><a class="dropdown-item" data-nav-city="Ahmedabad" href="#"><i class="fas fa-city me-2 text-muted small"></i>Ahmedabad</a></li>
+</ul>
+</div>
+</div>
+<button class="navbar-toggler" data-bs-target="#navbarContent" data-bs-toggle="collapse" type="button">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="navbarContent">
+<ul class="navbar-nav ms-auto align-items-center">
+<!-- 1. BUY MENU -->
+<li class="nav-item dropdown-mega">
+<a class="nav-link text-main fw-bold" href="listing.html">Buy <i class="fas fa-chevron-down ms-1" style="font-size: 0.6em;"></i></a>
+<div class="mega-menu">
+<div class="mega-grid">
+<div class="mega-item">
+<h6>Explore Vehicles</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="listing.html"><div class="fw-bold fs-6">Search Vehicles</div><p class="mb-0">Browse all available vehicles</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="listing.html"><div class="fw-bold fs-6">Explore by Category</div><p class="mb-0">Cars, Commercial, EVs</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="listing.html"><div class="fw-bold fs-6">Featured Listings</div><p class="mb-0">Verified &amp; premium vehicles</p></a>
+</div>
+<div class="mega-item">
+<h6>Buying Tools</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">Compare Vehicles</div><p class="mb-0">Side-by-side comparison</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">EMI Calculator</div><p class="mb-0">Estimate monthly payments</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">Loan Assistance</div><p class="mb-0">Financing options available</p></a>
+</div>
+<div class="mega-item">
+<h6>Buyer Support</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">Book Test Drive</div><p class="mb-0">Schedule a visit</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">Buyer Guide</div><p class="mb-0">How Buying Works</p></a>
+<a class="d-block text-decoration-none text-dark mb-4" href="#"><div class="fw-bold fs-6">Verified Listings &amp; Trust</div><p class="mb-0">Quality assured</p></a>
+<a class="btn btn-pink w-100 fw-bold rounded text-white py-2" href="listing.html" style="margin:0; text-align:center;">Start Buying</a>
+</div>
+</div>
+</div>
+</li>
+<!-- 2. SELL MENU -->
+<li class="nav-item dropdown-mega">
+<a class="nav-link text-main fw-bold" href="sell-wizard.html">Sell <i class="fas fa-chevron-down ms-1" style="font-size: 0.6em;"></i></a>
+<div class="mega-menu">
+<div class="mega-grid">
+<div class="mega-item">
+<h6>Getting Started</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell-wizard.html"><div class="fw-bold fs-6">How Selling Works</div><p class="mb-0">List → Get Quotes → Close Deal</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell-wizard.html"><div class="fw-bold fs-6">Who Can Sell</div><p class="mb-0">Dealers, fleet owners, businesses</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell-wizard.html"><div class="fw-bold fs-6">Why Sell on AutoHub</div><p class="mb-0">Reach, pricing, trust</p></a>
+</div>
+<div class="mega-item">
+<h6>Seller Benefits</h6>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Access Verified Buyers</div></div>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Auction vs Direct Sale</div></div>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Smart Pricing Insights</div></div>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Secure Payments &amp; Escrow</div></div>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Documentation Support</div></div>
+</div>
+<div class="mega-item">
+<h6>Conversion</h6>
+<div class="bg-light p-3 rounded mb-4 text-start" style="margin:0; border: 1px solid rgba(0,0,0,0.1);">
+<div class="small fw-bold text-success mb-2"><i class="fas fa-shield-alt"></i> Trusted by dealers across India</div>
+<div class="small fw-bold text-dark"><i class="fas fa-car border p-1 rounded me-1 bg-white"></i> 10,000+ vehicles sold</div>
+</div>
+<a class="btn btn-dark w-100 fw-bold rounded mb-2 py-2 text-white" href="register.html" style="margin:0; text-align:center;">Become a Seller</a>
+<a class="btn btn-outline-dark w-100 fw-bold rounded py-2" href="#" style="margin:0; text-align:center;">Talk to Account Manager</a>
+</div>
+</div>
+</div>
+</li>
+<!-- 3. AUCTIONS MENU -->
+<li class="nav-item dropdown-mega">
+<a class="nav-link text-main fw-bold" href="auction-subscription.html">Auctions <i class="fas fa-chevron-down ms-1" style="font-size: 0.6em;"></i></a>
+<div class="mega-menu">
+<div class="mega-grid">
+<div class="mega-item">
+<h6>Discover Auctions</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Live Auctions</div><p class="mb-0">Bid in real-time</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Upcoming Events</div><p class="mb-0">Plan your purchases</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Past Auction Results</div><p class="mb-0">Market price discovery</p></a>
+</div>
+<div class="mega-item">
+<h6>Participate</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">How Auctions Work</div><p class="mb-0">Step-by-step guidance</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Join Auction Events</div><p class="mb-0">Register as a bidder</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Rules &amp; Eligibility</div><p class="mb-0">What you need to know</p></a>
+</div>
+<div class="mega-item">
+<h6>Seller Education</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell-wizard.html"><div class="fw-bold fs-6">List Vehicle in Auction</div><p class="mb-0">Reach massive audiences</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell-wizard.html"><div class="fw-bold fs-6">Auction Benefits</div><p class="mb-0">Faster liquidation</p></a>
+<a class="d-block text-decoration-none text-dark mb-4" href="sell-wizard.html"><div class="fw-bold fs-6">Pricing Transparency</div><p class="mb-0">Market-driven value</p></a>
+<a class="btn w-100 fw-bold rounded text-white py-2" href="auction-subscription.html" style="background-color: var(--orange-accent); margin:0; text-align:center;">View Live Auctions</a>
+</div>
+</div>
+</div>
+</li>
+<!-- 4. RESOURCES MENU -->
+<li class="nav-item dropdown-mega">
+<a class="nav-link text-main fw-bold" href="blogs.html">Resources <i class="fas fa-chevron-down ms-1" style="font-size: 0.6em;"></i></a>
+<div class="mega-menu">
+<div class="mega-grid">
+<div class="mega-item">
+<h6>Learn</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Buyer Guide</div><p class="mb-0">Procurement made easy</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Seller Guide</div><p class="mb-0">Maximize your margins</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Auction Guide</div><p class="mb-0">Bidding strategies</p></a>
+</div>
+<div class="mega-item">
+<h6>Support</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="support.html"><div class="fw-bold fs-6">Help Center</div><p class="mb-0">Get assistance</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="faqs.html"><div class="fw-bold fs-6">FAQs</div><p class="mb-0">Common questions</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="support.html"><div class="fw-bold fs-6">Contact Support</div><p class="mb-0">We are here to help</p></a>
+</div>
+<div class="mega-item">
+<h6>Insights</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Blogs &amp; Industry Insights</div><p class="mb-0">Latest automotive news</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Market Trends</div><p class="mb-0">Demand forecasting</p></a>
+<a class="d-block text-decoration-none text-dark mb-4" href="blogs.html"><div class="fw-bold fs-6">Price Reports</div><p class="mb-0">Valuation matrix</p></a>
+<a class="btn btn-primary w-100 fw-bold rounded text-white py-2" href="blogs.html" style="margin:0; text-align:center;">Explore Resources</a>
+</div>
+</div>
+</div>
+</li>
 
-<body>
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg sticky-top">
-        <div class="container">
-            <div class="d-flex align-items-center gap-2">
-                <a class="navbar-brand" href="index.html">AutoHub <span class="text-accent">Marketplace</span></a>
-                <div class="dropdown d-none d-lg-block">
-                    <button class="btn nav-link" id="navLocationBtn" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-map-marker-alt me-1 text-accent"></i> Select City <i
-                            class="fas fa-chevron-down ms-1" style="font-size:0.7rem;"></i>
-                    </button>
-                    <ul class="dropdown-menu location-dropdown-menu">
-                        <li><span class="dropdown-header">Popular Cities</span></li>
-                        <li><a class="dropdown-item" href="#" data-nav-city="Bangalore"><i
-                                    class="fas fa-city me-2 text-muted small"></i>Bangalore</a></li>
-                        <li><a class="dropdown-item" href="#" data-nav-city="Chennai"><i
-                                    class="fas fa-city me-2 text-muted small"></i>Chennai</a></li>
-                        <li><a class="dropdown-item" href="#" data-nav-city="Pune"><i
-                                    class="fas fa-city me-2 text-muted small"></i>Pune</a></li>
-                        <li><a class="dropdown-item" href="#" data-nav-city="Mumbai"><i
-                                    class="fas fa-city me-2 text-muted small"></i>Mumbai</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#" data-nav-city="Delhi"><i
-                                    class="fas fa-city me-2 text-muted small"></i>Delhi</a></li>
-                        <li><a class="dropdown-item" href="#" data-nav-city="Hyderabad"><i
-                                    class="fas fa-city me-2 text-muted small"></i>Hyderabad</a></li>
-                        <li><a class="dropdown-item" href="#" data-nav-city="Ahmedabad"><i
-                                    class="fas fa-city me-2 text-muted small"></i>Ahmedabad</a></li>
-                    </ul>
-                </div>
-            </div>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarContent">
-                <ul class="navbar-nav ms-auto align-items-center">
-                    <li class="nav-item">
-                        <a class="nav-link nav-mode-btn buy-btn" href="#" data-mode="buy">Buy</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nav-mode-btn rent-btn" href="#" data-mode="rent">Rent</a>
-                    </li>
-                    <li class="nav-item me-2">
-                        <a class="nav-link nav-mode-btn sell-btn" href="#" data-mode="sell">Sell</a>
-                    </li>
-                    <li class="nav-item me-1 nav-bell-wrap">
-                        <a class="nav-link" href="#" title="Notifications"><i class="fas fa-bell"></i></a>
-                        <span class="bell-badge" id="bellCount">0</span>
-                    </li>
-                    <li class="nav-item me-2 position-relative">
-                        <a class="nav-link active" href="cart.html">
-                            <i class="fas fa-shopping-cart"></i>
-                            <span
-                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                                id="cartCount">0</span>
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
-                            data-bs-toggle="dropdown">
-                            <i class="fas fa-user-circle fa-lg"></i> <span id="userName">User</span>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="orders.html"><i class="fas fa-box me-2 text-muted"></i>My
+<li class="nav-item">
+<a class="nav-link nav-mode-btn rent-btn text-main" data-mode="rent" href="#">Rent</a>
+</li>
+
+<li class="nav-item me-1 nav-bell-wrap">
+<a class="nav-link" href="#" title="Notifications"><i class="fas fa-bell"></i></a>
+<span class="bell-badge" id="bellCount">0</span>
+</li>
+<li class="nav-item me-2 position-relative">
+<a class="nav-link active" href="cart.html">
+<i class="fas fa-shopping-cart"></i>
+<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cartCount">0</span>
+</a>
+</li>
+<li class="nav-item dropdown">
+<a class="nav-link dropdown-toggle text-main" data-bs-toggle="dropdown" href="#" id="profileDropdown" role="button">
+<i class="fas fa-user-circle fa-lg"></i> <span id="userName">User</span>
+</a>
+<ul class="dropdown-menu dropdown-menu-end bg-theme-primary border-theme shadow">
+<li><a class="dropdown-item text-main" href="orders.html"><i class="fas fa-box me-2 text-muted"></i>My
                                     Orders</a></li>
-                            <li><a class="dropdown-item" href="my-quotes.html"><i
-                                        class="fas fa-file-invoice me-2 text-muted"></i>My Quotations</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item text-danger" href="#" id="logoutBtn"><i
-                                        class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <div class="container py-5">
-        <h2 class="mb-4">Shopping Cart</h2>
-
-        <div class="row">
-            <div class="col-lg-8" id="cartItemsContainer">
-                <!-- Items injected here -->
-            </div>
-
-            <div class="col-lg-4">
-                <div class="card shadow-sm border-0">
-                    <div class="card-body">
-                        <h5 class="card-title mb-4">Order Summary</h5>
-                        <div class="d-flex justify-content-between mb-3">
-                            <span class="text-muted">Subtotal</span>
-                            <span class="fw-bold" id="cartSubtotal">₹ 0</span>
-                        </div>
-                        <div class="d-flex justify-content-between mb-3">
-                            <span class="text-muted">Taxes & Fees (est.)</span>
-                            <span class="fw-bold">₹ 5,000</span>
-                        </div>
-                        <hr>
-                        <div class="d-flex justify-content-between mb-4">
-                            <span class="h5">Total</span>
-                            <span class="h5 text-danger" id="cartTotal">₹ 0</span>
-                        </div>
-                        <div class="mb-4">
-                            <h6 class="fw-bold mb-3"><i class="fas fa-map-marker-alt text-accent me-2"></i>Delivery Address</h6>
-                            <div class="p-3 border rounded bg-light small">
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="radio" name="deliveryAddress" id="addr1" checked>
-                                    <label class="form-check-label" for="addr1">
-                                        <strong>Work / Office</strong><br>
+<li><a class="dropdown-item text-main" href="my-quotes.html"><i class="fas fa-file-invoice me-2 text-muted"></i>My Quotations</a></li>
+<li>
+<hr class="dropdown-divider"/>
+</li>
+<li><a class="dropdown-item text-danger" href="#" id="logoutBtn"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<div class="container py-5">
+<h2 class="mb-4">Shopping Cart</h2>
+<div class="row">
+<div class="col-lg-8" id="cartItemsContainer">
+<!-- Items injected here -->
+</div>
+<div class="col-lg-4">
+<div class="card shadow-sm border-theme bg-theme-primary">
+<div class="card-body">
+<h5 class="card-title mb-4">Order Summary</h5>
+<div class="d-flex justify-content-between mb-3">
+<span class="text-muted">Subtotal</span>
+<span class="fw-bold text-main" id="cartSubtotal">₹ 0</span>
+</div>
+<div class="d-flex justify-content-between mb-3">
+<span class="text-muted">Taxes &amp; Fees (est.)</span>
+<span class="fw-bold">₹ 5,000</span>
+</div>
+<hr/>
+<div class="d-flex justify-content-between mb-4">
+<span class="h5">Total</span>
+<span class="h5 text-danger" id="cartTotal">₹ 0</span>
+</div>
+<div class="mb-4">
+<h6 class="fw-bold mb-3"><i class="fas fa-map-marker-alt text-accent me-2"></i>Delivery Address</h6>
+<div class="p-3 border rounded bg-theme-secondary small">
+<div class="form-check mb-2">
+<input checked="" class="form-check-input" id="addr1" name="deliveryAddress" type="radio"/>
+<label class="form-check-label" for="addr1">
+<strong>Work / Office</strong><br/>
                                         123 Business Park, Sector 5, Bangalore, KA - 560001
                                     </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="deliveryAddress" id="addr2">
-                                    <label class="form-check-label" for="addr2">
-                                        <strong>Home</strong><br>
+</div>
+<div class="form-check">
+<input class="form-check-input" id="addr2" name="deliveryAddress" type="radio"/>
+<label class="form-check-label" for="addr2">
+<strong>Home</strong><br/>
                                         Flat 402, Sunshine Apts, MG Road, Pune, MH - 411001
                                     </label>
-                                </div>
-                                <button class="btn btn-sm btn-link p-0 mt-2 text-decoration-none">+ Add New Address</button>
-                            </div>
-                        </div>
-                        <a href="payment.html" class="btn btn-primary w-100 btn-lg" id="checkoutBtn">Proceed to
+</div>
+<button class="btn btn-sm btn-link p-0 mt-2 text-decoration-none">+ Add New Address</button>
+</div>
+</div>
+<a class="btn btn-primary w-100 btn-lg" href="payment.html" id="checkoutBtn">Proceed to
                             Checkout</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/store.js"></script>
-    <script src="js/location.js"></script>
-    <script>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/store.js"></script>
+<script src="js/location.js"></script>
+<script>
         document.addEventListener('DOMContentLoaded', () => {
             const user = store.getUser();
             if (!user) { window.location.href = 'login.html'; return; }
@@ -178,7 +295,7 @@
 
             cart.items.forEach((item, index) => {
                 const html = `
-                    <div class="card mb-3 border-0 shadow-sm cart-item-card">
+                    <div class="card mb-3 border-theme shadow-sm cart-item-card bg-theme-primary">
                         <div class="row g-0 align-items-center">
                             <div class="col-md-1 text-center">
                                 <input class="form-check-input cart-item-cb" type="checkbox" value="${item.id}" checked data-price="${item.price}" style="transform: scale(1.5);">
@@ -189,7 +306,7 @@
                             <div class="col-md-9">
                                 <div class="card-body py-2">
                                     <div class="d-flex justify-content-between">
-                                        <h5 class="card-title mb-1">${item.name}</h5>
+                                        <h5 class="card-title mb-1 text-main">${item.name}</h5>
                                         <button class="btn btn-link text-danger p-0 delete-btn" data-index="${index}"><i class="fas fa-trash"></i></button>
                                     </div>
                                     <p class="card-text text-muted small mb-2">${item.year} | ${item.fuel}</p>
@@ -258,5 +375,4 @@
         });
     </script>
 </body>
-
 </html>

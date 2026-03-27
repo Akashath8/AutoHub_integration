@@ -8,8 +8,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/main.css">
     <style>
-        body { background-color: #f8fafc; }
-        .dashboard-card { border: none; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); background: #ffffff; }
+        body { background-color: var(--bg-secondary); color: var(--text-main); }
+        .dashboard-card { border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); background-color: var(--bg-primary); }
         
         /* Order Lifecycle Tracker Styles */
         .lifecycle-stepper {
@@ -95,20 +95,20 @@
             top: 20px;
             left: 5%;
             height: 3px;
-            background-color: #10b981;
+            background-color: var(--accent-light, #10b981);
             z-index: 1;
             transition: width 0.5s ease;
         }
 
         /* Summary Cards */
         .summary-card {
-            border: 1px solid #e2e8f0;
+            border: 1px solid var(--border-color);
             border-radius: 10px;
             padding: 1.25rem;
             height: 100%;
         }
-        .summary-label { color: #64748b; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-        .summary-value { color: #1e293b; font-size: 1.5rem; font-weight: 800; margin-top: 5px; }
+        .summary-label { color: var(--text-muted); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .summary-value { color: var(--text-main); font-size: 1.5rem; font-weight: 800; margin-top: 5px; }
         
         /* Timeline and Ledger */
         .timeline-wrapper { position: relative; padding-left: 20px; }
@@ -137,8 +137,8 @@
         .step-active .timeline-indicator { background-color: #3b82f6; box-shadow: 0 0 0 2px #bfdbfe; }
         .step-completed .timeline-indicator { background-color: #10b981; box-shadow: 0 0 0 2px #a7f3d0; }
 
-        .ledger-table th { background-color: #f1f5f9; color: #475569; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; border-bottom: 1px solid #e2e8f0; }
-        .ledger-table td { padding: 12px; color: #1e293b; border-bottom: 1px solid #f1f5f9; vertical-align: middle; font-size: 0.9rem; }
+        .ledger-table th { background-color: var(--bg-secondary); color: var(--text-muted); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; border-bottom: 1px solid var(--border-color); }
+        .ledger-table td { padding: 12px; color: var(--text-main); border-bottom: 1px solid var(--border-color); vertical-align: middle; font-size: 0.9rem; }
 
         /* Documentation Checklist */
         .doc-item {
@@ -149,8 +149,8 @@
             align-items: center;
         }
         .doc-item:last-child { border-bottom: none; }
-        .doc-name { font-weight: 600; color: #334155; font-size: 0.9rem; }
-        .doc-meta { font-size: 0.75rem; color: #64748b; }
+        .doc-name { font-weight: 600; color: var(--text-main); font-size: 0.9rem; }
+        .doc-meta { font-size: 0.75rem; color: var(--text-muted); }
 
         /* Order Status Banner */
         .status-banner {
@@ -204,12 +204,8 @@
             </div>
         </div>
 
-        <div class="alert alert-primary d-flex align-items-center border-0 shadow-sm mb-4 py-3" role="alert">
-            <i class="fas fa-info-circle fs-4 me-3"></i>
-            <div>
-                <div class="fw-bold">AutoHub Transparency Guarantee</div>
-                <div class="small opacity-75">Full visibility into your vehicle journey. Stages update automatically as partners complete tasks.</div>
-            </div>
+        <div id="statusAlertContainer">
+            <!-- Populated by JS -->
         </div>
 
         <!-- Section 1: 9-Stage Order Lifecycle Tracker -->
@@ -410,12 +406,13 @@
                     <div class="summary-value text-success">₹ 2,50,000</div>
                 </div>
             </div>
-            <div class="col-md-3">
                 <div class="dashboard-card summary-card bg-white border-start border-danger border-4">
                     <div class="summary-label">Outstanding Balance</div>
-                    <div class="summary-value text-danger">₹ 5,00,000</div>
+                    <div class="d-flex justify-content-between align-items-end">
+                        <div class="summary-value text-danger" id="summaryOutstanding">₹ 0</div>
+                        <button class="btn btn-sm btn-danger fw-bold mb-1 d-none" id="payOutstandingBtn">Pay Now</button>
+                    </div>
                 </div>
-            </div>
             <div class="col-md-3">
                 <div class="dashboard-card summary-card bg-white">
                     <div class="d-flex justify-content-between align-items-center mb-2">
@@ -554,40 +551,423 @@
             </div>
         </div>
     </div>
+    
+    <!-- Payment Modal -->
+    <div class="modal fade" id="paymentModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg" style="border-radius: 16px; overflow: hidden;">
+                <div class="modal-header bg-theme-primary text-main border-bottom p-4">
+                    <h5 class="modal-title fw-bold">Complete Payment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4 bg-theme-primary">
+                    <div class="p-3 bg-danger bg-opacity-10 border border-danger border-opacity-25 rounded-3 mb-4">
+                        <div class="text-danger small fw-bold text-uppercase mb-1">Total Outstanding</div>
+                        <div class="h3 fw-bold text-danger mb-0" id="modalOutstandingAmount">₹ 0</div>
+                    </div>
+                    
+                    <h6 class="fw-bold mb-3">Select Payment Mode</h6>
+                    <div class="d-grid gap-2 mb-4">
+                        <div class="form-check p-3 border rounded-3 payment-mode-opt cursor-pointer">
+                            <input class="form-check-input ms-0 me-3" type="radio" name="paymentMode" id="upiOpt" value="UPI" checked>
+                            <label class="form-check-label fw-bold d-flex align-items-center" for="upiOpt">
+                                <i class="fas fa-qrcode me-2 text-primary"></i> UPI (PhonePe, GPay, etc.)
+                            </label>
+                        </div>
+                        <div class="form-check p-3 border rounded-3 payment-mode-opt cursor-pointer">
+                            <input class="form-check-input ms-0 me-3" type="radio" name="paymentMode" id="bankOpt" value="Bank Transfer">
+                            <label class="form-check-label fw-bold d-flex align-items-center" for="bankOpt">
+                                <i class="fas fa-university me-2 text-info"></i> Bank Transfer (NEFT/IMPS)
+                            </label>
+                        </div>
+                        <div class="form-check p-3 border rounded-3 payment-mode-opt cursor-pointer">
+                            <input class="form-check-input ms-0 me-3" type="radio" name="paymentMode" id="nbOpt" value="Net Banking">
+                            <label class="form-check-label fw-bold d-flex align-items-center" for="nbOpt">
+                                <i class="fas fa-globe me-2 text-success"></i> Net Banking
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary w-100 py-3 fw-bold rounded-3 shadow-sm" id="confirmPaymentBtn">Confirm & Pay</button>
+                </div>
+                <div class="modal-footer bg-light p-3 border-top justify-content-center">
+                    <span class="text-muted small"><i class="fas fa-shield-alt me-1"></i> Secure 256-bit encrypted transaction</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/store.js"></script>
     <script>
-        // Initialize tooltips
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl, {
-                customClass: 'custom-tooltip'
-            })
+        // DOM Elements
+        const orderIdDisplay = document.querySelector('h4.fw-bold');
+        const summaryInvoice = document.querySelector('.summary-card .summary-value');
+        const summaryPaid = document.querySelectorAll('.summary-card .summary-value')[1];
+        const summaryOutstanding = document.getElementById('summaryOutstanding');
+        const payBtn = document.getElementById('payOutstandingBtn');
+        const progressValue = document.querySelector('.summary-card .fw-bold.text-primary');
+        const progressBar = document.querySelector('.progress-bar');
+        const timelineList = document.querySelector('.timeline-wrapper');
+        const ledgerTable = document.querySelector('.ledger-table tbody');
+        const docChecklist = document.querySelector('#documentationDetails .row');
+        const deliveryActionBox = document.getElementById('deliveryConfirmAction');
+        const currentPhaseText = document.querySelector('.status-banner h4');
+
+        // State
+        let currentOrder = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const orderId = params.get('orderId') || 'ORD-9105';
+            currentOrder = store.getOrderById(orderId);
+
+            if (!currentOrder) {
+                alert("Order not found!");
+                window.location.href = 'orders.html';
+                return;
+            }
+
+            renderOrderDetails();
+
+            // Initialize tooltips
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl, {
+                    customClass: 'custom-tooltip'
+                })
+            });
         });
 
-        // Simulate delivery confirmation flow
-        document.getElementById('confirmDeliveryBtn').addEventListener('click', function() {
-            this.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Confirming...';
+        function renderOrderDetails() {
+            if (!currentOrder) return;
+
+            // Banner
+            const alertContainer = document.getElementById('statusAlertContainer');
+            let alertHtml = '';
+            if (currentOrder.outstandingAmount > 0) {
+                alertHtml = `
+                    <div class="alert alert-warning d-flex align-items-center border-0 shadow-sm mb-4 py-3" role="alert">
+                        <i class="fas fa-exclamation-triangle fs-4 me-3"></i>
+                        <div>
+                            <div class="fw-bold">Payment Pending — Delivery is on hold</div>
+                            <div class="small opacity-75">Please complete the outstanding balance of ₹ ${currentOrder.outstandingAmount.toLocaleString('en-IN')} to unlock the final delivery stage.</div>
+                        </div>
+                    </div>
+                `;
+            } else if (currentOrder.status === 'Loan Approved') {
+                alertHtml = `
+                    <div class="alert alert-info d-flex align-items-center border-0 shadow-sm mb-4 py-3" role="alert">
+                        <i class="fas fa-info-circle fs-4 me-3"></i>
+                        <div>
+                            <div class="fw-bold">Loan Approved — Awaiting buyer contribution</div>
+                            <div class="small opacity-75">Your loan is approved. Please pay the remaining buyer contribution to proceed to settlement.</div>
+                        </div>
+                    </div>
+                `;
+            } else if (currentOrder.status === 'PAID' || currentOrder.status === 'Loan Disbursed') {
+                alertHtml = `
+                    <div class="alert alert-success d-flex align-items-center border-0 shadow-sm mb-4 py-3" role="alert">
+                        <i class="fas fa-check-circle fs-4 me-3"></i>
+                        <div>
+                            <div class="fw-bold">Payment Completed — Delivery process started</div>
+                            <div class="small opacity-75">All payments are settled. The dealer has initiated the documentation and logistics process.</div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                alertHtml = `
+                    <div class="alert alert-primary d-flex align-items-center border-0 shadow-sm mb-4 py-3" role="alert">
+                        <i class="fas fa-info-circle fs-4 me-3"></i>
+                        <div>
+                            <div class="fw-bold">AutoHub Transparency Guarantee</div>
+                            <div class="small opacity-75">Full visibility into your vehicle journey. Stages update automatically as partners complete tasks.</div>
+                        </div>
+                    </div>
+                `;
+            }
+            alertContainer.innerHTML = alertHtml;
+
+            // Header
+            currentPhaseText.innerHTML = `<i class="fas fa-project-diagram me-2 text-warning"></i>Step ${currentOrder.lifecycleStep}: ${getStepTitle(currentOrder.lifecycleStep)}`;
+            
+            // Financials
+            summaryInvoice.textContent = `₹ ${currentOrder.totalAmount.toLocaleString('en-IN')}`;
+            summaryPaid.textContent = `₹ ${currentOrder.paidAmount.toLocaleString('en-IN')}`;
+            summaryOutstanding.textContent = `₹ ${currentOrder.outstandingAmount.toLocaleString('en-IN')}`;
+            
+            const progress = Math.round((currentOrder.paidAmount / currentOrder.totalAmount) * 100);
+            progressValue.textContent = `${progress}%`;
+            progressBar.style.width = `${progress}%`;
+
+            if (currentOrder.outstandingAmount > 0) {
+                payBtn.classList.remove('d-none');
+            } else {
+                payBtn.classList.add('d-none');
+            }
+
+            // Stepper
+            renderStepper();
+
+            // Timeline
+            renderTimeline();
+
+            // Ledger
+            renderLedger();
+
+            // Documents
+            renderDocs();
+
+            // Delivery Banner
+            if (currentOrder.outstandingAmount === 0 && currentOrder.lifecycleStep === 8) {
+                deliveryActionBox.classList.remove('d-none');
+                deliveryActionBox.querySelector('.fw-bold').innerText = "Proceed to Delivery?";
+                deliveryActionBox.querySelector('.small').innerText = "Payment completed. Start the vehicle handover process.";
+                deliveryActionBox.querySelector('button').innerText = "Initiate Delivery";
+            } else if (currentOrder.lifecycleStep === 9) {
+                deliveryActionBox.classList.add('d-none');
+            }
+        }
+
+        function getStepTitle(step) {
+            const steps = [
+                "", "Product Selected", "Added to Cart", "Address Selected", 
+                "Order Confirmed", "Payment / Loan", "Loan Processing", 
+                "Settlement", "Documentation", "Final Delivery"
+            ];
+            return steps[step] || "Unknown";
+        }
+
+        function renderStepper() {
+            const stepsContent = [
+                { id: 1, title: 'Product Selected', icon: 'fa-search', responsible: 'Platform', desc: 'Vehicle reserved for checkout process.' },
+                { id: 2, title: 'Added to Cart', icon: 'fa-cart-plus', responsible: 'Buyer', desc: 'Reviewing specifications and initial pricing.' },
+                { id: 3, title: 'Address Selected', icon: 'fa-map-marker-alt', responsible: 'Buyer', desc: 'Delivery address confirmed.' },
+                { id: 4, title: 'Order Confirmed', icon: 'fa-check-circle', responsible: 'Dealer', desc: 'Dealer notified to initiate transaction.' },
+                { id: 5, title: 'Payment / Financing', icon: 'fa-file-invoice-dollar', responsible: 'Buyer', desc: 'Settle downpayment or choose loan.' },
+                { id: 6, title: 'Loan Processing', icon: 'fa-university', responsible: 'Bank', desc: 'Bank evaluation and approval.' },
+                { id: 7, title: 'Settlement', icon: 'fa-hand-holding-usd', responsible: 'Platform', desc: 'Buyer contribution and loan disbursement.' },
+                { id: 8, title: 'Documentation', icon: 'fa-file-contract', responsible: 'Dealer', desc: 'RC and insurance transfer initiated.' },
+                { id: 9, title: 'Final Delivery', icon: 'fa-key', responsible: 'Logistics', desc: 'Vehicle handover.' }
+            ];
+
+            const stepperContainer = document.querySelector('.lifecycle-stepper');
+            stepperContainer.innerHTML = `<div class="lifecycle-progress-line" style="width: ${(currentOrder.lifecycleStep - 1) * 11}%;"></div>`;
+
+            stepsContent.forEach(step => {
+                const isBlocked = step.id === 9 && currentOrder.outstandingAmount > 0;
+                let statusClass = '';
+                let statusText = '';
+                let statusBadge = '';
+
+                if (step.id < currentOrder.lifecycleStep) {
+                    statusClass = 'completed';
+                    statusText = 'Completed';
+                    statusBadge = 'status-completed';
+                } else if (step.id === currentOrder.lifecycleStep) {
+                    if (isBlocked) {
+                        statusClass = 'blocked';
+                        statusText = 'Blocked';
+                        statusBadge = 'bg-danger text-white';
+                    } else {
+                        statusClass = 'active';
+                        statusText = 'In Progress';
+                        statusBadge = 'status-active';
+                    }
+                } else {
+                    statusClass = 'pending';
+                    statusText = 'Pending';
+                    statusBadge = 'status-pending';
+                }
+
+                const node = document.createElement('div');
+                node.className = `step-node ${statusClass}`;
+                node.setAttribute('data-bs-toggle', 'tooltip');
+                node.setAttribute('data-bs-html', 'true');
+                
+                let tooltipTitle = `<b>${step.title}</b><br>Responsible: <span class='text-info'>${step.responsible}</span><br>${step.desc}<br>`;
+                if (isBlocked) tooltipTitle += `<span class='text-danger fw-bold'>Delivery cannot proceed until full payment is completed.</span>`;
+                else if (statusClass === 'completed') tooltipTitle += `<span class='text-success fw-bold'>Completed</span>`;
+                else if (statusClass === 'active') tooltipTitle += `<span class='text-primary fw-bold'>In Progress</span>`;
+                else tooltipTitle += `<span class='text-muted fw-bold'>Pending</span>`;
+                
+                node.title = tooltipTitle;
+                node.innerHTML = `
+                    <div class="node-circle"><i class="fas ${step.icon}"></i></div>
+                    <span class="node-title">${step.title}</span>
+                    <span class="node-status ${statusBadge}">${statusText}</span>
+                `;
+                stepperContainer.appendChild(node);
+            });
+        }
+
+        function renderTimeline() {
+            timelineList.innerHTML = '';
+            currentOrder.timeline.forEach((item, idx) => {
+                const step = document.createElement('div');
+                step.className = `timeline-step step-${item.status}`;
+                step.innerHTML = `
+                    <div class="timeline-indicator"></div>
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <span class="fw-bold text-dark small d-block">${item.title}</span>
+                            ${item.amount ? `<span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 mt-1">₹ ${item.amount.toLocaleString('en-IN')}</span>` : ''}
+                        </div>
+                        <span class="small text-secondary fw-semibold" style="font-size: 0.75rem;">${item.date}</span>
+                    </div>
+                `;
+                timelineList.appendChild(step);
+            });
+        }
+
+        function renderLedger() {
+            ledgerTable.innerHTML = '';
+            // For now, reverse engineering ledger from timeline + invoice
+            ledgerTable.innerHTML = `
+                <tr>
+                    <td class="ps-3">
+                        <div class="fw-bold">Initial</div>
+                        <div class="text-secondary small" style="font-size: 0.7rem;">Order Open</div>
+                    </td>
+                    <td class="fw-bold text-dark">- ₹ ${currentOrder.totalAmount.toLocaleString('en-IN')}</td>
+                    <td>Invoice Created</td>
+                    <td class="font-monospace small">${currentOrder.invoiceNo}</td>
+                    <td class="small fw-semibold text-primary"><i class="fas fa-store me-1"></i> Dealer</td>
+                    <td class="text-center"><span class="badge bg-secondary bg-opacity-10 text-secondary px-3">INITIALIZED</span></td>
+                </tr>
+            `;
+
+            currentOrder.timeline.filter(t => t.amount).forEach(payment => {
+                ledgerTable.insertAdjacentHTML('afterbegin', `
+                    <tr>
+                        <td class="ps-3">
+                            <div class="fw-bold">${payment.date.split(' ')[0]} ${payment.date.split(' ')[1]}</div>
+                            <div class="text-secondary small" style="font-size: 0.7rem;">${payment.date.split(' ').slice(2).join(' ')}</div>
+                        </td>
+                        <td class="fw-bold text-success">+ ₹ ${payment.amount.toLocaleString('en-IN')}</td>
+                        <td>Online Payment</td>
+                        <td class="font-monospace small">TXN-${Math.floor(Math.random()*100000)}</td>
+                        <td class="small fw-semibold text-info"><i class="fas fa-bolt me-1"></i> Platform API</td>
+                        <td class="text-center"><span class="badge bg-success bg-opacity-10 text-success px-3">CLEARED</span></td>
+                    </tr>
+                `);
+            });
+        }
+
+        function renderDocs() {
+            const checklist = docChecklist;
+            const lhs = checklist.querySelector('.col-md-6:first-child');
+            const rhs = checklist.querySelector('.col-md-6.border-start');
+            lhs.innerHTML = '';
+            rhs.innerHTML = '';
+
+            currentOrder.documents.forEach((doc, idx) => {
+                const item = `
+                    <div class="doc-item">
+                        <div>
+                            <div class="doc-name">${doc.name}</div>
+                            <div class="doc-meta">Responsible: ${doc.responsible} ${doc.date ? '| ' + doc.date : ''}</div>
+                        </div>
+                        <span class="badge ${getStatusBadge(doc.status)}">${doc.status.toUpperCase()}</span>
+                    </div>
+                `;
+                if (idx < 4) lhs.innerHTML += item;
+                else rhs.innerHTML += item;
+            });
+        }
+
+        function getStatusBadge(status) {
+            switch (status.toLowerCase()) {
+                case 'completed': return 'bg-success';
+                case 'in progress': return 'bg-primary';
+                case 'blocked': return 'bg-danger';
+                default: return 'bg-secondary';
+            }
+        }
+
+        // Action Handlers
+        payBtn.addEventListener('click', () => {
+            document.getElementById('modalOutstandingAmount').innerText = `₹ ${currentOrder.outstandingAmount.toLocaleString('en-IN')}`;
+            const modal = new bootstrap.Modal(document.getElementById('paymentModal'));
+            modal.show();
+        });
+
+        document.getElementById('confirmPaymentBtn').addEventListener('click', function() {
+            this.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Processing...';
+            this.disabled = true;
+
             setTimeout(() => {
-                document.getElementById('deliveryConfirmAction').classList.add('d-none');
-                const lastNode = document.getElementById('deliveryStepNode');
-                lastNode.classList.remove('active');
-                lastNode.classList.add('completed');
-                lastNode.querySelector('.node-status').textContent = 'Completed';
-                lastNode.querySelector('.node-status').classList.replace('status-pending', 'status-completed');
+                const modalEl = document.getElementById('paymentModal');
+                const modal = bootstrap.Modal.getInstance(modalEl);
                 
-                // Update Progress line
-                document.querySelector('.lifecycle-progress-line').style.width = '95%';
+                // Update State
+                const paidAmt = currentOrder.outstandingAmount;
+                currentOrder.paidAmount += paidAmt;
+                currentOrder.outstandingAmount = 0;
+                currentOrder.status = 'PAID';
                 
-                alert('Success: Delivery confirmed. Your vehicle purchase lifecycle is now complete!');
+                currentOrder.timeline.push({
+                    title: 'Final Payment Completed',
+                    date: new Date().toLocaleDateString('en-GB') + ' ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                    status: 'completed',
+                    amount: paidAmt
+                });
+
+                store.updateOrder(currentOrder);
+                
+                modal.hide();
+                renderOrderDetails();
+                
+                // New tooltip initialization needed after re-render
+                var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+                var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                    return new bootstrap.Tooltip(tooltipTriggerEl, { customClass: 'custom-tooltip' });
+                });
+
+                this.innerHTML = 'Confirm & Pay';
+                this.disabled = false;
             }, 1500);
         });
 
-        // Show confirmation box after 3 seconds for demo purposes
-        setTimeout(() => {
-            document.getElementById('deliveryConfirmAction').classList.remove('d-none');
-            document.getElementById('deliveryConfirmAction').classList.add('animate__animated', 'animate__fadeIn');
-        }, 3000);
+        document.getElementById('confirmDeliveryBtn').addEventListener('click', function() {
+            const self = this;
+            if (currentOrder.lifecycleStep === 8) {
+                // "Initiate Delivery" state
+                this.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Processing...';
+                setTimeout(() => {
+                    currentOrder.lifecycleStep = 9;
+                    currentOrder.deliveryStage = 'In Transit';
+                    currentOrder.timeline.push({
+                        title: 'Vehicle Dispatched',
+                        date: new Date().toLocaleDateString('en-GB') + ' ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                        status: 'completed'
+                    });
+                    store.updateOrder(currentOrder);
+                    renderOrderDetails();
+                    
+                    // Transition to "Delivered" state for demo
+                    setTimeout(() => {
+                        deliveryActionBox.classList.remove('d-none');
+                        deliveryActionBox.querySelector('.fw-bold').innerText = "Vehicle Reached?";
+                        deliveryActionBox.querySelector('.small').innerText = "Confirm receipt to release final settlement and close order.";
+                        self.innerHTML = "Confirm Delivery";
+                    }, 2000);
+                }, 1000);
+            } else {
+                // "Confirm Delivery" state
+                this.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Confirming...';
+                setTimeout(() => {
+                    currentOrder.deliveryStage = 'Delivery Confirmed';
+                    currentOrder.timeline.push({
+                        title: 'Final Delivery Completed',
+                        date: new Date().toLocaleDateString('en-GB') + ' ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                        status: 'completed'
+                    });
+                    store.updateOrder(currentOrder);
+                    renderOrderDetails();
+                    alert('Success: Delivery confirmed. Your vehicle purchase lifecycle is now complete!');
+                }, 1500);
+            }
+        });
     </script>
 </body>
 </html>

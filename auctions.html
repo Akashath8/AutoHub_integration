@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Live Auctions | AutoHub Marketplace</title>
+<meta content="Browse and participate in live real-time vehicle auctions at wholesale prices." name="description"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<!-- Using our main light theme plus auction specific css -->
+<link href="css/main.css" rel="stylesheet"/>
+<link href="css/auction.css" rel="stylesheet"/>
+
+<style id="super-mega-menu-css">
+        /* Mega Menu Styles */
+        .dropdown-mega { position: static; }
+        .mega-menu {
+            position: absolute; top: 100%; left: 0; right: 0; margin: 0 auto;
+            width: 96%; max-width: 1100px; background: #ffffff;
+            border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            padding: 30px; display: none; z-index: 1050; border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+        .dropdown-mega:hover .mega-menu { display: block; animation: fadeInMega 0.2s ease-in-out; }
+        .mega-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .mega-item h6 { font-weight: 700; margin-bottom: 15px; color: #111827; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
+        .mega-item p { font-size: 13px; color: #6b7280; line-height: 1.4; transition: color 0.2s; }
+        .mega-item a { transition: all 0.2s ease; border-radius: 6px; padding: 8px; margin: -8px; }
+        .mega-item a:hover { background-color: #f8fafc; }
+        .mega-item a:hover .fs-6 { color: var(--pink-accent, #ec4899); }
+        .mega-item a:hover p { color: #4b5563; }
+        @keyframes fadeInMega { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* Responsive Mobile Behavior */
+        @media (max-width: 991px) {
+            .mega-menu { position: static; width: 100%; box-shadow: none; padding: 15px; display: none; margin-top: 10px; }
+            .dropdown-mega.show .mega-menu { display: block; }
+            .mega-grid { grid-template-columns: 1fr; gap: 20px; }
+        }
+    </style>
+</head>
+<body class="auction-theme">
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg sticky-top bg-white">
+<div class="container">
+<a class="navbar-brand fw-bold fs-4 text-dark" href="index.html">AutoHub <span style="color: var(--auc-primary);">Auctions</span></a>
+<button class="navbar-toggler" data-bs-target="#auctionNav" data-bs-toggle="collapse" type="button">
+<i class="fas fa-bars text-dark"></i>
+</button>
+<div class="collapse navbar-collapse" id="auctionNav">
+<div class="mx-auto" style="width: 40%;">
+<div class="input-group shadow-sm">
+<span class="input-group-text bg-light border-end-0 text-muted"><i class="fas fa-search"></i></span>
+<input class="form-control bg-light border-start-0" placeholder="Search auction inventory..." type="text"/>
+</div>
+</div>
+<ul class="navbar-nav ms-auto align-items-center gap-3">
+<!-- 1. BUY MENU -->
+<li class="nav-item dropdown-mega">
+<a class="nav-link text-main fw-bold" href="listing.html">Buy <i class="fas fa-chevron-down ms-1" style="font-size: 0.6em;"></i></a>
+<div class="mega-menu">
+<div class="mega-grid">
+<div class="mega-item">
+<h6>Explore Vehicles</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="listing.html"><div class="fw-bold fs-6">Search Vehicles</div><p class="mb-0">Browse all available vehicles</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="listing.html"><div class="fw-bold fs-6">Explore by Category</div><p class="mb-0">Cars, Commercial, EVs</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="listing.html"><div class="fw-bold fs-6">Featured Listings</div><p class="mb-0">Verified &amp; premium vehicles</p></a>
+</div>
+<div class="mega-item">
+<h6>Buying Tools</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">Compare Vehicles</div><p class="mb-0">Side-by-side comparison</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">EMI Calculator</div><p class="mb-0">Estimate monthly payments</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">Loan Assistance</div><p class="mb-0">Financing options available</p></a>
+</div>
+<div class="mega-item">
+<h6>Buyer Support</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">Book Test Drive</div><p class="mb-0">Schedule a visit</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">Buyer Guide</div><p class="mb-0">How Buying Works</p></a>
+<a class="d-block text-decoration-none text-dark mb-4" href="#"><div class="fw-bold fs-6">Verified Listings &amp; Trust</div><p class="mb-0">Quality assured</p></a>
+<a class="btn btn-pink w-100 fw-bold rounded text-white py-2" href="listing.html" style="margin:0; text-align:center;">Start Buying</a>
+</div>
+</div>
+</div>
+</li>
+<!-- 2. SELL MENU -->
+<li class="nav-item dropdown-mega">
+<a class="nav-link text-main fw-bold" href="sell.html">Sell <i class="fas fa-chevron-down ms-1" style="font-size: 0.6em;"></i></a>
+<div class="mega-menu">
+<div class="mega-grid">
+<div class="mega-item">
+<h6>Getting Started</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell.html"><div class="fw-bold fs-6">How Selling Works</div><p class="mb-0">List → Get Quotes → Close Deal</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell.html"><div class="fw-bold fs-6">Who Can Sell</div><p class="mb-0">Dealers, fleet owners, businesses</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell.html"><div class="fw-bold fs-6">Why Sell on AutoHub</div><p class="mb-0">Reach, pricing, trust</p></a>
+</div>
+<div class="mega-item">
+<h6>Seller Benefits</h6>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Access Verified Buyers</div></div>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Auction vs Direct Sale</div></div>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Smart Pricing Insights</div></div>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Secure Payments &amp; Escrow</div></div>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Documentation Support</div></div>
+</div>
+<div class="mega-item">
+<h6>Conversion</h6>
+<div class="bg-light p-3 rounded mb-4 text-start" style="margin:0; border: 1px solid rgba(0,0,0,0.1);">
+<div class="small fw-bold text-success mb-2"><i class="fas fa-shield-alt"></i> Trusted by dealers across India</div>
+<div class="small fw-bold text-dark"><i class="fas fa-car border p-1 rounded me-1 bg-white"></i> 10,000+ vehicles sold</div>
+</div>
+<a class="btn btn-dark w-100 fw-bold rounded mb-2 py-2 text-white" href="register.html" style="margin:0; text-align:center;">Become a Seller</a>
+<a class="btn btn-outline-dark w-100 fw-bold rounded py-2" href="#" style="margin:0; text-align:center;">Talk to Account Manager</a>
+</div>
+</div>
+</div>
+</li>
+<!-- 3. AUCTIONS MENU -->
+<li class="nav-item dropdown-mega">
+<a class="nav-link text-main fw-bold" href="auction-subscription.html">Auctions <i class="fas fa-chevron-down ms-1" style="font-size: 0.6em;"></i></a>
+<div class="mega-menu">
+<div class="mega-grid">
+<div class="mega-item">
+<h6>Discover Auctions</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Live Auctions</div><p class="mb-0">Bid in real-time</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Upcoming Events</div><p class="mb-0">Plan your purchases</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Past Auction Results</div><p class="mb-0">Market price discovery</p></a>
+</div>
+<div class="mega-item">
+<h6>Participate</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">How Auctions Work</div><p class="mb-0">Step-by-step guidance</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Join Auction Events</div><p class="mb-0">Register as a bidder</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Rules &amp; Eligibility</div><p class="mb-0">What you need to know</p></a>
+</div>
+<div class="mega-item">
+<h6>Seller Education</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell.html"><div class="fw-bold fs-6">List Vehicle in Auction</div><p class="mb-0">Reach massive audiences</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell.html"><div class="fw-bold fs-6">Auction Benefits</div><p class="mb-0">Faster liquidation</p></a>
+<a class="d-block text-decoration-none text-dark mb-4" href="sell.html"><div class="fw-bold fs-6">Pricing Transparency</div><p class="mb-0">Market-driven value</p></a>
+<a class="btn w-100 fw-bold rounded text-white py-2" href="auction-subscription.html" style="background-color: var(--orange-accent); margin:0; text-align:center;">View Live Auctions</a>
+</div>
+</div>
+</div>
+</li>
+<!-- 4. RESOURCES MENU -->
+<li class="nav-item dropdown-mega">
+<a class="nav-link text-main fw-bold" href="blogs.html">Resources <i class="fas fa-chevron-down ms-1" style="font-size: 0.6em;"></i></a>
+<div class="mega-menu">
+<div class="mega-grid">
+<div class="mega-item">
+<h6>Learn</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Buyer Guide</div><p class="mb-0">Procurement made easy</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Seller Guide</div><p class="mb-0">Maximize your margins</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Auction Guide</div><p class="mb-0">Bidding strategies</p></a>
+</div>
+<div class="mega-item">
+<h6>Support</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="support.html"><div class="fw-bold fs-6">Help Center</div><p class="mb-0">Get assistance</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="faqs.html"><div class="fw-bold fs-6">FAQs</div><p class="mb-0">Common questions</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="support.html"><div class="fw-bold fs-6">Contact Support</div><p class="mb-0">We are here to help</p></a>
+</div>
+<div class="mega-item">
+<h6>Insights</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Blogs &amp; Industry Insights</div><p class="mb-0">Latest automotive news</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Market Trends</div><p class="mb-0">Demand forecasting</p></a>
+<a class="d-block text-decoration-none text-dark mb-4" href="blogs.html"><div class="fw-bold fs-6">Price Reports</div><p class="mb-0">Valuation matrix</p></a>
+<a class="btn btn-primary w-100 fw-bold rounded text-white py-2" href="blogs.html" style="margin:0; text-align:center;">Explore Resources</a>
+</div>
+</div>
+</div>
+</li>
+
+<li class="nav-item"><a class="nav-link fw-semibold text-dark" href="auctions.html">Live Events</a></li>
+<li class="nav-item"><a class="nav-link text-secondary" href="#">Upcoming</a></li>
+<li class="nav-item"><a class="nav-link text-secondary" href="#">Results</a></li>
+<li class="nav-item ms-lg-3">
+<a class="btn btn-auction-outline btn-sm rounded-pill px-3" href="auction-subscription.html">Subscribe to Bid</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<!-- Auction Sub-nav / Filters -->
+<div class="border-bottom bg-light">
+<div class="container py-3 d-flex flex-wrap gap-4 align-items-center">
+<span class="text-secondary fw-bold small text-uppercase letter-spacing-1">Filters:</span>
+<div class="dropdown">
+<button class="btn btn-sm btn-white border shadow-sm dropdown-toggle text-dark" data-bs-toggle="dropdown">Vehicle Type</button>
+<ul class="dropdown-menu">
+<li><a class="dropdown-item" href="#">All Vehicles</a></li>
+<li><a class="dropdown-item" href="#">Commercial</a></li>
+<li><a class="dropdown-item" href="#">Passenger Cars</a></li>
+<li><a class="dropdown-item" href="#">Two-Wheelers</a></li>
+</ul>
+</div>
+<div class="dropdown">
+<button class="btn btn-sm btn-white border shadow-sm dropdown-toggle text-dark" data-bs-toggle="dropdown">Auction Type</button>
+<ul class="dropdown-menu">
+<li><a class="dropdown-item" href="#">All</a></li>
+<li><a class="dropdown-item" href="#">Live Bidding <span class="badge bg-danger ms-2">Live</span></a></li>
+<li><a class="dropdown-item" href="#">Timed Event</a></li>
+</ul>
+</div>
+<div class="dropdown">
+<button class="btn btn-sm btn-white border shadow-sm dropdown-toggle text-dark" data-bs-toggle="dropdown">Location</button>
+<ul class="dropdown-menu">
+<li><a class="dropdown-item" href="#">Pan India</a></li>
+<li><a class="dropdown-item" href="#">Maharashtra</a></li>
+<li><a class="dropdown-item" href="#">Karnataka</a></li>
+</ul>
+</div>
+<div class="ms-auto">
+<select class="form-select form-select-sm bg-white border shadow-sm text-dark">
+<option>Sort by: Ending Soonest</option>
+<option>Current Bid: Low to High</option>
+<option>Current Bid: High to Low</option>
+<option>Recently Added</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Active Live Auctions -->
+<section class="py-5 bg-white">
+<div class="container">
+<div class="d-flex justify-content-between align-items-end mb-4">
+<div>
+<h2 class="fw-bold mb-1 text-dark"><i class="fas fa-circle text-danger ms-1 me-2" style="font-size: 0.8rem; animation: pulse-danger 2s infinite;"></i>Live Auctions</h2>
+<p class="text-secondary mb-0">Bidding is open. Real-time lots ending soon.</p>
+</div>
+</div>
+<div class="row g-4">
+<!-- Live Card 1 -->
+<div class="col-lg-3 col-md-6">
+<a class="text-decoration-none text-dark" href="auction-details.html?id=1">
+<div class="auction-card shadow-sm border">
+<span class="auction-badge badge-live">Live</span>
+<div class="auction-card-img-wrap">
+<img alt="Tata Ace" src="https://images.unsplash.com/photo-1590362891991-f20bc081e533?auto=format&amp;fit=crop&amp;q=80&amp;w=400"/>
+<div class="auction-timer ending-soon">
+<i class="far fa-clock me-1"></i> 00:04:12
+                                </div>
+</div>
+<div class="auction-card-body">
+<h3 class="auction-card-title text-dark">2021 Tata Ace Gold CX</h3>
+<div class="auction-specs">
+<span><i class="fas fa-road"></i> 45k km</span>
+<span><i class="fas fa-gas-pump"></i> Diesel</span>
+</div>
+<div class="auction-price-row mt-3 border-top pt-3">
+<div>
+<div class="bid-label">Current Bid</div>
+<div class="bid-amount">₹2,85,000</div>
+</div>
+<div class="text-end">
+<div class="bid-count mb-1">14 Bids</div>
+<button class="btn btn-auction btn-sm mt-1 px-3">Bid Now</button>
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<!-- Live Card 2 -->
+<div class="col-lg-3 col-md-6">
+<a class="text-decoration-none text-dark" href="auction-details.html?id=2">
+<div class="auction-card shadow-sm border">
+<span class="auction-badge badge-live">Live</span>
+<div class="auction-card-img-wrap">
+<img alt="Hyundai i20" src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&amp;fit=crop&amp;q=80&amp;w=400"/>
+<div class="auction-timer">
+<i class="far fa-clock me-1"></i> 01:25:40
+                                </div>
+</div>
+<div class="auction-card-body">
+<h3 class="auction-card-title text-dark">2023 Hyundai i20 Sportz</h3>
+<div class="auction-specs">
+<span><i class="fas fa-road"></i> 12k km</span>
+<span><i class="fas fa-gas-pump"></i> Petrol</span>
+</div>
+<div class="auction-price-row mt-3 border-top pt-3">
+<div>
+<div class="bid-label">Current Bid</div>
+<div class="bid-amount">₹7,15,000</div>
+</div>
+<div class="text-end">
+<div class="bid-count mb-1">8 Bids</div>
+<button class="btn btn-auction btn-sm mt-1 px-3">Bid Now</button>
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<!-- Live Card 3 -->
+<div class="col-lg-3 col-md-6">
+<a class="text-decoration-none text-dark" href="auction-details.html?id=3">
+<div class="auction-card shadow-sm border">
+<span class="auction-badge badge-live">Live</span>
+<div class="auction-card-img-wrap">
+<img alt="Royal Enfield" src="https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&amp;fit=crop&amp;q=80&amp;w=400"/>
+<div class="auction-timer ending-soon">
+<i class="far fa-clock me-1"></i> 00:01:45
+                                </div>
+</div>
+<div class="auction-card-body">
+<h3 class="auction-card-title text-dark">2022 Royal Enfield Classic 350</h3>
+<div class="auction-specs">
+<span><i class="fas fa-road"></i> 8k km</span>
+<span><i class="fas fa-map-marker-alt"></i> Pune</span>
+</div>
+<div class="auction-price-row mt-3 border-top pt-3">
+<div>
+<div class="bid-label">Current Bid</div>
+<div class="bid-amount">₹1,45,000</div>
+</div>
+<div class="text-end">
+<div class="bid-count mb-1">22 Bids</div>
+<button class="btn btn-auction btn-sm mt-1 px-3">Bid Now</button>
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<!-- Live Card 4 -->
+<div class="col-lg-3 col-md-6">
+<a class="text-decoration-none text-dark" href="auction-details.html?id=4">
+<div class="auction-card shadow-sm border">
+<span class="auction-badge badge-live">Live</span>
+<div class="auction-card-img-wrap">
+<img alt="Mahindra Bolero" src="https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&amp;fit=crop&amp;q=80&amp;w=400"/>
+<div class="auction-timer">
+<i class="far fa-clock me-1"></i> 03:45:00
+                                </div>
+</div>
+<div class="auction-card-body">
+<h3 class="auction-card-title text-dark">2020 Mahindra Bolero MaxiTruck</h3>
+<div class="auction-specs">
+<span><i class="fas fa-road"></i> 65k km</span>
+<span><i class="fas fa-gas-pump"></i> Diesel</span>
+</div>
+<div class="auction-price-row mt-3 border-top pt-3">
+<div>
+<div class="bid-label">Current Bid</div>
+<div class="bid-amount">₹4,20,000</div>
+</div>
+<div class="text-end">
+<div class="bid-count mb-1">4 Bids</div>
+<button class="btn btn-auction btn-sm mt-1 px-3">Bid Now</button>
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+</div>
+</div>
+</section>
+<hr class="m-0 border-opacity-25 py-0"/>
+<!-- Upcoming Auctions -->
+<section class="py-5 bg-light">
+<div class="container">
+<h2 class="fw-bold mb-1 text-dark">Upcoming Auctions</h2>
+<p class="text-secondary mb-4">Preview inventory before bidding begins.</p>
+<div class="row g-4 opacity-75">
+<!-- Upcoming 1 -->
+<div class="col-lg-3 col-md-6">
+<div class="auction-card border shadow-sm">
+<span class="auction-badge badge-upcoming">Starts in 2h</span>
+<div class="auction-card-img-wrap">
+<img alt="Jeep Compass" src="https://images.unsplash.com/photo-1621007947382-bb3c3994e3fd?auto=format&amp;fit=crop&amp;q=80&amp;w=400"/>
+</div>
+<div class="auction-card-body">
+<h3 class="auction-card-title text-dark">2021 Jeep Compass Limited</h3>
+<div class="auction-specs">
+<span><i class="fas fa-road"></i> 32k km</span>
+<span><i class="fas fa-cog"></i> Auto</span>
+</div>
+<div class="auction-price-row mt-3">
+<div>
+<div class="bid-label border-0 pb-0">Starting Bid</div>
+<div class="bid-amount fs-5 text-dark">₹12,50,000</div>
+</div>
+<div class="text-end">
+<button class="btn btn-sm btn-outline-secondary px-3"><i class="far fa-bell me-1"></i> Remind</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Upcoming 2 -->
+<div class="col-lg-3 col-md-6">
+<div class="auction-card border shadow-sm">
+<span class="auction-badge badge-upcoming">Starts Tomorrow</span>
+<div class="auction-card-img-wrap">
+<img alt="Mercedes" src="https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?auto=format&amp;fit=crop&amp;q=80&amp;w=400"/>
+</div>
+<div class="auction-card-body">
+<h3 class="auction-card-title text-dark">2019 Mercedes-Benz C-Class</h3>
+<div class="auction-specs">
+<span><i class="fas fa-road"></i> 45k km</span>
+<span><i class="fas fa-file-contract"></i> Inspected</span>
+</div>
+<div class="auction-price-row mt-3">
+<div>
+<div class="bid-label border-0 pb-0">Starting Bid</div>
+<div class="bid-amount fs-5 text-dark">₹21,00,000</div>
+</div>
+<div class="text-end">
+<button class="btn btn-sm btn-outline-secondary px-3"><i class="far fa-bell me-1"></i> Remind</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Explore More -->
+<div class="col-lg-6 d-flex align-items-center justify-content-center border border-2 border-secondary rounded-4 bg-white" style="border-style: dashed !important; opacity: 0.7;">
+<div class="text-center p-4">
+<i class="fas fa-calendar-alt fa-3x mb-3 text-secondary opacity-50"></i>
+<h5 class="text-dark">156 More Upcoming Vehicles</h5>
+<button class="btn btn-outline-dark mt-2">View Full Schedule</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="py-4 border-top bg-white">
+<div class="container text-center text-md-start">
+<div class="row align-items-center text-muted small">
+<div class="col-md-6 mb-3 mb-md-0">
+                    AutoHub Auctions © 2026. Verified Dealerships Only.
+                </div>
+<div class="col-md-6 text-md-end">
+<a class="text-muted text-decoration-none me-3" href="auction-subscription.html">Subscription Plans</a>
+<a class="text-muted text-decoration-none me-3" href="#">Auction Rules</a>
+<a class="text-muted text-decoration-none" href="#">Support</a>
+</div>
+</div>
+</div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

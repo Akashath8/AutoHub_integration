@@ -695,7 +695,7 @@ with open('index.html', 'w', encoding='utf-8') as f:
                             <i class="fas fa-building me-1"></i> <span class="fw-bold">${user.companyName || user.firstName}</span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end shadow bg-dark-card border-secondary border-opacity-25" style="border-radius: 8px;">
-                            ${user.role === 'Dealer' ? '<li><a class="dropdown-item py-2 text-white" href="dealer-dashboard.html"><i class="fas fa-tachometer-alt me-3 text-cyan"></i>Dealer Dashboard</a></li>' : ''}
+                            ${user.role === 'Dealer' ? '<li><a class="dropdown-item py-2 text-white" href="seller/dashboard.html"><i class="fas fa-tachometer-alt me-3 text-cyan"></i>Dealer Dashboard</a></li>' : ''}
                             <li><a class="dropdown-item py-2 text-white" href="#"><i class="fas fa-user me-3 text-muted"></i>My Profile</a></li>
                             <li><a class="dropdown-item py-2 text-white" href="orders.html"><i class="fas fa-box me-3 text-muted"></i>My Orders</a></li>
                             <li><a class="dropdown-item py-2 text-white" href="my-quotes.html"><i class="fas fa-file-invoice me-3 text-muted"></i>Quotations</a></li>

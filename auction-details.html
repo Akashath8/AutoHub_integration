@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auction Lot #4202 - Tata Ace | AutoHub Auctions</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Using main theme variables and auction CSS override for light theme -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/auction.css">
+    <style>
+        .inspection-score {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--auc-success);
+            border: 2px solid var(--auc-success);
+        }
+    </style>
+</head>
+<body class="auction-theme">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg sticky-top bg-white">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-4 text-dark" href="index.html">AutoHub <span style="color: var(--auc-primary);">Auctions</span></a>
+            <div class="ms-auto d-flex align-items-center gap-3">
+                <a href="auctions.html" class="btn btn-sm btn-outline-secondary border-secondary">Back to Listings</a>
+                <div id="navProfileArea"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container py-4">
+        <!-- Breadcrumb: explicitly text-muted or standard link colors instead of being unreadable -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="auctions.html" class="text-secondary text-decoration-none">Live Auctions</a></li>
+                <li class="breadcrumb-item"><a href="#" class="text-secondary text-decoration-none">Commercial Vehicles</a></li>
+                <li class="breadcrumb-item active fw-bold text-dark" aria-current="page">Lot #4202</li>
+            </ol>
+        </nav>
+
+        <div class="row g-4 mb-5">
+            <!-- Left: Gallery & Details -->
+            <div class="col-lg-8">
+                <!-- Gallery -->
+                <div class="auction-gallery mb-4 p-2 bg-white rounded flex-column shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1590362891991-f20bc081e533?auto=format&fit=crop&q=80&w=1200" id="mainImage" class="auction-main-img img-fluid rounded mb-2" alt="Tata Ace Main">
+                    <div class="row g-2">
+                        <div class="col-3"><img src="https://images.unsplash.com/photo-1590362891991-f20bc081e533?auto=format&fit=crop&q=80" style="object-position: center;" class="auction-thumb active" onclick="changeImage(this)"></div>
+                        <div class="col-3"><img src="https://images.unsplash.com/photo-1518972554763-8a3c8de81eaf?auto=format&fit=crop&q=80" style="object-position: top;" class="auction-thumb" onclick="changeImage(this)"></div>
+                        <div class="col-3"><img src="https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&q=80" style="object-position: bottom;" class="auction-thumb" onclick="changeImage(this)"></div>
+                        <div class="col-3 position-relative cursor-pointer">
+                            <img src="https://images.unsplash.com/photo-1502877338535-775f0054817a?auto=format&fit=crop&q=80" class="auction-thumb" onclick="changeImage(this)">
+                            <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex align-items-center justify-content-center text-white fw-bold fs-5 rounded">+8</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vehicle Info -->
+                <div class="p-4 bg-white rounded rounded-4 border shadow-sm" style="border-color: var(--auc-border) !important;">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <span class="badge bg-light text-dark border mb-2">Lot #4202</span>
+                            <h1 class="h2 fw-bold mb-1 text-dark">2021 Tata Ace Gold CX</h1>
+                            <p class="text-muted"><i class="fas fa-map-marker-alt me-1"></i> Located in Pune, Maharashtra</p>
+                        </div>
+                        <div class="inspection-score" title="AutoHub Verified Score">
+                            9.2
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-4">
+                        <div class="col-6 col-md-3">
+                            <div class="p-3 bg-light rounded text-center border">
+                                <i class="fas fa-road text-muted mb-2 fs-5"></i>
+                                <div class="fw-bold text-dark">45,000 km</div>
+                                <div class="text-muted small">Odometer</div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="p-3 bg-light rounded text-center border">
+                                <i class="fas fa-gas-pump text-muted mb-2 fs-5"></i>
+                                <div class="fw-bold text-dark">Diesel</div>
+                                <div class="text-muted small">Fuel Type</div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="p-3 bg-light rounded text-center border">
+                                <i class="fas fa-cog text-muted mb-2 fs-5"></i>
+                                <div class="fw-bold text-dark">Manual</div>
+                                <div class="text-muted small">Transmission</div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="p-3 bg-light rounded text-center border">
+                                <i class="fas fa-user text-muted mb-2 fs-5"></i>
+                                <div class="fw-bold text-dark">1st Owner</div>
+                                <div class="text-muted small">Ownership</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="border-secondary opacity-25 my-4">
+
+                    <h4 class="fw-bold mb-3 text-dark">Inspection Report</h4>
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <ul class="list-unstyled">
+                                <li class="d-flex justify-content-between mb-2"><span class="text-dark">Engine & Transmission</span> <span class="text-success fw-bold"><i class="fas fa-check-circle me-1"></i> Passed</span></li>
+                                <li class="d-flex justify-content-between mb-2"><span class="text-dark">Steering & Suspension</span> <span class="text-success fw-bold"><i class="fas fa-check-circle me-1"></i> Passed</span></li>
+                                <li class="d-flex justify-content-between mb-2"><span class="text-dark">Brakes</span> <span class="text-success fw-bold"><i class="fas fa-check-circle me-1"></i> Passed</span></li>
+                                <li class="d-flex justify-content-between mb-2"><span class="text-dark">Electricals</span> <span class="text-warning fw-bold"><i class="fas fa-exclamation-circle me-1"></i> Minor Issues</span></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-unstyled">
+                                <li class="d-flex justify-content-between mb-2"><span class="text-dark">Exterior & Body</span> <span class="text-success fw-bold"><i class="fas fa-check-circle me-1"></i> Good</span></li>
+                                <li class="d-flex justify-content-between mb-2"><span class="text-dark">Tires</span> <span class="text-muted fw-bold">70% remaining</span></li>
+                            </ul>
+                            <a href="#" class="btn btn-sm btn-outline-secondary w-100 mt-2"><i class="fas fa-file-pdf me-2"></i> Download Full Report (PDF)</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Bidding Console -->
+            <div class="col-lg-4">
+                <div class="bid-console shadow bg-white border">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="auction-badge badge-live position-static">Live</span>
+                            <span class="fw-bold text-dark fs-5">Bidding is Open</span>
+                        </div>
+                        <div class="text-danger fw-bold font-monospace fs-4" id="countdownTimer">
+                            00:04:12
+                        </div>
+                    </div>
+
+                    <div class="p-3 bg-light rounded text-center mb-4 border border-secondary border-opacity-25">
+                        <p class="text-muted text-uppercase small letter-spacing-1 mb-1">Current Highest Bid</p>
+                        <h2 class="display-5 fw-bold text-dark mb-0" id="currentBidAmt">₹2,85,000</h2>
+                        <p class="text-success small fw-bold mt-2 mb-0"><i class="fas fa-check-circle me-1"></i> Reserve Price Met</p>
+                    </div>
+
+                    <div class="d-flex justify-content-between text-muted small mb-2">
+                        <span>Starting Bid: ₹1,50,000</span>
+                        <span>Min. Increment: ₹5,000</span>
+                    </div>
+
+                    <button class="btn btn-auction w-100 py-3 fs-5 shadow" id="placeBidBtn">Place Bid</button>
+                    <p class="text-center text-muted small mt-3"><i class="fas fa-info-circle me-1"></i> By placing a bid, you commit to buying this vehicle if you win.</p>
+
+                    <hr class="border-secondary opacity-25 my-4">
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="fw-bold text-dark mb-0">Bid History</h5>
+                        <span class="badge bg-light text-dark border">14 Bids</span>
+                    </div>
+
+                    <div class="bid-history-list pe-2">
+                        <div class="bid-item">
+                            <div>₹2,85,000</div>
+                            <div class="bid-item-user">Dealer_MHM*** <span class="text-muted small ms-2">10 sec ago</span></div>
+                        </div>
+                        <div class="bid-item">
+                            <div>₹2,80,000</div>
+                            <div class="bid-item-user">Autolink*** <span class="text-muted small ms-2">1 min ago</span></div>
+                        </div>
+                        <div class="bid-item">
+                            <div>₹2,75,000</div>
+                            <div class="bid-item-user">Dealer_MHM*** <span class="text-muted small ms-2">4 min ago</span></div>
+                        </div>
+                        <div class="bid-item">
+                            <div>₹2,60,000</div>
+                            <div class="bid-item-user">RK_Motors*** <span class="text-muted small ms-2">15 min ago</span></div>
+                        </div>
+                        <div class="bid-item">
+                            <div>₹2,55,000</div>
+                            <div class="bid-item-user">Dealer_MHM*** <span class="text-muted small ms-2">22 min ago</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modal (Lazy Auth) -->
+    <div class="modal fade" id="authModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-white text-dark shadow-lg" style="border-radius: 12px; overflow: hidden;">
+                <div class="modal-header border-bottom">
+                    <h5 class="modal-title fw-bold">Login to Participate</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4 text-center">
+                    <i class="fas fa-lock text-muted fa-3x mb-3"></i>
+                    <p class="mb-4 text-muted">You must be logged in to view subscription status and place bids securely.</p>
+                    <form id="lazyAuthForm">
+                        <input type="text" id="lazyAuthUser" class="form-control mb-3" placeholder="Email / Mobile" required>
+                        <input type="password" class="form-control mb-4" placeholder="Password" value="password" required>
+                        <button type="submit" class="btn btn-auction w-100 fw-bold">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/store.js"></script>
+    <script>
+        function changeImage(el) {
+            document.getElementById('mainImage').src = el.src;
+            document.querySelectorAll('.auction-thumb').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = store.getUser();
+            
+            // Setup Profile Area
+            const profileArea = document.getElementById('navProfileArea');
+            if (user && user.isLoggedIn) {
+                profileArea.innerHTML = `
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown">
+                            <i class="fas fa-user-circle me-1"></i> ${user.name || 'User'}
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end shadow">
+                            <li><a class="dropdown-item py-2" href="#"><i class="fas fa-gavel me-3 text-muted"></i>My Bids</a></li>
+                            ${!user.isAuctionSubscribed ? '<li><a class="dropdown-item py-2 text-warning" href="auction-subscription.html"><i class="fas fa-gem me-3"></i>Get Subscription</a></li>' : ''}
+                            <li><hr class="dropdown-divider border-secondary"></li>
+                            <li><a class="dropdown-item py-2 text-danger" href="#" id="logoutBtn"><i class="fas fa-sign-out-alt me-3"></i>Logout</a></li>
+                        </ul>
+                    </div>
+                `;
+                document.getElementById('logoutBtn').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    store.logoutUser();
+                    window.location.reload();
+                });
+            } else {
+                profileArea.innerHTML = `<button class="btn btn-sm btn-outline-dark px-3 fw-bold" id="navLoginBtn">Login</button>`;
+                document.getElementById('navLoginBtn').addEventListener('click', () => {
+                    new bootstrap.Modal(document.getElementById('authModal')).show();
+                });
+            }
+
+            // Auth form handling
+            const lazyForm = document.getElementById('lazyAuthForm');
+            if(lazyForm) {
+                lazyForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const u = document.getElementById('lazyAuthUser').value;
+                    if (!u) return;
+                    store.saveUser({
+                        name: 'Dealer_' + u.split('@')[0],
+                        email: u,
+                        isLoggedIn: true,
+                        isAuctionSubscribed: false // Default to false
+                    });
+                    window.location.reload();
+                });
+            }
+
+            // Bidding Logic
+            document.getElementById('placeBidBtn').addEventListener('click', () => {
+                const currentUser = store.getUser();
+                
+                // Case A: Not Logged In -> Show Modal
+                if (!currentUser || !currentUser.isLoggedIn) {
+                    new bootstrap.Modal(document.getElementById('authModal')).show();
+                    return;
+                }
+
+                // Case B: Logged In but NOT Subscribed -> Redirect to Paywall
+                if (!currentUser.isAuctionSubscribed) {
+                    window.location.href = 'auction-subscription.html';
+                    return;
+                }
+
+                // Case C: Logged In + Subscribed -> Take to Live Bid Room
+                window.location.href = 'live-auction.html';
+            });
+            
+            // Simple visual countdown logic for demo effect
+            let duration = 4 * 60 + 12; // 4m 12s
+            setInterval(() => {
+                duration--;
+                if(duration < 0) duration = 0;
+                let m = Math.floor(duration/60);
+                let s = duration % 60;
+                document.getElementById('countdownTimer').textContent = `00:0${m}:${s<10?'0'+s:s}`;
+                if(duration < 60) {
+                    document.getElementById('countdownTimer').classList.add('flash-update');
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

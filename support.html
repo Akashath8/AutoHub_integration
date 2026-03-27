@@ -1,26 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
 
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Support - AutoHub Marketplace</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Icon Font -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/main.css">
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Support - AutoHub Marketplace</title>
+<!-- Bootstrap 5 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<!-- Icon Font -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="css/main.css" rel="stylesheet"/>
+<style>
         body {
-            background-color: var(--dark-bg);
-            color: #f8f9fa;
+            background-color: var(--bg-secondary) !important;
+            color: var(--text-main) !important;
         }
-        h1, h2, h3, h4, h5, h6 { color: #ffffff; }
-        .text-muted { color: #9ca3af !important; }
+        h1, h2, h3, h4, h5, h6 { color: var(--text-main); }
+        .text-muted { color: var(--text-muted) !important; }
 
         .navbar {
-            background-color: var(--dark-bg) !important;
+            background-color: var(--bg-dark) !important;
             padding: 1rem 0;
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
@@ -55,8 +55,8 @@
 
         /* Support specific */
         .support-card {
-            background-color: var(--dark-card);
-            border: 1px solid rgba(255,255,255,0.05);
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
             border-radius: 16px;
             padding: 2.5rem 2rem;
             text-align: center;
@@ -66,7 +66,7 @@
         .support-card:hover {
             transform: translateY(-5px);
             border-color: var(--cyan-accent);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
         .support-icon {
             width: 72px;
@@ -80,7 +80,8 @@
         }
         
         .quick-help-block {
-            background-color: rgba(255,255,255,0.02);
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
             border-left: 4px solid var(--pink-accent);
             padding: 1.5rem;
             border-radius: 0 12px 12px 0;
@@ -88,243 +89,357 @@
             transition: background-color 0.2s;
         }
         .quick-help-block:hover {
-            background-color: rgba(255,255,255,0.05);
+            background-color: var(--bg-secondary);
         }
         
         .contact-form textarea {
             resize: none;
         }
         .contact-form .form-control {
-            background-color: rgba(255,255,255,0.05) !important;
-            border: 1px solid rgba(255,255,255,0.1);
-            color: #fff;
+            background-color: var(--bg-primary) !important;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
         }
         .contact-form .form-control:focus {
-            background-color: rgba(255,255,255,0.08) !important;
+            background-color: var(--bg-primary) !important;
             border-color: var(--cyan-accent);
             box-shadow: none;
         }
         .contact-form .form-control::placeholder {
-            color: rgba(255,255,255,0.4);
+            color: var(--text-muted);
+        }
+    </style>
+
+<style id="super-mega-menu-css">
+        /* Mega Menu Styles */
+        .dropdown-mega { position: static; }
+        .mega-menu {
+            position: absolute; top: 100%; left: 0; right: 0; margin: 0 auto;
+            width: 96%; max-width: 1100px; background: #ffffff;
+            border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            padding: 30px; display: none; z-index: 1050; border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+        .dropdown-mega:hover .mega-menu { display: block; animation: fadeInMega 0.2s ease-in-out; }
+        .mega-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .mega-item h6 { font-weight: 700; margin-bottom: 15px; color: #111827; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
+        .mega-item p { font-size: 13px; color: #6b7280; line-height: 1.4; transition: color 0.2s; }
+        .mega-item a { transition: all 0.2s ease; border-radius: 6px; padding: 8px; margin: -8px; }
+        .mega-item a:hover { background-color: #f8fafc; }
+        .mega-item a:hover .fs-6 { color: var(--pink-accent, #ec4899); }
+        .mega-item a:hover p { color: #4b5563; }
+        @keyframes fadeInMega { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* Responsive Mobile Behavior */
+        @media (max-width: 991px) {
+            .mega-menu { position: static; width: 100%; box-shadow: none; padding: 15px; display: none; margin-top: 10px; }
+            .dropdown-mega.show .mega-menu { display: block; }
+            .mega-grid { grid-template-columns: 1fr; gap: 20px; }
         }
     </style>
 </head>
-
 <body>
+<nav class="navbar navbar-expand-lg sticky-top">
+<div class="container">
+<div class="d-flex align-items-center gap-2">
+<a class="navbar-brand" href="index.html">AutoHub <span class="text-pink">Marketplace</span></a>
+<div class="dropdown d-none d-lg-block ms-3">
+<button aria-expanded="false" class="btn nav-link px-3 py-1 rounded" data-bs-toggle="dropdown" id="navLocationBtn" style="background-color: rgba(255,255,255,0.08);">
+<i class="fas fa-map-marker-alt text-pink me-1"></i>
+<span class="small text-muted d-block" style="font-size: 0.65rem; line-height: 1;">Location</span>
+<span style="font-size: 0.85rem; font-weight: 600; color: #fff;">Pune <i class="fas fa-chevron-down ms-1" style="font-size:0.6rem;"></i></span>
+</button>
+<!-- Location menu will open here -->
+</div>
+</div>
+<button class="navbar-toggler border-0" data-bs-target="#navbarContent" data-bs-toggle="collapse" type="button">
+<i class="fas fa-bars text-white"></i>
+</button>
+<div class="collapse navbar-collapse" id="navbarContent">
+<div class="ms-4 me-auto" style="width: 40px; border-radius: 6px; overflow:hidden;">
+<button class="btn search-input w-100 p-2"><i class="fas fa-search"></i></button>
+</div>
+<ul class="navbar-nav ms-auto align-items-center gap-3">
+<!-- 1. BUY MENU -->
+<li class="nav-item dropdown-mega">
+<a class="nav-link text-main fw-bold" href="listing.html">Buy <i class="fas fa-chevron-down ms-1" style="font-size: 0.6em;"></i></a>
+<div class="mega-menu">
+<div class="mega-grid">
+<div class="mega-item">
+<h6>Explore Vehicles</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="listing.html"><div class="fw-bold fs-6">Search Vehicles</div><p class="mb-0">Browse all available vehicles</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="listing.html"><div class="fw-bold fs-6">Explore by Category</div><p class="mb-0">Cars, Commercial, EVs</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="listing.html"><div class="fw-bold fs-6">Featured Listings</div><p class="mb-0">Verified &amp; premium vehicles</p></a>
+</div>
+<div class="mega-item">
+<h6>Buying Tools</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">Compare Vehicles</div><p class="mb-0">Side-by-side comparison</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">EMI Calculator</div><p class="mb-0">Estimate monthly payments</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">Loan Assistance</div><p class="mb-0">Financing options available</p></a>
+</div>
+<div class="mega-item">
+<h6>Buyer Support</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">Book Test Drive</div><p class="mb-0">Schedule a visit</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">Buyer Guide</div><p class="mb-0">How Buying Works</p></a>
+<a class="d-block text-decoration-none text-dark mb-4" href="#"><div class="fw-bold fs-6">Verified Listings &amp; Trust</div><p class="mb-0">Quality assured</p></a>
+<a class="btn btn-pink w-100 fw-bold rounded text-white py-2" href="listing.html" style="margin:0; text-align:center;">Start Buying</a>
+</div>
+</div>
+</div>
+</li>
+<!-- 2. SELL MENU -->
+<li class="nav-item dropdown-mega">
+<a class="nav-link text-main fw-bold" href="sell.html">Sell <i class="fas fa-chevron-down ms-1" style="font-size: 0.6em;"></i></a>
+<div class="mega-menu">
+<div class="mega-grid">
+<div class="mega-item">
+<h6>Getting Started</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell.html"><div class="fw-bold fs-6">How Selling Works</div><p class="mb-0">List → Get Quotes → Close Deal</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell.html"><div class="fw-bold fs-6">Who Can Sell</div><p class="mb-0">Dealers, fleet owners, businesses</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell.html"><div class="fw-bold fs-6">Why Sell on AutoHub</div><p class="mb-0">Reach, pricing, trust</p></a>
+</div>
+<div class="mega-item">
+<h6>Seller Benefits</h6>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Access Verified Buyers</div></div>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Auction vs Direct Sale</div></div>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Smart Pricing Insights</div></div>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Secure Payments &amp; Escrow</div></div>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Documentation Support</div></div>
+</div>
+<div class="mega-item">
+<h6>Conversion</h6>
+<div class="bg-light p-3 rounded mb-4 text-start" style="margin:0; border: 1px solid rgba(0,0,0,0.1);">
+<div class="small fw-bold text-success mb-2"><i class="fas fa-shield-alt"></i> Trusted by dealers across India</div>
+<div class="small fw-bold text-dark"><i class="fas fa-car border p-1 rounded me-1 bg-white"></i> 10,000+ vehicles sold</div>
+</div>
+<a class="btn btn-dark w-100 fw-bold rounded mb-2 py-2 text-white" href="register.html" style="margin:0; text-align:center;">Become a Seller</a>
+<a class="btn btn-outline-dark w-100 fw-bold rounded py-2" href="#" style="margin:0; text-align:center;">Talk to Account Manager</a>
+</div>
+</div>
+</div>
+</li>
+<!-- 3. AUCTIONS MENU -->
+<li class="nav-item dropdown-mega">
+<a class="nav-link text-main fw-bold" href="auction-subscription.html">Auctions <i class="fas fa-chevron-down ms-1" style="font-size: 0.6em;"></i></a>
+<div class="mega-menu">
+<div class="mega-grid">
+<div class="mega-item">
+<h6>Discover Auctions</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Live Auctions</div><p class="mb-0">Bid in real-time</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Upcoming Events</div><p class="mb-0">Plan your purchases</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Past Auction Results</div><p class="mb-0">Market price discovery</p></a>
+</div>
+<div class="mega-item">
+<h6>Participate</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">How Auctions Work</div><p class="mb-0">Step-by-step guidance</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Join Auction Events</div><p class="mb-0">Register as a bidder</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Rules &amp; Eligibility</div><p class="mb-0">What you need to know</p></a>
+</div>
+<div class="mega-item">
+<h6>Seller Education</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell.html"><div class="fw-bold fs-6">List Vehicle in Auction</div><p class="mb-0">Reach massive audiences</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell.html"><div class="fw-bold fs-6">Auction Benefits</div><p class="mb-0">Faster liquidation</p></a>
+<a class="d-block text-decoration-none text-dark mb-4" href="sell.html"><div class="fw-bold fs-6">Pricing Transparency</div><p class="mb-0">Market-driven value</p></a>
+<a class="btn w-100 fw-bold rounded text-white py-2" href="auction-subscription.html" style="background-color: var(--orange-accent); margin:0; text-align:center;">View Live Auctions</a>
+</div>
+</div>
+</div>
+</li>
+<!-- 4. RESOURCES MENU -->
+<li class="nav-item dropdown-mega">
+<a class="nav-link text-main fw-bold" href="blogs.html">Resources <i class="fas fa-chevron-down ms-1" style="font-size: 0.6em;"></i></a>
+<div class="mega-menu">
+<div class="mega-grid">
+<div class="mega-item">
+<h6>Learn</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Buyer Guide</div><p class="mb-0">Procurement made easy</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Seller Guide</div><p class="mb-0">Maximize your margins</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Auction Guide</div><p class="mb-0">Bidding strategies</p></a>
+</div>
+<div class="mega-item">
+<h6>Support</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="support.html"><div class="fw-bold fs-6">Help Center</div><p class="mb-0">Get assistance</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="faqs.html"><div class="fw-bold fs-6">FAQs</div><p class="mb-0">Common questions</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="support.html"><div class="fw-bold fs-6">Contact Support</div><p class="mb-0">We are here to help</p></a>
+</div>
+<div class="mega-item">
+<h6>Insights</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Blogs &amp; Industry Insights</div><p class="mb-0">Latest automotive news</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Market Trends</div><p class="mb-0">Demand forecasting</p></a>
+<a class="d-block text-decoration-none text-dark mb-4" href="blogs.html"><div class="fw-bold fs-6">Price Reports</div><p class="mb-0">Valuation matrix</p></a>
+<a class="btn btn-primary w-100 fw-bold rounded text-white py-2" href="blogs.html" style="margin:0; text-align:center;">Explore Resources</a>
+</div>
+</div>
+</div>
+</li>
 
-    <nav class="navbar navbar-expand-lg sticky-top">
-        <div class="container">
-            <div class="d-flex align-items-center gap-2">
-                <a class="navbar-brand" href="index.html">AutoHub <span class="text-pink">Marketplace</span></a>
-                <div class="dropdown d-none d-lg-block ms-3">
-                    <button class="btn nav-link px-3 py-1 rounded" id="navLocationBtn" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: rgba(255,255,255,0.08);">
-                        <i class="fas fa-map-marker-alt text-pink me-1"></i> 
-                        <span class="small text-muted d-block" style="font-size: 0.65rem; line-height: 1;">Location</span>
-                        <span style="font-size: 0.85rem; font-weight: 600; color: #fff;">Pune <i class="fas fa-chevron-down ms-1" style="font-size:0.6rem;"></i></span>
-                    </button>
-                    <!-- Location menu will open here -->
-                </div>
-            </div>
 
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
-                <i class="fas fa-bars text-white"></i>
-            </button>
 
-            <div class="collapse navbar-collapse" id="navbarContent">
-                <div class="ms-4 me-auto" style="width: 40px; border-radius: 6px; overflow:hidden;">
-                    <button class="btn search-input w-100 p-2"><i class="fas fa-search"></i></button>
-                </div>
-                <ul class="navbar-nav ms-auto align-items-center gap-3">
-                    <li class="nav-item"><a class="nav-link text-white fw-bold" href="index.html#buySection">Buy</a></li>
-                    <li class="nav-item"><a class="nav-link text-white fw-bold" href="index.html#sellSection">Sell</a></li>
-                    <li class="nav-item"><a class="nav-link text-white fw-bold" href="index.html#auctionSection">Auctions</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-cyan fw-bold" href="#" id="resourcesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Resources
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end shadow bg-dark-card border-secondary border-opacity-25" aria-labelledby="resourcesDropdown" style="border-radius: 8px;">
-                            <li><a class="dropdown-item py-2 text-white nav-dropdown-hover" href="blogs.html">Blogs</a></li>
-                            <li><a class="dropdown-item py-2 text-white nav-dropdown-hover" href="faqs.html">FAQs</a></li>
-                            <li><a class="dropdown-item py-2 text-white nav-dropdown-hover" href="support.html">Support</a></li>
-                            <li><a class="dropdown-item py-2 text-white nav-dropdown-hover" href="articles.html">Articles</a></li>
-                            <li><a class="dropdown-item py-2 text-white nav-dropdown-hover" href="white-papers.html">White Papers</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item ms-3 position-relative">
-                        <a class="nav-link" href="#" title="Notifications">
-                            <i class="fas fa-bell text-warning"></i>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-pink">3</span>
-                        </a>
-                    </li>
-                    <li class="nav-item position-relative">
-                        <a class="nav-link" href="#" title="Wishlist">
-                            <i class="fas fa-heart text-pink"></i>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-pink">0</span>
-                        </a>
-                    </li>
-                    <li class="nav-item me-3 position-relative">
-                        <a class="nav-link" href="cart.html">
-                            <i class="fas fa-shopping-cart text-secondary"></i>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-pink" id="cartCount">0</span>
-                        </a>
-                    </li>
-                    <li class="nav-item" id="navProfileArea"></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
 
-    <div class="container py-4">
-        <!-- Breadcrumbs -->
-        <nav aria-label="breadcrumb" class="mb-5">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Resources</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Support</li>
-            </ol>
-        </nav>
 
-        <div class="row justify-content-center mb-5">
-            <div class="col-lg-8 text-center">
-                <span class="badge bg-cyan bg-opacity-10 text-cyan border border-cyan border-opacity-25 px-3 py-2 mb-3 rounded-pill fw-bold" style="letter-spacing: 1px;">CUSTOMER SUCCESS</span>
-                <h2 class="display-5 fw-bold mb-3">We're Here to Help</h2>
-                <p class="text-muted lead mb-4">Choose from the options below to connect with our designated support teams for immediate assistance.</p>
-            </div>
-        </div>
-
-        <!-- Support Channels -->
-        <div class="row g-4 mb-5">
-            <div class="col-md-3">
-                <div class="support-card">
-                    <div class="support-icon bg-cyan bg-opacity-10 text-cyan">
-                        <i class="fas fa-headset"></i>
-                    </div>
-                    <h5 class="fw-bold mb-3">Live Chat</h5>
-                    <p class="text-muted small mb-4">Chat directly with a support agent for rapid resolution times.</p>
-                    <a href="#" class="btn btn-outline-cyan w-100 rounded-pill fw-bold">Start Chat</a>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="support-card" style="border-top: 3px solid var(--pink-accent);">
-                    <div class="support-icon bg-pink bg-opacity-10 text-pink">
-                        <i class="fas fa-ticket-alt"></i>
-                    </div>
-                    <h5 class="fw-bold mb-3">Raise a Ticket</h5>
-                    <p class="text-muted small mb-4">Log complex issues or technical bugs for our engineering team.</p>
-                    <a href="#" class="btn btn-pink w-100 rounded-pill fw-bold text-dark">Open Ticket</a>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="support-card">
-                    <div class="support-icon bg-warning bg-opacity-10 text-warning">
-                        <i class="fas fa-book"></i>
-                    </div>
-                    <h5 class="fw-bold mb-3">Help Center</h5>
-                    <p class="text-muted small mb-4">Browse detailed walkthroughs and platform documentation.</p>
-                    <a href="faqs.html" class="btn btn-outline-warning w-100 rounded-pill fw-bold">View Guides</a>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="support-card">
-                    <div class="support-icon" style="background-color: rgba(16, 185, 129, 0.1); color: #10b981;">
-                        <i class="fas fa-phone-alt"></i>
-                    </div>
-                    <h5 class="fw-bold mb-3">Phone Support</h5>
-                    <p class="text-muted small mb-4">Speak directly with an account manager (Mon-Fri, 9am - 6pm).</p>
-                    <a href="tel:18001234567" class="btn btn-outline-success w-100 rounded-pill fw-bold" style="color: #10b981; border-color: #10b981;">Call Now</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="row mt-5">
-            <!-- Contact Form -->
-            <div class="col-lg-7 mb-5 mb-lg-0 pe-lg-5">
-                <h3 class="fw-bold mb-4">Send Us a Message</h3>
-                <form class="contact-form bg-dark-card p-4 rounded-4 border border-secondary border-opacity-25 shadow">
-                    <div class="row g-3 mb-3">
-                        <div class="col-md-6">
-                            <label class="form-label text-muted small">Full Name / Company</label>
-                            <input type="text" class="form-control" placeholder="Enter name">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label text-muted small">Email Address</label>
-                            <input type="email" class="form-control" placeholder="name@company.com">
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label text-muted small">Topic</label>
-                        <select class="form-select form-control text-white" style="background-color: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
-                            <option value="1">Order Issue</option>
-                            <option value="2">Auction Registration</option>
-                            <option value="3">Vehicle Listing</option>
-                            <option value="4">Payment & Finance</option>
-                            <option value="5">Other</option>
-                        </select>
-                    </div>
-                    <div class="mb-4">
-                        <label class="form-label text-muted small">Message Details</label>
-                        <textarea class="form-control" rows="5" placeholder="Please describe your issue..."></textarea>
-                    </div>
-                    <button type="button" class="btn btn-cyan px-5 py-2 fw-bold">Submit Message</button>
-                </form>
-            </div>
-
-            <!-- Quick Help -->
-            <div class="col-lg-5">
-                <h4 class="fw-bold mb-4">Quick Help Summaries</h4>
-                
-                <a href="#" class="text-decoration-none">
-                    <div class="quick-help-block">
-                        <h6 class="text-white fw-bold mb-1">Track Ongoing Delivery</h6>
-                        <p class="text-muted small mb-0">Learn how to view GPS logs for purchased vehicles in transit.</p>
-                    </div>
-                </a>
-                
-                <a href="#" class="text-decoration-none">
-                    <div class="quick-help-block" style="border-left-color: var(--cyan-accent);">
-                        <h6 class="text-white fw-bold mb-1">Update GST Details</h6>
-                        <p class="text-muted small mb-0">Steps to modify company tax information on your profile.</p>
-                    </div>
-                </a>
-                
-                <a href="#" class="text-decoration-none">
-                    <div class="quick-help-block" style="border-left-color: var(--warning);">
-                        <h6 class="text-white fw-bold mb-1">Escalate Account Block</h6>
-                        <p class="text-muted small mb-0">Requirements for unlocking bidding privileges due to misses.</p>
-                    </div>
-                </a>
-                
-                <div class="mt-5 p-4 bg-dark-card border border-secondary border-opacity-25 rounded-4 text-center">
-                    <h5 class="text-white fw-bold mb-2">Corporate Office</h5>
-                    <p class="text-muted small mb-3">12th Floor, Orion Tech Park,<br>Baner, Pune, 411045, India</p>
-                    <a href="#" class="text-cyan small fw-bold">View on Google Maps <i class="fas fa-external-link-alt ms-1"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="footer-dark text-start mt-5">
-        <div class="container">
-            <div class="row g-4 mb-5">
-                <div class="col-lg-4 col-md-6 pe-5">
-                    <h4 class="fw-bold mb-3">AutoHub <span class="text-pink">Marketplace</span></h4>
-                    <p class="text-muted small">Premium vehicle marketplace for buying, selling, and leasing with institutional-grade assurance.</p>
-                </div>
-                <!-- Nav elements omitted for brevity -->
-            </div>
-            <div class="row pt-4" style="border-top: 1px solid rgba(255,255,255,0.05);">
-                <div class="col-md-6 mb-3 mb-md-0">
-                    <p class="text-muted small mb-0">&copy; 2025 AutoHub Marketplace. All rights reserved.</p>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/store.js"></script>
-    <script>
+<li class="nav-item ms-3 position-relative">
+<a class="nav-link" href="#" title="Notifications">
+<i class="fas fa-bell text-warning"></i>
+<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-pink">3</span>
+</a>
+</li>
+<li class="nav-item position-relative">
+<a class="nav-link" href="#" title="Wishlist">
+<i class="fas fa-heart text-pink"></i>
+<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-pink">0</span>
+</a>
+</li>
+<li class="nav-item me-3 position-relative">
+<a class="nav-link" href="cart.html">
+<i class="fas fa-shopping-cart text-secondary"></i>
+<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-pink" id="cartCount">0</span>
+</a>
+</li>
+<li class="nav-item" id="navProfileArea"></li>
+</ul>
+</div>
+</div>
+</nav>
+<div class="container py-4">
+<!-- Breadcrumbs -->
+<nav aria-label="breadcrumb" class="mb-5">
+<ol class="breadcrumb">
+<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+<li class="breadcrumb-item"><a href="#">Resources</a></li>
+<li aria-current="page" class="breadcrumb-item active">Support</li>
+</ol>
+</nav>
+<div class="row justify-content-center mb-5">
+<div class="col-lg-8 text-center">
+<span class="badge bg-cyan bg-opacity-10 text-cyan border border-cyan border-opacity-25 px-3 py-2 mb-3 rounded-pill fw-bold" style="letter-spacing: 1px;">CUSTOMER SUCCESS</span>
+<h2 class="display-5 fw-bold mb-3">We're Here to Help</h2>
+<p class="text-muted lead mb-4">Choose from the options below to connect with our designated support teams for immediate assistance.</p>
+</div>
+</div>
+<!-- Support Channels -->
+<div class="row g-4 mb-5">
+<div class="col-md-3">
+<div class="support-card">
+<div class="support-icon bg-cyan bg-opacity-10 text-cyan">
+<i class="fas fa-headset"></i>
+</div>
+<h5 class="fw-bold mb-3">Live Chat</h5>
+<p class="text-muted small mb-4">Chat directly with a support agent for rapid resolution times.</p>
+<a class="btn btn-outline-cyan w-100 rounded-pill fw-bold" href="#">Start Chat</a>
+</div>
+</div>
+<div class="col-md-3">
+<div class="support-card" style="border-top: 3px solid var(--pink-accent);">
+<div class="support-icon bg-pink bg-opacity-10 text-pink">
+<i class="fas fa-ticket-alt"></i>
+</div>
+<h5 class="fw-bold mb-3">Raise a Ticket</h5>
+<p class="text-muted small mb-4">Log complex issues or technical bugs for our engineering team.</p>
+<a class="btn btn-pink w-100 rounded-pill fw-bold text-dark" href="#">Open Ticket</a>
+</div>
+</div>
+<div class="col-md-3">
+<div class="support-card">
+<div class="support-icon bg-warning bg-opacity-10 text-warning">
+<i class="fas fa-book"></i>
+</div>
+<h5 class="fw-bold mb-3">Help Center</h5>
+<p class="text-muted small mb-4">Browse detailed walkthroughs and platform documentation.</p>
+<a class="btn btn-outline-warning w-100 rounded-pill fw-bold" href="faqs.html">View Guides</a>
+</div>
+</div>
+<div class="col-md-3">
+<div class="support-card">
+<div class="support-icon" style="background-color: rgba(16, 185, 129, 0.1); color: #10b981;">
+<i class="fas fa-phone-alt"></i>
+</div>
+<h5 class="fw-bold mb-3">Phone Support</h5>
+<p class="text-muted small mb-4">Speak directly with an account manager (Mon-Fri, 9am - 6pm).</p>
+<a class="btn btn-outline-success w-100 rounded-pill fw-bold" href="tel:18001234567" style="color: #10b981; border-color: #10b981;">Call Now</a>
+</div>
+</div>
+</div>
+<div class="row mt-5">
+<!-- Contact Form -->
+<div class="col-lg-7 mb-5 mb-lg-0 pe-lg-5">
+<h3 class="fw-bold mb-4">Send Us a Message</h3>
+<form class="contact-form bg-dark-card p-4 rounded-4 border border-secondary border-opacity-25 shadow">
+<div class="row g-3 mb-3">
+<div class="col-md-6">
+<label class="form-label text-muted small">Full Name / Company</label>
+<input class="form-control" placeholder="Enter name" type="text"/>
+</div>
+<div class="col-md-6">
+<label class="form-label text-muted small">Email Address</label>
+<input class="form-control" placeholder="name@company.com" type="email"/>
+</div>
+</div>
+<div class="mb-3">
+<label class="form-label text-muted small">Topic</label>
+<select class="form-select form-control text-white" style="background-color: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
+<option value="1">Order Issue</option>
+<option value="2">Auction Registration</option>
+<option value="3">Vehicle Listing</option>
+<option value="4">Payment &amp; Finance</option>
+<option value="5">Other</option>
+</select>
+</div>
+<div class="mb-4">
+<label class="form-label text-muted small">Message Details</label>
+<textarea class="form-control" placeholder="Please describe your issue..." rows="5"></textarea>
+</div>
+<button class="btn btn-cyan px-5 py-2 fw-bold" type="button">Submit Message</button>
+</form>
+</div>
+<!-- Quick Help -->
+<div class="col-lg-5">
+<h4 class="fw-bold mb-4">Quick Help Summaries</h4>
+<a class="text-decoration-none" href="#">
+<div class="quick-help-block">
+<h6 class="text-white fw-bold mb-1">Track Ongoing Delivery</h6>
+<p class="text-muted small mb-0">Learn how to view GPS logs for purchased vehicles in transit.</p>
+</div>
+</a>
+<a class="text-decoration-none" href="#">
+<div class="quick-help-block" style="border-left-color: var(--cyan-accent);">
+<h6 class="text-white fw-bold mb-1">Update GST Details</h6>
+<p class="text-muted small mb-0">Steps to modify company tax information on your profile.</p>
+</div>
+</a>
+<a class="text-decoration-none" href="#">
+<div class="quick-help-block" style="border-left-color: var(--warning);">
+<h6 class="text-white fw-bold mb-1">Escalate Account Block</h6>
+<p class="text-muted small mb-0">Requirements for unlocking bidding privileges due to misses.</p>
+</div>
+</a>
+<div class="mt-5 p-4 bg-dark-card border border-secondary border-opacity-25 rounded-4 text-center">
+<h5 class="text-white fw-bold mb-2">Corporate Office</h5>
+<p class="text-muted small mb-3">12th Floor, Orion Tech Park,<br/>Baner, Pune, 411045, India</p>
+<a class="text-cyan small fw-bold" href="#">View on Google Maps <i class="fas fa-external-link-alt ms-1"></i></a>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="footer-dark text-start mt-5">
+<div class="container">
+<div class="row g-4 mb-5">
+<div class="col-lg-4 col-md-6 pe-5">
+<h4 class="fw-bold mb-3">AutoHub <span class="text-pink">Marketplace</span></h4>
+<p class="text-muted small">Premium vehicle marketplace for buying, selling, and leasing with institutional-grade assurance.</p>
+</div>
+<!-- Nav elements omitted for brevity -->
+</div>
+<div class="row pt-4" style="border-top: 1px solid rgba(255,255,255,0.05);">
+<div class="col-md-6 mb-3 mb-md-0">
+<p class="text-muted small mb-0">© 2025 AutoHub Marketplace. All rights reserved.</p>
+</div>
+</div>
+</div>
+</footer>
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/store.js"></script>
+<script>
         document.addEventListener('DOMContentLoaded', () => {
             const user = store.getUser();
             const cart = store.getCart();

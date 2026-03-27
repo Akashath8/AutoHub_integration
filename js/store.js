@@ -22,9 +22,22 @@ class Store {
         if (!this.getCart()) {
             this.saveCart({ items: [], total: 0 });
         }
-        if (!this.getOrders()) {
-            this.saveOrders([]);
+
+    }
+
+
+
+    updateOrder(updatedOrder) {
+        const orders = this.getOrders();
+        const index = orders.findIndex(o => o.id === updatedOrder.id);
+        if (index !== -1) {
+            orders[index] = updatedOrder;
+            this.saveOrders(orders);
         }
+    }
+
+    getOrderById(id) {
+        return this.getOrders().find(o => o.id === id);
     }
 
     // --- User Management ---
@@ -100,7 +113,95 @@ class Store {
 
     // --- Order History ---
     getOrders() {
-        return JSON.parse(localStorage.getItem(this.STORAGE_KEYS.ORDERS)) || [];
+        const staticOrders = [
+            {
+                id: "ORD-1001",
+                orderId: "ORD-1001",
+                productName: "Tata Signa Truck",
+                dealerName: "Deshpande Commercials",
+                invoiceNo: "INV-2023-0104",
+                totalAmount: 750000,
+                paidAmount: 750000,
+                outstandingAmount: 0,
+                status: "PAID",
+                paymentStatus: "Paid",
+                delivery: "Delivered",
+                lifecycleStep: 9,
+                deliveryStage: "Delivery Confirmed",
+                documents: [
+                    { name: 'Invoice Generated', status: 'Completed', responsible: 'Dealer', date: '24 Oct 2023' },
+                    { name: 'RC Transfer Initiated', status: 'Completed', responsible: 'Dealer', date: '25 Oct 2023' },
+                    { name: 'RC Transfer Completed', status: 'Completed', responsible: 'RTO', date: '30 Oct 2023' },
+                    { name: 'Insurance Transfer', status: 'Completed', responsible: 'Dealer', date: '01 Nov 2023' },
+                    { name: 'Hypothecation Registration', status: 'Completed', responsible: 'Bank', date: '02 Nov 2023' },
+                    { name: 'Vehicle Inspection', status: 'Completed', responsible: 'Logistics', date: '03 Nov 2023' },
+                    { name: 'Delivery Challan', status: 'Completed', responsible: 'Dealer', date: '04 Nov 2023' }
+                ],
+                timeline: [
+                    { title: 'Order Created', date: '22 Oct 10:30 AM', status: 'completed' },
+                    { title: 'Payment Completed', date: '26 Oct 14:00 PM', status: 'completed', amount: 750000 },
+                    { title: 'Final Delivery Completed', date: '05 Nov 11:45 AM', status: 'completed' }
+                ]
+            },
+            {
+                id: "ORD-1002",
+                orderId: "ORD-1002",
+                productName: "Ashok Leyland Dost+",
+                dealerName: "Northwest Commercials",
+                invoiceNo: "INV-2023-0145",
+                totalAmount: 750000,
+                paidAmount: 250000,
+                outstandingAmount: 500000,
+                status: "PARTIAL",
+                paymentStatus: "Partial",
+                delivery: "Blocked",
+                lifecycleStep: 8,
+                deliveryStage: "Blocked",
+                documents: [
+                    { name: 'Invoice Generated', status: 'Completed', responsible: 'Dealer', date: '24 Oct 2023' },
+                    { name: 'RC Transfer Initiated', status: 'In Progress', responsible: 'Dealer' },
+                    { name: 'Insurance Transfer', status: 'In Progress', responsible: 'Dealer' }
+                ],
+                timeline: [
+                    { title: 'Order Created', date: '22 Oct 10:30 AM', status: 'completed' },
+                    { title: 'First Payment Recorded', date: '26 Oct 14:00 PM', status: 'completed', amount: 250000 }
+                ]
+            },
+            {
+                id: "ORD-1003",
+                orderId: "ORD-1003",
+                productName: "Eicher Pro 2049",
+                dealerName: "Global Heavy Eq.",
+                invoiceNo: "INV-2023-0162",
+                totalAmount: 1350000,
+                paidAmount: 0,
+                outstandingAmount: 1350000,
+                status: "LOAN APPROVED",
+                paymentStatus: "Pending",
+                delivery: "Not Started",
+                lifecycleStep: 6,
+                deliveryStage: "Blocked",
+                documents: [
+                    { name: 'Invoice Generated', status: 'Completed', responsible: 'Dealer', date: '22 Oct 2023' }
+                ],
+                timeline: [
+                    { title: 'Order Created', date: '22 Oct 10:30 AM', status: 'completed' },
+                    { title: 'Loan Approved', date: '23 Oct 09:00 AM', status: 'completed' }
+                ]
+            }
+        ];
+
+        const savedOrders = JSON.parse(localStorage.getItem(this.STORAGE_KEYS.ORDERS)) || [];
+        
+        // Merge without duplicates
+        const allOrders = [...staticOrders];
+        savedOrders.forEach(so => {
+            if (!allOrders.find(o => o.id === so.id)) {
+                allOrders.push(so);
+            }
+        });
+
+        return allOrders;
     }
 
     saveOrders(orders) {
@@ -197,3 +298,14 @@ class Store {
 
 // Export a singleton instance
 const store = new Store();
+
+// Role-based UI Adjustments
+document.addEventListener('DOMContentLoaded', () => {
+    const user = store.getUser();
+    if (user && user.role === 'Buyer') {
+        const sellButtons = document.querySelectorAll('a[href*="sell.html"], a[href*="#sellSection"], a[href*="sell-wizard.html"], button[onclick*="sellSection"]');
+        sellButtons.forEach(btn => {
+            btn.style.setProperty('display', 'none', 'important');
+        });
+    }
+});

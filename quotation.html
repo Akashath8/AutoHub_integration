@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/main.css">
     <style>
         .quote-sidebar {
-            background: #fff;
+            background-color: var(--bg-primary);
             border-radius: 12px;
             padding: 1.5rem;
             border: 1px solid var(--border-color);
@@ -18,12 +18,12 @@
     </style>
 </head>
 
-<body>
+<body class="bg-theme-secondary text-main">
 
     <!-- Navbar (Simplified) -->
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg bg-theme-primary border-bottom border-theme">
         <div class="container">
-            <a class="navbar-brand" href="index.html">AutoHub <span class="text-accent">Marketplace</span></a>
+            <a class="navbar-brand text-main" href="index.html">AutoHub <span class="text-accent">Marketplace</span></a>
         </div>
     </nav>
 
@@ -35,21 +35,21 @@
             <div class="row">
                 <!-- Left: Form -->
                 <div class="col-lg-8">
-                    <div class="card border-0 shadow-sm p-4 mb-4">
-                        <h4 class="mb-4">Create Quotation</h4>
+                    <div class="card bg-theme-primary border-theme shadow-sm p-4 mb-4">
+                        <h4 class="mb-4 text-main">Create Quotation</h4>
 
-                        <div id="quotationItemsContainer">
+                        <div id="quotationItemsContainer" class="bg-theme-primary">
                             <!-- Items populated by JS -->
                         </div>
 
                         <div class="mb-4">
-                            <label class="form-label fw-bold">Description / Notes</label>
-                            <textarea class="form-control" rows="4"
+                            <label class="form-label fw-bold text-main">Description / Notes</label>
+                            <textarea class="form-control bg-theme-secondary text-main border-theme" rows="4"
                                 placeholder="Enter specific requirements..."></textarea>
                         </div>
 
                         <!-- File Upload Visual -->
-                        <div class="p-3 bg-light rounded d-flex align-items-center mb-4">
+                        <div class="p-3 bg-theme-secondary rounded d-flex align-items-center mb-4">
                             <button class="btn btn-secondary btn-sm me-3">Upload file</button>
                             <small class="text-muted">Max limit: 2 file upload</small>
                         </div>
@@ -126,23 +126,23 @@
 
                 selectedVehicles.forEach(v => {
                     container.innerHTML += `
-                        <div class="row g-3 mb-4 border-bottom pb-4">
+                        <div class="row g-3 mb-4 border-bottom border-theme pb-4">
                             <div class="col-md-5">
                                 <label class="form-label text-muted small">Vehicle Selected</label>
-                                <div class="form-control bg-light text-truncate" title="${v.name}">${v.name}</div>
+                                <div class="form-control bg-theme-secondary text-main border-theme text-truncate" title="${v.name}">${v.name}</div>
                                 <div class="small text-muted mt-1"><i class="fas fa-store"></i> ${v.sellerName || 'Verified AutoHub Seller'}</div>
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label text-muted small">Quantity</label>
                                 <div class="input-group">
-                                    <button class="btn btn-outline-secondary" type="button" disabled>-</button>
-                                    <input type="text" class="form-control text-center bg-white" value="1" readonly>
-                                    <button class="btn btn-outline-secondary" type="button" disabled>+</button>
+                                    <button class="btn btn-outline-secondary border-theme" type="button" disabled>-</button>
+                                    <input type="text" class="form-control text-center bg-theme-primary text-main border-theme" value="1" readonly>
+                                    <button class="btn btn-outline-secondary border-theme" type="button" disabled>+</button>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label text-muted small">Quote Estimate</label>
-                                <div class="form-control bg-light text-danger fw-bold">₹ ${(v.price).toLocaleString('en-IN')}</div>
+                                <div class="form-control bg-theme-secondary text-danger fw-bold border-theme">₹ ${(v.price).toLocaleString('en-IN')}</div>
                             </div>
                         </div>
                     `;

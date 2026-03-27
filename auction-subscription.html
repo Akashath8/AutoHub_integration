@@ -1,114 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auction Subscription - AutoHub</title>
+    <title>Subscribe to Auctions | AutoHub Marketplace</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/auction.css">
     <style>
-        .pricing-card {
-            border: 2px solid transparent;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .pricing-card:hover, .pricing-card.selected {
-            border-color: var(--primary-color);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .pricing-card.popular {
-            border-color: var(--primary-color);
-            position: relative;
-        }
-
-        .popular-badge {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--primary-color);
-            color: white;
-            padding: 2px 15px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
+        .trust-shield {
+            font-size: 3rem;
+            background: -webkit-linear-gradient(#f97316, #ea580c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
     </style>
 </head>
+<body class="auction-theme">
 
-<body>
-    <!-- Navbar Simplified -->
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg border-bottom sticky-top bg-white shadow-sm">
         <div class="container">
-            <a class="navbar-brand" href="index.html">AutoHub <span class="text-accent">Marketplace</span></a>
-            <a href="index.html" class="btn btn-outline-secondary btn-sm"><i class="fas fa-arrow-left me-1"></i> Back to Home</a>
+            <a class="navbar-brand fw-bold fs-4 text-dark" href="index.html">AutoHub <span style="color: var(--auc-primary);">Auctions</span></a>
+            <a href="auctions.html" class="btn btn-sm btn-outline-secondary"><i class="fas fa-arrow-left me-2"></i>Back to Events</a>
         </div>
     </nav>
 
-    <div class="container py-5">
-        <div class="text-center mb-5">
-            <h2 class="fw-bold">Unlock AutoHub <span class="text-warning">Auctions</span></h2>
-            <p class="text-muted lead">Access exclusive B2B inventory at wholesale prices. Subscribe to participate in daily live auctions.</p>
+    <!-- Hero Paywall Section -->
+    <section class="sub-hero text-center position-relative overflow-hidden border-bottom pb-5">
+        <div class="container position-relative" style="z-index: 2;">
+            <i class="fas fa-shield-alt trust-shield mb-3 mt-3"></i>
+            <h1 class="display-4 fw-bold text-dark mb-3">Unlock Premium Auctions</h1>
+            <p class="lead text-secondary mx-auto" style="max-width: 600px;">To maintain a highly verified, serious bidding environment, a subscription is required. Gain uninterrupted access to thousands of wholesale commercial and passenger vehicles daily.</p>
         </div>
+    </section>
 
-        <div class="row justify-content-center g-4">
-            <!-- Basic Plan -->
-            <div class="col-md-4">
-                <div class="card pricing-card h-100 p-4 text-center" onclick="selectPlan('basic', 2999)">
-                    <div class="card-body">
-                        <h4 class="fw-bold text-muted mb-3">Monthly Basic</h4>
-                        <h2 class="display-5 fw-bold mb-4">₹2,999<span class="fs-6 text-muted fw-normal">/mo</span></h2>
-                        <ul class="list-unstyled text-start mb-4">
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Access to all live auctions</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Standard bidding limits</li>
-                            <li class="mb-2"><i class="fas fa-times text-danger me-2"></i> No Auto-Bid feature</li>
-                            <li class="mb-2"><i class="fas fa-times text-danger me-2"></i> Standard Support</li>
-                        </ul>
-                        <button class="btn btn-outline-primary w-100 fw-bold plan-btn">Select Plan</button>
+    <!-- Value Proposition -->
+    <section class="py-5 bg-white">
+        <div class="container">
+            <div class="row g-4 justify-content-center text-center mb-5">
+                <div class="col-md-4">
+                    <div class="p-4 rounded-4 bg-light h-100 border shadow-sm">
+                        <i class="fas fa-gavel fa-2x mb-3 text-secondary"></i>
+                        <h4 class="text-dark fw-bold">Live Real-time Bidding</h4>
+                        <p class="text-muted small">Bid directly against verified dealers across India without intermediaries or delays.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-4 rounded-4 bg-light h-100 border shadow-sm">
+                        <i class="fas fa-robot fa-2x mb-3 text-secondary"></i>
+                        <h4 class="text-dark fw-bold">Smart Auto-Bid Option</h4>
+                        <p class="text-muted small">Set your maximum price and let our proxy engine automatically bid on your behalf so you never miss a deal.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-4 rounded-4 bg-light h-100 border shadow-sm">
+                        <i class="fas fa-bolt fa-2x mb-3 text-secondary"></i>
+                        <h4 class="text-dark fw-bold">Instant Approvals</h4>
+                        <p class="text-muted small">All vehicles come with verified inspection reports. Win a bid, pay online, and take delivery within 48 hours.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Pro Plan -->
-            <div class="col-md-4">
-                <div class="card pricing-card popular h-100 p-4 text-center" onclick="selectPlan('pro', 24999)">
-                    <div class="popular-badge">MOST POPULAR</div>
-                    <div class="card-body">
-                        <h4 class="fw-bold text-primary mb-3">Annual Pro</h4>
-                        <h2 class="display-5 fw-bold mb-4">₹24,999<span class="fs-6 text-muted fw-normal">/yr</span></h2>
-                        <ul class="list-unstyled text-start mb-4">
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Access to all live auctions</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Unlimited bidding limits</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Auto-Bid feature enabled</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Priority 24/7 Support</li>
+            <!-- Pricing Plans -->
+            <div class="row g-4 justify-content-center pb-5">
+                <!-- Basic Plan -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="sub-card d-flex flex-column h-100 p-4 border bg-white shadow">
+                        <h4 class="text-dark fw-bold">Basic Tier</h4>
+                        <p class="small text-muted mb-4">Perfect for individual buyers and small lots.</p>
+                        <div class="sub-price mb-4 text-dark">₹2,999<span class="fs-5 text-muted fw-normal">/mo</span></div>
+                        
+                        <ul class="list-unstyled mb-5 flex-grow-1 text-dark">
+                            <li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i> Join any Live or Timed Auction</li>
+                            <li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i> Verified inspection downloads</li>
+                            <li class="mb-3 opacity-50"><i class="fas fa-times-circle text-secondary me-2"></i> No Auto-Bid (Proxy Bidding)</li>
+                            <li class="mb-3 opacity-50"><i class="fas fa-times-circle text-secondary me-2"></i> Max limits: 3 active bids</li>
                         </ul>
-                        <button class="btn btn-primary w-100 fw-bold plan-btn text-white">Select Plan</button>
+                        <button class="btn btn-outline-dark w-100 py-3 fw-bold" onclick="selectPlan('basic', 2999)">Select Basic</button>
                     </div>
+                </div>
+
+                <!-- Pro Plan -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="sub-card popular d-flex flex-column h-100 p-4 bg-white border shadow-lg">
+                        <div class="position-absolute top-0 start-50 translate-middle badge px-3 py-2 text-uppercase fw-bold shadow text-white" style="background-color: var(--auc-primary) !important;">Most Popular</div>
+                        <h4 class="text-dark fw-bold mt-2">Professional Tier</h4>
+                        <p class="small text-muted mb-4">Built for active dealerships scanning for absolute value.</p>
+                        <div class="sub-price mb-4 text-dark">₹24,999<span class="fs-5 text-muted fw-normal">/yr</span></div>
+                        
+                        <ul class="list-unstyled mb-5 flex-grow-1 text-dark">
+                            <li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i> Access to all Live Auctions globally</li>
+                            <li class="mb-3"><i class="fas fa-check-circle text-success me-2"></i> Verified inspection downloads</li>
+                            <li class="mb-3 fw-semibold"><i class="fas fa-check-circle text-success me-2"></i> <span class="text-orange" style="color:#d97706;">Auto-Bid (Proxy) enabled</span></li>
+                            <li class="mb-3 fw-semibold"><i class="fas fa-check-circle text-success me-2"></i> <span class="text-orange" style="color:#d97706;">Unlimited active bids</span></li>
+                        </ul>
+                        <button class="btn btn-auction w-100 py-3 fw-bold fs-5 shadow" onclick="selectPlan('pro', 24999)">Subscribe & Start Bidding</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center pb-5">
+                <p class="text-muted"><i class="fas fa-info-circle me-1"></i> Transparent Pricing. No hidden platform charges or bidding fees. Win the bid, pay the seller.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Modal -->
+    <div class="modal fade" id="paymentModal" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-white border-0 shadow-lg">
+                <div class="modal-header border-bottom">
+                    <h5 class="modal-title fw-bold text-dark"><i class="fas fa-lock text-success me-2"></i>Secure Checkout</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4 text-center">
+                    <p class="text-muted text-uppercase small letter-spacing-1 mb-1" id="selectedPlanName">Professional Tier</p>
+                    <h2 class="display-6 fw-bold text-dark mb-4" id="selectedPlanPrice">₹24,999</h2>
+                    
+                    <div class="p-3 bg-light border rounded text-start mb-4">
+                        <div class="d-flex justify-content-between mb-2 text-dark"><span>Subscription Base:</span> <span id="basePrice">₹24,999</span></div>
+                        <div class="d-flex justify-content-between mb-2 text-dark"><span>GST (18%):</span> <span class="text-muted">Inclusive</span></div>
+                        <hr class="my-2">
+                        <div class="d-flex justify-content-between fw-bold text-dark fs-5"><span>Total:</span> <span id="finalPrice" style="color: var(--auc-primary) !important;">₹24,999</span></div>
+                    </div>
+
+                    <button id="paySubBtn" class="btn btn-success w-100 fw-bold py-3 fs-5 shadow"><i class="fas fa-credit-card me-2"></i>Pay Securely & Activate</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Payment Modal -->
-    <div class="modal fade" id="paymentModal" tabindex="-1">
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content border-0 shadow-lg">
-                <div class="modal-header border-bottom-0 pb-0">
-                    <h5 class="modal-title fw-bold">Confirm Subscription</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body p-4 text-center">
-                    <i class="fas fa-gem text-warning fa-3x mb-3"></i>
-                    <h4 id="selectedPlanName" class="mb-2">Plan Name</h4>
-                    <p class="text-muted mb-4">Total Amount: <strong class="fs-5 text-dark" id="selectedPlanPrice">₹0</strong></p>
-                    
-                    <button id="paySubBtn" class="btn btn-success w-100 fw-bold py-2 mb-2">Pay & Activate Subscription</button>
-                    <p class="small text-muted mt-2"><i class="fas fa-lock me-1"></i> Secure payment processing</p>
+            <div class="modal-content bg-white border-success shadow-lg text-center" style="border-width: 2px;">
+                <div class="modal-body p-5">
+                    <i class="fas fa-check-circle text-success fa-4x mb-4"></i>
+                    <h3 class="text-dark fw-bold mb-3">Subscription Active!</h3>
+                    <p class="text-secondary mb-4">You are now a verified bidder. You can place live real-time bids immediately.</p>
+                    <button class="btn btn-auction w-100 py-2 fw-bold" onclick="window.location.href='live-auction.html'">Enter Live Auction Room <i class="fas fa-arrow-right ms-2"></i></button>
                 </div>
             </div>
         </div>
@@ -118,37 +149,50 @@
     <script src="js/store.js"></script>
     <script>
         let selectedPlan = null;
-        const paymentModal = new bootstrap.Modal(document.getElementById('paymentModal'));
+        let payModalInstance;
+        let successModalInstance;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            payModalInstance = new bootstrap.Modal(document.getElementById('paymentModal'));
+            successModalInstance = new bootstrap.Modal(document.getElementById('successModal'), { keyboard: false, backdrop: 'static' });
+        });
 
         function selectPlan(plan, price) {
             const user = store.getUser();
             if (!user || !user.isLoggedIn) {
-                alert("Please login to subscribe to auctions.");
-                window.location.href = 'login.html';
+                alert("Please login via the main site to subscribe.");
+                window.location.href = 'index.html';
                 return;
             }
 
             selectedPlan = { plan, price };
-            document.getElementById('selectedPlanName').textContent = plan === 'basic' ? 'Monthly Basic Plan' : 'Annual Pro Plan';
-            document.getElementById('selectedPlanPrice').textContent = '₹' + price.toLocaleString('en-IN');
+            document.getElementById('selectedPlanName').textContent = plan === 'basic' ? 'Basic Tier Membership' : 'Professional Tier Membership';
+            const formattedPrice = '₹' + price.toLocaleString('en-IN');
             
-            paymentModal.show();
+            document.getElementById('selectedPlanPrice').textContent = formattedPrice;
+            document.getElementById('basePrice').textContent = formattedPrice;
+            document.getElementById('finalPrice').textContent = formattedPrice;
+            
+            payModalInstance.show();
         }
 
         document.getElementById('paySubBtn').addEventListener('click', () => {
             const btn = document.getElementById('paySubBtn');
-            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Processing...';
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Validating Transaction...';
+            btn.classList.replace('btn-success', 'btn-secondary');
             btn.disabled = true;
 
             setTimeout(() => {
-                const user = store.getUser();
-                user.isAuctionSubscribed = true;
-                user.auctionPlan = selectedPlan.plan;
-                store.saveUser(user);
+                let user = store.getUser();
+                if(user) {
+                    user.isAuctionSubscribed = true;
+                    user.auctionPlan = selectedPlan.plan;
+                    store.saveUser(user);
+                }
 
-                alert("Subscription activated successfully! You now have access to Live Auctions.");
-                window.location.href = 'index.html'; // Or redirect to an actual auction portal if built later
-            }, 1500);
+                payModalInstance.hide();
+                successModalInstance.show();
+            }, 2000);
         });
     </script>
 </body>

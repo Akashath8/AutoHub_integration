@@ -3,132 +3,198 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-    /* Primary Palette - Deep Navy based */
-    --primary-color: #1a1a2e;
-    --secondary-color: #16213e;
-    --accent-color: #ff477e;
-    /* Vibrant Red/Pink for specific callouts */
+    /* Brand Colors */
+    --primary-color: #0f172a;    /* Deep Slate/Navy */
+    --secondary-color: #1e293b;  /* Slate-800 */
+    --pink-accent: #ec4899;      /* Pink-500 (AutoHub Buy) */
+    --accent-color: #ec4899;     /* Alias for pink-accent */
+    --cyan-accent: #06b6d4;      /* Cyan-500 (AutoHub Sell) */
+    --orange-accent: #f59e0b;    /* Orange-500 (AutoHub Auction) */
 
-    /* New Landing Page Theme Variables */
-    --cyan-accent: #00e5ff;
-    --pink-accent: #ff477e;
-    --orange-accent: #f59e0b;
-    --dark-bg: #0f172a;
-    --dark-card: #1e293b;
+    /* Light Theme Palette */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8fafc;
+    --bg-light: #f1f5f9;
+    --text-main: #1a1a1a;       /* Dark variant for headings */
+    --text-primary: #1a1a1a;    /* Centralized body text */
+    --text-secondary: #475569;  /* Slate-600 */
+    --text-muted: #6b7280;      /* Slate-500 */
+    --text-light: #ffffff;
+    --border-color: #e5e7eb;    /* Slate-200 */
 
-    /* Functional Colors */
-    --text-primary: #333333;
-    --text-secondary: #666666;
-    --bg-light: #f8f9fa;
-    --bg-white: #ffffff;
-    --border-color: #e0e0e0;
-
-    /* Branding */
-    --brand-blue: #0d6efd;
-    /* For standard links/buttons */
-
-    /* Status */
-    --success-color: #2ecc71;
-    --warning-color: #f1c40f;
-    --danger-color: #e74c3c;
+    /* Functional Elements */
+    --card-bg: #ffffff;
+    --dropdown-bg: #ffffff;
+    --input-bg: #f8fafc;
+    --nav-bg: #ffffff;
 
     /* Shadows */
-    --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    --hover-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
 
 body {
     font-family: 'Inter', sans-serif;
     color: var(--text-primary);
-    background-color: var(--bg-light);
+    background-color: var(--bg-secondary);
     line-height: 1.6;
 }
 
-/* Typography Overrides */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+/* Global Headings */
+h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
-    color: var(--primary-color);
+    color: var(--text-main);
     letter-spacing: -0.02em;
 }
 
-/* Buttons */
-.btn-primary {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
-    padding: 0.6rem 1.5rem;
-    font-weight: 500;
+/* Global Dropdowns Fix */
+.dropdown-menu {
+    background-color: var(--dropdown-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: var(--shadow-lg) !important;
+    padding: 0.5rem !important;
+    border-radius: 12px !important;
 }
 
-.btn-primary:hover {
-    background-color: var(--secondary-color);
-    border-color: var(--secondary-color);
+.dropdown-item {
+    color: var(--text-primary) !important;
+    padding: 0.6rem 1rem !important;
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+    transition: all 0.2s ease !important;
 }
 
-.btn-danger {
-    background-color: var(--accent-color);
-    border-color: var(--accent-color);
+.dropdown-item:hover {
+    background-color: var(--bg-light) !important;
+    color: var(--text-main) !important;
 }
 
-.btn-danger:hover {
-    background-color: #d6304b;
-    border-color: #d6304b;
+.dropdown-item i {
+    color: var(--text-secondary) !important;
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
 }
 
-/* Cards */
-.card {
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    box-shadow: var(--card-shadow);
-    transition: transform 0.2s, box-shadow 0.2s;
-    border-radius: 0.75rem;
+.dropdown-divider {
+    border-top: 1px solid var(--border-color) !important;
+    opacity: 1 !important;
 }
 
-.card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--hover-shadow);
-}
-
-.card-img-top {
-    border-top-left-radius: 0.75rem;
-    border-top-right-radius: 0.75rem;
-    object-fit: cover;
-    height: 200px;
-}
-
-/* Navbar */
+/* Global Navbar Styling */
 .navbar {
-    background-color: var(--primary-color) !important;
-    padding: 1rem 0;
+    background-color: var(--nav-bg) !important;
+    padding: 0.75rem 0 !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    box-shadow: var(--shadow-sm);
 }
 
 .navbar-brand {
     font-weight: 800;
     font-size: 1.5rem;
-    color: #fff !important;
+    color: var(--text-main) !important;
 }
 
-.nav-link {
-    color: rgba(255, 255, 255, 0.85) !important;
-    font-weight: 500;
-    margin-right: 1rem;
+.navbar .nav-link {
+    color: var(--text-secondary) !important;
+    font-weight: 500 !important;
+    padding: 0.5rem 1rem !important;
+    transition: color 0.2s ease !important;
 }
 
-.nav-link:hover,
-.nav-link.active {
-    color: #fff !important;
+.navbar .nav-link:hover,
+.navbar .nav-link.active {
+    color: var(--text-main) !important;
+}
+
+/* Fix Location Button inside Nav */
+#navLocationBtn {
+    background: var(--bg-secondary) !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-primary) !important;
+    border-radius: 100px !important;
+    padding: 0.4rem 1rem !important;
+}
+
+#navLocationBtn:hover {
+    background: var(--bg-light) !important;
+}
+
+/* Button Overrides */
+.btn-primary {
+    background-color: var(--accent-color) !important;
+    border-color: var(--accent-color) !important;
+    color: var(--text-light) !important;
+    font-weight: 600 !important;
+}
+
+.btn-primary:hover {
+    background-color: #d63384 !important;
+    border-color: #d63384 !important;
+}
+
+.btn-light, .btn-secondary {
+    background-color: var(--bg-light) !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-primary) !important;
+}
+
+.btn-light:hover, .btn-secondary:hover {
+    background-color: var(--border-color) !important;
+    color: var(--text-main) !important;
+}
+
+/* Form Controls */
+.form-control {
+    background-color: var(--bg-primary) !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-primary) !important;
+    padding: 0.6rem 1rem !important;
+}
+
+.form-control::placeholder {
+    color: var(--text-muted) !important;
+    opacity: 0.7 !important;
+}
+
+.form-control:focus {
+    border-color: var(--accent-color) !important;
+    box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1) !important;
+}
+
+/* Cards */
+.card {
+    background-color: var(--card-bg) !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: var(--shadow-sm) !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
 }
 
 /* Utilities */
-.text-accent {
-    color: var(--accent-color);
+.text-main { color: var(--text-main) !important; }
+.text-primary { color: var(--text-primary) !important; }
+.text-secondary { color: var(--text-secondary) !important; }
+.text-accent { color: var(--accent-color) !important; }
+
+.bg-theme-main { background-color: var(--bg-primary) !important; }
+.bg-theme-sub { background-color: var(--bg-secondary) !important; }
+.bg-theme-accent { background-color: var(--accent-color) !important; }
+
+.border-theme { border: 1px solid var(--border-color) !important; }
+
+/* Status Badges */
+.badge-success-theme {
+    background-color: var(--success-color, #10b981) !important;
+    color: #fff !important;
+    border-radius: 20px !important;
 }
 
-.bg-light-gray {
-    background-color: #f3f4f6;
+.badge-warning-theme {
+    background-color: var(--orange-accent);
+    color: #fff !important;
+    border-radius: 20px !important;
 }
 
 /* Loading Spinner Overlay */
@@ -138,13 +204,12 @@ h6 {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.9);
     z-index: 9999;
     display: flex;
     justify-content: center;
     align-items: center;
     display: none;
-    /* Hidden by default */
 }
 
 /* =====================================================
@@ -153,55 +218,44 @@ h6 {
 
 /* --- Explore By Secondary Navbar --- */
 .explore-navbar {
-    background-color: #4b167a;
-    /* Deep purple inspired by Spinny */
-    color: #ffffff;
+    background-color: var(--bg-primary);
+    color: var(--text-main);
     padding: 0.5rem 0;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
 }
 
 .explore-navbar .explore-label {
     font-size: 0.85rem;
     font-weight: 500;
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--text-muted);
 }
 
 .explore-navbar .btn-link {
-    color: #ffffff;
+    color: var(--text-primary);
     font-weight: 500;
     font-size: 0.9rem;
     padding: 0;
     box-shadow: none;
+    text-decoration: none;
 }
 
 .explore-navbar .btn-link:hover,
 .explore-navbar .btn-link:focus {
-    color: rgba(255, 255, 255, 0.85);
-}
-
-.explore-navbar .dropdown-menu {
-    border-radius: 8px;
-    border: none;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-    margin-top: 0.5rem;
-}
-
-.explore-navbar .dropdown-item {
-    font-size: 0.9rem;
-    padding: 0.4rem 1rem;
+    color: var(--accent-color);
 }
 
 .explore-navbar .dropdown-item:hover {
-    background-color: #f3f4f6;
-    color: #4b167a;
+    background-color: var(--bg-light);
+    color: var(--text-main);
     font-weight: 500;
 }
 
 /* --- Navbar Location Dropdown --- */
 #navLocationBtn {
-    background: rgba(255, 255, 255, 0.12);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    color: #fff !important;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary) !important;
     border-radius: 20px;
     padding: 0.35rem 0.85rem;
     font-size: 0.88rem;
@@ -211,7 +265,7 @@ h6 {
 }
 
 #navLocationBtn:hover {
-    background: rgba(255, 255, 255, 0.22);
+    background: var(--bg-light);
 }
 
 .location-dropdown-menu {
@@ -356,12 +410,6 @@ h6 {
 }
 
 /* --- Landing Page Overhaul Styles --- */
-.bg-dark-navy {
-    background-color: var(--dark-bg);
-}
-.bg-dark-card {
-    background-color: var(--dark-card);
-}
 .text-cyan {
     color: var(--cyan-accent) !important;
 }
@@ -374,33 +422,33 @@ h6 {
 .btn-cyan {
     background-color: var(--cyan-accent);
     border-color: var(--cyan-accent);
-    color: #000;
+    color: #ffffff !important;
     font-weight: 600;
 }
 .btn-cyan:hover {
-    background-color: #00b8d4;
-    border-color: #00b8d4;
-    color: #000;
+    background-color: #0891b2;
+    border-color: #0891b2;
+    color: #ffffff !important;
 }
 .btn-pink {
     background-color: var(--pink-accent);
     border-color: var(--pink-accent);
-    color: #fff;
+    color: #ffffff !important;
     font-weight: 600;
 }
 .btn-pink:hover {
-    background-color: #e03e6e;
-    border-color: #e03e6e;
-    color: #fff;
+    background-color: #be185d;
+    border-color: #be185d;
+    color: #ffffff !important;
 }
 .btn-orange {
     background-color: var(--orange-accent);
     border-color: var(--orange-accent);
-    color: #fff;
+    color: #ffffff !important;
     font-weight: 600;
 }
 .btn-orange:hover {
     background-color: #d97706;
     border-color: #d97706;
-    color: #fff;
+    color: #ffffff !important;
 }

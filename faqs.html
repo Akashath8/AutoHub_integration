@@ -1,34 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
 
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FAQs - AutoHub Marketplace</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Icon Font -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/main.css">
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FAQs - AutoHub Marketplace</title>
+<!-- Bootstrap 5 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<!-- Icon Font -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="css/main.css" rel="stylesheet"/>
+<style>
         body {
-            background-color: var(--dark-bg);
-            color: #f8f9fa;
+            background-color: var(--bg-secondary);
+            color: var(--text-main);
         }
 
-        /* Override Bootstrap defaults for dark theme readability */
+        /* Override Bootstrap defaults for light theme readability */
         h1, h2, h3, h4, h5, h6 {
-            color: #ffffff;
+            color: var(--text-main);
         }
 
         .text-muted {
-            color: #9ca3af !important;
+            color: var(--text-muted) !important;
         }
 
         /* Navbar Customization */
         .navbar {
-            background-color: var(--dark-bg) !important;
+            background-color: var(--bg-dark) !important;
             padding: 1rem 0;
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
@@ -78,9 +78,9 @@
 
         /* FAQ specific styles */
         .faq-search {
-            background-color: var(--dark-card) !important;
-            border: 1px solid rgba(255,255,255,0.1) !important;
-            color: #fff !important;
+            background-color: var(--bg-primary) !important;
+            border: 1px solid var(--border-color) !important;
+            color: var(--text-main) !important;
             padding: 1rem 1.5rem;
             font-size: 1.1rem;
             border-radius: 30px;
@@ -90,13 +90,13 @@
             border-color: var(--cyan-accent) !important;
         }
         .faq-search::placeholder {
-            color: rgba(255,255,255,0.4);
+            color: var(--text-muted);
         }
         
         .faq-category-btn {
             background-color: transparent;
-            color: #9ca3af;
-            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
             border-radius: 30px;
             padding: 0.5rem 1.5rem;
             font-weight: 600;
@@ -104,8 +104,8 @@
             margin: 0.25rem;
         }
         .faq-category-btn:hover {
-            border-color: rgba(255,255,255,0.3);
-            color: #fff;
+            border-color: var(--text-muted);
+            color: var(--text-main);
         }
         .faq-category-btn.active {
             background-color: var(--cyan-accent);
@@ -115,19 +115,19 @@
 
         /* Accordion Customization */
         .accordion-item {
-            background-color: var(--dark-card) !important;
-            border: 1px solid rgba(255,255,255,0.08) !important;
+            background-color: var(--bg-primary) !important;
+            border: 1px solid var(--border-color) !important;
             margin-bottom: 1rem;
             border-radius: 12px !important;
             overflow: hidden;
             transition: border-color 0.2s;
         }
         .accordion-item:hover {
-            border-color: rgba(255,255,255,0.15) !important;
+            border-color: var(--text-muted) !important;
         }
         .accordion-button {
-            background-color: var(--dark-card) !important;
-            color: #fff !important;
+            background-color: var(--bg-primary) !important;
+            color: var(--text-main) !important;
             font-weight: 600;
             font-size: 1.1rem;
             padding: 1.25rem 1.5rem;
@@ -136,292 +136,403 @@
         }
         .accordion-button:not(.collapsed) {
             color: var(--cyan-accent) !important;
-            background-color: rgba(255,255,255,0.02) !important;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            background-color: var(--bg-secondary) !important;
+            border-bottom: 1px solid var(--border-color);
             border-bottom-left-radius: 0 !important;
             border-bottom-right-radius: 0 !important;
         }
         .accordion-button::after {
-            filter: invert(1);
+            filter: none;
         }
         .accordion-button:not(.collapsed)::after {
             filter: invert(70%) sepia(35%) saturate(5414%) hue-rotate(152deg) brightness(101%) contrast(98%);
         }
         .accordion-body {
-            color: #9ca3af;
-            background-color: rgba(255,255,255,0.02);
+            color: var(--text-muted);
+            background-color: var(--bg-secondary);
             padding: 1.5rem;
             line-height: 1.6;
         }
     </style>
+
+<style id="super-mega-menu-css">
+        /* Mega Menu Styles */
+        .dropdown-mega { position: static; }
+        .mega-menu {
+            position: absolute; top: 100%; left: 0; right: 0; margin: 0 auto;
+            width: 96%; max-width: 1100px; background: #ffffff;
+            border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            padding: 30px; display: none; z-index: 1050; border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+        .dropdown-mega:hover .mega-menu { display: block; animation: fadeInMega 0.2s ease-in-out; }
+        .mega-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .mega-item h6 { font-weight: 700; margin-bottom: 15px; color: #111827; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
+        .mega-item p { font-size: 13px; color: #6b7280; line-height: 1.4; transition: color 0.2s; }
+        .mega-item a { transition: all 0.2s ease; border-radius: 6px; padding: 8px; margin: -8px; }
+        .mega-item a:hover { background-color: #f8fafc; }
+        .mega-item a:hover .fs-6 { color: var(--pink-accent, #ec4899); }
+        .mega-item a:hover p { color: #4b5563; }
+        @keyframes fadeInMega { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* Responsive Mobile Behavior */
+        @media (max-width: 991px) {
+            .mega-menu { position: static; width: 100%; box-shadow: none; padding: 15px; display: none; margin-top: 10px; }
+            .dropdown-mega.show .mega-menu { display: block; }
+            .mega-grid { grid-template-columns: 1fr; gap: 20px; }
+        }
+    </style>
 </head>
-
 <body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg sticky-top">
+<div class="container">
+<div class="d-flex align-items-center gap-2">
+<a class="navbar-brand" href="index.html">AutoHub <span class="text-pink">Marketplace</span></a>
+<div class="dropdown d-none d-lg-block ms-3">
+<button aria-expanded="false" class="btn nav-link px-3 py-1 rounded" data-bs-toggle="dropdown" id="navLocationBtn" style="background-color: rgba(255,255,255,0.08);">
+<i class="fas fa-map-marker-alt text-pink me-1"></i>
+<span class="small text-muted d-block" style="font-size: 0.65rem; line-height: 1;">Location</span>
+<span style="font-size: 0.85rem; font-weight: 600; color: #fff;">Pune <i class="fas fa-chevron-down ms-1" style="font-size:0.6rem;"></i></span>
+</button>
+<!-- Location menu will open here -->
+</div>
+</div>
+<button class="navbar-toggler border-0" data-bs-target="#navbarContent" data-bs-toggle="collapse" type="button">
+<i class="fas fa-bars text-white"></i>
+</button>
+<div class="collapse navbar-collapse" id="navbarContent">
+<!-- Center Search -->
+<div class="ms-4 me-auto" style="width: 40px; border-radius: 6px; overflow:hidden;">
+<button class="btn search-input w-100 p-2"><i class="fas fa-search"></i></button>
+</div>
+<!-- Right nav items -->
+<ul class="navbar-nav ms-auto align-items-center gap-3">
+<!-- 1. BUY MENU -->
+<li class="nav-item dropdown-mega">
+<a class="nav-link text-main fw-bold" href="listing.html">Buy <i class="fas fa-chevron-down ms-1" style="font-size: 0.6em;"></i></a>
+<div class="mega-menu">
+<div class="mega-grid">
+<div class="mega-item">
+<h6>Explore Vehicles</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="listing.html"><div class="fw-bold fs-6">Search Vehicles</div><p class="mb-0">Browse all available vehicles</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="listing.html"><div class="fw-bold fs-6">Explore by Category</div><p class="mb-0">Cars, Commercial, EVs</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="listing.html"><div class="fw-bold fs-6">Featured Listings</div><p class="mb-0">Verified &amp; premium vehicles</p></a>
+</div>
+<div class="mega-item">
+<h6>Buying Tools</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">Compare Vehicles</div><p class="mb-0">Side-by-side comparison</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">EMI Calculator</div><p class="mb-0">Estimate monthly payments</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">Loan Assistance</div><p class="mb-0">Financing options available</p></a>
+</div>
+<div class="mega-item">
+<h6>Buyer Support</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">Book Test Drive</div><p class="mb-0">Schedule a visit</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">Buyer Guide</div><p class="mb-0">How Buying Works</p></a>
+<a class="d-block text-decoration-none text-dark mb-4" href="#"><div class="fw-bold fs-6">Verified Listings &amp; Trust</div><p class="mb-0">Quality assured</p></a>
+<a class="btn btn-pink w-100 fw-bold rounded text-white py-2" href="listing.html" style="margin:0; text-align:center;">Start Buying</a>
+</div>
+</div>
+</div>
+</li>
+<!-- 2. SELL MENU -->
+<li class="nav-item dropdown-mega">
+<a class="nav-link text-main fw-bold" href="sell.html">Sell <i class="fas fa-chevron-down ms-1" style="font-size: 0.6em;"></i></a>
+<div class="mega-menu">
+<div class="mega-grid">
+<div class="mega-item">
+<h6>Getting Started</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell.html"><div class="fw-bold fs-6">How Selling Works</div><p class="mb-0">List → Get Quotes → Close Deal</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell.html"><div class="fw-bold fs-6">Who Can Sell</div><p class="mb-0">Dealers, fleet owners, businesses</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell.html"><div class="fw-bold fs-6">Why Sell on AutoHub</div><p class="mb-0">Reach, pricing, trust</p></a>
+</div>
+<div class="mega-item">
+<h6>Seller Benefits</h6>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Access Verified Buyers</div></div>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Auction vs Direct Sale</div></div>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Smart Pricing Insights</div></div>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Secure Payments &amp; Escrow</div></div>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Documentation Support</div></div>
+</div>
+<div class="mega-item">
+<h6>Conversion</h6>
+<div class="bg-light p-3 rounded mb-4 text-start" style="margin:0; border: 1px solid rgba(0,0,0,0.1);">
+<div class="small fw-bold text-success mb-2"><i class="fas fa-shield-alt"></i> Trusted by dealers across India</div>
+<div class="small fw-bold text-dark"><i class="fas fa-car border p-1 rounded me-1 bg-white"></i> 10,000+ vehicles sold</div>
+</div>
+<a class="btn btn-dark w-100 fw-bold rounded mb-2 py-2 text-white" href="register.html" style="margin:0; text-align:center;">Become a Seller</a>
+<a class="btn btn-outline-dark w-100 fw-bold rounded py-2" href="#" style="margin:0; text-align:center;">Talk to Account Manager</a>
+</div>
+</div>
+</div>
+</li>
+<!-- 3. AUCTIONS MENU -->
+<li class="nav-item dropdown-mega">
+<a class="nav-link text-main fw-bold" href="auction-subscription.html">Auctions <i class="fas fa-chevron-down ms-1" style="font-size: 0.6em;"></i></a>
+<div class="mega-menu">
+<div class="mega-grid">
+<div class="mega-item">
+<h6>Discover Auctions</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Live Auctions</div><p class="mb-0">Bid in real-time</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Upcoming Events</div><p class="mb-0">Plan your purchases</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Past Auction Results</div><p class="mb-0">Market price discovery</p></a>
+</div>
+<div class="mega-item">
+<h6>Participate</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">How Auctions Work</div><p class="mb-0">Step-by-step guidance</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Join Auction Events</div><p class="mb-0">Register as a bidder</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Rules &amp; Eligibility</div><p class="mb-0">What you need to know</p></a>
+</div>
+<div class="mega-item">
+<h6>Seller Education</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell.html"><div class="fw-bold fs-6">List Vehicle in Auction</div><p class="mb-0">Reach massive audiences</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell.html"><div class="fw-bold fs-6">Auction Benefits</div><p class="mb-0">Faster liquidation</p></a>
+<a class="d-block text-decoration-none text-dark mb-4" href="sell.html"><div class="fw-bold fs-6">Pricing Transparency</div><p class="mb-0">Market-driven value</p></a>
+<a class="btn w-100 fw-bold rounded text-white py-2" href="auction-subscription.html" style="background-color: var(--orange-accent); margin:0; text-align:center;">View Live Auctions</a>
+</div>
+</div>
+</div>
+</li>
+<!-- 4. RESOURCES MENU -->
+<li class="nav-item dropdown-mega">
+<a class="nav-link text-main fw-bold" href="blogs.html">Resources <i class="fas fa-chevron-down ms-1" style="font-size: 0.6em;"></i></a>
+<div class="mega-menu">
+<div class="mega-grid">
+<div class="mega-item">
+<h6>Learn</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Buyer Guide</div><p class="mb-0">Procurement made easy</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Seller Guide</div><p class="mb-0">Maximize your margins</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Auction Guide</div><p class="mb-0">Bidding strategies</p></a>
+</div>
+<div class="mega-item">
+<h6>Support</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="support.html"><div class="fw-bold fs-6">Help Center</div><p class="mb-0">Get assistance</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="faqs.html"><div class="fw-bold fs-6">FAQs</div><p class="mb-0">Common questions</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="support.html"><div class="fw-bold fs-6">Contact Support</div><p class="mb-0">We are here to help</p></a>
+</div>
+<div class="mega-item">
+<h6>Insights</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Blogs &amp; Industry Insights</div><p class="mb-0">Latest automotive news</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Market Trends</div><p class="mb-0">Demand forecasting</p></a>
+<a class="d-block text-decoration-none text-dark mb-4" href="blogs.html"><div class="fw-bold fs-6">Price Reports</div><p class="mb-0">Valuation matrix</p></a>
+<a class="btn btn-primary w-100 fw-bold rounded text-white py-2" href="blogs.html" style="margin:0; text-align:center;">Explore Resources</a>
+</div>
+</div>
+</div>
+</li>
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg sticky-top">
-        <div class="container">
-            <div class="d-flex align-items-center gap-2">
-                <a class="navbar-brand" href="index.html">AutoHub <span class="text-pink">Marketplace</span></a>
-                <div class="dropdown d-none d-lg-block ms-3">
-                    <button class="btn nav-link px-3 py-1 rounded" id="navLocationBtn" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: rgba(255,255,255,0.08);">
-                        <i class="fas fa-map-marker-alt text-pink me-1"></i> 
-                        <span class="small text-muted d-block" style="font-size: 0.65rem; line-height: 1;">Location</span>
-                        <span style="font-size: 0.85rem; font-weight: 600; color: #fff;">Pune <i class="fas fa-chevron-down ms-1" style="font-size:0.6rem;"></i></span>
-                    </button>
-                    <!-- Location menu will open here -->
-                </div>
-            </div>
 
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
-                <i class="fas fa-bars text-white"></i>
-            </button>
 
-            <div class="collapse navbar-collapse" id="navbarContent">
-                <!-- Center Search -->
-                <div class="ms-4 me-auto" style="width: 40px; border-radius: 6px; overflow:hidden;">
-                    <button class="btn search-input w-100 p-2"><i class="fas fa-search"></i></button>
-                </div>
 
-                <!-- Right nav items -->
-                <ul class="navbar-nav ms-auto align-items-center gap-3">
-                    <li class="nav-item"><a class="nav-link text-white fw-bold" href="index.html#buySection">Buy</a></li>
-                    <li class="nav-item"><a class="nav-link text-white fw-bold" href="index.html#sellSection">Sell</a></li>
-                    <li class="nav-item"><a class="nav-link text-white fw-bold" href="index.html#auctionSection">Auctions</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-cyan fw-bold" href="#" id="resourcesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Resources
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end shadow bg-dark-card border-secondary border-opacity-25" aria-labelledby="resourcesDropdown" style="border-radius: 8px;">
-                            <li><a class="dropdown-item py-2 text-white nav-dropdown-hover" href="blogs.html">Blogs</a></li>
-                            <li><a class="dropdown-item py-2 text-white nav-dropdown-hover" href="faqs.html">FAQs</a></li>
-                            <li><a class="dropdown-item py-2 text-white nav-dropdown-hover" href="support.html">Support</a></li>
-                            <li><a class="dropdown-item py-2 text-white nav-dropdown-hover" href="articles.html">Articles</a></li>
-                            <li><a class="dropdown-item py-2 text-white nav-dropdown-hover" href="white-papers.html">White Papers</a></li>
-                        </ul>
-                    </li>
-                    
-                    <li class="nav-item ms-3 position-relative">
-                        <a class="nav-link" href="#" title="Notifications">
-                            <i class="fas fa-bell text-warning"></i>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-pink">3</span>
-                        </a>
-                    </li>
-                    <li class="nav-item position-relative">
-                        <a class="nav-link" href="#" title="Wishlist">
-                            <i class="fas fa-heart text-pink"></i>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-pink">0</span>
-                        </a>
-                    </li>
-                    <li class="nav-item me-3 position-relative">
-                        <a class="nav-link" href="cart.html">
-                            <i class="fas fa-shopping-cart text-secondary"></i>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-pink" id="cartCount">0</span>
-                        </a>
-                    </li>
 
-                    <li class="nav-item" id="navProfileArea">
-                        <!-- Handled by JS -->
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Page Content -->
-    <div class="container py-4">
-        <!-- Breadcrumbs -->
-        <nav aria-label="breadcrumb" class="mb-5">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Resources</a></li>
-                <li class="breadcrumb-item active" aria-current="page">FAQs</li>
-            </ol>
-        </nav>
-
-        <div class="row justify-content-center mb-5">
-            <div class="col-lg-8 text-center">
-                <h2 class="display-5 fw-bold mb-3">How can we help you?</h2>
-                <p class="text-muted lead mb-4">Browse our frequently asked questions or search for a specific topic.</p>
-                
-                <div class="position-relative mb-5 mx-auto" style="max-width: 600px;">
-                    <i class="fas fa-search position-absolute top-50 start-0 translate-middle-y ms-4 text-muted fs-5"></i>
-                    <input type="text" class="form-control faq-search w-100 shadow" style="padding-left: 3rem;" placeholder="Search for answers (e.g. documentation, bidding...)">
-                </div>
-
-                <div class="d-flex flex-wrap justify-content-center gap-2">
-                    <button class="btn faq-category-btn active">All Topics</button>
-                    <button class="btn faq-category-btn">Buying</button>
-                    <button class="btn faq-category-btn">Selling</button>
-                    <button class="btn faq-category-btn">Auctions</button>
-                    <button class="btn faq-category-btn">Finance</button>
-                    <button class="btn faq-category-btn">Account</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="row justify-content-center mb-5 pb-5">
-            <div class="col-lg-9">
-                <!-- Group: Buying -->
-                <h4 class="fw-bold mb-4 mt-4 text-cyan"><i class="fas fa-shopping-cart me-2"></i> Buying</h4>
-                <div class="accordion" id="faqBuying">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="buyHead1">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#buy1" aria-expanded="false">
+<li class="nav-item ms-3 position-relative">
+<a class="nav-link" href="#" title="Notifications">
+<i class="fas fa-bell text-warning"></i>
+<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-pink">3</span>
+</a>
+</li>
+<li class="nav-item position-relative">
+<a class="nav-link" href="#" title="Wishlist">
+<i class="fas fa-heart text-pink"></i>
+<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-pink">0</span>
+</a>
+</li>
+<li class="nav-item me-3 position-relative">
+<a class="nav-link" href="cart.html">
+<i class="fas fa-shopping-cart text-secondary"></i>
+<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-pink" id="cartCount">0</span>
+</a>
+</li>
+<li class="nav-item" id="navProfileArea">
+<!-- Handled by JS -->
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<!-- Page Content -->
+<div class="container py-4">
+<!-- Breadcrumbs -->
+<nav aria-label="breadcrumb" class="mb-5">
+<ol class="breadcrumb">
+<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+<li class="breadcrumb-item"><a href="#">Resources</a></li>
+<li aria-current="page" class="breadcrumb-item active">FAQs</li>
+</ol>
+</nav>
+<div class="row justify-content-center mb-5">
+<div class="col-lg-8 text-center">
+<h2 class="display-5 fw-bold mb-3">How can we help you?</h2>
+<p class="text-muted lead mb-4">Browse our frequently asked questions or search for a specific topic.</p>
+<div class="position-relative mb-5 mx-auto" style="max-width: 600px;">
+<i class="fas fa-search position-absolute top-50 start-0 translate-middle-y ms-4 text-muted fs-5"></i>
+<input class="form-control faq-search w-100 shadow" placeholder="Search for answers (e.g. documentation, bidding...)" style="padding-left: 3rem;" type="text"/>
+</div>
+<div class="d-flex flex-wrap justify-content-center gap-2">
+<button class="btn faq-category-btn active">All Topics</button>
+<button class="btn faq-category-btn">Buying</button>
+<button class="btn faq-category-btn">Selling</button>
+<button class="btn faq-category-btn">Auctions</button>
+<button class="btn faq-category-btn">Finance</button>
+<button class="btn faq-category-btn">Account</button>
+</div>
+</div>
+</div>
+<div class="row justify-content-center mb-5 pb-5">
+<div class="col-lg-9">
+<!-- Group: Buying -->
+<h4 class="fw-bold mb-4 mt-4 text-cyan"><i class="fas fa-shopping-cart me-2"></i> Buying</h4>
+<div class="accordion" id="faqBuying">
+<div class="accordion-item">
+<h2 class="accordion-header" id="buyHead1">
+<button aria-expanded="false" class="accordion-button collapsed" data-bs-target="#buy1" data-bs-toggle="collapse" type="button">
                                 How do I register as a B2B buyer?
                             </button>
-                        </h2>
-                        <div id="buy1" class="accordion-collapse collapse" data-bs-parent="#faqBuying">
-                            <div class="accordion-body">
+</h2>
+<div class="accordion-collapse collapse" data-bs-parent="#faqBuying" id="buy1">
+<div class="accordion-body">
                                 Click on the Register/Sign in button at the top right, submit your company details, uploading GST and PAN documents for verification. Once approved by our team, you will receive full bidding and buying privileges.
                             </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="buyHead2">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#buy2" aria-expanded="false">
+</div>
+</div>
+<div class="accordion-item">
+<h2 class="accordion-header" id="buyHead2">
+<button aria-expanded="false" class="accordion-button collapsed" data-bs-target="#buy2" data-bs-toggle="collapse" type="button">
                                 Are all vehicles inspected before purchase?
                             </button>
-                        </h2>
-                        <div id="buy2" class="accordion-collapse collapse" data-bs-parent="#faqBuying">
-                            <div class="accordion-body">
+</h2>
+<div class="accordion-collapse collapse" data-bs-parent="#faqBuying" id="buy2">
+<div class="accordion-body">
                                 Yes, all Direct Sell and certified auction vehicles undergo a rigorous 150-point inspection process by our qualified engineers. The full inspection report, including structural integrity and engine diagnostics, is visible on the vehicle listing page.
                             </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="buyHead3">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#buy3" aria-expanded="false">
+</div>
+</div>
+<div class="accordion-item">
+<h2 class="accordion-header" id="buyHead3">
+<button aria-expanded="false" class="accordion-button collapsed" data-bs-target="#buy3" data-bs-toggle="collapse" type="button">
                                 What is the delivery process after purchase?
                             </button>
-                        </h2>
-                        <div id="buy3" class="accordion-collapse collapse" data-bs-parent="#faqBuying">
-                            <div class="accordion-body">
+</h2>
+<div class="accordion-collapse collapse" data-bs-parent="#faqBuying" id="buy3">
+<div class="accordion-body">
                                 Once payment is cleared and RC transfer is initiated, you can opt for AutoHub logistics delivery to your preferred location or schedule a self-pickup from the vehicle's current yard.
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Group: Selling -->
-                <h4 class="fw-bold mb-4 mt-5 text-pink"><i class="fas fa-tag me-2"></i> Selling</h4>
-                <div class="accordion" id="faqSelling">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="sellHead1">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sell1" aria-expanded="false">
+</div>
+</div>
+</div>
+<!-- Group: Selling -->
+<h4 class="fw-bold mb-4 mt-5 text-pink"><i class="fas fa-tag me-2"></i> Selling</h4>
+<div class="accordion" id="faqSelling">
+<div class="accordion-item">
+<h2 class="accordion-header" id="sellHead1">
+<button aria-expanded="false" class="accordion-button collapsed" data-bs-target="#sell1" data-bs-toggle="collapse" type="button">
                                 How is the initial valuation calculated?
                             </button>
-                        </h2>
-                        <div id="sell1" class="accordion-collapse collapse" data-bs-parent="#faqSelling">
-                            <div class="accordion-body">
+</h2>
+<div class="accordion-collapse collapse" data-bs-parent="#faqSelling" id="sell1">
+<div class="accordion-body">
                                 Our AI valuation engine takes inputs like manufacturing year, kilometers driven, ownership history, and overall condition. It then cross-references this data with thousands of current market transactions to estimate a fair base range.
                             </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="sellHead2">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sell2" aria-expanded="false">
+</div>
+</div>
+<div class="accordion-item">
+<h2 class="accordion-header" id="sellHead2">
+<button aria-expanded="false" class="accordion-button collapsed" data-bs-target="#sell2" data-bs-toggle="collapse" type="button">
                                 What if my vehicle does not sell in an auction?
                             </button>
-                        </h2>
-                        <div id="sell2" class="accordion-collapse collapse" data-bs-parent="#faqSelling">
-                            <div class="accordion-body">
+</h2>
+<div class="accordion-collapse collapse" data-bs-parent="#faqSelling" id="sell2">
+<div class="accordion-body">
                                 If a vehicle does not meet its reserve price, it is marked as "Unsold." You will have the option to lower the reserve and re-run it in the next auction event, or list it directly on the marketplace for interested buyers.
                             </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Group: Auctions -->
-                <h4 class="fw-bold mb-4 mt-5 text-warning"><i class="fas fa-gavel me-2"></i> Auctions</h4>
-                <div class="accordion" id="faqAuctions">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="aucHead1">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#auc1" aria-expanded="false">
+</div>
+</div>
+</div>
+<!-- Group: Auctions -->
+<h4 class="fw-bold mb-4 mt-5 text-warning"><i class="fas fa-gavel me-2"></i> Auctions</h4>
+<div class="accordion" id="faqAuctions">
+<div class="accordion-item">
+<h2 class="accordion-header" id="aucHead1">
+<button aria-expanded="false" class="accordion-button collapsed" data-bs-target="#auc1" data-bs-toggle="collapse" type="button">
                                 Do I need a specific subscription to bid?
                             </button>
-                        </h2>
-                        <div id="auc1" class="accordion-collapse collapse" data-bs-parent="#faqAuctions">
-                            <div class="accordion-body">
+</h2>
+<div class="accordion-collapse collapse" data-bs-parent="#faqAuctions" id="auc1">
+<div class="accordion-body">
                                 Yes. While any registered user can view live auctions, you must have an active "Pro Buyer" or "Enterprise" subscription tier to place active bids on institutional events.
                             </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="aucHead2">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#auc2" aria-expanded="false">
+</div>
+</div>
+<div class="accordion-item">
+<h2 class="accordion-header" id="aucHead2">
+<button aria-expanded="false" class="accordion-button collapsed" data-bs-target="#auc2" data-bs-toggle="collapse" type="button">
                                 How does the proxy bidding system work?
                             </button>
-                        </h2>
-                        <div id="auc2" class="accordion-collapse collapse" data-bs-parent="#faqAuctions">
-                            <div class="accordion-body">
+</h2>
+<div class="accordion-collapse collapse" data-bs-parent="#faqAuctions" id="auc2">
+<div class="accordion-body">
                                 You can enter your maximum allowed bid, and our system will automatically place bids on your behalf at the minimum increment necessary to keep you in the lead, up to your maximum limit.
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="footer-dark text-start">
-        <div class="container">
-            <div class="row g-4 mb-5">
-                <div class="col-lg-4 col-md-6 pe-5">
-                    <h4 class="fw-bold mb-3">AutoHub <span class="text-pink">Marketplace</span></h4>
-                    <p class="text-muted small">Premium vehicle marketplace for buying, selling, and leasing with institutional-grade assurance.</p>
-                </div>
-                <div class="col-lg-2 col-md-6">
-                    <h6 class="text-white fw-bold mb-4">Useful Links</h6>
-                    <a href="#">Home</a>
-                    <a href="#">About Us</a>
-                    <a href="#">Investors</a>
-                    <a href="#">FAQ</a>
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms And Conditions</a>
-                </div>
-                <div class="col-lg-2 col-md-4">
-                    <h6 class="text-white fw-bold mb-4">About Us</h6>
-                    <a href="#">Company Overview</a>
-                    <a href="#">Our Mission</a>
-                    <a href="#">Careers</a>
-                    <a href="#">Press & Media</a>
-                </div>
-                <div class="col-lg-2 col-md-4">
-                    <h6 class="text-white fw-bold mb-4">How It Works</h6>
-                    <a href="#">Buying Guide</a>
-                    <a href="#">Selling Process</a>
-                    <a href="#">Financing Explained</a>
-                    <a href="#">Rental Terms</a>
-                </div>
-                <div class="col-lg-2 col-md-4">
-                    <h6 class="text-white fw-bold mb-4">Solutions</h6>
-                    <a href="#">Buy on Marketplace</a>
-                    <a href="#">Sell on Marketplace</a>
-                    <a href="#">Auction Events</a>
-                    <a href="#">Finance Your Vehicle</a>
-                </div>
-            </div>
-            
-            <div class="row pt-4" style="border-top: 1px solid rgba(255,255,255,0.05);">
-                <div class="col-md-6 mb-3 mb-md-0">
-                    <p class="text-muted small mb-0">&copy; 2025 AutoHub Marketplace. All rights reserved.</p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <span class="text-white fw-bold me-3">Contact Us</span>
-                    <a href="#" class="d-inline-block text-muted me-3"><i class="fas fa-envelope text-pink me-1"></i> support@autohub.com</a>
-                    <a href="#" class="d-inline-block text-muted"><i class="fas fa-phone-alt text-pink me-1"></i> 1800-ELITE-HUB</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/store.js"></script>
-    <script>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="footer-dark text-start">
+<div class="container">
+<div class="row g-4 mb-5">
+<div class="col-lg-4 col-md-6 pe-5">
+<h4 class="fw-bold mb-3">AutoHub <span class="text-pink">Marketplace</span></h4>
+<p class="text-muted small">Premium vehicle marketplace for buying, selling, and leasing with institutional-grade assurance.</p>
+</div>
+<div class="col-lg-2 col-md-6">
+<h6 class="text-white fw-bold mb-4">Useful Links</h6>
+<a href="#">Home</a>
+<a href="#">About Us</a>
+<a href="#">Investors</a>
+<a href="#">FAQ</a>
+<a href="#">Privacy Policy</a>
+<a href="#">Terms And Conditions</a>
+</div>
+<div class="col-lg-2 col-md-4">
+<h6 class="text-white fw-bold mb-4">About Us</h6>
+<a href="#">Company Overview</a>
+<a href="#">Our Mission</a>
+<a href="#">Careers</a>
+<a href="#">Press &amp; Media</a>
+</div>
+<div class="col-lg-2 col-md-4">
+<h6 class="text-white fw-bold mb-4">How It Works</h6>
+<a href="#">Buying Guide</a>
+<a href="#">Selling Process</a>
+<a href="#">Financing Explained</a>
+<a href="#">Rental Terms</a>
+</div>
+<div class="col-lg-2 col-md-4">
+<h6 class="text-white fw-bold mb-4">Solutions</h6>
+<a href="#">Buy on Marketplace</a>
+<a href="#">Sell on Marketplace</a>
+<a href="#">Auction Events</a>
+<a href="#">Finance Your Vehicle</a>
+</div>
+</div>
+<div class="row pt-4" style="border-top: 1px solid rgba(255,255,255,0.05);">
+<div class="col-md-6 mb-3 mb-md-0">
+<p class="text-muted small mb-0">© 2025 AutoHub Marketplace. All rights reserved.</p>
+</div>
+<div class="col-md-6 text-md-end">
+<span class="text-white fw-bold me-3">Contact Us</span>
+<a class="d-inline-block text-muted me-3" href="#"><i class="fas fa-envelope text-pink me-1"></i> support@autohub.com</a>
+<a class="d-inline-block text-muted" href="#"><i class="fas fa-phone-alt text-pink me-1"></i> 1800-ELITE-HUB</a>
+</div>
+</div>
+</div>
+</footer>
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/store.js"></script>
+<script>
         document.addEventListener('DOMContentLoaded', () => {
             const user = store.getUser();
             const cart = store.getCart();
@@ -435,7 +546,7 @@
                             <i class="fas fa-building me-1"></i> <span class="fw-bold">${user.companyName || user.firstName}</span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end shadow bg-dark-card border-secondary border-opacity-25" style="border-radius: 8px;">
-                            ${user.role === 'Dealer' ? '<li><a class="dropdown-item py-2 text-white" href="dealer-dashboard.html"><i class="fas fa-tachometer-alt me-3 text-cyan"></i>Dealer Dashboard</a></li>' : ''}
+                            ${user.role === 'Dealer' ? '<li><a class="dropdown-item py-2 text-white" href="seller/dashboard.html"><i class="fas fa-tachometer-alt me-3 text-cyan"></i>Dealer Dashboard</a></li>' : ''}
                             <li><a class="dropdown-item py-2 text-white" href="#"><i class="fas fa-user me-3 text-muted"></i>My Profile</a></li>
                             <li><a class="dropdown-item py-2 text-white" href="orders.html"><i class="fas fa-box me-3 text-muted"></i>My Orders</a></li>
                             <li><a class="dropdown-item py-2 text-white" href="my-quotes.html"><i class="fas fa-file-invoice me-3 text-muted"></i>Quotations</a></li>

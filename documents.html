@@ -11,7 +11,7 @@
     <style>
         /* Modern Sidebar */
         .sidebar {
-            background: white;
+            background-color: var(--bg-primary);
             min-height: 100vh;
             border-right: 1px solid var(--border-color);
             width: 260px;
@@ -60,7 +60,7 @@
             top: 0;
             bottom: 0;
             width: 2px;
-            background: #e9ecef;
+            background-color: var(--bg-secondary);
             z-index: -1;
         }
 
@@ -76,8 +76,8 @@
             width: 28px;
             height: 28px;
             border-radius: 50%;
-            background: #e9ecef;
-            color: #fff;
+            background-color: var(--bg-secondary);
+            color: var(--text-muted);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -108,13 +108,13 @@
         .main-content {
             margin-left: 260px;
             padding: 2rem;
-            background: #f8f9fa;
+            background-color: var(--bg-secondary);
             min-height: 100vh;
         }
 
         /* Tabs */
         .doc-tabs {
-            border-bottom: 2px solid #e9ecef;
+            border-bottom: 2px solid var(--border-color);
             margin-bottom: 2rem;
             display: flex;
             gap: 2rem;
@@ -145,9 +145,9 @@
 
         /* Document Table */
         .doc-table {
-            background: white;
+            background-color: var(--bg-primary);
             border-radius: 8px;
-            border: 1px solid #e9ecef;
+            border: 1px solid var(--border-color);
             overflow: hidden;
         }
 
@@ -156,7 +156,7 @@
             align-items: center;
             justify-content: location;
             padding: 1rem 1.5rem;
-            border-bottom: 1px solid #e9ecef;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .doc-row:last-child {
@@ -166,7 +166,7 @@
         .doc-name {
             flex-grow: 1;
             font-weight: 500;
-            color: #495057;
+            color: var(--text-main);
             font-size: 0.95rem;
         }
 
@@ -196,14 +196,14 @@
 
         /* File Preview */
         .file-preview {
-            border: 1px dashed #ced4da;
+            border: 1px dashed var(--border-color);
             padding: 0.5rem 1rem;
             border-radius: 6px;
             display: flex;
             align-items: center;
             gap: 10px;
             font-size: 0.9rem;
-            background: #f8f9fa;
+            background-color: var(--bg-secondary);
         }
 
         .file-icon {

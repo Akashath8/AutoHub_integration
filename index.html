@@ -1,76 +1,105 @@
 <!DOCTYPE html>
+
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - AutoHub Marketplace</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Icon Font -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/main.css">
-    <style>
-        body {
-            background-color: var(--dark-bg);
-            color: #f8f9fa;
-        }
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Home - AutoHub Marketplace</title>
+<!-- Bootstrap 5 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<!-- Icon Font -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<!-- Custom CSS -->
+<link href="css/main.css" rel="stylesheet"/>
+<style>
+        /* Landing Page Specific Enhancements */
 
-        /* Override Bootstrap defaults for dark theme readability */
-        h1, h2, h3, h4, h5, h6 {
-            color: #ffffff;
+        /* Standardized Section Headings */
+        .section-heading-wrapper {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+            margin-bottom: 3rem;
         }
-
-        .text-muted {
-            color: #9ca3af !important;
+        .section-heading-wrapper::before,
+        .section-heading-wrapper::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: var(--border-color);
+            opacity: 0.6;
         }
-
-        /* Navbar Customization */
-        .navbar {
-            background-color: var(--dark-bg) !important;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+        .section-heading-wrapper .heading-content {
+            padding: 0 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .section-heading-wrapper h2 {
+            margin: 0;
+            white-space: normal;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            max-width: 800px;
+        }
+        @media (max-width: 768px) {
+            .section-heading-wrapper h2 {
+                font-size: 1.75rem !important;
+                margin: 0 0.5rem;
+            }
+            .section-heading-wrapper::before,
+            .section-heading-wrapper::after {
+                display: none;
+            }
+            .section-heading-wrapper {
+                justify-content: center;
+                margin-bottom: 2rem;
+            }
+        }
+        .section-heading-wrapper .badge {
+            margin-bottom: 0.5rem;
         }
 
         .search-input {
-            background-color: rgba(255,255,255,0.08) !important;
-            color: #fff !important;
-            border: none;
+            background-color: var(--bg-secondary) !important;
+            color: var(--text-primary) !important;
+            border: 1px solid var(--border-color);
         }
         .search-input::placeholder {
-            color: rgba(255,255,255,0.5);
+            color: var(--text-muted);
         }
 
-        /* Hero Section */
+        /* Hero Section overlay tuning */
         .hero-section {
-            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.9)), url('https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80') center/cover;
-            padding: 8rem 2rem 6rem;
+            background: linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.6)), url('https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80') center/cover;
+            padding: 10rem 2rem 8rem;
             text-align: center;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .hero-section h1 {
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            color: #fff !important;
+        }
+        .hero-section p {
+            color: rgba(255,255,255,0.9) !important;
+            text-shadow: 0 1px 5px rgba(0,0,0,0.2);
         }
 
-        /* Horizontal Scroll for Cards */
-        .custom-scrollbar::-webkit-scrollbar {
-            height: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background-color: rgba(255,255,255,0.2);
-            border-radius: 10px;
-        }
-
-        /* Features Section Cards */
+        /* Feature Section Cards Enhancement */
         .feature-card {
-            background-color: #1a233a;
-            border: 1px solid rgba(255,255,255,0.05);
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
             border-radius: 1rem;
             padding: 2rem;
             height: 100%;
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
         }
         .feature-card:hover {
             transform: translateY(-5px);
             border-color: var(--cyan-accent);
+            box-shadow: var(--shadow-md);
         }
 
         /* Auction Tabs */
@@ -106,35 +135,43 @@
 
         /* Accordion Customization */
         .accordion-item {
-            background-color: var(--dark-card) !important;
-            border: 1px solid rgba(255,255,255,0.1);
+            background-color: var(--white) !important;
+            border: 1px solid var(--border-color);
             margin-bottom: 1rem;
             border-radius: 8px !important;
+            overflow: hidden;
         }
         .accordion-button {
-            background-color: var(--dark-card) !important;
-            color: #fff !important;
+            background-color: var(--white) !important;
+            color: var(--text-heading) !important;
             font-weight: 600;
             box-shadow: none !important;
             border-radius: 8px !important;
         }
         .accordion-button::after {
-            filter: invert(1);
+            filter: none;
         }
         .accordion-body {
-            color: #9ca3af;
+            color: var(--text-muted-light);
+            background-color: #f8fafc;
         }
 
         /* Process Steps */
         .process-card {
-            background-color: #1e293b;
+            background-color: var(--white);
             border-radius: 16px;
             padding: 2rem 1.5rem;
             text-align: left;
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.05);
+            border: 1px solid var(--border-color);
             height: 100%;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        .process-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transform: translateY(-3px);
         }
         .process-card .step-number {
             position: absolute;
@@ -142,7 +179,7 @@
             right: 20px;
             font-size: 3.5rem;
             font-weight: 800;
-            color: rgba(255,255,255,0.03);
+            color: rgba(15, 23, 42, 0.05);
             line-height: 1;
         }
 
@@ -197,543 +234,718 @@
             transition: all 0.2s ease;
             padding-top: 10px;
             padding-bottom: 10px;
+            color: var(--text-muted-light) !important;
+        }
+        .action-switcher-btn:hover {
+            color: var(--pink-accent) !important;
         }
         .action-switcher-btn.active {
-            background-color: var(--pink-accent) !important;
+            background-color: var(--accent-color) !important;
             color: #fff !important;
+            box-shadow: 0 4px 6px rgba(236, 72, 153, 0.3);
+        }
+
+        /* Journey Tabs */
+        .journey-tab {
+            transition: all 0.3s ease;
+            border: none !important;
+        }
+        .journey-tab.active {
+            background-color: var(--accent-color);
+            color: #fff !important;
+            box-shadow: 0 4px 10px rgba(236, 72, 153, 0.2);
+        }
+        .journey-tab.active[data-journey="sell"] {
+            background-color: var(--cyan-accent);
+            box-shadow: 0 4px 10px rgba(6, 182, 212, 0.2);
+        }
+        .journey-tab.active[data-journey="auction"] {
+            background-color: var(--orange-accent);
+            box-shadow: 0 4px 10px rgba(245, 158, 11, 0.2);
+        }
+        .journey-tab:not(.active):hover {
+            color: var(--text-main) !important;
+            background-color: rgba(0,0,0,0.03);
         }
         .nav-dropdown-hover:hover {
             background-color: rgba(255,255,255,0.1) !important;
             color: var(--pink-accent) !important;
         }
     </style>
+
+<style id="super-mega-menu-css">
+        /* Mega Menu Styles */
+        .dropdown-mega { position: static; }
+        .mega-menu {
+            position: absolute; top: 100%; left: 0; right: 0; margin: 0 auto;
+            width: 96%; max-width: 1100px; background: #ffffff;
+            border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            padding: 30px; display: none; z-index: 1050; border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+        .dropdown-mega:hover .mega-menu { display: block; animation: fadeInMega 0.2s ease-in-out; }
+        .mega-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .mega-item h6 { font-weight: 700; margin-bottom: 15px; color: #111827; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
+        .mega-item p { font-size: 13px; color: #6b7280; line-height: 1.4; transition: color 0.2s; }
+        .mega-item a { transition: all 0.2s ease; border-radius: 6px; padding: 8px; margin: -8px; }
+        .mega-item a:hover { background-color: #f8fafc; }
+        .mega-item a:hover .fs-6 { color: var(--pink-accent, #ec4899); }
+        .mega-item a:hover p { color: #4b5563; }
+        @keyframes fadeInMega { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* Responsive Mobile Behavior */
+        @media (max-width: 991px) {
+            .mega-menu { position: static; width: 100%; box-shadow: none; padding: 15px; display: none; margin-top: 10px; }
+            .dropdown-mega.show .mega-menu { display: block; }
+            .mega-grid { grid-template-columns: 1fr; gap: 20px; }
+        }
+    </style>
 </head>
-
 <body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg sticky-top bg-theme-primary border-bottom border-theme">
+<div class="container">
+<!-- Brand + Location Dropdown -->
+<div class="d-flex align-items-center gap-2">
+<a class="navbar-brand text-main" href="index.html">AutoHub <span class="text-pink">Marketplace</span></a>
+<div class="dropdown d-none d-lg-block ms-3">
+<button aria-expanded="false" class="btn nav-link px-3 py-1 rounded" data-bs-toggle="dropdown" id="navLocationBtn" style="background-color: var(--bg-secondary);">
+<i class="fas fa-map-marker-alt text-pink me-1"></i>
+<span class="small text-muted d-block" style="font-size: 0.65rem; line-height: 1;">Location</span>
+<span style="font-size: 0.85rem; font-weight: 600; color: var(--text-main);">Pune <i class="fas fa-chevron-down ms-1" style="font-size:0.6rem;"></i></span>
+</button>
+<!-- Location menu will open here -->
+</div>
+</div>
+<button class="navbar-toggler border-0" data-bs-target="#navbarContent" data-bs-toggle="collapse" type="button">
+<i class="fas fa-bars text-main"></i>
+</button>
+<div class="collapse navbar-collapse" id="navbarContent">
+<!-- Center Search -->
+<div class="ms-4 me-auto" style="width: 40px; border-radius: 6px; overflow:hidden;">
+<button class="btn bg-theme-secondary text-main w-100 p-2 border-theme"><i class="fas fa-search opacity-50"></i></button>
+<!-- Expandable search implementation omitted for layout fidelity -->
+</div>
+<!-- Right nav items -->
+<ul class="navbar-nav ms-auto align-items-center gap-3">
+<!-- 1. BUY MENU -->
+<li class="nav-item dropdown-mega">
+<a class="nav-link text-main fw-bold" href="listing.html">Buy <i class="fas fa-chevron-down ms-1" style="font-size: 0.6em;"></i></a>
+<div class="mega-menu">
+<div class="mega-grid">
+<div class="mega-item">
+<h6>Explore Vehicles</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="listing.html"><div class="fw-bold fs-6">Search Vehicles</div><p class="mb-0">Browse all available vehicles</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="listing.html"><div class="fw-bold fs-6">Explore by Category</div><p class="mb-0">Cars, Commercial, EVs</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="listing.html"><div class="fw-bold fs-6">Featured Listings</div><p class="mb-0">Verified &amp; premium vehicles</p></a>
+</div>
+<div class="mega-item">
+<h6>Buying Tools</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">Compare Vehicles</div><p class="mb-0">Side-by-side comparison</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">EMI Calculator</div><p class="mb-0">Estimate monthly payments</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">Loan Assistance</div><p class="mb-0">Financing options available</p></a>
+</div>
+<div class="mega-item">
+<h6>Buyer Support</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">Book Test Drive</div><p class="mb-0">Schedule a visit</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">Buyer Guide</div><p class="mb-0">How Buying Works</p></a>
+<a class="d-block text-decoration-none text-dark mb-4" href="#"><div class="fw-bold fs-6">Verified Listings &amp; Trust</div><p class="mb-0">Quality assured</p></a>
+<a class="btn btn-pink w-100 fw-bold rounded text-white py-2" href="listing.html" style="margin:0; text-align:center;">Start Buying</a>
+</div>
+</div>
+</div>
+</li>
+<!-- 2. SELL MENU -->
+<li class="nav-item dropdown-mega">
+<a class="nav-link text-main fw-bold" href="sell.html">Sell <i class="fas fa-chevron-down ms-1" style="font-size: 0.6em;"></i></a>
+<div class="mega-menu">
+<div class="mega-grid">
+<div class="mega-item">
+<h6>Getting Started</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell.html"><div class="fw-bold fs-6">How Selling Works</div><p class="mb-0">List → Get Quotes → Close Deal</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell.html"><div class="fw-bold fs-6">Who Can Sell</div><p class="mb-0">Dealers, fleet owners, businesses</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell.html"><div class="fw-bold fs-6">Why Sell on AutoHub</div><p class="mb-0">Reach, pricing, trust</p></a>
+</div>
+<div class="mega-item">
+<h6>Seller Benefits</h6>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Access Verified Buyers</div></div>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Auction vs Direct Sale</div></div>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Smart Pricing Insights</div></div>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Secure Payments &amp; Escrow</div></div>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Documentation Support</div></div>
+</div>
+<div class="mega-item">
+<h6>Conversion</h6>
+<div class="bg-light p-3 rounded mb-4 text-start" style="margin:0; border: 1px solid rgba(0,0,0,0.1);">
+<div class="small fw-bold text-success mb-2"><i class="fas fa-shield-alt"></i> Trusted by dealers across India</div>
+<div class="small fw-bold text-dark"><i class="fas fa-car border p-1 rounded me-1 bg-white"></i> 10,000+ vehicles sold</div>
+</div>
+<a class="btn btn-dark w-100 fw-bold rounded mb-2 py-2 text-white" href="register.html" style="margin:0; text-align:center;">Become a Seller</a>
+<a class="btn btn-outline-dark w-100 fw-bold rounded py-2" href="#" style="margin:0; text-align:center;">Talk to Account Manager</a>
+</div>
+</div>
+</div>
+</li>
+<!-- 3. AUCTIONS MENU -->
+<li class="nav-item dropdown-mega">
+<a class="nav-link text-main fw-bold" href="auction-subscription.html">Auctions <i class="fas fa-chevron-down ms-1" style="font-size: 0.6em;"></i></a>
+<div class="mega-menu">
+<div class="mega-grid">
+<div class="mega-item">
+<h6>Discover Auctions</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Live Auctions</div><p class="mb-0">Bid in real-time</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Upcoming Events</div><p class="mb-0">Plan your purchases</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Past Auction Results</div><p class="mb-0">Market price discovery</p></a>
+</div>
+<div class="mega-item">
+<h6>Participate</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">How Auctions Work</div><p class="mb-0">Step-by-step guidance</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Join Auction Events</div><p class="mb-0">Register as a bidder</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Rules &amp; Eligibility</div><p class="mb-0">What you need to know</p></a>
+</div>
+<div class="mega-item">
+<h6>Seller Education</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell.html"><div class="fw-bold fs-6">List Vehicle in Auction</div><p class="mb-0">Reach massive audiences</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell.html"><div class="fw-bold fs-6">Auction Benefits</div><p class="mb-0">Faster liquidation</p></a>
+<a class="d-block text-decoration-none text-dark mb-4" href="sell.html"><div class="fw-bold fs-6">Pricing Transparency</div><p class="mb-0">Market-driven value</p></a>
+<a class="btn w-100 fw-bold rounded text-white py-2" href="auction-subscription.html" style="background-color: var(--orange-accent); margin:0; text-align:center;">View Live Auctions</a>
+</div>
+</div>
+</div>
+</li>
+<!-- 4. RESOURCES MENU -->
+<li class="nav-item dropdown-mega">
+<a class="nav-link text-main fw-bold" href="blogs.html">Resources <i class="fas fa-chevron-down ms-1" style="font-size: 0.6em;"></i></a>
+<div class="mega-menu">
+<div class="mega-grid">
+<div class="mega-item">
+<h6>Learn</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Buyer Guide</div><p class="mb-0">Procurement made easy</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Seller Guide</div><p class="mb-0">Maximize your margins</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Auction Guide</div><p class="mb-0">Bidding strategies</p></a>
+</div>
+<div class="mega-item">
+<h6>Support</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="support.html"><div class="fw-bold fs-6">Help Center</div><p class="mb-0">Get assistance</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="faqs.html"><div class="fw-bold fs-6">FAQs</div><p class="mb-0">Common questions</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="support.html"><div class="fw-bold fs-6">Contact Support</div><p class="mb-0">We are here to help</p></a>
+</div>
+<div class="mega-item">
+<h6>Insights</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Blogs &amp; Industry Insights</div><p class="mb-0">Latest automotive news</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Market Trends</div><p class="mb-0">Demand forecasting</p></a>
+<a class="d-block text-decoration-none text-dark mb-4" href="blogs.html"><div class="fw-bold fs-6">Price Reports</div><p class="mb-0">Valuation matrix</p></a>
+<a class="btn btn-primary w-100 fw-bold rounded text-white py-2" href="blogs.html" style="margin:0; text-align:center;">Explore Resources</a>
+</div>
+</div>
+</div>
+</li>
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg sticky-top">
-        <div class="container">
-            <!-- Brand + Location Dropdown -->
-            <div class="d-flex align-items-center gap-2">
-                <a class="navbar-brand" href="index.html">AutoHub <span class="text-pink">Marketplace</span></a>
-                <div class="dropdown d-none d-lg-block ms-3">
-                    <button class="btn nav-link px-3 py-1 rounded" id="navLocationBtn" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: rgba(255,255,255,0.08);">
-                        <i class="fas fa-map-marker-alt text-pink me-1"></i> 
-                        <span class="small text-muted d-block" style="font-size: 0.65rem; line-height: 1;">Location</span>
-                        <span style="font-size: 0.85rem; font-weight: 600; color: #fff;">Pune <i class="fas fa-chevron-down ms-1" style="font-size:0.6rem;"></i></span>
-                    </button>
-                    <!-- Location menu will open here -->
-                </div>
-            </div>
 
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
-                <i class="fas fa-bars text-white"></i>
-            </button>
 
-            <div class="collapse navbar-collapse" id="navbarContent">
-                <!-- Center Search -->
-                <div class="ms-4 me-auto" style="width: 40px; border-radius: 6px; overflow:hidden;">
-                    <button class="btn search-input w-100 p-2"><i class="fas fa-search"></i></button>
-                    <!-- Expandable search implementation omitted for layout fidelity -->
-                </div>
 
-                <!-- Right nav items -->
-                <ul class="navbar-nav ms-auto align-items-center gap-3">
-                    <li class="nav-item"><a class="nav-link text-white fw-bold" href="#buySection">Buy</a></li>
-                    <li class="nav-item"><a class="nav-link text-white fw-bold" href="#sellSection">Sell</a></li>
-                    <li class="nav-item"><a class="nav-link text-white fw-bold" href="#auctionSection">Auctions</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-white fw-bold" href="#" id="resourcesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Resources
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end shadow bg-dark-card border-secondary border-opacity-25" aria-labelledby="resourcesDropdown" style="border-radius: 8px;">
-                            <li><a class="dropdown-item py-2 text-white nav-dropdown-hover" href="blogs.html">Blogs</a></li>
-                            <li><a class="dropdown-item py-2 text-white nav-dropdown-hover" href="faqs.html">FAQs</a></li>
-                            <li><a class="dropdown-item py-2 text-white nav-dropdown-hover" href="support.html">Support</a></li>
-                            <li><a class="dropdown-item py-2 text-white nav-dropdown-hover" href="articles.html">Articles</a></li>
-                            <li><a class="dropdown-item py-2 text-white nav-dropdown-hover" href="white-papers.html">White Papers</a></li>
-                        </ul>
-                    </li>
-                    
-                    <li class="nav-item ms-3 position-relative">
-                        <a class="nav-link" href="#" title="Notifications">
-                            <i class="fas fa-bell text-warning"></i>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-pink">3</span>
-                        </a>
-                    </li>
-                    <li class="nav-item position-relative">
-                        <a class="nav-link" href="#" title="Wishlist">
-                            <i class="fas fa-heart text-pink"></i>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-pink">0</span>
-                        </a>
-                    </li>
-                    <li class="nav-item me-3 position-relative">
-                        <a class="nav-link" href="cart.html">
-                            <i class="fas fa-shopping-cart text-secondary"></i>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-pink" id="cartCount">0</span>
-                        </a>
-                    </li>
 
-                    <!-- Profile / Login Area -->
-                    <li class="nav-item" id="navProfileArea">
-                        <!-- Handled by JS -->
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <div class="hero-section position-relative">
-        <h1 class="display-3 fw-bold mb-2" id="heroTitle">India's Smart <br><span class="text-pink">Vehicle Marketplace</span></h1>
-        <p class="lead mb-0 fw-normal" id="heroSubtitle">The premium platform for B2B automotive commerce.</p>
-    </div>
-
-    <!-- Action Switcher -->
-    <div class="container position-relative" style="margin-top: -30px; z-index: 10;">
-        <div class="bg-dark-card border border-secondary border-opacity-25 rounded-pill shadow-lg p-2 d-flex justify-content-center mx-auto" style="max-width: 450px;">
-            <button class="btn action-switcher-btn active btn-pink rounded-pill flex-fill fw-bold mx-1" onclick="switchTab(this, 'buySection')">Buy</button>
-            <button class="btn action-switcher-btn btn-outline-light text-white border-0 rounded-pill flex-fill fw-bold mx-1" onclick="switchTab(this, 'sellSection')">Sell</button>
-            <button class="btn action-switcher-btn btn-outline-light text-white border-0 rounded-pill flex-fill fw-bold mx-1" onclick="switchTab(this, 'auctionSection')">Auction</button>
-        </div>
-    </div>
-
-    <!-- Explore Our Services Section -->
-    <div class="py-5 mt-4" style="background-color: var(--dark-bg);">
-        <div class="container text-center mb-5">
-            <h2 class="fw-bold">Explore Our Services</h2>
-            <p class="text-muted">Comprehensive solutions for every step of your automotive journey.</p>
-        </div>
-        <div class="container">
-            <div class="row g-4 justify-content-center">
-                <div class="col-lg-3 col-md-6">
-                    <div class="card bg-dark-card border border-secondary border-opacity-25 h-100 p-4 service-card transition-all">
-                        <div class="service-icon mb-3 text-pink fs-1"><i class="fas fa-shopping-cart"></i></div>
-                        <h5 class="fw-bold text-white mb-2">Buy</h5>
-                        <p class="text-muted small mb-4">Discover verified vehicles with transparent pricing and comprehensive inspection reports.</p>
-                        <a href="#buySection" class="text-pink fw-bold text-decoration-none mt-auto">Learn More <i class="fas fa-arrow-right ms-1"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="card bg-dark-card border border-secondary border-opacity-25 h-100 p-4 service-card transition-all" style="--pink-accent: var(--cyan-accent);">
-                        <div class="service-icon mb-3 text-cyan fs-1"><i class="fas fa-tag"></i></div>
-                        <h5 class="fw-bold text-white mb-2">Sell</h5>
-                        <p class="text-muted small mb-4">List your inventory directly to verified buyers or leverage our dynamic valuation engine.</p>
-                        <a href="#sellSection" class="text-cyan fw-bold text-decoration-none mt-auto">Learn More <i class="fas fa-arrow-right ms-1"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="card bg-dark-card border border-secondary border-opacity-25 h-100 p-4 service-card transition-all" style="--pink-accent: var(--orange-accent);">
-                        <div class="service-icon mb-3 text-warning fs-1"><i class="fas fa-gavel"></i></div>
-                        <h5 class="fw-bold text-white mb-2">Auction</h5>
-                        <p class="text-muted small mb-4">Participate in live institutional disposal events and bid on premium stock.</p>
-                        <a href="#auctionSection" class="text-warning fw-bold text-decoration-none mt-auto">Learn More <i class="fas fa-arrow-right ms-1"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="card bg-dark-card border border-secondary border-opacity-25 h-100 p-4 service-card transition-all" style="--pink-accent: #10b981;">
-                        <div class="service-icon mb-3 text-success fs-1"><i class="fas fa-wallet"></i></div>
-                        <h5 class="fw-bold text-white mb-2">Finance</h5>
-                        <p class="text-muted small mb-4">Secure competitive loans with leading NBFCs for your fleet expansion projects.</p>
-                        <a href="#" class="text-success fw-bold text-decoration-none mt-auto">Learn More <i class="fas fa-arrow-right ms-1"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Buy Section -->
-    <div id="buySection" class="py-5" style="background-color: var(--dark-bg); border-top: 1px solid rgba(255,255,255,0.05);">
-        <div class="container py-4">
-            <div class="row align-items-center">
-                <div class="col-lg-5 mb-5 mb-lg-0 pe-lg-5">
-                    <span class="badge bg-pink bg-opacity-10 text-pink border border-pink border-opacity-25 px-3 py-2 mb-3 rounded-pill fw-bold" style="letter-spacing: 1px;">BUY VEHICLES</span>
-                    <h2 class="fw-bold mb-3">Discover Verified Inventory</h2>
-                    <p class="text-muted mb-4" style="line-height: 1.8;">Find the perfect commercial or passenger vehicles for your business. Every vehicle on AutoHub comes with a comprehensive inspection report, verified ownership history, and transparent pricing. Explore flexible financing options to scale your fleet seamlessly.</p>
-                    <ul class="list-unstyled text-muted mb-4">
-                        <li class="mb-2"><i class="fas fa-check-circle text-pink me-2"></i> 150+ point inspection checks</li>
-                        <li class="mb-2"><i class="fas fa-check-circle text-pink me-2"></i> Pre-approved financing available</li>
-                        <li class="mb-2"><i class="fas fa-check-circle text-pink me-2"></i> Dedicated RTO & paperwork support</li>
-                    </ul>
-                    <div class="d-flex align-items-center gap-4 mb-4">
-                        <div class="pe-4 border-end border-secondary border-opacity-50">
-                            <h3 class="fw-bold text-white mb-0">5,000+</h3>
-                            <small class="text-muted">Verified Vehicles</small>
-                        </div>
-                        <div>
-                            <h3 class="fw-bold text-white mb-0">98%</h3>
-                            <small class="text-muted">Satisfaction Rate</small>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <a href="listing.html" class="btn btn-pink px-4 py-3 fw-bold rounded shadow">Browse Inventory</a>
-                        <a href="listing.html" class="text-pink fw-bold ms-4 text-decoration-none">View More <i class="fas fa-arrow-right ms-1"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-7">
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <div class="card bg-dark-card border border-secondary border-opacity-25 h-100 position-relative" style="border-radius: 12px; overflow: hidden;">
-                                <span class="badge position-absolute top-0 start-0 m-3 px-3 py-2" style="background-color: #10b981; border-radius: 20px;">DIRECT SELL</span>
-                                <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&q=80" class="card-img-top" alt="Scania" style="height: 200px; object-fit: cover;">
-                                <div class="card-body p-4">
-                                    <h6 class="fw-bold text-white mb-2">2021 Volvo FH16</h6>
-                                    <p class="text-muted small mb-3">Heavy Duty &bull; 50,000 km &bull; Pune</p>
-                                    <h5 class="text-pink fw-bold mb-0">₹ 45,00,000</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card bg-dark-card border border-secondary border-opacity-25 h-100 position-relative" style="border-radius: 12px; overflow: hidden;">
-                                <span class="badge position-absolute top-0 start-0 m-3 px-3 py-2" style="background-color: #10b981; border-radius: 20px;">DIRECT SELL</span>
-                                <img src="https://images.unsplash.com/photo-1559416523-140ddc3d238c?auto=format&fit=crop&q=80" class="card-img-top" alt="Traveller" style="height: 200px; object-fit: cover;">
-                                <div class="card-body p-4">
-                                    <h6 class="fw-bold text-white mb-2">2022 Force Traveller</h6>
-                                    <p class="text-muted small mb-3">Commercial &bull; 15,000 km &bull; Mumbai</p>
-                                    <h5 class="text-pink fw-bold mb-0">₹ 14,00,000</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Sell Section -->
-    <div id="sellSection" class="py-5" style="background-color: #111827; border-top: 1px solid rgba(255,255,255,0.05);">
-        <div class="container py-4">
-            <div class="row align-items-center flex-lg-row-reverse">
-                <div class="col-lg-5 mb-5 mb-lg-0 ps-lg-5">
-                    <span class="badge bg-cyan bg-opacity-10 text-cyan border border-cyan border-opacity-25 px-3 py-2 mb-3 rounded-pill fw-bold" style="letter-spacing: 1px;">SELL VEHICLES</span>
-                    <h2 class="fw-bold mb-3">Sell Your Vehicle Faster</h2>
-                    <p class="text-muted mb-4" style="line-height: 1.8;">Maximize your returns with our intelligent selling tools. Whether you're a private seller or a dealer managing bulk inventory, our platform connects you with thousands of verified B2B buyers across India.</p>
-                    <ul class="list-unstyled text-muted mb-4">
-                        <li class="mb-2"><i class="fas fa-check-circle text-cyan me-2"></i> Dynamic AI-driven valuation engine</li>
-                        <li class="mb-2"><i class="fas fa-check-circle text-cyan me-2"></i> Seamless dealer & private seller flow</li>
-                        <li class="mb-2"><i class="fas fa-check-circle text-cyan me-2"></i> Direct marketplace listing or auction options</li>
-                    </ul>
-                    <div class="d-flex align-items-center gap-4 mb-4">
-                        <div class="pe-4 border-end border-secondary border-opacity-50">
-                            <h3 class="fw-bold text-white mb-0">24h</h3>
-                            <small class="text-muted">Avg. Time to Sell</small>
-                        </div>
-                        <div>
-                            <h3 class="fw-bold text-white mb-0">15K+</h3>
-                            <small class="text-muted">Active Buyers</small>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <a href="sell-wizard.html" class="btn btn-cyan px-4 py-3 fw-bold rounded shadow text-dark">Start Selling Now</a>
-                        <a href="sell-wizard.html" class="text-cyan fw-bold ms-4 text-decoration-none">View More <i class="fas fa-arrow-right ms-1"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-7 text-center">
-                    <div class="position-relative d-inline-block w-100" style="max-width: 600px;">
-                        <img src="https://images.unsplash.com/photo-1560179707-f14e90ef3623?auto=format&fit=crop&q=80" alt="Sell Vehicle" class="img-fluid rounded-4 shadow-lg border border-secondary border-opacity-25 w-100" style="height: 380px; object-fit: cover;">
-                        <div class="position-absolute bottom-0 start-0 m-4 bg-dark-card border border-secondary border-opacity-25 rounded-4 p-3 shadow-lg d-flex align-items-center text-start">
-                            <div class="bg-cyan bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 48px; height: 48px;">
-                                <i class="fas fa-chart-line text-cyan fs-5"></i>
-                            </div>
-                            <div>
-                                <p class="text-white fw-bold mb-0">Get Instant Value</p>
-                                <p class="text-muted small mb-0">AI-powered valuation engine</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Auction Section -->
-    <div id="auctionSection" class="py-5" style="background-color: var(--dark-bg); border-top: 1px solid rgba(255,255,255,0.05);">
-        <div class="container py-4">
-            <div class="row align-items-center">
-                <div class="col-lg-5 mb-5 mb-lg-0 pe-lg-5">
-                    <span class="badge bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25 px-3 py-2 mb-3 rounded-pill fw-bold" style="letter-spacing: 1px;">AUCTION EVENTS</span>
-                    <h2 class="fw-bold mb-3">Live Bidding & Transparent Pricing</h2>
-                    <p class="text-muted mb-4" style="line-height: 1.8;">Access exclusive institutional and fleet disposal events. Our dynamic auction engine provides a fair, transparent environment for dealers and enterprise buyers to secure the best inventory at market-driven prices.</p>
-                    <ul class="list-unstyled text-muted mb-4">
-                        <li class="mb-2"><i class="fas fa-check-circle text-warning me-2"></i> Real-time live bidding dashboard</li>
-                        <li class="mb-2"><i class="fas fa-check-circle text-warning me-2"></i> Transparent reserve pricing & lot details</li>
-                        <li class="mb-2"><i class="fas fa-check-circle text-warning me-2"></i> Nationwide delivery assistance</li>
-                    </ul>
-                    <div class="d-flex align-items-center gap-4 mb-4">
-                        <div class="pe-4 border-end border-secondary border-opacity-50">
-                            <h3 class="fw-bold text-white mb-0">50+</h3>
-                            <small class="text-muted">Weekly Events</small>
-                        </div>
-                        <div>
-                            <h3 class="fw-bold text-white mb-0">100%</h3>
-                            <small class="text-muted">Secure Bidding</small>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <a href="listing.html?type=auction" class="btn btn-warning px-4 py-3 fw-bold rounded shadow text-dark">View Live Events</a>
-                        <a href="listing.html?type=auction" class="text-warning fw-bold ms-4 text-decoration-none">View More <i class="fas fa-arrow-right ms-1"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-7">
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <div class="card bg-dark-card border border-secondary border-opacity-25 h-100 position-relative" style="border-radius: 12px; overflow: hidden;">
-                                <span class="badge position-absolute top-0 start-0 m-3 px-3 py-2 text-dark" style="background-color: var(--bs-warning); border-radius: 20px;">LIVE AUCTION</span>
-                                <img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&q=80" class="card-img-top" alt="Scania Touring" style="height: 200px; object-fit: cover;">
-                                <div class="card-body p-4">
-                                    <h6 class="fw-bold text-white mb-2">2019 Scania Touring</h6>
-                                    <p class="text-muted small mb-3">Passenger &bull; Ends in 2h 15m</p>
-                                    <div class="d-flex justify-content-between align-items-end">
-                                        <h5 class="text-pink fw-bold mb-0">₹ 32,50,000</h5>
-                                        <small class="text-muted">12 Bids</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card bg-dark-card border border-secondary border-opacity-25 h-100 position-relative p-4 d-flex flex-column justify-content-center align-items-center text-center w-100" style="border-radius: 12px; border-style: dashed !important;">
-                                <div class="bg-warning bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center mb-3 text-warning" style="width: 64px; height: 64px;">
-                                    <i class="fas fa-calendar-alt fs-3"></i>
-                                </div>
-                                <h6 class="text-white fw-bold">Upcoming: Dealer Exchange</h6>
-                                <p class="text-muted small mb-3">Explore 50+ vehicles listed for tomorrow's live auction.</p>
-                                <a href="listing.html?type=auction" class="btn btn-outline-warning btn-sm fw-bold px-3">Join Event</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Dynamic How It Works Section -->
-    <div class="py-5" style="background-color: var(--dark-bg); border-top: 1px solid rgba(255,255,255,0.05);">
-        <div class="container">
-            <h2 id="howWorksTitle" class="fw-bold mb-5">How Buying Works</h2>
-            <div class="row g-3" id="howWorksGrid">
-                <!-- Dynamically populated via renderSteps() -->
-            </div>
-        </div>
-    </div>
-
-    <!-- About AutoHub -->
-    <div class="py-5" style="background-color: var(--dark-bg); border-top: 1px solid rgba(255,255,255,0.05);">
-        <div class="container text-center mb-5">
-            <h2 class="fw-bold">About AutoHub</h2>
-        </div>
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-5 pe-lg-5 mb-4 mb-md-0">
-                    <h5 class="fw-bold text-white mb-3">Transforming B2B Vehicle Commerce</h5>
-                    <p class="text-muted" style="line-height: 1.8;">AutoHub Marketplace is India's premier platform designed exclusively for B2B vehicle buying, selling, and auctioning. We bring transparency, institutional-grade assurance, and seamless financing to fleet operators, dealerships, and enterprise businesses.</p>
-                </div>
-                <div class="col-md-7">
-                    <img src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&q=80" alt="Driving" class="img-fluid rounded-4 shadow-lg w-100" style="object-fit: cover; height: 350px;">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- What Our Partners Say -->
-    <div class="py-5" style="background-color: var(--dark-bg); border-top: 1px solid rgba(255,255,255,0.05);">
-        <div class="container text-center mb-5">
-            <h2 class="fw-bold">What Our Partners Say</h2>
-        </div>
-        <div class="container">
-            <div class="row justify-content-center g-4">
-                <div class="col-md-5">
-                    <div class="bg-dark-card p-4 rounded-4 position-relative h-100" style="border-left: 4px solid var(--cyan-accent);">
-                        <p class="text-white mb-4">"AutoHub completely streamlined how we procure fleet vehicles. The financing integration is a game-changer."</p>
-                        <h6 class="fw-bold text-cyan mb-0">- Rajesh K., Logistics CEO</h6>
-                    </div>
-                </div>
-                <div class="col-md-5">
-                    <div class="bg-dark-card p-4 rounded-4 position-relative h-100" style="border-left: 4px solid var(--cyan-accent);">
-                        <p class="text-white mb-4">"Selling our decommissioned buses through their auction portal got us 15% above our target price."</p>
-                        <h6 class="fw-bold text-cyan mb-0">- Amit P., Fleet Manager</h6>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- FAQ -->
-    <div class="py-5" style="background-color: var(--dark-bg); border-top: 1px solid rgba(255,255,255,0.05);">
-        <div class="container text-center mb-4">
-            <h2 class="fw-bold">Frequently Asked Questions</h2>
-        </div>
-        <div class="container text-center mb-5">
-            <div class="d-inline-flex gap-2 p-1 bg-dark-card rounded-pill">
-                <button class="btn btn-cyan rounded-pill px-4 fw-bold">Buyers</button>
-                <button class="btn text-white px-4">Sellers</button>
-                <button class="btn text-white px-4">Finance</button>
-                <button class="btn text-white px-4">Auctions</button>
-            </div>
-        </div>
-        <div class="container" style="max-width: 800px;">
-            <div class="accordion" id="faqAccordion">
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingOne">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+<li class="nav-item ms-3 position-relative">
+<a class="nav-link" href="#" title="Notifications">
+<i class="fas fa-bell text-warning"></i>
+<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-pink">3</span>
+</a>
+</li>
+<li class="nav-item position-relative">
+<a class="nav-link" href="#" title="Wishlist">
+<i class="fas fa-heart text-pink"></i>
+<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-pink">0</span>
+</a>
+</li>
+<li class="nav-item me-3 position-relative">
+<a class="nav-link" href="cart.html">
+<i class="fas fa-shopping-cart text-secondary"></i>
+<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-pink" id="cartCount">0</span>
+</a>
+</li>
+<!-- Profile / Login Area -->
+<li class="nav-item" id="navProfileArea">
+<!-- Handled by JS -->
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<!-- Hero Section -->
+<div class="hero-section position-relative">
+<h1 class="display-3 fw-bold mb-2" id="heroTitle">India's Smart <br/><span class="text-pink">Vehicle Marketplace</span></h1>
+<p class="lead mb-0 fw-normal" id="heroSubtitle">The premium platform for B2B automotive commerce.</p>
+</div>
+<!-- Action Switcher -->
+<div class="container position-relative" style="margin-top: -30px; z-index: 10;">
+<div class="bg-white border border-secondary border-opacity-10 rounded-pill shadow-lg p-2 d-flex justify-content-center mx-auto" style="max-width: 450px;">
+<button class="btn action-switcher-btn active rounded-pill flex-fill fw-bold mx-1" onclick="switchTab(this, 'buySection')">Buy</button>
+<button class="btn action-switcher-btn border-0 rounded-pill flex-fill fw-bold mx-1" onclick="switchTab(this, 'sellSection')">Sell</button>
+<button class="btn action-switcher-btn border-0 rounded-pill flex-fill fw-bold mx-1" onclick="switchTab(this, 'auctionSection')">Auction</button>
+</div>
+</div>
+<!-- Buy Section -->
+<div class="py-5 bg-theme-main border-top" id="buySection">
+<div class="container py-4">
+<div class="section-heading-wrapper">
+<div class="heading-content">
+<span class="badge bg-pink bg-opacity-10 text-pink border border-pink border-opacity-25 px-3 py-2 rounded-pill fw-bold" style="letter-spacing: 1px;">BUY VEHICLES</span>
+<h2 class="fw-bold fs-1">Discover Verified Inventory</h2>
+<p class="text-muted fs-5 mt-2 mb-0">Premium verified inventory with institutional-grade assurance.</p>
+</div>
+</div>
+<div class="row align-items-center">
+<div class="col-lg-5 mb-5 mb-lg-0 pe-lg-5">
+<p class="text-muted mb-4" style="line-height: 1.8;">Find the perfect commercial or passenger vehicles for your business. Every vehicle on AutoHub comes with a comprehensive inspection report, verified ownership history, and transparent pricing. Explore flexible financing options to scale your fleet seamlessly.</p>
+<ul class="list-unstyled text-muted mb-4">
+<li class="mb-2"><i class="fas fa-check-circle text-pink me-2"></i> 150+ point inspection checks</li>
+<li class="mb-2"><i class="fas fa-check-circle text-pink me-2"></i> Pre-approved financing available</li>
+<li class="mb-2"><i class="fas fa-check-circle text-pink me-2"></i> Dedicated RTO &amp; paperwork support</li>
+</ul>
+<div class="d-flex align-items-center gap-4 mb-4">
+<div class="pe-4 border-end border-secondary border-opacity-50">
+<h3 class="fw-bold text-main mb-0">5,000+</h3>
+<small class="text-muted">Verified Vehicles</small>
+</div>
+<div>
+<h3 class="fw-bold text-main mb-0">98%</h3>
+<small class="text-muted">Satisfaction Rate</small>
+</div>
+</div>
+<div class="d-flex align-items-center">
+<a class="btn btn-pink px-4 py-3 fw-bold rounded shadow" href="listing.html">Browse Inventory</a>
+</div>
+</div>
+<div class="col-lg-7">
+<div class="row g-3">
+<div class="col-md-6">
+<div class="card bg-theme-primary border-theme h-100 position-relative" style="border-radius: 12px; overflow: hidden;">
+<span class="badge badge-success-theme position-absolute top-0 start-0 m-3 px-3 py-2">DIRECT SELL</span>
+<img alt="Scania" class="card-img-top" src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&amp;fit=crop&amp;q=80" style="height: 200px; object-fit: cover;"/>
+<div class="card-body p-4">
+<h6 class="fw-bold text-main mb-2">2021 Volvo FH16</h6>
+<p class="text-secondary small mb-3">Heavy Duty • 50,000 km • Pune</p>
+<h5 class="text-pink fw-bold mb-0">₹ 45,00,000</h5>
+</div>
+</div>
+</div>
+<div class="col-md-6">
+<div class="card bg-theme-primary border-theme h-100 position-relative" style="border-radius: 12px; overflow: hidden;">
+<span class="badge badge-success-theme position-absolute top-0 start-0 m-3 px-3 py-2">DIRECT SELL</span>
+<img alt="Traveller" class="card-img-top" src="https://images.unsplash.com/photo-1559416523-140ddc3d238c?auto=format&amp;fit=crop&amp;q=80" style="height: 200px; object-fit: cover;"/>
+<div class="card-body p-4">
+<h6 class="fw-bold text-main mb-2">2022 Force Traveller</h6>
+<p class="text-secondary small mb-3">Commercial • 15,000 km • Mumbai</p>
+<h5 class="text-pink fw-bold mb-0">₹ 14,00,000</h5>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Sell Section -->
+<div class="py-5 bg-theme-sub border-top" id="sellSection">
+<div class="container py-4">
+<div class="section-heading-wrapper">
+<div class="heading-content">
+<span class="badge bg-cyan bg-opacity-10 text-cyan border border-cyan border-opacity-25 px-3 py-2 rounded-pill fw-bold" style="letter-spacing: 1px;">SELL VEHICLES</span>
+<h2 class="fw-bold fs-1">Sell Your Vehicle Faster</h2>
+<p class="text-muted fs-5 mt-2 mb-0">Reach verified buyers and maximize your vehicle's market value.</p>
+</div>
+</div>
+<div class="row align-items-center flex-lg-row-reverse">
+<div class="col-lg-5 mb-5 mb-lg-0 ps-lg-5">
+<p class="text-muted mb-4" style="line-height: 1.8;">Maximize your returns with our intelligent selling tools. Whether you're a private seller or a dealer managing bulk inventory, our platform connects you with thousands of verified B2B buyers across India.</p>
+<ul class="list-unstyled text-muted mb-4">
+<li class="mb-2"><i class="fas fa-check-circle text-cyan me-2"></i> Dynamic AI-driven valuation engine</li>
+<li class="mb-2"><i class="fas fa-check-circle text-cyan me-2"></i> Seamless dealer &amp; private seller flow</li>
+<li class="mb-2"><i class="fas fa-check-circle text-cyan me-2"></i> Direct marketplace listing or auction options</li>
+</ul>
+<div class="d-flex align-items-center gap-4 mb-4">
+<div class="pe-4 border-end border-secondary border-opacity-50">
+<h3 class="fw-bold text-main mb-0">24h</h3>
+<small class="text-muted">Avg. Time to Sell</small>
+</div>
+<div>
+<h3 class="fw-bold text-main mb-0">15K+</h3>
+<small class="text-muted">Active Buyers</small>
+</div>
+</div>
+<div class="d-flex align-items-center">
+<a class="btn btn-cyan px-4 py-3 fw-bold rounded shadow text-dark" href="sell.html">Start Selling Now</a>
+</div>
+</div>
+<div class="col-lg-7 text-center">
+<div class="position-relative d-inline-block w-100" style="max-width: 600px;">
+<img alt="Sell Vehicle" class="img-fluid rounded-4 shadow-lg border border-theme w-100" src="https://images.unsplash.com/photo-1550355291-bbee04a92027?auto=format&amp;fit=crop&amp;q=80" style="height: 380px; object-fit: cover;"/>
+<div class="position-absolute bottom-0 start-0 m-4 bg-theme-primary border border-theme rounded-4 p-3 shadow-lg d-flex align-items-center text-start">
+<div class="bg-cyan bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 48px; height: 48px;">
+<i class="fas fa-chart-line text-cyan fs-5"></i>
+</div>
+<div>
+<p class="text-heading fw-bold mb-0">Get Instant Value</p>
+<p class="text-muted small mb-0">AI-powered valuation engine</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Auction Section -->
+<div class="py-5 bg-theme-main border-top" id="auctionSection">
+<div class="container py-4">
+<div class="section-heading-wrapper">
+<div class="heading-content">
+<span class="badge bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25 px-3 py-2 rounded-pill fw-bold" style="letter-spacing: 1px;">AUCTION EVENTS</span>
+<h2 class="fw-bold fs-1">Live Bidding &amp; Transparent Pricing</h2>
+<p class="text-muted fs-5 mt-2 mb-0">Participate in exclusive bidding events for institutional stock.</p>
+</div>
+</div>
+<div class="row align-items-center">
+<div class="col-lg-5 mb-5 mb-lg-0 pe-lg-5">
+<p class="text-muted mb-4" style="line-height: 1.8;">Access exclusive institutional and fleet disposal events. Our dynamic auction engine provides a fair, transparent environment for dealers and enterprise buyers to secure the best inventory at market-driven prices.</p>
+<ul class="list-unstyled text-muted mb-4">
+<li class="mb-2"><i class="fas fa-check-circle text-warning me-2"></i> Real-time live bidding dashboard</li>
+<li class="mb-2"><i class="fas fa-check-circle text-warning me-2"></i> Transparent reserve pricing &amp; lot details</li>
+<li class="mb-2"><i class="fas fa-check-circle text-warning me-2"></i> Nationwide delivery assistance</li>
+</ul>
+<div class="d-flex align-items-center gap-4 mb-4">
+<div class="pe-4 border-end border-secondary border-opacity-50">
+<h3 class="fw-bold text-main mb-0">50+</h3>
+<small class="text-muted">Weekly Events</small>
+</div>
+<div>
+<h3 class="fw-bold text-main mb-0">100%</h3>
+<small class="text-muted">Secure Bidding</small>
+</div>
+</div>
+<div class="d-flex align-items-center">
+<a class="btn btn-warning px-4 py-3 fw-bold rounded shadow text-dark" href="auctions.html">View Live Events</a>
+</div>
+</div>
+<div class="col-lg-7">
+<div class="row g-3">
+<div class="col-md-6">
+<div class="card bg-theme-primary border-theme h-100 position-relative" style="border-radius: 12px; overflow: hidden;">
+<span class="badge badge-warning-theme position-absolute top-0 start-0 m-3 px-3 py-2 text-dark">LIVE AUCTION</span>
+<img alt="Scania Touring" class="card-img-top" src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&amp;fit=crop&amp;q=80" style="height: 200px; object-fit: cover;"/>
+<div class="card-body p-4">
+<h6 class="fw-bold text-main mb-2">2019 Scania Touring</h6>
+<p class="text-secondary small mb-3">Passenger • Ends in 2h 15m</p>
+<div class="d-flex justify-content-between align-items-end">
+<h5 class="text-pink fw-bold mb-0">₹ 32,50,000</h5>
+<small class="text-muted">12 Bids</small>
+</div>
+</div>
+</div>
+</div>
+<div class="col-md-6">
+<div class="card bg-theme-primary border-theme border-opacity-50 h-100 position-relative p-4 d-flex flex-column justify-content-center align-items-center text-center w-100" style="border-radius: 12px; border-style: dashed !important;">
+<div class="bg-warning bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center mb-3 text-warning" style="width: 64px; height: 64px;">
+<i class="fas fa-calendar-alt fs-3"></i>
+</div>
+<h6 class="text-heading fw-bold">Upcoming: Dealer Exchange</h6>
+<p class="text-muted small mb-3">Explore 50+ vehicles listed for tomorrow's live auction.</p>
+<a class="btn btn-outline-warning btn-sm fw-bold px-3" href="auctions.html">Join Event</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Explore Our Services Section -->
+<div class="py-5 bg-theme-sub border-top">
+<div class="container py-4">
+<div class="section-heading-wrapper">
+<div class="heading-content">
+<h2 class="fw-bold fs-1">Explore Our Services</h2>
+<p class="text-muted fs-5 mt-2 mb-0">End-to-end solutions for fleet management and vehicle trade.</p>
+</div>
+</div>
+<div class="container">
+<div class="row g-4 justify-content-center">
+<div class="col-lg-3 col-md-6">
+<div class="card bg-theme-primary border-theme h-100 p-4 service-card transition-all">
+<div class="service-icon mb-3 text-pink fs-1"><i class="fas fa-shopping-cart"></i></div>
+<h5 class="fw-bold text-main mb-2">Buy</h5>
+<p class="text-muted small mb-4">Discover verified vehicles with transparent pricing and comprehensive inspection reports.</p>
+<a class="text-pink fw-bold text-decoration-none mt-auto" href="#buySection">Learn More <i class="fas fa-arrow-right ms-1"></i></a>
+</div>
+</div>
+<div class="col-lg-3 col-md-6">
+<div class="card bg-theme-primary border-theme h-100 p-4 service-card transition-all" style="--pink-accent: var(--cyan-accent);">
+<div class="service-icon mb-3 text-cyan fs-1"><i class="fas fa-tag"></i></div>
+<h5 class="fw-bold text-main mb-2">Sell</h5>
+<p class="text-muted small mb-4">List your inventory directly to verified buyers or leverage our dynamic valuation engine.</p>
+<a class="text-cyan fw-bold text-decoration-none mt-auto" href="#sellSection">Learn More <i class="fas fa-arrow-right ms-1"></i></a>
+</div>
+</div>
+<div class="col-lg-3 col-md-6">
+<div class="card bg-theme-primary border-theme h-100 p-4 service-card transition-all" style="--pink-accent: var(--orange-accent);">
+<div class="service-icon mb-3 text-warning fs-1"><i class="fas fa-gavel"></i></div>
+<h5 class="fw-bold text-main mb-2">Auction</h5>
+<p class="text-muted small mb-4">Participate in live institutional disposal events and bid on premium stock.</p>
+<a class="text-warning fw-bold text-decoration-none mt-auto" href="#auctionSection">Learn More <i class="fas fa-arrow-right ms-1"></i></a>
+</div>
+</div>
+<div class="col-lg-3 col-md-6">
+<div class="card bg-theme-primary border-theme h-100 p-4 service-card transition-all" style="--pink-accent: #10b981;">
+<div class="service-icon mb-3 text-success fs-1"><i class="fas fa-wallet"></i></div>
+<h5 class="fw-bold text-main mb-2">Finance</h5>
+<p class="text-muted small mb-4">Secure competitive loans with leading NBFCs for your fleet expansion projects.</p>
+<a class="text-success fw-bold text-decoration-none mt-auto" href="#">Learn More <i class="fas fa-arrow-right ms-1"></i></a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Dynamic How It Works Section -->
+<div class="py-5" id="howItWorksSection" style="background-color: var(--white); border-top: 1px solid var(--border-color);">
+<div class="container py-4">
+<div class="section-heading-wrapper">
+<div class="heading-content">
+<h2 class="fw-bold fs-1">How It Works</h2>
+<p class="text-muted fs-5 mt-2 mb-0">A transparent, structured process for every transaction.</p>
+</div>
+</div>
+<!-- Journey Switcher -->
+<div class="container text-center mb-5">
+<div class="d-inline-flex p-1 bg-theme-secondary border-theme rounded-pill shadow-sm">
+<button class="btn journey-tab active px-4 py-2 rounded-pill fw-bold" data-journey="buy" onclick="renderJourney('buy', this)">Buy</button>
+<button class="btn journey-tab px-4 py-2 rounded-pill fw-bold text-muted" data-journey="sell" onclick="renderJourney('sell', this)">Sell</button>
+<button class="btn journey-tab px-4 py-2 rounded-pill fw-bold text-muted" data-journey="auction" onclick="renderJourney('auction', this)">Auction</button>
+</div>
+</div>
+<div class="container">
+<div class="row g-3 row-cols-1 row-cols-md-3 row-cols-lg-5" id="journeyStepsGrid" style="transition: opacity 0.3s ease;">
+<!-- Dynamically populated via renderJourney() -->
+</div>
+</div>
+</div>
+</div>
+<!-- About AutoHub -->
+<div class="py-5 bg-theme-sub border-top">
+<div class="container py-4">
+<div class="section-heading-wrapper">
+<div class="heading-content">
+<h2 class="fw-bold fs-1">About AutoHub</h2>
+<p class="text-muted fs-5 mt-2 mb-0">Leading the digital transformation of automotive B2B commerce.</p>
+</div>
+</div>
+<div class="container">
+<div class="row align-items-center">
+<div class="col-md-5 pe-lg-5 mb-4 mb-md-0">
+<h5 class="fw-bold text-heading mb-3">Transforming B2B Vehicle Commerce</h5>
+<p class="text-muted" style="line-height: 1.8;">AutoHub Marketplace is India's premier platform designed exclusively for B2B vehicle buying, selling, and auctioning. We bring transparency, institutional-grade assurance, and seamless financing to fleet operators, dealerships, and enterprise businesses.</p>
+</div>
+<div class="col-md-7">
+<img alt="Driving" class="img-fluid rounded-4 shadow-lg w-100" src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&amp;fit=crop&amp;q=80" style="object-fit: cover; height: 350px;"/>
+</div>
+</div>
+</div>
+</div>
+<div class="py-5 bg-theme-main border-top">
+<div class="container py-4">
+<div class="section-heading-wrapper">
+<div class="heading-content">
+<h2 class="fw-bold fs-1">What Our Partners Say</h2>
+<p class="text-muted fs-5 mt-2 mb-0">Trusted by industry leaders across the logistics and automotive sectors.</p>
+</div>
+</div>
+<div class="container">
+<div class="row justify-content-center g-4">
+<div class="col-md-5">
+<div class="bg-white border border-secondary border-opacity-10 p-4 rounded-4 position-relative h-100 shadow-sm" style="border-left: 4px solid var(--cyan-accent) !important;">
+<p class="text-main mb-4">"AutoHub completely streamlined how we procure fleet vehicles. The financing integration is a game-changer."</p>
+<h6 class="fw-bold text-cyan mb-0">- Rajesh K., Logistics CEO</h6>
+</div>
+</div>
+<div class="col-md-5">
+<div class="bg-theme-primary border border-theme p-4 rounded-4 position-relative h-100" style="border-left: 4px solid var(--cyan-accent) !important;">
+<p class="text-main mb-4">"Selling our decommissioned buses through their auction portal got us 15% above our target price."</p>
+<h6 class="fw-bold text-cyan mb-0">- Amit P., Fleet Manager</h6>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- FAQ -->
+<div class="py-5 bg-theme-sub border-top">
+<div class="container py-4">
+<div class="section-heading-wrapper">
+<div class="heading-content">
+<h2 class="fw-bold fs-1">Frequently Asked Questions</h2>
+<p class="text-muted fs-5 mt-2 mb-0">Answers to common questions about our marketplace and services.</p>
+</div>
+</div>
+<div class="container text-center mb-5">
+<div class="d-inline-flex gap-2 p-1 bg-theme-primary border-theme border rounded-pill">
+<button class="btn btn-cyan rounded-pill px-4 fw-bold">Buyers</button>
+<button class="btn text-main px-4">Sellers</button>
+<button class="btn text-main px-4">Finance</button>
+<button class="btn text-main px-4">Auctions</button>
+</div>
+</div>
+<div class="container" style="max-width: 800px;">
+<div class="accordion" id="faqAccordion">
+<div class="accordion-item">
+<h2 class="accordion-header" id="headingOne">
+<button aria-controls="collapseOne" aria-expanded="false" class="accordion-button collapsed" data-bs-target="#collapseOne" data-bs-toggle="collapse" type="button">
                             How do I register as a B2B buyer?
                         </button>
-                    </h2>
-                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
-                        <div class="accordion-body">
+</h2>
+<div aria-labelledby="headingOne" class="accordion-collapse collapse" data-bs-parent="#faqAccordion" id="collapseOne">
+<div class="accordion-body">
                             Click on the Register/Sign in button at the top right, submit your company details, uploading GST and PAN documents for verification.
                         </div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingTwo">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+</div>
+</div>
+<div class="accordion-item">
+<h2 class="accordion-header" id="headingTwo">
+<button aria-controls="collapseTwo" aria-expanded="false" class="accordion-button collapsed" data-bs-target="#collapseTwo" data-bs-toggle="collapse" type="button">
                             Are all vehicles inspected before purchase?
                         </button>
-                    </h2>
-                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
-                        <div class="accordion-body">
+</h2>
+<div aria-labelledby="headingTwo" class="accordion-collapse collapse" data-bs-parent="#faqAccordion" id="collapseTwo">
+<div class="accordion-body">
                             Yes, all Direct Sell and certified auction vehicles undergo a rigorous multi-point inspection process by our qualified engineers.
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Get in Touch -->
-    <div class="py-5" style="background-color: var(--dark-bg); border-top: 1px solid rgba(255,255,255,0.05);">
-        <div class="container text-center mb-5">
-            <h2 class="fw-bold">Get in Touch</h2>
-        </div>
-        <div class="container" style="max-width: 600px;">
-            <div class="bg-dark-card p-4 rounded-4 border border-secondary border-opacity-25">
-                <form>
-                    <div class="mb-3">
-                        <input type="text" class="form-control bg-dark border-secondary border-opacity-25 text-white" placeholder="Your Name / Company Name" style="padding: 0.8rem;">
-                    </div>
-                    <div class="mb-3">
-                        <input type="email" class="form-control bg-dark border-secondary border-opacity-25 text-white" placeholder="Email Address" style="padding: 0.8rem;">
-                    </div>
-                    <div class="mb-4">
-                        <textarea class="form-control bg-dark border-secondary border-opacity-25 text-white" rows="4" placeholder="How can we help you?" style="padding: 0.8rem;"></textarea>
-                    </div>
-                    <button type="button" onclick="alert('Message sent successfully!');" class="btn btn-cyan w-100 py-3 fw-bold rounded">Send Message</button>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="footer-dark text-start">
-        <div class="container">
-            <div class="row g-4 mb-5">
-                <div class="col-lg-4 col-md-6 pe-5">
-                    <h4 class="fw-bold mb-3">AutoHub <span class="text-pink">Marketplace</span></h4>
-                    <p class="text-muted small">Premium vehicle marketplace for buying, selling, and leasing with institutional-grade assurance.</p>
-                </div>
-                <div class="col-lg-2 col-md-6">
-                    <h6 class="text-white fw-bold mb-4">Useful Links</h6>
-                    <a href="#">Home</a>
-                    <a href="#">About Us</a>
-                    <a href="#">Investors</a>
-                    <a href="#">FAQ</a>
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms And Conditions</a>
-                </div>
-                <div class="col-lg-2 col-md-4">
-                    <h6 class="text-white fw-bold mb-4">About Us</h6>
-                    <a href="#">Company Overview</a>
-                    <a href="#">Our Mission</a>
-                    <a href="#">Careers</a>
-                    <a href="#">Press & Media</a>
-                </div>
-                <div class="col-lg-2 col-md-4">
-                    <h6 class="text-white fw-bold mb-4">How It Works</h6>
-                    <a href="#">Buying Guide</a>
-                    <a href="#">Selling Process</a>
-                    <a href="#">Financing Explained</a>
-                    <a href="#">Rental Terms</a>
-                </div>
-                <div class="col-lg-2 col-md-4">
-                    <h6 class="text-white fw-bold mb-4">Solutions</h6>
-                    <a href="#">Buy on Marketplace</a>
-                    <a href="#">Sell on Marketplace</a>
-                    <a href="#">Auction Events</a>
-                    <a href="#">Finance Your Vehicle</a>
-                </div>
-            </div>
-            
-            <div class="row pt-4" style="border-top: 1px solid rgba(255,255,255,0.05);">
-                <div class="col-md-6 mb-3 mb-md-0">
-                    <p class="text-muted small mb-0">&copy; 2025 AutoHub Marketplace. All rights reserved.</p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <span class="text-white fw-bold me-3">Contact Us</span>
-                    <a href="#" class="d-inline-block text-muted me-3"><i class="fas fa-envelope text-pink me-1"></i> support@autohub.com</a>
-                    <a href="#" class="d-inline-block text-muted"><i class="fas fa-phone-alt text-pink me-1"></i> 1800-ELITE-HUB</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-
-    <!-- Login/Signup Modal (Lazy Auth) -->
-    <div class="modal fade" id="authModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content bg-dark-card text-white border border-secondary border-opacity-25 shadow-lg" style="border-radius: 12px; overflow: hidden;">
-                <div class="row g-0">
-                    <div class="col-md-5 d-none d-md-block" style="background: linear-gradient(135deg, var(--dark-bg), var(--pink-accent));">
-                        <div class="p-4 text-white h-100 d-flex flex-column justify-content-center">
-                            <h4 class="fw-bold mb-3">AutoHub</h4>
-                            <p class="small opacity-75">Your journey to the perfect car starts here. Sign in to save, shortlist, and buy.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-7 p-4">
-                        <div class="d-flex justify-content-between align-items-center mb-4">
-                            <h5 class="fw-bold mb-0">Login or Sign Up</h5>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                        </div>
-                        <form id="lazyAuthForm">
-                            <div class="mb-3">
-                                <label class="form-label small text-muted">Email or Mobile Number</label>
-                                <input type="text" id="lazyAuthUser" class="form-control bg-dark text-white border-secondary border-opacity-25" placeholder="Enter details" required>
-                            </div>
-                            <div class="mb-4">
-                                <label class="form-label small text-muted">Password</label>
-                                <input type="password" id="lazyAuthPass" class="form-control bg-dark text-white border-secondary border-opacity-25" placeholder="••••••••" required>
-                            </div>
-                            <button type="submit" class="btn btn-cyan w-100 fw-bold mb-3">Continue</button>
-
-                            <div class="d-flex align-items-center mb-3">
-                                <hr class="flex-grow-1 border-secondary border-opacity-50 m-0">
-                                <span class="mx-3 text-muted small">OR</span>
-                                <hr class="flex-grow-1 border-secondary border-opacity-50 m-0">
-                            </div>
-
-                            <button type="button" class="btn btn-outline-light w-100 fw-bold mb-4 d-flex align-items-center justify-content-center">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" style="height: 18px; margin-right: 8px;">
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Get in Touch -->
+<div class="py-5 bg-theme-main border-top">
+<div class="container py-4">
+<div class="section-heading-wrapper">
+<div class="heading-content">
+<h2 class="fw-bold fs-1">Get in Touch</h2>
+<p class="text-muted fs-5 mt-2 mb-0">Let us help you scale your automotive business today.</p>
+</div>
+</div>
+<div class="container" style="max-width: 600px;">
+<div class="bg-theme-primary p-4 rounded-4 border border-theme shadow-sm">
+<form>
+<div class="mb-3">
+<input class="form-control bg-theme-secondary text-main border-theme" placeholder="Your Name / Company Name" type="text"/>
+</div>
+<div class="mb-3">
+<input class="form-control bg-theme-secondary text-main border-theme" placeholder="Email Address" type="email"/>
+</div>
+<div class="mb-4">
+<textarea class="form-control bg-theme-secondary text-main border-theme" placeholder="How can we help you?" rows="4"></textarea>
+</div>
+<button class="btn btn-cyan w-100 py-3 fw-bold rounded" onclick="alert('Message sent successfully!');" type="button">Send Message</button>
+</form>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="footer-dark text-start">
+<div class="container">
+<div class="row g-4 mb-5">
+<div class="col-lg-4 col-md-6 pe-5">
+<h4 class="fw-bold mb-3">AutoHub <span class="text-pink">Marketplace</span></h4>
+<p class="text-muted small">Premium vehicle marketplace for buying, selling, and leasing with institutional-grade assurance.</p>
+</div>
+<div class="col-lg-2 col-md-6">
+<h6 class="text-white fw-bold mb-4">Useful Links</h6>
+<a href="#">Home</a>
+<a href="#">About Us</a>
+<a href="#">Investors</a>
+<a href="#">FAQ</a>
+<a href="#">Privacy Policy</a>
+<a href="#">Terms And Conditions</a>
+</div>
+<div class="col-lg-2 col-md-4">
+<h6 class="text-white fw-bold mb-4">About Us</h6>
+<a href="#">Company Overview</a>
+<a href="#">Our Mission</a>
+<a href="#">Careers</a>
+<a href="#">Press &amp; Media</a>
+</div>
+<div class="col-lg-2 col-md-4">
+<h6 class="text-white fw-bold mb-4">How It Works</h6>
+<a href="#">Buying Guide</a>
+<a href="#">Selling Process</a>
+<a href="#">Financing Explained</a>
+<a href="#">Rental Terms</a>
+</div>
+<div class="col-lg-2 col-md-4">
+<h6 class="text-white fw-bold mb-4">Solutions</h6>
+<a href="#">Buy on Marketplace</a>
+<a href="#">Sell on Marketplace</a>
+<a href="#">Auction Events</a>
+<a href="#">Finance Your Vehicle</a>
+</div>
+</div>
+<div class="row pt-4" style="border-top: 1px solid rgba(255,255,255,0.05);">
+<div class="col-md-6 mb-3 mb-md-0">
+<p class="text-muted small mb-0">© 2025 AutoHub Marketplace. All rights reserved.</p>
+</div>
+<div class="col-md-6 text-md-end">
+<span class="text-white fw-bold me-3">Contact Us</span>
+<a class="d-inline-block text-muted me-3" href="#"><i class="fas fa-envelope text-pink me-1"></i> support@autohub.com</a>
+<a class="d-inline-block text-muted" href="#"><i class="fas fa-phone-alt text-pink me-1"></i> 1800-ELITE-HUB</a>
+</div>
+</div>
+</div>
+</footer>
+<!-- Login/Signup Modal (Lazy Auth) -->
+<div class="modal fade" id="authModal" tabindex="-1">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content bg-theme-primary text-main border border-theme shadow-lg" style="border-radius: 12px; overflow: hidden;">
+<div class="row g-0">
+<div class="col-md-5 d-none d-md-block" style="background: linear-gradient(135deg, var(--primary-color), var(--pink-accent));">
+<div class="p-4 text-white h-100 d-flex flex-column justify-content-center">
+<h4 class="fw-bold mb-3">AutoHub</h4>
+<p class="small opacity-75">Your journey to the perfect car starts here. Sign in to save, shortlist, and buy.</p>
+</div>
+</div>
+<div class="col-md-7 p-4">
+<div class="d-flex justify-content-between align-items-center mb-4">
+<h5 class="fw-bold mb-0">Login or Sign Up</h5>
+<button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+</div>
+<form id="lazyAuthForm">
+<div class="mb-3">
+<label class="form-label small text-muted">Email or Mobile Number</label>
+<input class="form-control bg-theme-secondary text-main border-theme" id="lazyAuthUser" placeholder="Enter details" required="" type="text"/>
+</div>
+<div class="mb-4">
+<label class="form-label small text-muted">Password</label>
+<input class="form-control bg-theme-secondary text-main border-theme" id="lazyAuthPass" placeholder="••••••••" required="" type="password"/>
+</div>
+<button class="btn btn-cyan w-100 fw-bold mb-3" type="submit">Continue</button>
+<div class="d-flex align-items-center mb-3">
+<hr class="flex-grow-1 border-theme m-0"/>
+<span class="mx-3 text-muted small">OR</span>
+<hr class="flex-grow-1 border-theme m-0"/>
+</div>
+<button class="btn btn-outline-secondary w-100 fw-bold mb-4 d-flex align-items-center justify-content-center" type="button">
+<img alt="Google" src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" style="height: 18px; margin-right: 8px;"/>
                                 Continue with Google
                             </button>
-
-                            <div class="text-center mt-2">
-                                <span class="text-muted small">New to AutoHub?</span>
-                                <a href="register.html" class="text-decoration-none fw-bold small ms-1 text-cyan">Create New Account</a>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/store.js"></script>
-    <script src="js/data.js"></script>
-    <script src="js/location.js"></script>
-
-    <script>
+<div class="text-center mt-2">
+<span class="text-muted small">New to AutoHub?</span>
+<a class="text-decoration-none fw-bold small ms-1 text-cyan" href="register.html">Create New Account</a>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/store.js"></script>
+<script src="js/data.js"></script>
+<script src="js/location.js"></script>
+<script>
         document.addEventListener('DOMContentLoaded', () => {
             const user = store.getUser();
             const cart = store.getCart();
@@ -746,13 +958,13 @@
                         <button class="btn btn-cyan rounded-pill px-4" id="profileDropdown" data-bs-toggle="dropdown">
                             <i class="fas fa-building me-1"></i> <span class="fw-bold">${user.companyName || user.firstName}</span>
                         </button>
-                        <ul class="dropdown-menu dropdown-menu-end shadow bg-dark-card border-secondary border-opacity-25" style="border-radius: 8px;">
-                            ${user.role === 'Dealer' ? '<li><a class="dropdown-item py-2 text-white" href="dealer-dashboard.html"><i class="fas fa-tachometer-alt me-3 text-cyan"></i>Dealer Dashboard</a></li>' : ''}
-                            <li><a class="dropdown-item py-2 text-white" href="#"><i class="fas fa-user me-3 text-muted"></i>My Profile</a></li>
-                            <li><a class="dropdown-item py-2 text-white" href="orders.html"><i class="fas fa-box me-3 text-muted"></i>My Orders</a></li>
-                            <li><a class="dropdown-item py-2 text-white" href="my-quotes.html"><i class="fas fa-file-invoice me-3 text-muted"></i>Quotations</a></li>
-                            <li><a class="dropdown-item py-2 text-white" href="my-test-drives.html"><i class="fas fa-car me-3 text-muted"></i>Test Drives</a></li>
-                            <li><hr class="dropdown-divider border-secondary border-opacity-25"></li>
+                        <ul class="dropdown-menu dropdown-menu-end shadow bg-theme-primary border-theme" style="border-radius: 8px;">
+                            ${user.role === 'Dealer' ? '<li><a class="dropdown-item py-2 text-main" href="seller/dashboard.html"><i class="fas fa-tachometer-alt me-3 text-cyan"></i>Dealer Dashboard</a></li>' : ''}
+                            <li><a class="dropdown-item py-2 text-main" href="#"><i class="fas fa-user me-3 text-muted"></i>My Profile</a></li>
+                            <li><a class="dropdown-item py-2 text-main" href="orders.html"><i class="fas fa-box me-3 text-muted"></i>My Orders</a></li>
+                            <li><a class="dropdown-item py-2 text-main" href="my-quotes.html"><i class="fas fa-file-invoice me-3 text-muted"></i>Quotations</a></li>
+                            <li><a class="dropdown-item py-2 text-main" href="my-test-drives.html"><i class="fas fa-car me-3 text-muted"></i>Test Drives</a></li>
+                            <li><hr class="dropdown-divider border-theme"></li>
                             <li><a class="dropdown-item py-2 text-pink fw-bold" href="#" id="logoutBtn"><i class="fas fa-sign-out-alt me-3"></i>Logout</a></li>
                         </ul>
                     </div>
@@ -827,28 +1039,69 @@
             };
 
             const buySteps = [
-                { number:'01', title:'Browse Vehicles', desc: 'Explore thousands of certified cars and commercial vehicles with transparent pricing.', icon: 'fas fa-search', color: '#a78bfa'},
-                { number:'02', title:'Compare Details', desc: 'Check inspection reports, photos, ownership records, and price benchmarks.', icon: 'fas fa-list-alt', color: '#60a5fa'},
-                { number:'03', title:'Apply for Finance', desc: 'Review finance options, pre-approvals, and institutional assistance.', icon: 'fas fa-university', color: '#9ca3af'},
-                { number:'04', title:'Checkout or Bid', desc: 'Add vehicles to cart, save to wishlist, buy instantly, or place bids.', icon: 'fas fa-shopping-cart', color: '#94a3b8'},
-                { number:'05', title:'RC & Delivery', desc: 'Complete documentation, transfer ownership, and schedule delivery.', icon: 'fas fa-truck', color: '#fbbf24'}
+                { number:'01', title:'Browse Vehicles', desc: 'Explore thousands of certified cars and commercial vehicles.', icon: 'fas fa-search', color: '#ec4899'},
+                { number:'02', title:'Compare Details', desc: 'Check inspection reports, photos, and ownership records.', icon: 'fas fa-list-alt', color: '#ec4899'},
+                { number:'03', title:'Book Test Drive', desc: 'Experience the vehicle firsthand before making a decision.', icon: 'fas fa-car', color: '#ec4899'},
+                { number:'04', title:'Confirm Purchase', desc: 'Select your vehicle and proceed to final checkout instantly.', icon: 'fas fa-check-circle', color: '#ec4899'},
+                { number:'05', title:'Financing & Documentation', desc: 'Secure institutional loans and handle RTO paperwork.', icon: 'fas fa-university', color: '#ec4899'},
+                { number:'06', title:'Delivery', desc: 'Schedule a convenient time for your vehicle handover.', icon: 'fas fa-truck', color: '#ec4899'}
             ];
 
-            const howWorksGrid = document.getElementById('howWorksGrid');
-            if (howWorksGrid) {
-                howWorksGrid.innerHTML = buySteps.map(s => `
-                    <div class="col">
-                        <div class="process-card">
-                            <div class="step-number">${s.number}</div>
-                            <div class="fs-4 mb-3" style="color: ${s.color};"><i class="${s.icon}"></i></div>
-                            <h6 class="fw-bold text-white mb-2">${s.title}</h6>
-                            <p class="small text-muted mb-0">${s.desc}</p>
+            const sellSteps = [
+                { number:'01', title:'List Vehicle', desc: 'Submit your vehicle details and documents in minutes.', icon: 'fas fa-plus-circle', color: '#06b6d4'},
+                { number:'02', title:'AI Valuation', desc: 'Get an instant, fair market price for your vehicle.', icon: 'fas fa-robot', color: '#06b6d4'},
+                { number:'03', title:'Reach Buyers', desc: 'Get exposure to 10k+ verified B2B buyers across India.', icon: 'fas fa-users', color: '#06b6d4'},
+                { number:'04', title:'Negotiate', desc: 'Receive offers and close deals with our secure workflow.', icon: 'fas fa-handshake', color: '#06b6d4'},
+                { number:'05', title:'Get Paid', desc: 'Secure instant payment and handle documentation.', icon: 'fas fa-money-bill-wave', color: '#06b6d4'}
+            ];
+
+            const auctionSteps = [
+                { number:'01', title:'Register', desc: 'Sign up and verify your credentials for bidding.', icon: 'fas fa-user-edit', color: '#f59e0b'},
+                { number:'02', title:'Browse Events', desc: 'Access upcoming institutional and fleet auctions.', icon: 'fas fa-calendar-alt', color: '#f59e0b'},
+                { number:'03', title:'Place Bids', desc: 'Compete in real-time with our dynamic engine.', icon: 'fas fa-gavel', color: '#f59e0b'},
+                { number:'04', title:'Win & Confirm', desc: 'Secure the deal once the auction timer hits zero.', icon: 'fas fa-trophy', color: '#f59e0b'},
+                { number:'05', title:'Documentation', desc: 'Complete RTO and transfer paperwork digitally.', icon: 'fas fa-file-contract', color: '#f59e0b'}
+            ];
+
+            window.renderJourney = function(type, btn) {
+                const grid = document.getElementById('journeyStepsGrid');
+                const tabs = document.querySelectorAll('.journey-tab');
+                
+                // Update tabs
+                tabs.forEach(t => {
+                    t.classList.remove('active', 'text-white');
+                    t.classList.add('text-muted');
+                });
+                btn.classList.add('active');
+                btn.classList.remove('text-muted');
+
+                // Grid animation
+                grid.style.opacity = '0';
+                
+                setTimeout(() => {
+                    let steps = [];
+                    if (type === 'buy') steps = buySteps;
+                    else if (type === 'sell') steps = sellSteps;
+                    else if (type === 'auction') steps = auctionSteps;
+
+                    grid.innerHTML = steps.map(s => `
+                        <div class="col">
+                            <div class="process-card">
+                                <div class="step-number">${s.number}</div>
+                                <div class="fs-4 mb-3" style="color: ${s.color};"><i class="${s.icon}"></i></div>
+                                <h6 class="fw-bold text-heading mb-2">${s.title}</h6>
+                                <p class="small text-muted mb-0">${s.desc}</p>
+                            </div>
                         </div>
-                    </div>
-                `).join('');
-            }
+                    `).join('');
+                    grid.style.opacity = '1';
+                }, 300);
+            };
+
+            // Initialize with Buy journey
+            const buyTab = document.querySelector('.journey-tab[data-journey="buy"]');
+            if (buyTab) renderJourney('buy', buyTab);
         });
     </script>
-</body>
-
+</div></div></div></div></div></body>
 </html>

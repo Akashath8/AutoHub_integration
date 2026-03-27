@@ -14,15 +14,16 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            background-color: var(--bg-secondary);
         }
         .auth-card {
-            background: white;
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
             border-radius: 16px;
             padding: 2.5rem;
             width: 100%;
             max-width: 450px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            box-shadow: var(--shadow-md);
         }
         .brand-logo {
             font-size: 1.8rem;
@@ -43,13 +44,13 @@
             
             <form id="loginForm">
                 <div class="mb-3">
-                    <label for="email" class="form-label">Email Address</label>
-                    <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+                    <label for="email" class="form-label text-main fw-bold">Email Address</label>
+                    <input type="email" class="form-control bg-theme-secondary text-main border-theme" id="email" placeholder="Enter your email" required>
                 </div>
                 
                 <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" placeholder="Enter password" required>
+                    <label for="password" class="form-label text-main fw-bold">Password</label>
+                    <input type="password" class="form-control bg-theme-secondary text-main border-theme" id="password" placeholder="Enter password" required>
                 </div>
                 
                 <div class="d-flex justify-content-between align-items-center mb-4">

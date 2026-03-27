@@ -22,7 +22,7 @@
 
         .payment-card.selected {
             border-color: var(--primary-color);
-            background-color: #f8f9ff;
+            background-color: var(--bg-primary);
         }
 
         .trust-badge {
@@ -33,17 +33,17 @@
     </style>
 </head>
 
-<body>
+<body class="bg-theme-secondary text-main">
 
     <!-- Navbar Simplified -->
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg bg-theme-primary border-bottom border-theme">
         <div class="container">
-            <a class="navbar-brand" href="index.html">AutoHub <span class="text-accent">Marketplace</span></a>
+            <a class="navbar-brand text-main" href="index.html">AutoHub <span class="text-accent">Marketplace</span></a>
         </div>
     </nav>
 
     <div class="container py-5">
-        <h3 class="mb-4 text-center">Complete Transaction Payment</h3>
+        <h3 class="mb-4 text-center text-main">Complete Transaction Payment</h3>
 
         <div class="alert alert-info d-none mb-4 mx-auto" style="max-width: 800px;" id="escrowNotice">
             <!-- Notice removed based on user request to strip escrow wording -->
@@ -53,11 +53,11 @@
 
             <!-- Option 1: Settlement -->
             <div class="col-md-5">
-                <div class="card payment-card h-100 p-4 text-center position-relative" onclick="selectOption('settlement')">
+                <div class="card payment-card bg-theme-primary border-theme h-100 p-4 text-center position-relative" onclick="selectOption('settlement')">
                     <div id="trustBadgeContainer"></div>
                     <div class="card-body">
                         <i id="settlementIcon" class="fas fa-university text-primary mb-3" style="font-size: 3rem;"></i>
-                        <h4 id="settlementTitle">Pay</h4>
+                        <h4 id="settlementTitle" class="text-main">Pay</h4>
                         <p class="text-muted" id="settlementDesc">Direct payment to finalize transaction.</p>
                         <h5 class="text-danger fw-bold mt-3" id="totalAmountDisplay">₹ 0</h5>
                         <button class="btn btn-outline-primary mt-3 w-100">Proceed to Pay</button>
@@ -67,10 +67,10 @@
 
             <!-- Option 2: Finance -->
             <div class="col-md-5">
-                <div class="card payment-card h-100 p-4 text-center" onclick="selectOption('finance')">
+                <div class="card payment-card bg-theme-primary border-theme h-100 p-4 text-center" onclick="selectOption('finance')">
                     <div class="card-body">
                         <i class="fas fa-briefcase text-success mb-3" style="font-size: 3rem;"></i>
-                        <h4>Apply for a loan</h4>
+                        <h4 class="text-main">Apply for a loan</h4>
                         <p class="text-muted">Get B2B financing through our partner banks.</p>
                         <ul class="text-start small text-muted mt-3 mb-3">
                             <li><i class="fas fa-check text-success me-2"></i> High Credit Limits</li>
@@ -88,7 +88,7 @@
     <!-- Payment Processing Modal -->
     <div class="modal fade" id="processingModal" tabindex="-1" data-bs-backdrop="static">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content text-center p-5">
+            <div class="modal-content bg-theme-primary border-theme text-center p-5">
                 <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;"></div>
                 <h5>Processing Payment...</h5>
                 <p class="text-muted">Please do not refresh the page.</p>

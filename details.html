@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
 
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap 5 CSS -->
-    <title>Details - AutoHub Marketplace</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/main.css">
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Bootstrap 5 CSS -->
+<title>Details - AutoHub Marketplace</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<link href="css/main.css" rel="stylesheet"/>
+<style>
         .main-image {
             height: 400px;
             object-fit: cover;
@@ -18,250 +18,358 @@
         }
 
         .spec-box {
-            background: #f8f9fa;
+            background-color: var(--bg-secondary);
             padding: 1rem;
             border-radius: 8px;
             text-align: center;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+    </style>
+
+<style id="super-mega-menu-css">
+        /* Mega Menu Styles */
+        .dropdown-mega { position: static; }
+        .mega-menu {
+            position: absolute; top: 100%; left: 0; right: 0; margin: 0 auto;
+            width: 96%; max-width: 1100px; background: #ffffff;
+            border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            padding: 30px; display: none; z-index: 1050; border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+        .dropdown-mega:hover .mega-menu { display: block; animation: fadeInMega 0.2s ease-in-out; }
+        .mega-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .mega-item h6 { font-weight: 700; margin-bottom: 15px; color: #111827; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
+        .mega-item p { font-size: 13px; color: #6b7280; line-height: 1.4; transition: color 0.2s; }
+        .mega-item a { transition: all 0.2s ease; border-radius: 6px; padding: 8px; margin: -8px; }
+        .mega-item a:hover { background-color: #f8fafc; }
+        .mega-item a:hover .fs-6 { color: var(--pink-accent, #ec4899); }
+        .mega-item a:hover p { color: #4b5563; }
+        @keyframes fadeInMega { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* Responsive Mobile Behavior */
+        @media (max-width: 991px) {
+            .mega-menu { position: static; width: 100%; box-shadow: none; padding: 15px; display: none; margin-top: 10px; }
+            .dropdown-mega.show .mega-menu { display: block; }
+            .mega-grid { grid-template-columns: 1fr; gap: 20px; }
         }
     </style>
 </head>
+<body class="bg-theme-secondary text-main">
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg sticky-top">
+<div class="container">
+<div class="d-flex align-items-center gap-2">
+<a class="navbar-brand" href="index.html">AutoHub <span class="text-accent">Marketplace</span></a>
+<div class="dropdown d-none d-lg-block">
+<button aria-expanded="false" class="btn nav-link" data-bs-toggle="dropdown" id="navLocationBtn">
+<i class="fas fa-map-marker-alt me-1 text-accent"></i> Select City <i class="fas fa-chevron-down ms-1" style="font-size:0.7rem;"></i>
+</button>
+<ul class="dropdown-menu location-dropdown-menu">
+<li><span class="dropdown-header">Popular Cities</span></li>
+<li><a class="dropdown-item" data-nav-city="Bangalore" href="#"><i class="fas fa-city me-2 text-muted small"></i>Bangalore</a></li>
+<li><a class="dropdown-item" data-nav-city="Chennai" href="#"><i class="fas fa-city me-2 text-muted small"></i>Chennai</a></li>
+<li><a class="dropdown-item" data-nav-city="Pune" href="#"><i class="fas fa-city me-2 text-muted small"></i>Pune</a></li>
+<li><a class="dropdown-item" data-nav-city="Mumbai" href="#"><i class="fas fa-city me-2 text-muted small"></i>Mumbai</a></li>
+<li>
+<hr class="dropdown-divider"/>
+</li>
+<li><a class="dropdown-item" data-nav-city="Delhi" href="#"><i class="fas fa-city me-2 text-muted small"></i>Delhi</a></li>
+<li><a class="dropdown-item" data-nav-city="Hyderabad" href="#"><i class="fas fa-city me-2 text-muted small"></i>Hyderabad</a></li>
+<li><a class="dropdown-item" data-nav-city="Ahmedabad" href="#"><i class="fas fa-city me-2 text-muted small"></i>Ahmedabad</a></li>
+</ul>
+</div>
+</div>
+<button class="navbar-toggler" data-bs-target="#navbarContent" data-bs-toggle="collapse" type="button">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="navbarContent">
+<ul class="navbar-nav ms-auto align-items-center gap-2">
+<!-- 1. BUY MENU -->
+<li class="nav-item dropdown-mega">
+<a class="nav-link text-main fw-bold" href="listing.html">Buy <i class="fas fa-chevron-down ms-1" style="font-size: 0.6em;"></i></a>
+<div class="mega-menu">
+<div class="mega-grid">
+<div class="mega-item">
+<h6>Explore Vehicles</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="listing.html"><div class="fw-bold fs-6">Search Vehicles</div><p class="mb-0">Browse all available vehicles</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="listing.html"><div class="fw-bold fs-6">Explore by Category</div><p class="mb-0">Cars, Commercial, EVs</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="listing.html"><div class="fw-bold fs-6">Featured Listings</div><p class="mb-0">Verified &amp; premium vehicles</p></a>
+</div>
+<div class="mega-item">
+<h6>Buying Tools</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">Compare Vehicles</div><p class="mb-0">Side-by-side comparison</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">EMI Calculator</div><p class="mb-0">Estimate monthly payments</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">Loan Assistance</div><p class="mb-0">Financing options available</p></a>
+</div>
+<div class="mega-item">
+<h6>Buyer Support</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">Book Test Drive</div><p class="mb-0">Schedule a visit</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">Buyer Guide</div><p class="mb-0">How Buying Works</p></a>
+<a class="d-block text-decoration-none text-dark mb-4" href="#"><div class="fw-bold fs-6">Verified Listings &amp; Trust</div><p class="mb-0">Quality assured</p></a>
+<a class="btn btn-pink w-100 fw-bold rounded text-white py-2" href="listing.html" style="margin:0; text-align:center;">Start Buying</a>
+</div>
+</div>
+</div>
+</li>
+<!-- 2. SELL MENU -->
+<li class="nav-item dropdown-mega">
+<a class="nav-link text-main fw-bold" href="sell-wizard.html">Sell <i class="fas fa-chevron-down ms-1" style="font-size: 0.6em;"></i></a>
+<div class="mega-menu">
+<div class="mega-grid">
+<div class="mega-item">
+<h6>Getting Started</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell-wizard.html"><div class="fw-bold fs-6">How Selling Works</div><p class="mb-0">List → Get Quotes → Close Deal</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell-wizard.html"><div class="fw-bold fs-6">Who Can Sell</div><p class="mb-0">Dealers, fleet owners, businesses</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell-wizard.html"><div class="fw-bold fs-6">Why Sell on AutoHub</div><p class="mb-0">Reach, pricing, trust</p></a>
+</div>
+<div class="mega-item">
+<h6>Seller Benefits</h6>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Access Verified Buyers</div></div>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Auction vs Direct Sale</div></div>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Smart Pricing Insights</div></div>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Secure Payments &amp; Escrow</div></div>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Documentation Support</div></div>
+</div>
+<div class="mega-item">
+<h6>Conversion</h6>
+<div class="bg-light p-3 rounded mb-4 text-start" style="margin:0; border: 1px solid rgba(0,0,0,0.1);">
+<div class="small fw-bold text-success mb-2"><i class="fas fa-shield-alt"></i> Trusted by dealers across India</div>
+<div class="small fw-bold text-dark"><i class="fas fa-car border p-1 rounded me-1 bg-white"></i> 10,000+ vehicles sold</div>
+</div>
+<a class="btn btn-dark w-100 fw-bold rounded mb-2 py-2 text-white" href="register.html" style="margin:0; text-align:center;">Become a Seller</a>
+<a class="btn btn-outline-dark w-100 fw-bold rounded py-2" href="#" style="margin:0; text-align:center;">Talk to Account Manager</a>
+</div>
+</div>
+</div>
+</li>
+<!-- 3. AUCTIONS MENU -->
+<li class="nav-item dropdown-mega">
+<a class="nav-link text-main fw-bold" href="auction-subscription.html">Auctions <i class="fas fa-chevron-down ms-1" style="font-size: 0.6em;"></i></a>
+<div class="mega-menu">
+<div class="mega-grid">
+<div class="mega-item">
+<h6>Discover Auctions</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Live Auctions</div><p class="mb-0">Bid in real-time</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Upcoming Events</div><p class="mb-0">Plan your purchases</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Past Auction Results</div><p class="mb-0">Market price discovery</p></a>
+</div>
+<div class="mega-item">
+<h6>Participate</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">How Auctions Work</div><p class="mb-0">Step-by-step guidance</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Join Auction Events</div><p class="mb-0">Register as a bidder</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Rules &amp; Eligibility</div><p class="mb-0">What you need to know</p></a>
+</div>
+<div class="mega-item">
+<h6>Seller Education</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell-wizard.html"><div class="fw-bold fs-6">List Vehicle in Auction</div><p class="mb-0">Reach massive audiences</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell-wizard.html"><div class="fw-bold fs-6">Auction Benefits</div><p class="mb-0">Faster liquidation</p></a>
+<a class="d-block text-decoration-none text-dark mb-4" href="sell-wizard.html"><div class="fw-bold fs-6">Pricing Transparency</div><p class="mb-0">Market-driven value</p></a>
+<a class="btn w-100 fw-bold rounded text-white py-2" href="auction-subscription.html" style="background-color: var(--orange-accent); margin:0; text-align:center;">View Live Auctions</a>
+</div>
+</div>
+</div>
+</li>
+<!-- 4. RESOURCES MENU -->
+<li class="nav-item dropdown-mega">
+<a class="nav-link text-main fw-bold" href="blogs.html">Resources <i class="fas fa-chevron-down ms-1" style="font-size: 0.6em;"></i></a>
+<div class="mega-menu">
+<div class="mega-grid">
+<div class="mega-item">
+<h6>Learn</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Buyer Guide</div><p class="mb-0">Procurement made easy</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Seller Guide</div><p class="mb-0">Maximize your margins</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Auction Guide</div><p class="mb-0">Bidding strategies</p></a>
+</div>
+<div class="mega-item">
+<h6>Support</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="support.html"><div class="fw-bold fs-6">Help Center</div><p class="mb-0">Get assistance</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="faqs.html"><div class="fw-bold fs-6">FAQs</div><p class="mb-0">Common questions</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="support.html"><div class="fw-bold fs-6">Contact Support</div><p class="mb-0">We are here to help</p></a>
+</div>
+<div class="mega-item">
+<h6>Insights</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Blogs &amp; Industry Insights</div><p class="mb-0">Latest automotive news</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Market Trends</div><p class="mb-0">Demand forecasting</p></a>
+<a class="d-block text-decoration-none text-dark mb-4" href="blogs.html"><div class="fw-bold fs-6">Price Reports</div><p class="mb-0">Valuation matrix</p></a>
+<a class="btn btn-primary w-100 fw-bold rounded text-white py-2" href="blogs.html" style="margin:0; text-align:center;">Explore Resources</a>
+</div>
+</div>
+</div>
+</li>
 
-<body>
-
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg sticky-top">
-        <div class="container">
-            <div class="d-flex align-items-center gap-2">
-                <a class="navbar-brand" href="index.html">AutoHub <span class="text-accent">Marketplace</span></a>
-                <div class="dropdown d-none d-lg-block">
-                    <button class="btn nav-link" id="navLocationBtn" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-map-marker-alt me-1 text-accent"></i> Select City <i
-                            class="fas fa-chevron-down ms-1" style="font-size:0.7rem;"></i>
-                    </button>
-                    <ul class="dropdown-menu location-dropdown-menu">
-                        <li><span class="dropdown-header">Popular Cities</span></li>
-                        <li><a class="dropdown-item" href="#" data-nav-city="Bangalore"><i
-                                    class="fas fa-city me-2 text-muted small"></i>Bangalore</a></li>
-                        <li><a class="dropdown-item" href="#" data-nav-city="Chennai"><i
-                                    class="fas fa-city me-2 text-muted small"></i>Chennai</a></li>
-                        <li><a class="dropdown-item" href="#" data-nav-city="Pune"><i
-                                    class="fas fa-city me-2 text-muted small"></i>Pune</a></li>
-                        <li><a class="dropdown-item" href="#" data-nav-city="Mumbai"><i
-                                    class="fas fa-city me-2 text-muted small"></i>Mumbai</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#" data-nav-city="Delhi"><i
-                                    class="fas fa-city me-2 text-muted small"></i>Delhi</a></li>
-                        <li><a class="dropdown-item" href="#" data-nav-city="Hyderabad"><i
-                                    class="fas fa-city me-2 text-muted small"></i>Hyderabad</a></li>
-                        <li><a class="dropdown-item" href="#" data-nav-city="Ahmedabad"><i
-                                    class="fas fa-city me-2 text-muted small"></i>Ahmedabad</a></li>
-                    </ul>
-                </div>
-            </div>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarContent">
-                <ul class="navbar-nav ms-auto align-items-center gap-2">
-                    <li class="nav-item me-2 position-relative">
-                        <a class="nav-link" href="#" title="Wishlist">
-                            <i class="fas fa-heart text-danger"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item d-none" id="navQuotations">
-                        <a class="nav-link nav-mode-btn rent-btn" href="my-quotes.html">Quotations</a>
-                    </li>
-                    <li class="nav-item me-1 nav-bell-wrap">
-                        <a class="nav-link" href="#" title="Notifications"><i class="fas fa-bell"></i></a>
-                        <span class="bell-badge" id="bellCount">0</span>
-                    </li>
-                    <li class="nav-item me-2 position-relative">
-                        <a class="nav-link" href="cart.html">
-                            <i class="fas fa-shopping-cart"></i>
-                            <span
-                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                                id="cartCount">0</span>
-                        </a>
-                    </li>
-                    <li class="nav-item ms-2" id="navProfileArea">
-                        <!-- Handled by JS -->
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <div class="container py-5" id="detailsContainer">
-        <!-- Content injected via JS -->
-    </div>
-
-    <!-- Login/Signup Modal (Lazy Auth) -->
-    <div class="modal fade" id="authModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content border-0 shadow-lg" style="border-radius: 12px; overflow: hidden;">
-                <div class="row g-0">
-                    <div class="col-md-5 d-none d-md-block"
-                        style="background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));">
-                        <div class="p-4 text-white h-100 d-flex flex-column justify-content-center">
-                            <h4 class="fw-bold mb-3">AutoHub</h4>
-                            <p class="small opacity-75">Your journey to the perfect car starts here. Sign in to save,
+<li class="nav-item me-2 position-relative">
+<a class="nav-link" href="#" title="Wishlist">
+<i class="fas fa-heart text-danger"></i>
+</a>
+</li>
+<li class="nav-item d-none" id="navQuotations">
+<a class="nav-link nav-mode-btn rent-btn" href="my-quotes.html">Quotations</a>
+</li>
+<li class="nav-item me-1 nav-bell-wrap">
+<a class="nav-link" href="#" title="Notifications"><i class="fas fa-bell"></i></a>
+<span class="bell-badge" id="bellCount">0</span>
+</li>
+<li class="nav-item me-2 position-relative">
+<a class="nav-link" href="cart.html">
+<i class="fas fa-shopping-cart"></i>
+<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cartCount">0</span>
+</a>
+</li>
+<li class="nav-item ms-2" id="navProfileArea">
+<!-- Handled by JS -->
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<div class="container py-5" id="detailsContainer">
+<!-- Content injected via JS -->
+</div>
+<!-- Login/Signup Modal (Lazy Auth) -->
+<div class="modal fade" id="authModal" tabindex="-1">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content border-0 shadow-lg" style="border-radius: 12px; overflow: hidden;">
+<div class="row g-0">
+<div class="col-md-5 d-none d-md-block" style="background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));">
+<div class="p-4 text-white h-100 d-flex flex-column justify-content-center">
+<h4 class="fw-bold mb-3">AutoHub</h4>
+<p class="small opacity-75">Your journey to the perfect car starts here. Sign in to save,
                                 shortlist, and buy.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-7 p-4">
-                        <div class="d-flex justify-content-between align-items-center mb-4">
-                            <h5 class="fw-bold mb-0">Login or Sign Up</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <form id="lazyAuthForm">
-                            <div class="mb-3">
-                                <label class="form-label small text-muted">Email or Mobile Number</label>
-                                <input type="text" id="lazyAuthUser" class="form-control" placeholder="Enter details"
-                                    required>
-                            </div>
-                            <div class="mb-4">
-                                <label class="form-label small text-muted">Password</label>
-                                <input type="password" id="lazyAuthPass" class="form-control" placeholder="••••••••"
-                                    required>
-                            </div>
-                            <button type="submit" class="btn btn-primary w-100 fw-bold mb-3"
-                                style="background: #8e44ad; border-color: #8e44ad;">Continue</button>
-
-                            <div class="d-flex align-items-center mb-3">
-                                <hr class="flex-grow-1 m-0">
-                                <span class="mx-3 text-muted small">OR</span>
-                                <hr class="flex-grow-1 m-0">
-                            </div>
-
-                            <button type="button"
-                                class="btn btn-outline-dark w-100 fw-bold mb-4 d-flex align-items-center justify-content-center">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg"
-                                    alt="Google" style="height: 18px; margin-right: 8px;">
+</div>
+</div>
+<div class="col-md-7 p-4">
+<div class="d-flex justify-content-between align-items-center mb-4">
+<h5 class="fw-bold mb-0">Login or Sign Up</h5>
+<button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+</div>
+<form id="lazyAuthForm">
+<div class="mb-3">
+<label class="form-label small text-muted">Email or Mobile Number</label>
+<input class="form-control" id="lazyAuthUser" placeholder="Enter details" required="" type="text"/>
+</div>
+<div class="mb-4">
+<label class="form-label small text-muted">Password</label>
+<input class="form-control" id="lazyAuthPass" placeholder="••••••••" required="" type="password"/>
+</div>
+<button class="btn btn-primary w-100 fw-bold mb-3" type="submit">Continue</button>
+<div class="d-flex align-items-center mb-3">
+<hr class="flex-grow-1 m-0"/>
+<span class="mx-3 text-muted small">OR</span>
+<hr class="flex-grow-1 m-0"/>
+</div>
+<button class="btn btn-outline-dark w-100 fw-bold mb-4 d-flex align-items-center justify-content-center" type="button">
+<img alt="Google" src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" style="height: 18px; margin-right: 8px;"/>
                                 Continue with Google
                             </button>
-
-                            <div class="text-center mt-2">
-                                <span class="text-muted small">New to AutoHub?</span>
-                                <a href="register.html" class="text-decoration-none fw-bold small ms-1"
-                                    style="color: #8e44ad;">Create New Account</a>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Test Drive Booking Modal -->
-    <div class="modal fade" id="testDriveModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content border-0 shadow-lg" style="border-radius: 12px; overflow: hidden;">
-                <div class="modal-header bg-light">
-                    <h5 class="modal-title fw-bold">Book Test Drive</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body p-0">
-                    <div class="row g-0">
-                        <!-- Vehicle Summary -->
-                        <div class="col-md-5 bg-light p-4 border-end">
-                            <img src="" id="tdVehicleImg" class="img-fluid rounded mb-3"
-                                style="width: 100%; height: 200px; object-fit: cover;" alt="Vehicle Image">
-                            <h5 class="fw-bold mb-1" id="tdVehicleName">Vehicle Name</h5>
-                            <p class="text-muted small mb-3"><i class="fas fa-map-marker-alt me-1"></i> <span
-                                    id="tdVehicleLocation">Location</span></p>
-                            <p class="small mb-1"><span class="text-muted">Seller:</span> <span class="fw-bold"
-                                    id="tdVehicleSeller">Seller Name</span></p>
-                            <hr>
-                            <div class="d-flex gap-2">
-                                <span class="badge bg-secondary" id="tdVehicleFuel">Fuel</span>
-                                <span class="badge bg-secondary" id="tdVehicleTransmission">Transmission</span>
-                            </div>
-                        </div>
-                        <!-- form -->
-                        <div class="col-md-7 p-4">
-                            <form id="testDriveForm">
-                                <input type="hidden" id="tdVehicleId">
-                                <div class="row g-3 mb-3">
-                                    <div class="col-md-12">
-                                        <label class="form-label small fw-bold">Full Name *</label>
-                                        <input type="text" class="form-control" id="tdName" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="form-label small fw-bold">Mobile Number *</label>
-                                        <input type="tel" class="form-control" id="tdMobile" required
-                                            pattern="[0-9]{10}">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="form-label small fw-bold">Email Address *</label>
-                                        <input type="email" class="form-control" id="tdEmail" required>
-                                    </div>
-                                </div>
-                                <div class="row g-3 mb-3">
-                                    <div class="col-md-6">
-                                        <label class="form-label small fw-bold">Preferred Date *</label>
-                                        <input type="date" class="form-control" id="tdDate" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="form-label small fw-bold">Preferred Time Slot *</label>
-                                        <select class="form-select" id="tdTimeSlot" required>
-                                            <option value="">Select Slot</option>
-                                            <option value="Morning Slot (10 AM – 1 PM)">Morning Slot (10 AM – 1 PM)
+<div class="text-center mt-2">
+<span class="text-theme-muted small">New to AutoHub?</span>
+<a class="text-decoration-none fw-bold small ms-1 text-accent" href="register.html">Create New Account</a>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Test Drive Booking Modal -->
+<div class="modal fade" id="testDriveModal" tabindex="-1">
+<div class="modal-dialog modal-dialog-centered modal-lg">
+<div class="modal-content border-0 shadow-lg" style="border-radius: 12px; overflow: hidden;">
+<div class="modal-header bg-light">
+<h5 class="modal-title fw-bold">Book Test Drive</h5>
+<button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+</div>
+<div class="modal-body p-0">
+<div class="row g-0">
+<!-- Vehicle Summary -->
+<div class="col-md-5 bg-light p-4 border-end">
+<img alt="Vehicle Image" class="img-fluid rounded mb-3" id="tdVehicleImg" src="" style="width: 100%; height: 200px; object-fit: cover;"/>
+<h5 class="fw-bold mb-1" id="tdVehicleName">Vehicle Name</h5>
+<p class="text-muted small mb-3"><i class="fas fa-map-marker-alt me-1"></i> <span id="tdVehicleLocation">Location</span></p>
+<p class="small mb-1"><span class="text-muted">Seller:</span> <span class="fw-bold" id="tdVehicleSeller">Seller Name</span></p>
+<hr/>
+<div class="d-flex gap-2">
+<span class="badge bg-secondary" id="tdVehicleFuel">Fuel</span>
+<span class="badge bg-secondary" id="tdVehicleTransmission">Transmission</span>
+</div>
+</div>
+<!-- form -->
+<div class="col-md-7 p-4">
+<form id="testDriveForm">
+<input id="tdVehicleId" type="hidden"/>
+<div class="row g-3 mb-3">
+<div class="col-md-12">
+<label class="form-label small fw-bold">Full Name *</label>
+<input class="form-control" id="tdName" required="" type="text"/>
+</div>
+<div class="col-md-6">
+<label class="form-label small fw-bold">Mobile Number *</label>
+<input class="form-control" id="tdMobile" pattern="[0-9]{10}" required="" type="tel"/>
+</div>
+<div class="col-md-6">
+<label class="form-label small fw-bold">Email Address *</label>
+<input class="form-control" id="tdEmail" required="" type="email"/>
+</div>
+</div>
+<div class="row g-3 mb-3">
+<div class="col-md-6">
+<label class="form-label small fw-bold">Preferred Date *</label>
+<input class="form-control" id="tdDate" required="" type="date"/>
+</div>
+<div class="col-md-6">
+<label class="form-label small fw-bold">Preferred Time Slot *</label>
+<select class="form-select" id="tdTimeSlot" required="">
+<option value="">Select Slot</option>
+<option value="Morning Slot (10 AM – 1 PM)">Morning Slot (10 AM – 1 PM)
                                             </option>
-                                            <option value="Afternoon Slot (1 PM – 4 PM)">Afternoon Slot (1 PM – 4 PM)
+<option value="Afternoon Slot (1 PM – 4 PM)">Afternoon Slot (1 PM – 4 PM)
                                             </option>
-                                            <option value="Evening Slot (4 PM – 7 PM)">Evening Slot (4 PM – 7 PM)
+<option value="Evening Slot (4 PM – 7 PM)">Evening Slot (4 PM – 7 PM)
                                             </option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label class="form-label small fw-bold">Select Vehicle Location *</label>
-                                        <select class="form-select" id="tdLoc" required>
-                                            <option value="">Select Location</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row g-3 mb-4">
-                                    <div class="col-md-12">
-                                        <label class="form-label small fw-bold">Preferred Driving Route
+</select>
+</div>
+<div class="col-md-12">
+<label class="form-label small fw-bold">Select Vehicle Location *</label>
+<select class="form-select" id="tdLoc" required="">
+<option value="">Select Location</option>
+</select>
+</div>
+</div>
+<div class="row g-3 mb-4">
+<div class="col-md-12">
+<label class="form-label small fw-bold">Preferred Driving Route
                                             (Optional)</label>
-                                        <input type="text" class="form-control" id="tdRoute"
-                                            placeholder="e.g. Highway, City traffic">
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label class="form-label small fw-bold">Special Requests (Optional)</label>
-                                        <textarea class="form-control" id="tdRequests" rows="2"></textarea>
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn btn-primary w-100 fw-bold">Confirm Test Drive</button>
-                            </form>
-                        </div>
-                    </div>
+<input class="form-control" id="tdRoute" placeholder="e.g. Highway, City traffic" type="text"/>
+</div>
+<div class="col-md-12">
+<label class="form-label small fw-bold">Special Requests (Optional)</label>
+<textarea class="form-control" id="tdRequests" rows="2"></textarea>
+</div>
+</div>
+<button class="btn btn-primary w-100 fw-bold" type="submit">Confirm Test Drive</button>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Success Toast Container -->
+<div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1060">
+<div aria-atomic="true" aria-live="assertive" class="toast align-items-center text-white bg-success border-0" id="tdSuccessToast" role="alert">
+<div class="d-flex">
+<div class="toast-body">
+                    Your test drive has been booked successfully.<br/>Our team will contact you shortly.
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Success Toast Container -->
-    <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1060">
-        <div id="tdSuccessToast" class="toast align-items-center text-white bg-success border-0" role="alert"
-            aria-live="assertive" aria-atomic="true">
-            <div class="d-flex">
-                <div class="toast-body">
-                    Your test drive has been booked successfully.<br>Our team will contact you shortly.
-                </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
-                    aria-label="Close"></button>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/store.js"></script>
-    <script src="js/data.js"></script>
-    <script src="js/location.js"></script>
-    <script>
+<button aria-label="Close" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" type="button"></button>
+</div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/store.js"></script>
+<script src="js/data.js"></script>
+<script src="js/location.js"></script>
+<script>
         document.addEventListener('DOMContentLoaded', () => {
             const user = store.getUser();
 
@@ -274,7 +382,7 @@
                             <i class="fas fa-building fa-lg text-primary"></i> <span class="fw-bold ms-1">${user.companyName || user.firstName}</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end shadow border-0" style="border-radius: 8px;">
-                            ${user.role === 'Dealer' ? '<li><a class="dropdown-item py-2 fw-bold text-primary" href="dealer-dashboard.html"><i class="fas fa-tachometer-alt me-3 text-primary"></i>Dealer Dashboard</a></li>' : ''}
+                            ${user.role === 'Dealer' ? '<li><a class="dropdown-item py-2 fw-bold text-primary" href="seller/dashboard.html"><i class="fas fa-tachometer-alt me-3 text-primary"></i>Dealer Dashboard</a></li>' : ''}
                             <li><a class="dropdown-item py-2" href="#"><i class="fas fa-user me-3 text-muted"></i>My Profile</a></li>
                             <li><a class="dropdown-item py-2" href="orders.html"><i class="fas fa-box me-3 text-muted"></i>My Orders</a></li>
                             <li><a class="dropdown-item py-2" href="my-quotes.html"><i class="fas fa-file-invoice me-3 text-muted"></i>Quotations</a></li>
@@ -409,12 +517,12 @@
                             </div>
                         </div>
 
-                        <div class="card bg-light border-0 mb-4">
+                        <div class="card bg-theme-primary border-theme mb-4">
                             <div class="card-body">
                                 <h6 class="fw-bold">Technical Specifications</h6>
-                                <p class="mb-1"><small>Engine:</small> ${vehicle.specs.engine}</p>
-                                <p class="mb-1"><small>Power:</small> ${vehicle.specs.power}</p>
-                                <p class="mb-0"><small>Transmission:</small> ${vehicle.transmission}</p>
+                                <p class="mb-1 text-theme-muted"><small>Engine:</small> <span class="text-main">${vehicle.specs.engine}</span></p>
+                                <p class="mb-1 text-theme-muted"><small>Power:</small> <span class="text-main">${vehicle.specs.power}</span></p>
+                                <p class="mb-0 text-theme-muted"><small>Transmission:</small> <span class="text-main">${vehicle.transmission}</span></p>
                             </div>
                         </div>
 
@@ -553,5 +661,4 @@
         });
     </script>
 </body>
-
 </html>

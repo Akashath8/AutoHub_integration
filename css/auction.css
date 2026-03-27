@@ -1,0 +1,369 @@
+/* AutoHub Auction Platform Styles - Light Theme */
+:root {
+    --auc-bg-page: var(--bg-secondary, #f8fafc);
+    --auc-bg-card: var(--bg-primary, #ffffff);
+    --auc-bg-hover: var(--bg-light, #f1f5f9);
+    --auc-text-main: var(--text-main, #1a1a1a);
+    --auc-text-muted: var(--text-muted, #6b7280);
+    --auc-border: var(--border-color, #e5e7eb);
+    --auc-primary: #f97316; /* High-energy Orange */
+    --auc-primary-hover: #ea580c;
+    --auc-success: #10b981; /* Winning/Active Green */
+    --auc-danger: #ef4444; /* Urgency Red */
+    --auc-warning: #eab308; /* Pending/Notice Yellow */
+}
+
+/* Base Theme Overrides */
+body.auction-theme {
+    background-color: var(--auc-bg-page);
+    color: var(--auc-text-main);
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+.auction-theme .navbar {
+    background-color: var(--auc-bg-card) !important;
+    border-bottom: 1px solid var(--auc-border);
+    backdrop-filter: none;
+}
+
+.auction-theme .navbar-brand {
+    color: var(--auc-text-main) !important;
+}
+
+.auction-theme .nav-link {
+    color: var(--auc-text-muted) !important;
+}
+
+.auction-theme .nav-link:hover {
+    color: var(--auc-primary) !important;
+}
+
+/* Action Buttons */
+.btn-auction {
+    background: linear-gradient(135deg, var(--auc-primary), var(--auc-primary-hover));
+    color: #fff;
+    border: none;
+    font-weight: 700;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-auction:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+    color: #fff;
+}
+
+.btn-auction-outline {
+    background: transparent;
+    color: var(--auc-primary);
+    border: 1px solid var(--auc-primary);
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-auction-outline:hover {
+    background: var(--auc-primary);
+    color: #fff;
+}
+
+/* Auction Cards */
+.auction-card {
+    background: var(--auc-bg-card);
+    border: 1px solid var(--auc-border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Light shadow */
+}
+
+.auction-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1); /* Lighter hover shadow */
+    border-color: var(--auc-primary);
+}
+
+.auction-card-img-wrap {
+    position: relative;
+    height: 200px;
+    background: #f1f5f9;
+}
+
+.auction-card-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.95;
+    transition: opacity 0.3s;
+}
+
+.auction-card:hover .auction-card-img-wrap img {
+    opacity: 1;
+}
+
+/* Badges */
+.auction-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    z-index: 10;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.badge-live {
+    background: var(--auc-danger);
+    color: #fff;
+    animation: pulse-danger 2s infinite;
+}
+
+.badge-upcoming {
+    background: var(--auc-bg-hover);
+    color: var(--auc-text-muted);
+    border: 1px solid var(--auc-border);
+}
+
+.badge-closed {
+    background: var(--auc-border);
+    color: var(--auc-text-main);
+}
+
+/* Timer */
+.auction-timer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.85); /* Light background for timer */
+    backdrop-filter: blur(4px);
+    padding: 8px 0;
+    text-align: center;
+    color: var(--auc-text-main);
+    font-family: monospace;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+.auction-timer.ending-soon {
+    color: var(--auc-danger);
+    background: rgba(254, 226, 226, 0.9); /* Light red tint */
+    border-top: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* Content Area */
+.auction-card-body {
+    padding: 1rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.auction-card-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+    color: var(--auc-text-main);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.auction-specs {
+    font-size: 0.8rem;
+    color: var(--auc-text-muted);
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 10px;
+}
+
+.auction-specs span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.auction-price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px dashed var(--auc-border);
+}
+
+.bid-label {
+    font-size: 0.75rem;
+    color: var(--auc-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+}
+
+.bid-amount {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--auc-primary);
+}
+
+.bid-count {
+    font-size: 0.8rem;
+    color: var(--auc-text-muted);
+    background: var(--auc-bg-hover);
+    padding: 3px 8px;
+    border-radius: 4px;
+}
+
+/* Details Page Styles */
+.auction-gallery {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--auc-border);
+    background: var(--auc-bg-card); /* White background for gallery */
+}
+
+.auction-main-img {
+    width: 100%;
+    height: 480px;
+    object-fit: contain; /* Don't crop heavily */
+    background: #f8fafc; /* Subtle background behind image */
+}
+
+.auction-thumb {
+    width: 100%;
+    height: 90px;
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.auction-thumb:hover, .auction-thumb.active {
+    border-color: var(--auc-primary);
+}
+
+.bid-console {
+    background: var(--auc-bg-card);
+    border: 1px solid var(--auc-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    position: sticky;
+    top: 100px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.bid-history-list {
+    max-height: 250px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+
+.bid-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--auc-border);
+    font-size: 0.9rem;
+    color: var(--auc-text-main);
+}
+
+.bid-item:first-child {
+    color: var(--auc-success);
+    font-weight: bold;
+}
+
+.bid-item-user {
+    color: var(--auc-text-muted);
+}
+
+/* Subscription Paywall Elements */
+.sub-hero {
+    background: linear-gradient(135deg, var(--auc-bg-page) 0%, #fff1f2 100%); /* Light pinkish/orange gradient instead of deep dark */
+    border-bottom: 1px solid var(--auc-border);
+    padding: 4rem 0;
+}
+
+.sub-card {
+    background: var(--auc-bg-card);
+    border: 1px solid var(--auc-border);
+    border-radius: 16px;
+    padding: 2.5rem;
+    position: relative;
+    transition: transform 0.3s;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.sub-card:hover {
+    border-color: rgba(249, 115, 22, 0.5);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.sub-card.popular {
+    border: 2px solid var(--auc-primary);
+    transform: scale(1.05);
+}
+
+.sub-price {
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--auc-text-main);
+}
+
+/* Animations */
+@keyframes pulse-danger {
+    0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5); }
+    70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+@keyframes flash-bid {
+    0% { background-color: rgba(16, 185, 129, 0.2); }
+    100% { background-color: transparent; }
+}
+
+.flash-update {
+    animation: flash-bid 1s ease-out;
+}
+
+/* Live View Elements */
+.live-stream-container {
+    background: #e2e8f0; /* Light gray instead of black */
+    border: 1px solid var(--auc-border);
+    border-radius: 12px;
+    height: 500px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.live-badge-overlay {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(239, 68, 68, 0.9);
+    color: #fff;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 10;
+}
+
+.live-badge-overlay i {
+    animation: pulse-danger 2s infinite;
+    border-radius: 50%;
+}

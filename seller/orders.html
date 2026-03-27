@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pipeline &amp; Orders | AutoHub B2B</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        :root {
+            --bg-color: #f7f9fc;
+            --white: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --primary-blue: #0ea5e9;
+            --primary-blue-dark: #0284c7;
+            --success-green: #22c55e;
+            --border-light: #e2e8f0;
+            --sidebar-width: 70px;
+            --header-height: 70px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            height: 100vh;
+        }
+
+        /* THIN SIDEBAR */
+        .sidebar-mini {
+            width: var(--sidebar-width);
+            background-color: var(--white);
+            border-right: 1px solid var(--border-light);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            z-index: 1040;
+            flex-shrink: 0;
+        }
+
+        .sidebar-mini .nav-item {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            transition: all 0.2s;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+
+        .sidebar-mini .nav-item:hover {
+            background-color: #f1f5f9;
+            color: var(--primary-blue);
+        }
+
+        .sidebar-mini .nav-item.active {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+        }
+
+        .sidebar-bottom {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* MAIN WRAPPER */
+        .main-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        /* HEADER */
+        .top-header {
+            height: var(--header-height);
+            background-color: var(--white);
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            padding: 0 30px;
+            gap: 40px;
+            z-index: 1030;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            line-height: 1.2;
+            color: var(--text-main);
+            min-width: 180px;
+        }
+
+        .brand-logo i {
+            color: var(--primary-blue);
+            font-size: 1.4rem;
+        }
+
+        .brand-logo span {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .horizontal-nav {
+            display: flex;
+            gap: 30px;
+            height: 100%;
+        }
+
+        .horizontal-nav a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            position: relative;
+            height: 100%;
+            transition: color 0.2s;
+        }
+
+        .horizontal-nav a:hover {
+            color: var(--text-main);
+        }
+
+        .horizontal-nav a.active {
+            color: var(--text-main);
+        }
+
+        .horizontal-nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-blue);
+            border-radius: 3px 3px 0 0;
+        }
+
+        .header-actions {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .search-container {
+            position: relative;
+            width: 250px;
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 8px 12px 8px 36px;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            background-color: #f8fafc;
+            font-size: 0.85rem;
+        }
+
+        .search-container input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            background-color: var(--white);
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+        }
+
+        .add-btn {
+            width: 36px;
+            height: 36px;
+            background-color: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: 0.2s;
+        }
+        .add-btn:hover { background-color: var(--primary-blue-dark); transform: scale(1.05); }
+
+        .notification-btn {
+            position: relative;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .notification-dot {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 8px;
+            height: 8px;
+            background-color: #ef4444;
+            border-radius: 50%;
+            border: 2px solid var(--white);
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            background-color: #e2e8f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.85rem;
+            color: var(--text-main);
+            cursor: pointer;
+        }
+
+        /* PAGE CONTENT */
+        .page-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 30px;
+        }
+
+        .page-header {
+            margin-bottom: 25px;
+        }
+
+        .page-header h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: var(--text-main);
+        }
+
+        .page-header p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* CARDS */
+        .dashboard-card {
+            background-color: var(--white);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            border: 1px solid rgba(0,0,0,0.04);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .kpi-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .kpi-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f9ff;
+            color: var(--primary-blue);
+            font-size: 1rem;
+        }
+
+        .kpi-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin: 0;
+            color: var(--text-main);
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+        }
+
+        .kpi-trend {
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .trend-up {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+
+        .chart-container-card {
+            background-color: var(--white);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            border: 1px solid rgba(0,0,0,0.04);
+            height: 320px;
+            position: relative;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .chart-title {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--text-main);
+            margin: 0;
+        }
+
+        .chart-more {
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+
+        .donut-container {
+            display: flex;
+            align-items: center;
+            height: calc(100% - 40px);
+            gap: 20px;
+        }
+        
+        .donut-chart-wrapper {
+            position: relative;
+            width: 160px;
+            height: 160px;
+        }
+        
+        .donut-center-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .donut-center-text h3 {
+            margin: 0;
+            font-weight: 800;
+            font-size: 1.8rem;
+        }
+
+        .donut-center-text p {
+            margin: 0;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .donut-legend {
+            flex: 1;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+            display: inline-block;
+        }
+
+        /* LISTS */
+        .list-card {
+            background-color: var(--white);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            border: 1px solid rgba(0,0,0,0.04);
+            height: 350px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .item-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .item-row {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .item-row:last-child { border-bottom: none; }
+
+        .car-thumb {
+            width: 50px;
+            height: 35px;
+            border-radius: 6px;
+            object-fit: cover;
+            margin-right: 15px;
+            background-color: #f1f5f9;
+        }
+
+        .item-details h6 {
+            margin: 0 0 2px 0;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--text-main);
+        }
+
+        .item-details p {
+            margin: 0;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .item-action {
+            margin-left: auto;
+            color: var(--text-muted);
+        }
+
+        /* Lead Table Custom */
+        .lead-table th {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 10px;
+        }
+        .lead-table td {
+            padding: 12px 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(0,0,0,0.02);
+            vertical-align: middle;
+        }
+        .avatar-sm {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 8px;
+        }
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+        .status-closed { background-color: #e0f2fe; color: #0284c7; }
+
+        .search-mini {
+            position: relative;
+        }
+        .search-mini input {
+            padding: 4px 10px 4px 28px;
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            font-size: 0.75rem;
+            width: 160px;
+            background-color: #f8fafc;
+        }
+        .search-mini i {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.7rem;
+            color: #94a3b8;
+        }
+    </style></head>
+<body><aside class="sidebar-mini">
+<div class="mb-4">
+<a class="nav-item" href="#"><i class="fas fa-th-large"></i></a>
+</div>
+<a class="nav-item" href="inventory.html" title="Inventory"><i class="fas fa-car"></i></a>
+<a class="nav-item" href="quotations.html" title="Sales Leads"><i class="fas fa-briefcase"></i></a>
+<a class="nav-item" href="documents.html" title="Documents"><i class="fas fa-file-alt"></i></a>
+<a class="nav-item" href="profile.html" title="Settings"><i class="fas fa-cog"></i></a>
+<div class="sidebar-bottom">
+<a class="nav-item" href="#" title="Help"><i class="far fa-question-circle"></i></a>
+<a class="nav-item text-danger" href="#" id="logoutBtn" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
+</div>
+</aside><div class="main-wrapper">
+<header class="top-header">
+<div class="brand-logo">
+<i class="fas fa-car-side"></i>
+<div>
+<div>AUTOHUB</div>
+<span>DEALER PORTAL</span>
+</div>
+</div>
+<nav class="horizontal-nav">
+<a class="" href="dashboard.html">Dashboard</a>
+<a href="inventory.html">Inventory</a>
+<a href="quotations.html">Sales Leads</a>
+<a href="#">Service</a>
+<a href="#">Reports</a>
+<a href="profile.html">Settings</a>
+</nav>
+<div class="header-actions">
+<div class="search-container">
+<i class="fas fa-search"></i>
+<input placeholder="Search Inventory, Leads..." type="text"/>
+</div>
+<button class="add-btn" title="Add Vehicle">+</button>
+<div class="notification-btn">
+<i class="far fa-bell"></i>
+<div class="notification-dot"></div>
+</div>
+<div aria-expanded="false" class="user-avatar dropdown-toggle" data-bs-toggle="dropdown">
+                    S.J.
+                </div>
+<ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
+<li><a class="dropdown-item py-2 fw-bold" href="profile.html"><i class="fas fa-user me-2 text-muted"></i>Profile</a></li>
+<li><hr class="dropdown-divider"/></li>
+<li><a class="dropdown-item py-2 text-danger fw-bold" href="#" onclick="document.getElementById('logoutBtn').click()"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+</ul>
+</div>
+</header>
+<main class="page-content">
+<div class="row g-4">
+<!-- Pipeline List (Left) -->
+<div class="col-lg-5">
+<!-- Search & Sort Bar -->
+<div class="d-flex justify-content-between mb-3">
+<h6 class="fw-bold mb-0 text-dark">4 Deals in Progress</h6>
+<select class="form-select form-select-sm w-auto border-0 text-primary fw-bold bg-transparent"><option>Sort by Urgency</option><option>Newest First</option></select>
+</div>
+<div class="d-flex flex-column gap-3">
+<!-- Order Card 1: Blocked -->
+<div class="card border-0 shadow-sm rounded-4 border-start border-danger border-4 cursor-pointer" style="background:#fffcfc;">
+<div class="card-body p-3">
+<div class="d-flex justify-content-between mb-2">
+<span class="badge bg-danger">Action Needed: Docs Pending</span>
+<span class="small fw-bold text-muted">#ORD-8821</span>
+</div>
+<h6 class="fw-bold text-dark mb-1 d-flex align-items-center gap-2">Tata Ace Gold CX <span class="badge bg-light text-dark fw-normal border">₹ 2.65L</span></h6>
+<p class="small text-muted mb-0"><i class="fas fa-user-circle me-1"></i> Buyer: Vinayak Transport</p>
+</div>
+</div>
+<!-- Order Card 2: Loan Processing -->
+<div class="card border-0 shadow-sm rounded-4 border-start border-warning border-4 cursor-pointer">
+<div class="card-body p-3">
+<div class="d-flex justify-content-between mb-2">
+<span class="badge bg-warning text-dark border border-warning" style="background:#fff3cd;">Loan Underwriting</span>
+<span class="small fw-bold text-muted">#ORD-8942</span>
+</div>
+<h6 class="fw-bold text-dark mb-1 d-flex align-items-center gap-2">Eicher Pro 2049 <span class="badge bg-light text-dark fw-normal border">₹ 8.50L</span></h6>
+<p class="small text-muted mb-0"><i class="fas fa-user-circle me-1"></i> Buyer: Jai Logistics</p>
+</div>
+</div>
+<!-- Order Card 3: Ready for delivery -->
+<div class="card border-0 shadow-sm rounded-4 border-start border-success border-4 cursor-pointer">
+<div class="card-body p-3">
+<div class="d-flex justify-content-between mb-2">
+<span class="badge bg-success bg-opacity-10 text-success border border-success">Ready for Release</span>
+<span class="small fw-bold text-muted">#ORD-8799</span>
+</div>
+<h6 class="fw-bold text-dark mb-1 flex align-items-center gap-2">Mahindra Bolero Pickup <span class="badge bg-light text-dark fw-normal border">₹ 5.15L</span></h6>
+<p class="small text-muted mb-0"><i class="fas fa-user-circle me-1"></i> Buyer: SK Traders</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Detailed View Tracker (Right) -->
+<div class="col-lg-7">
+<div class="card border-0 shadow-sm rounded-4 h-100">
+<!-- Header -->
+<div class="card-header bg-white p-4 border-bottom d-flex justify-content-between align-items-start">
+<div>
+<h5 class="fw-bold text-dark mb-1">Order #ORD-8821 Pipeline</h5>
+<div class="text-muted small">Tata Ace Gold CX • Value: ₹2,65,000</div>
+</div>
+<div class="text-end">
+<div class="badge bg-danger p-2 fs-6 border border-danger">Blocked</div>
+<div class="small fw-bold mt-1 text-muted">Started: 12 Oct</div>
+</div>
+</div>
+<!-- Full Timeline -->
+<div class="card-body p-4 bg-light">
+<div class="timeline-wrapper ms-2">
+<div class="timeline-step step-completed">
+<div class="timeline-circle"><i class="fas fa-check"></i></div>
+<div class="flex-grow-1">
+<div class="fw-bold fs-6 text-success text-opacity-75">1. Deal Agreed &amp; Token Retained</div>
+<div class="text-muted small">Quotation finalized at ₹2.65L. Buyer paid 5% Token via NEFT.</div>
+</div>
+<div class="text-muted small fw-bold">12 Oct 10:00</div>
+</div>
+<div class="timeline-step step-completed">
+<div class="timeline-circle"><i class="fas fa-check"></i></div>
+<div class="flex-grow-1">
+<div class="fw-bold fs-6 text-success text-opacity-75">2. Loan Sanctioned</div>
+<div class="text-muted small">AutoHub Finance processed ₹2.2L loan via HDFC Bank.</div>
+</div>
+<div class="text-muted small fw-bold">14 Oct 14:30</div>
+</div>
+<div class="timeline-step step-blocked">
+<div class="timeline-circle"><i class="fas fa-times"></i></div>
+<div class="flex-grow-1 bg-white p-3 rounded border border-danger shadow-sm mt-1">
+<div class="d-flex justify-content-between">
+<div class="fw-bold fs-6 text-danger"><i class="fas fa-exclamation-triangle"></i> 3. Seller Compliance Pending</div>
+<a class="btn btn-sm btn-dark fw-bold px-3" href="deal-fulfillment.html">Upload Now</a>
+</div>
+<div class="text-muted small mt-2">You must upload RTO Form 29/30 &amp; NOC to unlock Escrow Disbursal. Status is blocked from Bank.</div>
+</div>
+</div>
+<div class="timeline-step">
+<div class="timeline-circle">4</div>
+<div class="flex-grow-1">
+<div class="fw-bold fs-6 text-muted">Bank Disbursal to Escrow</div>
+<div class="text-muted small">Awaiting steps above.</div>
+</div>
+</div>
+<div class="timeline-step">
+<div class="timeline-circle">5</div>
+<div class="flex-grow-1">
+<div class="fw-bold fs-6 text-muted">Vehicle Ready for Delivery</div>
+<div class="text-muted small">Handover checklist and delivery docket.</div>
+</div>
+</div>
+<div class="timeline-step border-0">
+<div class="timeline-circle opacity-50"><i class="fas fa-flag-checkered"></i></div>
+<div class="flex-grow-1">
+<div class="fw-bold fs-6 text-muted">Deal Completed</div>
+<div class="text-muted small">Escrow released to your HDFC primary account.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const logoutBtn = document.getElementById("logoutBtn");
+            if (logoutBtn) {
+                logoutBtn.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    if (confirm("Are you sure you want to logout?")) {
+                        localStorage.clear();
+                        sessionStorage.clear();
+                        window.location.href = "../index.html";
+                    }
+                });
+            }
+        });
+    </script>
+<!-- Dynamic Nav Highlighting -->
+<script id="dynamic-nav-js">
+    document.addEventListener("DOMContentLoaded", function() {
+        let currentPath = window.location.pathname.split('/').pop();
+        if(!currentPath || currentPath === '') currentPath = 'dashboard.html';
+        
+        // Highlight side nav
+        const sideNavs = document.querySelectorAll('.sidebar-mini a.nav-item');
+        let sideMatched = false;
+        sideNavs.forEach(nav => {
+            const href = nav.getAttribute('href');
+            if (href && href === currentPath) {
+                nav.classList.add('active');
+                sideMatched = true;
+            }
+        });
+        // Default to first icon if no match
+        if(!sideMatched) {
+            document.querySelector('.sidebar-mini a.nav-item')?.classList.add('active');
+        }
+
+        // Highlight horizontal nav
+        const topNavs = document.querySelectorAll('.horizontal-nav a');
+        topNavs.forEach(nav => {
+            const href = nav.getAttribute('href');
+            if (href && currentPath.includes(href.split('.')[0]) && href !== '#') {
+                nav.classList.add('active');
+            }
+        });
+        
+        // Match base
+        if(currentPath === 'dashboard.html') {
+            document.querySelector('.horizontal-nav a[href="dashboard.html"]')?.classList.add('active');
+        }
+    });
+</script>
+</body>
+</html>

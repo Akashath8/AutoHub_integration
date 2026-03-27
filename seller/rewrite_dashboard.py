@@ -1,0 +1,940 @@
+import os
+
+NEW_DASHBOARD_HTML = """<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoHub Dealer Portal - Dashboard</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Core -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js for mocks -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #f7f9fc;
+            --white: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --primary-blue: #0ea5e9;
+            --primary-blue-dark: #0284c7;
+            --success-green: #22c55e;
+            --border-light: #e2e8f0;
+            --sidebar-width: 70px;
+            --header-height: 70px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            height: 100vh;
+        }
+
+        /* THIN SIDEBAR */
+        .sidebar-mini {
+            width: var(--sidebar-width);
+            background-color: var(--white);
+            border-right: 1px solid var(--border-light);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            z-index: 1040;
+            flex-shrink: 0;
+        }
+
+        .sidebar-mini .nav-item {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            transition: all 0.2s;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+
+        .sidebar-mini .nav-item:hover {
+            background-color: #f1f5f9;
+            color: var(--primary-blue);
+        }
+
+        .sidebar-mini .nav-item.active {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+        }
+
+        .sidebar-bottom {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* MAIN WRAPPER */
+        .main-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        /* HEADER */
+        .top-header {
+            height: var(--header-height);
+            background-color: var(--white);
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            padding: 0 30px;
+            gap: 40px;
+            z-index: 1030;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            line-height: 1.2;
+            color: var(--text-main);
+            min-width: 180px;
+        }
+
+        .brand-logo i {
+            color: var(--primary-blue);
+            font-size: 1.4rem;
+        }
+
+        .brand-logo span {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .horizontal-nav {
+            display: flex;
+            gap: 30px;
+            height: 100%;
+        }
+
+        .horizontal-nav a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            position: relative;
+            height: 100%;
+            transition: color 0.2s;
+        }
+
+        .horizontal-nav a:hover {
+            color: var(--text-main);
+        }
+
+        .horizontal-nav a.active {
+            color: var(--text-main);
+        }
+
+        .horizontal-nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-blue);
+            border-radius: 3px 3px 0 0;
+        }
+
+        .header-actions {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .search-container {
+            position: relative;
+            width: 250px;
+        }
+
+        .search-container i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 8px 12px 8px 36px;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            background-color: #f8fafc;
+            font-size: 0.85rem;
+        }
+
+        .search-container input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            background-color: var(--white);
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+        }
+
+        .add-btn {
+            width: 36px;
+            height: 36px;
+            background-color: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: 0.2s;
+        }
+        .add-btn:hover { background-color: var(--primary-blue-dark); transform: scale(1.05); }
+
+        .notification-btn {
+            position: relative;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .notification-dot {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 8px;
+            height: 8px;
+            background-color: #ef4444;
+            border-radius: 50%;
+            border: 2px solid var(--white);
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            background-color: #e2e8f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.85rem;
+            color: var(--text-main);
+            cursor: pointer;
+        }
+
+        /* PAGE CONTENT */
+        .page-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 30px;
+        }
+
+        .page-header {
+            margin-bottom: 25px;
+        }
+
+        .page-header h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: var(--text-main);
+        }
+
+        .page-header p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* CARDS */
+        .dashboard-card {
+            background-color: var(--white);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            border: 1px solid rgba(0,0,0,0.04);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .kpi-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .kpi-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f9ff;
+            color: var(--primary-blue);
+            font-size: 1rem;
+        }
+
+        .kpi-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin: 0;
+            color: var(--text-main);
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+        }
+
+        .kpi-trend {
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .trend-up {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+
+        .chart-container-card {
+            background-color: var(--white);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            border: 1px solid rgba(0,0,0,0.04);
+            height: 320px;
+            position: relative;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .chart-title {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--text-main);
+            margin: 0;
+        }
+
+        .chart-more {
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+
+        .donut-container {
+            display: flex;
+            align-items: center;
+            height: calc(100% - 40px);
+            gap: 20px;
+        }
+        
+        .donut-chart-wrapper {
+            position: relative;
+            width: 160px;
+            height: 160px;
+        }
+        
+        .donut-center-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .donut-center-text h3 {
+            margin: 0;
+            font-weight: 800;
+            font-size: 1.8rem;
+        }
+
+        .donut-center-text p {
+            margin: 0;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .donut-legend {
+            flex: 1;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+            display: inline-block;
+        }
+
+        /* LISTS */
+        .list-card {
+            background-color: var(--white);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            border: 1px solid rgba(0,0,0,0.04);
+            height: 350px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .item-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .item-row {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .item-row:last-child { border-bottom: none; }
+
+        .car-thumb {
+            width: 50px;
+            height: 35px;
+            border-radius: 6px;
+            object-fit: cover;
+            margin-right: 15px;
+            background-color: #f1f5f9;
+        }
+
+        .item-details h6 {
+            margin: 0 0 2px 0;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: var(--text-main);
+        }
+
+        .item-details p {
+            margin: 0;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .item-action {
+            margin-left: auto;
+            color: var(--text-muted);
+        }
+
+        /* Lead Table Custom */
+        .lead-table th {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 10px;
+        }
+        .lead-table td {
+            padding: 12px 0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(0,0,0,0.02);
+            vertical-align: middle;
+        }
+        .avatar-sm {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 8px;
+        }
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+        .status-closed { background-color: #e0f2fe; color: #0284c7; }
+
+        .search-mini {
+            position: relative;
+        }
+        .search-mini input {
+            padding: 4px 10px 4px 28px;
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            font-size: 0.75rem;
+            width: 160px;
+            background-color: #f8fafc;
+        }
+        .search-mini i {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.7rem;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- THIN LEFT SIDEBAR -->
+    <aside class="sidebar-mini">
+        <div class="mb-4">
+            <a href="#" class="nav-item active"><i class="fas fa-th-large"></i></a>
+        </div>
+        <a href="inventory.html" class="nav-item" title="Inventory"><i class="fas fa-car"></i></a>
+        <a href="quotations.html" class="nav-item" title="Sales Leads"><i class="fas fa-briefcase"></i></a>
+        <a href="documents.html" class="nav-item" title="Documents"><i class="fas fa-file-alt"></i></a>
+        <a href="profile.html" class="nav-item" title="Settings"><i class="fas fa-cog"></i></a>
+        
+        <div class="sidebar-bottom">
+            <a href="#" class="nav-item" title="Help"><i class="far fa-question-circle"></i></a>
+            <a href="#" class="nav-item text-danger" title="Logout" id="logoutBtn"><i class="fas fa-sign-out-alt"></i></a>
+        </div>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="main-wrapper">
+        
+        <!-- HEADER -->
+        <header class="top-header">
+            <div class="brand-logo">
+                <i class="fas fa-car-side"></i>
+                <div>
+                    <div>AUTOHUB</div>
+                    <span>DEALER PORTAL</span>
+                </div>
+            </div>
+
+            <nav class="horizontal-nav">
+                <a href="dashboard.html" class="active">Dashboard</a>
+                <a href="inventory.html">Inventory</a>
+                <a href="quotations.html">Sales Leads</a>
+                <a href="#">Service</a>
+                <a href="#">Reports</a>
+                <a href="profile.html">Settings</a>
+            </nav>
+
+            <div class="header-actions">
+                <div class="search-container">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search Inventory, Leads...">
+                </div>
+                <button class="add-btn" title="Add Vehicle">+</button>
+                <div class="notification-btn">
+                    <i class="far fa-bell"></i>
+                    <div class="notification-dot"></div>
+                </div>
+                <div class="user-avatar dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    S.J.
+                </div>
+                <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
+                    <li><a class="dropdown-item py-2 fw-bold" href="profile.html"><i class="fas fa-user me-2 text-muted"></i>Profile</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item py-2 text-danger fw-bold" href="#" onclick="document.getElementById('logoutBtn').click()"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                </ul>
+            </div>
+        </header>
+
+        <!-- DASHBOARD CONTENT -->
+        <main class="page-content">
+            <div class="page-header">
+                <h2>Welcome back, Sarah Jenkins!</h2>
+                <p id="currentDate">Monday, Oct 28, 2024</p>
+            </div>
+
+            <!-- KPI ROW -->
+            <div class="row g-4 mb-4">
+                <div class="col-md-3">
+                    <div class="dashboard-card">
+                        <div class="card-header-flex">
+                            <span class="kpi-title">Total Vehicles</span>
+                            <div class="kpi-icon"><i class="fas fa-car-side"></i></div>
+                        </div>
+                        <div class="kpi-value">148 <span class="kpi-trend trend-up">+5</span></div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="dashboard-card">
+                        <div class="card-header-flex">
+                            <span class="kpi-title">Active Leads</span>
+                            <div class="kpi-icon"><i class="far fa-address-book"></i></div>
+                        </div>
+                        <div class="kpi-value">87 <span class="kpi-trend trend-up">+12</span></div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="dashboard-card">
+                        <div class="card-header-flex">
+                            <span class="kpi-title">Monthly Sales</span>
+                            <div class="kpi-icon"><i class="fas fa-hand-holding-usd"></i></div>
+                        </div>
+                        <div class="kpi-value">24 <span style="font-size:1rem; font-weight:600; color:#64748b;">vehicles</span></div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="dashboard-card">
+                        <div class="card-header-flex">
+                            <span class="kpi-title">Total Revenue</span>
+                            <div class="kpi-icon"><i class="fas fa-money-bill-wave"></i></div>
+                        </div>
+                        <div class="kpi-value">$815,400</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CHARTS ROW -->
+            <div class="row g-4 mb-4">
+                <!-- Donut Chart -->
+                <div class="col-md-4">
+                    <div class="chart-container-card">
+                        <div class="chart-header">
+                            <h3 class="chart-title">Inventory Overview</h3>
+                            <i class="fas fa-ellipsis-h chart-more"></i>
+                        </div>
+                        <div class="donut-container">
+                            <div class="donut-chart-wrapper">
+                                <canvas id="inventoryChart"></canvas>
+                                <div class="donut-center-text">
+                                    <h3>148</h3>
+                                    <p>Total</p>
+                                </div>
+                            </div>
+                            <div class="donut-legend">
+                                <div class="legend-item"><span class="d-flex align-items-center"><span class="legend-dot" style="background:#0ea5e9;"></span> 60 New Cars</span></div>
+                                <div class="legend-item"><span class="d-flex align-items-center"><span class="legend-dot" style="background:#38bdf8;"></span> 45 Used Cars</span></div>
+                                <div class="legend-item"><span class="d-flex align-items-center"><span class="legend-dot" style="background:#7dd3fc;"></span> 25 Trucks</span></div>
+                                <div class="legend-item"><span class="d-flex align-items-center"><span class="legend-dot" style="background:#bae6fd;"></span> 18 SUVs</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bar Chart -->
+                <div class="col-md-4">
+                    <div class="chart-container-card">
+                        <div class="chart-header">
+                            <div>
+                                <h3 class="chart-title mb-1">Sales Leads</h3>
+                                <p class="mb-0 text-muted" style="font-size: 0.75rem; font-weight: 600;">Lead Conversion Rate (This Month)<br><span class="text-main">42% conversion</span></p>
+                            </div>
+                            <i class="fas fa-ellipsis-h chart-more"></i>
+                        </div>
+                        <div style="height: 190px;">
+                            <canvas id="leadsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Line Chart -->
+                <div class="col-md-4">
+                    <div class="chart-container-card">
+                        <div class="chart-header">
+                            <h3 class="chart-title">Monthly Sales Revenue</h3>
+                            <i class="fas fa-ellipsis-h chart-more"></i>
+                        </div>
+                        <div style="height: 220px; position:relative; top:-10px;">
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BOTTOM ROW -->
+            <div class="row g-4 pb-4">
+                <!-- Recent Arrivals -->
+                <div class="col-md-4">
+                    <div class="list-card">
+                        <div class="chart-header">
+                            <h3 class="chart-title">Recent Arrivals</h3>
+                            <i class="fas fa-ellipsis-h chart-more"></i>
+                        </div>
+                        <ul class="item-list">
+                            <li class="item-row">
+                                <img src="https://images.unsplash.com/photo-1606159068539-43f36b99d1b2?w=80&h=60&fit=crop" class="car-thumb" alt="Car">
+                                <div class="item-details">
+                                    <h6>2024 Ford F-150</h6>
+                                    <p>2024 Oct 28, 2024</p>
+                                </div>
+                                <i class="fas fa-chevron-right item-action"></i>
+                            </li>
+                            <li class="item-row">
+                                <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?w=80&h=60&fit=crop" class="car-thumb" alt="Car">
+                                <div class="item-details">
+                                    <h6>2023 BMW X5</h6>
+                                    <p>2023 Oct 28, 2024</p>
+                                </div>
+                                <i class="fas fa-chevron-right item-action"></i>
+                            </li>
+                            <li class="item-row">
+                                <img src="https://images.unsplash.com/photo-1563720225384-9c0f129cedc6?w=80&h=60&fit=crop" class="car-thumb" alt="Car">
+                                <div class="item-details">
+                                    <h6>2023 Honda CR-V</h6>
+                                    <p>2023 Oct 28, 2024</p>
+                                </div>
+                                <i class="fas fa-chevron-right item-action"></i>
+                            </li>
+                            <li class="item-row">
+                                <div class="d-flex align-items-center justify-content-center w-100 py-2">
+                                    <a href="#" class="text-decoration-none text-primary fw-bold" style="font-size:0.85rem">View All Inventory</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Latest Leads Table -->
+                <div class="col-md-5">
+                    <div class="list-card">
+                        <div class="chart-header">
+                            <h3 class="chart-title">Latest Leads</h3>
+                            <div class="search-mini">
+                                <i class="fas fa-search"></i>
+                                <input type="text" placeholder="Search Leads...">
+                            </div>
+                        </div>
+                        <div class="table-responsive flex-grow-1">
+                            <table class="table lead-table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Contact</th>
+                                        <th>Interest</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><div class="d-flex align-items-center"><img src="https://randomuser.me/api/portraits/men/32.jpg" class="avatar-sm">Mike Ross</div></td>
+                                        <td>mike.r@...</td>
+                                        <td>38%</td>
+                                        <td><span class="status-badge status-closed">Closed</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class="d-flex align-items-center"><img src="https://randomuser.me/api/portraits/women/44.jpg" class="avatar-sm">Emily Chen</div></td>
+                                        <td>emily.c@...</td>
+                                        <td>42%</td>
+                                        <td><span class="status-badge status-closed">Closed</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class="d-flex align-items-center"><img src="https://randomuser.me/api/portraits/men/85.jpg" class="avatar-sm">David Kim</div></td>
+                                        <td>david.k@...</td>
+                                        <td>33%</td>
+                                        <td><span class="status-badge status-closed">Closed</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top Selling Models -->
+                <div class="col-md-3">
+                    <div class="list-card">
+                        <div class="chart-header">
+                            <h3 class="chart-title">Top Selling Models</h3>
+                            <i class="fas fa-ellipsis-h chart-more"></i>
+                        </div>
+                        <ul class="item-list">
+                            <li class="item-row px-1">
+                                <span class="fw-bold me-3 text-muted">1.</span>
+                                <i class="fas fa-car-side text-primary fa-lg me-3"></i>
+                                <span class="fw-bold" style="font-size:0.85rem">BMW X5</span>
+                                <span class="ms-auto text-muted" style="font-size:0.75rem">12 units</span>
+                            </li>
+                            <li class="item-row px-1">
+                                <span class="fw-bold me-3 text-muted">2.</span>
+                                <i class="fas fa-car-side text-primary fa-lg me-3"></i>
+                                <span class="fw-bold" style="font-size:0.85rem">Toyota RAV4</span>
+                                <span class="ms-auto text-muted" style="font-size:0.75rem">11 units</span>
+                            </li>
+                            <li class="item-row px-1">
+                                <span class="fw-bold me-3 text-muted">3.</span>
+                                <i class="fas fa-car-side text-primary fa-lg me-3"></i>
+                                <span class="fw-bold" style="font-size:0.85rem">Mercedes GLC</span>
+                                <span class="ms-auto text-muted" style="font-size:0.75rem">9 units</span>
+                            </li>
+                            <li class="item-row px-1">
+                                <span class="fw-bold me-3 text-muted">4.</span>
+                                <i class="fas fa-truck-pickup text-primary fa-lg me-3"></i>
+                                <span class="fw-bold" style="font-size:0.85rem">Ford F-150</span>
+                                <span class="ms-auto text-muted" style="font-size:0.75rem">8 units</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/store.js"></script>
+    <script src="../js/data.js"></script>
+
+    <script>
+        // Set dynamic date
+        const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', options);
+
+        // Chart Mocks
+        const blueScale = ['#0ea5e9', '#38bdf8', '#7dd3fc', '#bae6fd'];
+
+        // 1. Donut Chart
+        const ctxDonut = document.getElementById('inventoryChart').getContext('2d');
+        new Chart(ctxDonut, {
+            type: 'doughnut',
+            data: {
+                labels: ['New Cars', 'Used Cars', 'Trucks', 'SUVs'],
+                datasets: [{
+                    data: [60, 45, 25, 18],
+                    backgroundColor: blueScale,
+                    borderWidth: 0,
+                    cutout: '75%'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false }, tooltip: { enabled: true } }
+            }
+        });
+
+        // 2. Bar Chart
+        const ctxBar = document.getElementById('leadsChart').getContext('2d');
+        new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: ['New', 'Contacted', 'Qualified', 'Closed'],
+                datasets: [{
+                    data: [35, 25, 17, 8],
+                    backgroundColor: blueScale,
+                    borderRadius: 4,
+                    barPercentage: 0.6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { grid: { display: false }, ticks: { font: {size: 10} } },
+                    y: { grid: { color: 'rgba(0,0,0,0.05)' }, ticks: { font: {size: 10}, callback: function(value) { return value + "%"; } } }
+                }
+            }
+        });
+
+        // 3. Line Chart
+        const ctxLine = document.getElementById('revenueChart').getContext('2d');
+        
+        // Create Gradient
+        const gradient = ctxLine.createLinearGradient(0, 0, 0, 200);
+        gradient.addColorStop(0, 'rgba(14, 165, 233, 0.4)');
+        gradient.addColorStop(1, 'rgba(14, 165, 233, 0.0)');
+
+        new Chart(ctxLine, {
+            type: 'line',
+            data: {
+                labels: ['1', '6', '10', '14', '18', '21', '24', '29', '30'],
+                datasets: [{
+                    data: [100, 300, 250, 520, 600, 815, 400, 600, 800],
+                    borderColor: '#0ea5e9',
+                    backgroundColor: gradient,
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 0,
+                    pointHoverRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { grid: { display: false }, ticks: { font: {size: 10} } },
+                    y: { grid: { color: 'rgba(0,0,0,0.05)' }, ticks: { font: {size: 10}, callback: function(value) { return "$" + value; } } }
+                }
+            }
+        });
+
+        // Global Logout Handler
+        document.addEventListener("DOMContentLoaded", function() {
+            const logoutBtn = document.getElementById("logoutBtn");
+            if (logoutBtn) {
+                logoutBtn.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    if (confirm("Are you sure you want to logout?")) {
+                        localStorage.clear();
+                        sessionStorage.clear();
+                        window.location.href = "../index.html";
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>"""
+
+with open(r"d:\Old_backup\Tri-party LOS inregration\los-project - Copy\seller\dashboard.html", "w", encoding="utf-8") as f:
+    f.write(NEW_DASHBOARD_HTML)
+print("Dashboard rewritten to light SaaS theme successfully.")

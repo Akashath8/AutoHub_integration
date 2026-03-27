@@ -15,16 +15,17 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, var(--bg-light) 0%, #eef1f5 100%);
+            background-color: var(--bg-secondary);
             padding: 2rem;
         }
 
         .auth-wrapper {
             display: flex;
-            background: white;
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);
             border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow-md);
             width: 100%;
             max-width: 1000px;
             min-height: 600px;
@@ -52,6 +53,8 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            background-color: var(--bg-primary);
+            color: var(--text-main);
         }
 
         @media (max-width: 768px) {
@@ -92,50 +95,50 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label">Company Name</label>
-                            <input type="text" class="form-control" id="companyName" placeholder="Enter company name"
+                            <label class="form-label fw-bold">Company Name</label>
+                            <input type="text" class="form-control bg-theme-secondary text-main border-theme" id="companyName" placeholder="Enter company name"
                                 required>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label">Contact Person</label>
-                            <input type="text" class="form-control" id="contactPerson" placeholder="Authorized person name"
+                            <label class="form-label fw-bold">Contact Person</label>
+                            <input type="text" class="form-control bg-theme-secondary text-main border-theme" id="contactPerson" placeholder="Authorized person name"
                                 required>
                         </div>
 
                         <div class="col-12">
-                            <label class="form-label">Email (Business ID)</label>
-                            <input type="email" class="form-control" id="email" placeholder="name@company.com" required>
+                            <label class="form-label fw-bold">Email (Business ID)</label>
+                            <input type="email" class="form-control bg-theme-secondary text-main border-theme" id="email" placeholder="name@company.com" required>
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label">GST / Tax ID</label>
-                            <input type="text" class="form-control text-uppercase" id="gst"
+                            <label class="form-label fw-bold">GST / Tax ID</label>
+                            <input type="text" class="form-control text-uppercase bg-theme-secondary text-main border-theme" id="gst"
                                 placeholder="Enter GST Number" required>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label">Business Reg. No.</label>
-                            <input type="text" class="form-control text-uppercase" id="regNo"
+                            <label class="form-label fw-bold">Business Reg. No.</label>
+                            <input type="text" class="form-control text-uppercase bg-theme-secondary text-main border-theme" id="regNo"
                                 placeholder="CIN or Reg No." required>
                         </div>
 
                         <div class="col-12">
-                            <label class="form-label">Mobile</label>
+                            <label class="form-label fw-bold">Mobile</label>
                             <div class="input-group">
-                                <span class="input-group-text bg-white border-end-0">🇮🇳 +91</span>
-                                <input type="tel" class="form-control border-start-0" id="mobile"
+                                <span class="input-group-text bg-theme-secondary border-theme text-main border-end-0">🇮🇳 +91</span>
+                                <input type="tel" class="form-control bg-theme-secondary text-main border-theme border-start-0" id="mobile"
                                     placeholder="00000 00000" required>
                                 <button class="btn btn-primary" type="button">Send OTP</button>
                             </div>
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label">Create Password</label>
-                            <input type="password" class="form-control" id="password" placeholder="Enter password"
+                            <label class="form-label fw-bold">Create Password</label>
+                            <input type="password" class="form-control bg-theme-secondary text-main border-theme" id="password" placeholder="Enter password"
                                 required>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label">Confirm Password</label>
-                            <input type="password" class="form-control" id="confirmPassword"
+                            <label class="form-label fw-bold">Confirm Password</label>
+                            <input type="password" class="form-control bg-theme-secondary text-main border-theme" id="confirmPassword"
                                 placeholder="Re-enter password" required>
                         </div>
 

@@ -1,210 +1,330 @@
 <!DOCTYPE html>
+
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Orders - AutoHub</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/main.css">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>My Orders - AutoHub</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<link href="css/main.css" rel="stylesheet"/>
+
+<style id="super-mega-menu-css">
+        /* Mega Menu Styles */
+        .dropdown-mega { position: static; }
+        .mega-menu {
+            position: absolute; top: 100%; left: 0; right: 0; margin: 0 auto;
+            width: 96%; max-width: 1100px; background: #ffffff;
+            border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            padding: 30px; display: none; z-index: 1050; border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+        .dropdown-mega:hover .mega-menu { display: block; animation: fadeInMega 0.2s ease-in-out; }
+        .mega-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .mega-item h6 { font-weight: 700; margin-bottom: 15px; color: #111827; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
+        .mega-item p { font-size: 13px; color: #6b7280; line-height: 1.4; transition: color 0.2s; }
+        .mega-item a { transition: all 0.2s ease; border-radius: 6px; padding: 8px; margin: -8px; }
+        .mega-item a:hover { background-color: #f8fafc; }
+        .mega-item a:hover .fs-6 { color: var(--pink-accent, #ec4899); }
+        .mega-item a:hover p { color: #4b5563; }
+        @keyframes fadeInMega { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* Responsive Mobile Behavior */
+        @media (max-width: 991px) {
+            .mega-menu { position: static; width: 100%; box-shadow: none; padding: 15px; display: none; margin-top: 10px; }
+            .dropdown-mega.show .mega-menu { display: block; }
+            .mega-grid { grid-template-columns: 1fr; gap: 20px; }
+        }
+    </style>
 </head>
+<body class="bg-theme-secondary text-main">
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg sticky-top">
+<div class="container">
+<div class="d-flex align-items-center gap-2">
+<a class="navbar-brand" href="index.html">AutoHub <span class="text-accent">Marketplace</span></a>
+<div class="dropdown d-none d-lg-block">
+<button aria-expanded="false" class="btn nav-link" data-bs-toggle="dropdown" id="navLocationBtn">
+<i class="fas fa-map-marker-alt me-1 text-accent"></i> Select City <i class="fas fa-chevron-down ms-1" style="font-size:0.7rem;"></i>
+</button>
+<ul class="dropdown-menu location-dropdown-menu">
+<li><span class="dropdown-header">Popular Cities</span></li>
+<li><a class="dropdown-item" data-nav-city="Bangalore" href="#"><i class="fas fa-city me-2 text-muted small"></i>Bangalore</a></li>
+<li><a class="dropdown-item" data-nav-city="Chennai" href="#"><i class="fas fa-city me-2 text-muted small"></i>Chennai</a></li>
+<li><a class="dropdown-item" data-nav-city="Pune" href="#"><i class="fas fa-city me-2 text-muted small"></i>Pune</a></li>
+<li><a class="dropdown-item" data-nav-city="Mumbai" href="#"><i class="fas fa-city me-2 text-muted small"></i>Mumbai</a></li>
+<li>
+<hr class="dropdown-divider"/>
+</li>
+<li><a class="dropdown-item" data-nav-city="Delhi" href="#"><i class="fas fa-city me-2 text-muted small"></i>Delhi</a></li>
+<li><a class="dropdown-item" data-nav-city="Hyderabad" href="#"><i class="fas fa-city me-2 text-muted small"></i>Hyderabad</a></li>
+<li><a class="dropdown-item" data-nav-city="Ahmedabad" href="#"><i class="fas fa-city me-2 text-muted small"></i>Ahmedabad</a></li>
+</ul>
+</div>
+</div>
+<button class="navbar-toggler" data-bs-target="#navbarContent" data-bs-toggle="collapse" type="button">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="navbarContent">
+<ul class="navbar-nav ms-auto align-items-center gap-2">
+<!-- 1. BUY MENU -->
+<li class="nav-item dropdown-mega">
+<a class="nav-link text-main fw-bold" href="listing.html">Buy <i class="fas fa-chevron-down ms-1" style="font-size: 0.6em;"></i></a>
+<div class="mega-menu">
+<div class="mega-grid">
+<div class="mega-item">
+<h6>Explore Vehicles</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="listing.html"><div class="fw-bold fs-6">Search Vehicles</div><p class="mb-0">Browse all available vehicles</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="listing.html"><div class="fw-bold fs-6">Explore by Category</div><p class="mb-0">Cars, Commercial, EVs</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="listing.html"><div class="fw-bold fs-6">Featured Listings</div><p class="mb-0">Verified &amp; premium vehicles</p></a>
+</div>
+<div class="mega-item">
+<h6>Buying Tools</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">Compare Vehicles</div><p class="mb-0">Side-by-side comparison</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">EMI Calculator</div><p class="mb-0">Estimate monthly payments</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">Loan Assistance</div><p class="mb-0">Financing options available</p></a>
+</div>
+<div class="mega-item">
+<h6>Buyer Support</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">Book Test Drive</div><p class="mb-0">Schedule a visit</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">Buyer Guide</div><p class="mb-0">How Buying Works</p></a>
+<a class="d-block text-decoration-none text-dark mb-4" href="#"><div class="fw-bold fs-6">Verified Listings &amp; Trust</div><p class="mb-0">Quality assured</p></a>
+<a class="btn btn-pink w-100 fw-bold rounded text-white py-2" href="listing.html" style="margin:0; text-align:center;">Start Buying</a>
+</div>
+</div>
+</div>
+</li>
+<!-- 2. SELL MENU -->
+<li class="nav-item dropdown-mega">
+<a class="nav-link text-main fw-bold" href="sell-wizard.html">Sell <i class="fas fa-chevron-down ms-1" style="font-size: 0.6em;"></i></a>
+<div class="mega-menu">
+<div class="mega-grid">
+<div class="mega-item">
+<h6>Getting Started</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell-wizard.html"><div class="fw-bold fs-6">How Selling Works</div><p class="mb-0">List → Get Quotes → Close Deal</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell-wizard.html"><div class="fw-bold fs-6">Who Can Sell</div><p class="mb-0">Dealers, fleet owners, businesses</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell-wizard.html"><div class="fw-bold fs-6">Why Sell on AutoHub</div><p class="mb-0">Reach, pricing, trust</p></a>
+</div>
+<div class="mega-item">
+<h6>Seller Benefits</h6>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Access Verified Buyers</div></div>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Auction vs Direct Sale</div></div>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Smart Pricing Insights</div></div>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Secure Payments &amp; Escrow</div></div>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Documentation Support</div></div>
+</div>
+<div class="mega-item">
+<h6>Conversion</h6>
+<div class="bg-light p-3 rounded mb-4 text-start" style="margin:0; border: 1px solid rgba(0,0,0,0.1);">
+<div class="small fw-bold text-success mb-2"><i class="fas fa-shield-alt"></i> Trusted by dealers across India</div>
+<div class="small fw-bold text-dark"><i class="fas fa-car border p-1 rounded me-1 bg-white"></i> 10,000+ vehicles sold</div>
+</div>
+<a class="btn btn-dark w-100 fw-bold rounded mb-2 py-2 text-white" href="register.html" style="margin:0; text-align:center;">Become a Seller</a>
+<a class="btn btn-outline-dark w-100 fw-bold rounded py-2" href="#" style="margin:0; text-align:center;">Talk to Account Manager</a>
+</div>
+</div>
+</div>
+</li>
+<!-- 3. AUCTIONS MENU -->
+<li class="nav-item dropdown-mega">
+<a class="nav-link text-main fw-bold" href="auction-subscription.html">Auctions <i class="fas fa-chevron-down ms-1" style="font-size: 0.6em;"></i></a>
+<div class="mega-menu">
+<div class="mega-grid">
+<div class="mega-item">
+<h6>Discover Auctions</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Live Auctions</div><p class="mb-0">Bid in real-time</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Upcoming Events</div><p class="mb-0">Plan your purchases</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Past Auction Results</div><p class="mb-0">Market price discovery</p></a>
+</div>
+<div class="mega-item">
+<h6>Participate</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">How Auctions Work</div><p class="mb-0">Step-by-step guidance</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Join Auction Events</div><p class="mb-0">Register as a bidder</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Rules &amp; Eligibility</div><p class="mb-0">What you need to know</p></a>
+</div>
+<div class="mega-item">
+<h6>Seller Education</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell-wizard.html"><div class="fw-bold fs-6">List Vehicle in Auction</div><p class="mb-0">Reach massive audiences</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell-wizard.html"><div class="fw-bold fs-6">Auction Benefits</div><p class="mb-0">Faster liquidation</p></a>
+<a class="d-block text-decoration-none text-dark mb-4" href="sell-wizard.html"><div class="fw-bold fs-6">Pricing Transparency</div><p class="mb-0">Market-driven value</p></a>
+<a class="btn w-100 fw-bold rounded text-white py-2" href="auction-subscription.html" style="background-color: var(--orange-accent); margin:0; text-align:center;">View Live Auctions</a>
+</div>
+</div>
+</div>
+</li>
+<!-- 4. RESOURCES MENU -->
+<li class="nav-item dropdown-mega">
+<a class="nav-link text-main fw-bold" href="blogs.html">Resources <i class="fas fa-chevron-down ms-1" style="font-size: 0.6em;"></i></a>
+<div class="mega-menu">
+<div class="mega-grid">
+<div class="mega-item">
+<h6>Learn</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Buyer Guide</div><p class="mb-0">Procurement made easy</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Seller Guide</div><p class="mb-0">Maximize your margins</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Auction Guide</div><p class="mb-0">Bidding strategies</p></a>
+</div>
+<div class="mega-item">
+<h6>Support</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="support.html"><div class="fw-bold fs-6">Help Center</div><p class="mb-0">Get assistance</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="faqs.html"><div class="fw-bold fs-6">FAQs</div><p class="mb-0">Common questions</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="support.html"><div class="fw-bold fs-6">Contact Support</div><p class="mb-0">We are here to help</p></a>
+</div>
+<div class="mega-item">
+<h6>Insights</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Blogs &amp; Industry Insights</div><p class="mb-0">Latest automotive news</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Market Trends</div><p class="mb-0">Demand forecasting</p></a>
+<a class="d-block text-decoration-none text-dark mb-4" href="blogs.html"><div class="fw-bold fs-6">Price Reports</div><p class="mb-0">Valuation matrix</p></a>
+<a class="btn btn-primary w-100 fw-bold rounded text-white py-2" href="blogs.html" style="margin:0; text-align:center;">Explore Resources</a>
+</div>
+</div>
+</div>
+</li>
 
-<body>
-
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg sticky-top">
-        <div class="container">
-            <div class="d-flex align-items-center gap-2">
-                <a class="navbar-brand" href="index.html">AutoHub <span class="text-accent">Marketplace</span></a>
-                <div class="dropdown d-none d-lg-block">
-                    <button class="btn nav-link" id="navLocationBtn" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-map-marker-alt me-1 text-accent"></i> Select City <i
-                            class="fas fa-chevron-down ms-1" style="font-size:0.7rem;"></i>
-                    </button>
-                    <ul class="dropdown-menu location-dropdown-menu">
-                        <li><span class="dropdown-header">Popular Cities</span></li>
-                        <li><a class="dropdown-item" href="#" data-nav-city="Bangalore"><i
-                                    class="fas fa-city me-2 text-muted small"></i>Bangalore</a></li>
-                        <li><a class="dropdown-item" href="#" data-nav-city="Chennai"><i
-                                    class="fas fa-city me-2 text-muted small"></i>Chennai</a></li>
-                        <li><a class="dropdown-item" href="#" data-nav-city="Pune"><i
-                                    class="fas fa-city me-2 text-muted small"></i>Pune</a></li>
-                        <li><a class="dropdown-item" href="#" data-nav-city="Mumbai"><i
-                                    class="fas fa-city me-2 text-muted small"></i>Mumbai</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#" data-nav-city="Delhi"><i
-                                    class="fas fa-city me-2 text-muted small"></i>Delhi</a></li>
-                        <li><a class="dropdown-item" href="#" data-nav-city="Hyderabad"><i
-                                    class="fas fa-city me-2 text-muted small"></i>Hyderabad</a></li>
-                        <li><a class="dropdown-item" href="#" data-nav-city="Ahmedabad"><i
-                                    class="fas fa-city me-2 text-muted small"></i>Ahmedabad</a></li>
-                    </ul>
-                </div>
-            </div>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarContent">
-                <ul class="navbar-nav ms-auto align-items-center gap-2">
-                    <li class="nav-item me-2 position-relative">
-                        <a class="nav-link" href="#" title="Wishlist">
-                            <i class="fas fa-heart text-danger"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nav-mode-btn rent-btn" href="my-quotes.html">Quotations</a>
-                    </li>
-                    <li class="nav-item me-1 nav-bell-wrap">
-                        <a class="nav-link" href="#" title="Notifications"><i class="fas fa-bell"></i></a>
-                        <span class="bell-badge" id="bellCount">0</span>
-                    </li>
-                    <li class="nav-item me-2 position-relative">
-                        <a class="nav-link" href="cart.html">
-                            <i class="fas fa-shopping-cart"></i>
-                            <span
-                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                                id="cartCount">0</span>
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown" id="navProfileArea">
-                        <a class="nav-link dropdown-toggle active" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown">
-                            <i class="fas fa-building fa-lg text-primary"></i> <span id="userName" class="fw-bold ms-1">User</span>
-                        </a>
-                        <!-- Populated by JS -->
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <div class="container py-5">
-        <h3 class="mb-4">Transaction Ledger <span class="badge bg-secondary ms-2" style="font-size: 0.9rem;">Powered by LOS</span></h3>
-
-        <div class="card shadow-sm border-0">
-            <div class="card-body p-0">
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle mb-0">
-                        <thead class="bg-light">
-                            <tr>
-                                <th class="ps-4">Order ID</th>
-                                <th>Product Name</th>
-                                <th>Dealer Name</th>
-                                <th>Invoice No.</th>
-                                <th>Invoice Amount</th>
-                                <th>Amt Received</th>
-                                <th>Outstanding</th>
-                                <th>Payment Status</th>
-                                <th class="text-end pe-4">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="ordersBody">
-                            <!-- Dummy Data for Financial Flow Prototype -->
-                            <tr>
-                                <td class="ps-4 fw-bold text-primary">ORD-9021</td>
-                                <td><div class="text-truncate" style="max-width: 150px;" title="Tata Ace Gold">Tata Ace Gold</div></td>
-                                <td><div class="text-truncate" style="max-width: 150px;" title="Deshpande Commercials">Deshpande Commercials</div></td>
-                                <td>INV-2023-0104</td>
-                                <td class="fw-bold">₹ 4,80,000</td>
-                                <td class="text-success fw-bold">₹ 4,80,000</td>
-                                <td class="text-muted">₹ 0</td>
-                                <td><span class="badge bg-success">Paid</span></td>
-                                <td class="text-end pe-4">
-                                    <div class="dropdown">
-                                        <button class="btn btn-sm btn-light border dropdown-toggle" type="button" data-bs-toggle="dropdown">
+<li class="nav-item me-2 position-relative">
+<a class="nav-link" href="#" title="Wishlist">
+<i class="fas fa-heart text-danger"></i>
+</a>
+</li>
+<li class="nav-item">
+<a class="nav-link nav-mode-btn rent-btn" href="my-quotes.html">Quotations</a>
+</li>
+<li class="nav-item me-1 nav-bell-wrap">
+<a class="nav-link" href="#" title="Notifications"><i class="fas fa-bell"></i></a>
+<span class="bell-badge" id="bellCount">0</span>
+</li>
+<li class="nav-item me-2 position-relative">
+<a class="nav-link" href="cart.html">
+<i class="fas fa-shopping-cart"></i>
+<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cartCount">0</span>
+</a>
+</li>
+<li class="nav-item dropdown" id="navProfileArea">
+<a class="nav-link dropdown-toggle active" data-bs-toggle="dropdown" href="#" id="profileDropdown" role="button">
+<i class="fas fa-building fa-lg text-primary"></i> <span class="fw-bold ms-1" id="userName">User</span>
+</a>
+<!-- Populated by JS -->
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<div class="container py-5">
+<h3 class="mb-4">Transaction Ledger <span class="badge bg-secondary ms-2" style="font-size: 0.9rem;">Powered by LOS</span></h3>
+<div class="card shadow-sm border-0">
+<div class="card-body p-0">
+<div class="table-responsive">
+<table class="table table-hover align-middle mb-0 text-main">
+<thead class="bg-theme-secondary">
+<tr>
+<th class="ps-4">Order ID</th>
+<th>Product Name</th>
+<th>Dealer Name</th>
+<th>Invoice No.</th>
+<th>Invoice Amount</th>
+<th>Amt Received</th>
+<th>Outstanding</th>
+<th>Payment Status</th>
+<th class="text-end pe-4">Actions</th>
+</tr>
+</thead>
+<tbody id="ordersBody">
+<!-- Static Demo Data -->
+<tr>
+<td class="ps-4 fw-bold text-primary">ORD-1001</td>
+<td>Tata Signa Truck</td>
+<td>Deshpande Commercials</td>
+<td class="font-monospace small">INV-2023-0104</td>
+<td class="fw-bold">₹ 7,50,000</td>
+<td class="text-success fw-bold">₹ 7,50,000</td>
+<td class="text-muted">₹ 0</td>
+<td><span class="badge bg-success">Paid</span></td>
+<td class="text-end pe-4">
+<div class="dropdown">
+<button class="btn btn-sm btn-light border dropdown-toggle" data-bs-toggle="dropdown" type="button">
                                             Actions
                                         </button>
-                                        <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
-                                            <li><a class="dropdown-item" href="invoice-viewer.html"><i class="fas fa-file-invoice text-primary me-2"></i>View Invoice</a></li>
-                                            <li><a class="dropdown-item" href="financial-overview.html"><i class="fas fa-chart-pie text-info me-2"></i>View Financial Details</a></li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="ps-4 fw-bold text-primary">ORD-9105</td>
-                                <td><div class="text-truncate" style="max-width: 150px;" title="Ashok Leyland Dost+">Ashok Leyland Dost+</div></td>
-                                <td><div class="text-truncate" style="max-width: 150px;" title="Northwest Commercials">Northwest Commercials</div></td>
-                                <td>INV-2023-0145</td>
-                                <td class="fw-bold">₹ 7,50,000</td>
-                                <td class="text-success fw-bold">₹ 2,50,000</td>
-                                <td class="text-danger fw-bold">₹ 5,00,000</td>
-                                <td><span class="badge bg-warning text-dark">Partially Paid</span></td>
-                                <td class="text-end pe-4">
-                                    <div class="dropdown">
-                                        <button class="btn btn-sm btn-light border dropdown-toggle" type="button" data-bs-toggle="dropdown">
+<ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+<li><a class="dropdown-item" href="financial-overview.html?orderId=ORD-1001"><i class="fas fa-chart-pie text-info me-2"></i>View Financial Details</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr>
+<td class="ps-4 fw-bold text-primary">ORD-1002</td>
+<td>Ashok Leyland Dost+</td>
+<td>Northwest Commercials</td>
+<td class="font-monospace small">INV-2023-0145</td>
+<td class="fw-bold">₹ 7,50,000</td>
+<td class="text-success fw-bold">₹ 2,50,000</td>
+<td class="text-danger fw-bold">₹ 5,00,000</td>
+<td><span class="badge bg-warning text-dark">Partial</span></td>
+<td class="text-end pe-4">
+<div class="dropdown">
+<button class="btn btn-sm btn-light border dropdown-toggle" data-bs-toggle="dropdown" type="button">
                                             Actions
                                         </button>
-                                        <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
-                                            <li><a class="dropdown-item" href="invoice-viewer.html"><i class="fas fa-file-invoice text-primary me-2"></i>View Invoice</a></li>
-                                            <li><a class="dropdown-item" href="financial-overview.html"><i class="fas fa-chart-pie text-info me-2"></i>View Financial Details</a></li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="ps-4 fw-bold text-primary">ORD-9112</td>
-                                <td><div class="text-truncate" style="max-width: 150px;" title="Eicher Pro 2049">Eicher Pro 2049</div></td>
-                                <td><div class="text-truncate" style="max-width: 150px;" title="Global Heavy Equipments">Global Heavy Eq.</div></td>
-                                <td>INV-2023-0162</td>
-                                <td class="fw-bold">₹ 13,50,000</td>
-                                <td class="text-muted">₹ 0</td>
-                                <td class="text-danger fw-bold">₹ 13,50,000</td>
-                                <td><span class="badge bg-secondary">Pending</span></td>
-                                <td class="text-end pe-4">
-                                    <div class="dropdown">
-                                        <button class="btn btn-sm btn-light border dropdown-toggle" type="button" data-bs-toggle="dropdown">
+<ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+<li><a class="dropdown-item" href="financial-overview.html?orderId=ORD-1002"><i class="fas fa-chart-pie text-info me-2"></i>View Financial Details</a></li>
+</ul>
+</div>
+</td>
+</tr>
+<tr>
+<td class="ps-4 fw-bold text-primary">ORD-1003</td>
+<td>Eicher Pro 2049</td>
+<td>Global Heavy Eq.</td>
+<td class="font-monospace small">INV-2023-0162</td>
+<td class="fw-bold">₹ 13,50,000</td>
+<td class="text-success fw-bold">₹ 0</td>
+<td class="text-danger fw-bold">₹ 13,50,000</td>
+<td><span class="badge bg-secondary">Pending</span></td>
+<td class="text-end pe-4">
+<div class="dropdown">
+<button class="btn btn-sm btn-light border dropdown-toggle" data-bs-toggle="dropdown" type="button">
                                             Actions
                                         </button>
-                                        <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
-                                            <li><a class="dropdown-item" href="invoice-viewer.html"><i class="fas fa-file-invoice text-primary me-2"></i>View Invoice</a></li>
-                                            <li><a class="dropdown-item" href="financial-overview.html"><i class="fas fa-chart-pie text-info me-2"></i>View Financial Details</a></li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Master-Sub Order Details Modal -->
-    <div class="modal fade" id="orderDetailsModal" tabindex="-1">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content border-0 shadow-lg">
-                <div class="modal-header border-bottom-0 pb-0">
-                    <h5 class="modal-title fw-bold">Deal Details</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body pt-3 pb-4">
-                    <div class="mb-4 d-flex justify-content-between border-bottom pb-3">
-                        <div>
-                            <div class="text-muted small">Master Deal ID</div>
-                            <div class="fw-bold fs-5 text-primary" id="modalMasterOrderId">-</div>
-                        </div>
-                        <div class="text-end">
-                            <div class="text-muted small">Grand Total</div>
-                            <div class="fw-bold fs-5" id="modalGrandTotal">-</div>
-                        </div>
-                    </div>
-
-                    <h6 class="fw-bold mb-3">Seller Transaction Details</h6>
-                    <div id="modalSubOrdersList">
-                        <!-- Populated by JS -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/store.js"></script>
-    <script src="js/location.js"></script>
-    <script>
+<ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+<li><a class="dropdown-item" href="financial-overview.html?orderId=ORD-1003"><i class="fas fa-chart-pie text-info me-2"></i>View Financial Details</a></li>
+</ul>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<!-- Master-Sub Order Details Modal -->
+<div class="modal fade" id="orderDetailsModal" tabindex="-1">
+<div class="modal-dialog modal-lg modal-dialog-centered">
+<div class="modal-content border-theme bg-theme-primary shadow-lg">
+<div class="modal-header border-bottom border-theme pb-0 bg-theme-secondary text-main">
+<h5 class="modal-title fw-bold">Deal Details</h5>
+<button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+</div>
+<div class="modal-body pt-3 pb-4 bg-theme-primary text-main">
+<div class="mb-4 d-flex justify-content-between border-bottom border-theme pb-3">
+<div>
+<div class="text-muted small">Master Deal ID</div>
+<div class="fw-bold fs-5 text-primary" id="modalMasterOrderId">-</div>
+</div>
+<div class="text-end">
+<div class="text-muted small">Grand Total</div>
+<div class="fw-bold fs-5" id="modalGrandTotal">-</div>
+</div>
+</div>
+<h6 class="fw-bold mb-3">Seller Transaction Details</h6>
+<div id="modalSubOrdersList">
+<!-- Populated by JS -->
+</div>
+</div>
+</div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/store.js"></script>
+<script src="js/location.js"></script>
+<script>
         document.addEventListener('DOMContentLoaded', () => {
             const user = store.getUser();
             if (!user) { window.location.href = 'login.html'; return; }
@@ -217,7 +337,7 @@
                 ul.className = "dropdown-menu dropdown-menu-end shadow border-0";
                 ul.style.borderRadius = "8px";
                 ul.innerHTML = `
-                    ${user.role === 'Dealer' ? '<li><a class="dropdown-item py-2 fw-bold text-primary" href="dealer-dashboard.html"><i class="fas fa-tachometer-alt me-3 text-primary"></i>Dealer Dashboard</a></li>' : ''}
+                    ${user.role === 'Dealer' ? '<li><a class="dropdown-item py-2 fw-bold text-primary" href="seller/dashboard.html"><i class="fas fa-tachometer-alt me-3 text-primary"></i>Dealer Dashboard</a></li>' : ''}
                     <li><a class="dropdown-item py-2" href="#"><i class="fas fa-user me-3 text-muted"></i>My Profile</a></li>
                     <li><a class="dropdown-item py-2 mb-1 bg-light text-primary" href="orders.html"><i class="fas fa-box me-3 text-primary"></i>My Orders</a></li>
                     <li><a class="dropdown-item py-2" href="my-quotes.html"><i class="fas fa-file-invoice me-3 text-muted"></i>Quotations</a></li>
@@ -231,131 +351,9 @@
             document.getElementById('logoutBtn').addEventListener('click', (e) => {
                 e.preventDefault();
                 store.logoutUser();
-                if(user.role === 'Dealer') window.location.href = 'index.html';
-                else window.location.href = 'index.html';
-            });
-
-            const tbody = document.getElementById('ordersBody');
-
-            // JS data loading commented out for purely static prototype representation
-            // Event Delegation for Order Details Modal
-            document.getElementById('ordersBody').addEventListener('click', (e) => {
-                const btn = e.target.closest('.view-details-btn');
-                if (!btn) return;
-
-                e.preventDefault();
-                const idx = btn.getAttribute('data-order-index');
-                if (idx === null) return;
-
-                try {
-                    const order = orders[idx];
-                    if (!order) return;
-
-                    document.getElementById('modalMasterOrderId').textContent = order.id || '-';
-                    document.getElementById('modalGrandTotal').textContent = '₹ ' + (Number(order.total) || 0).toLocaleString('en-IN');
-
-                    const subOrdersList = document.getElementById('modalSubOrdersList');
-                    subOrdersList.innerHTML = '';
-
-                    if (order.subOrders && Array.isArray(order.subOrders) && order.subOrders.length > 0) {
-                        order.subOrders.forEach(so => {
-                            let statusColor = 'text-warning';
-                            if (so.payout_status === 'Paid' || so.payout_status === 'Payout Completed') statusColor = 'text-success';
-                                if (so.payout_status === 'Pending Escrow') statusColor = 'text-primary fw-bold';
-                                if (so.payout_status === 'Pending Downpayment' || so.payout_status === 'Pending Payment') statusColor = 'text-danger fw-bold';
-
-                                // Generate Items List for this Sub-Order
-                                let itemsHtml = '';
-                                if (so.items && Array.isArray(so.items)) {
-                                    so.items.forEach(v => {
-                                        itemsHtml += `
-                                            <div class="d-flex align-items-center mt-3 pt-2 border-top">
-                                                <img src="${v.image || ''}" alt="${v.name || 'Vehicle'}" class="rounded" style="width: 50px; height: 35px; object-fit: cover;">
-                                                <div class="ms-3 flex-grow-1">
-                                                    <div class="fw-bold small text-dark">${v.name || 'Unknown'}</div>
-                                                    <div class="text-muted" style="font-size: 0.65rem;">${v.year || '-'} | ${(Number(v.km) || 0).toLocaleString('en-IN')} km</div>
-                                                </div>
-                                                <div class="fw-bold text-dark small">₹${(Number(v.price) || 0).toLocaleString('en-IN')}</div>
-                                            </div>
-                                        `;
-                                    });
-                                }
-
-                                // Action Button
-                                let actionBtnHtml = '';
-                                if ((so.pending_downpayment && so.pending_downpayment > 0) || so.payout_status === 'Pending Escrow') {
-                                    actionBtnHtml = `
-                                        <div class="mt-3 pt-3 border-top text-end">
-                                            <button class="btn btn-sm text-white px-4 pay-downpayment-btn" style="background:#8e44ad;" data-order-idx="${idx}" data-suborder-id="${so.sub_order_id}">
-                                                Proceed to Escrow Payment: ₹ ${(Number(so.pending_downpayment) || 0).toLocaleString('en-IN')}
-                                            </button>
-                                        </div>
-                                    `;
-                                }
-
-                            subOrdersList.innerHTML += `
-                                <div class="card border-0 shadow-sm mb-3">
-                                    <div class="card-body bg-light rounded">
-                                        <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <div class="fw-bold"><i class="fas fa-store text-muted me-2"></i>${so.seller_id}</div>
-                                            <div class="small fw-semibold ${statusColor}"><i class="fas fa-circle me-1" style="font-size: 8px;"></i>${so.payout_status}</div>
-                                        </div>
-                                        <div class="row g-0 small text-muted border-top pt-2 mt-2">
-                                            <div class="col-4">
-                                                <div>Sub-Order ID</div>
-                                                <div class="fw-bold text-dark">${so.sub_order_id}</div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div>Seller Total</div>
-                                                <div class="fw-bold text-dark">₹ ${(Number(so.seller_total) || 0).toLocaleString('en-IN')}</div>
-                                            </div>
-                                            <div class="col-4 text-end">
-                                                <div>Platform Comm.</div>
-                                                <div class="fw-bold text-danger">- ₹ ${(Number(so.commission) || 0).toLocaleString('en-IN')}</div>
-                                            </div>
-                                        </div>
-                                        ${itemsHtml}
-                                        ${actionBtnHtml}
-                                    </div>
-                                </div>
-                            `;
-                        });
-                    } else {
-                        subOrdersList.innerHTML = `
-                            <div class="text-center py-4 text-muted fst-italic">
-                                <i class="fas fa-info-circle mb-2 fs-4"></i><br>
-                                Split payout details not available for legacy single-seller orders.
-                            </div>
-                        `;
-                    }
-
-                    const modalEl = document.getElementById('orderDetailsModal');
-                    const modal = new bootstrap.Modal(modalEl);
-                    modal.show();
-                } catch (err) {
-                    console.error("Error opening order details modal:", err);
-                    alert("Could not display order details.");
-                }
-            });
-
-            // Event Delegation for Pay Downpayment Button
-            document.getElementById('orderDetailsModal').addEventListener('click', (e) => {
-                const btn = e.target.closest('.pay-downpayment-btn');
-                if (!btn) return;
-
-                const idx = btn.getAttribute('data-order-idx');
-                const subId = btn.getAttribute('data-suborder-id');
-
-                const originalText = btn.innerHTML;
-                btn.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span> Redirecting...`;
-                btn.disabled = true;
-
-                setTimeout(() => {
-                    window.location.href = `payment.html?dealId=${orders[idx].id}&subId=${subId}`;
-                }, 800);
+                window.location.href = 'index.html';
             });
         });
     </script>
 </body>
-
 </html>

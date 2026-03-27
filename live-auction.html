@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Auction Room | AutoHub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/auction.css">
+</head>
+<body class="auction-theme overflow-hidden">
+
+    <nav class="navbar navbar-expand-lg border-bottom sticky-top bg-white shadow-sm">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand fw-bold fs-4 text-dark" href="index.html">AutoHub <span style="color: var(--auc-primary);">Live</span></a>
+            <div class="d-flex align-items-center gap-3">
+                <span class="badge bg-danger pulse-danger px-3 py-2 text-white"><i class="fas fa-video me-2"></i>Live Stream</span>
+                <button class="btn btn-sm btn-outline-secondary border-secondary" onclick="window.location.href='auctions.html'">Leave Room</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid px-0 h-100">
+        <div class="row g-0" style="height: calc(100vh - 65px);">
+            <!-- Left: Video & Specs -->
+            <div class="col-lg-8 bg-light d-flex flex-column">
+                <div class="live-stream-container flex-grow-1 position-relative border-0 rounded-0 bg-dark">
+                    <div class="position-absolute top-0 start-0 w-100 p-4 d-flex justify-content-between z-3" style="background: linear-gradient(rgba(0,0,0,0.8), transparent);">
+                        <div>
+                            <span class="badge bg-light text-dark border mb-2 fs-6 shadow-sm">Lot #4202</span>
+                            <h2 class="text-white fw-bold shadow-sm">2021 Tata Ace Gold CX</h2>
+                            <p class="text-white-50"><i class="fas fa-map-marker-alt me-1"></i> Pune Yard</p>
+                        </div>
+                        <div class="text-end">
+                            <div class="bg-white bg-opacity-75 border border-secondary px-3 py-2 rounded-3 text-center ms-auto shadow" style="width: 140px; backdrop-filter: blur(4px);">
+                                <div class="text-secondary text-uppercase small fw-bold">Ends In</div>
+                                <div class="fs-3 fw-bold text-danger font-monospace" id="liveTimer">00:04:12</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Simulated Video Background -->
+                    <img src="https://images.unsplash.com/photo-1590362891991-f20bc081e533?auto=format&fit=crop&q=80&w=1200" class="w-100 h-100 opacity-75 object-fit-cover" alt="Live Feed">
+                    
+                    <div class="position-absolute bottom-0 start-0 w-100 p-3 pt-5 z-2" style="background: linear-gradient(transparent, rgba(0,0,0,0.9));">
+                        <div class="d-flex justify-content-center gap-4 text-white-50 fw-semibold fs-5">
+                            <span class="text-light"><i class="fas fa-road me-1 text-white"></i> 45k km</span>
+                            <span class="text-light">|</span>
+                            <span class="text-light"><i class="fas fa-gas-pump me-1 text-white"></i> Diesel</span>
+                            <span class="text-light">|</span>
+                            <span class="text-light">Inspection Score: 9.2 <i class="fas fa-check-circle text-success ms-1"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Bidding Console -->
+            <div class="col-lg-4 d-flex flex-column border-start bg-white z-3 shadow-lg">
+                
+                <!-- Highest Bid Box -->
+                <div class="p-4 border-bottom text-center bg-light">
+                    <div class="text-secondary text-uppercase small letter-spacing-1 mb-2 fw-bold">Highest Bidder</div>
+                    <div class="d-flex align-items-center justify-content-center gap-3">
+                        <h1 class="display-4 fw-bold text-dark mb-0" id="liveBidDisplay">₹2,85,000</h1>
+                        <span class="badge bg-success shadow-sm" id="autoBidBadge" style="display: none;">Auto-Bid</span>
+                    </div>
+                    <div class="text-success small fw-bold mt-2"><i class="fas fa-shield-alt me-1"></i> Reserve Price Met</div>
+                </div>
+
+                <!-- Live Bid History -->
+                <div class="flex-grow-1 p-3 overflow-y-auto" style="scrollbar-width: thin;" id="liveBidHistory">
+                    <div class="bid-item text-success fw-bold p-2 bg-success bg-opacity-10 rounded mb-2 border border-success border-opacity-25">
+                        <span class="text-success">₹2,85,000</span>
+                        <span class="text-success">Dealer_MHM*** (Current)</span>
+                    </div>
+                    <div class="bid-item p-2 mb-1 border-bottom">
+                        <span class="fw-semibold text-dark">₹2,80,000</span>
+                        <span class="text-muted">Autolink***</span>
+                    </div>
+                    <div class="bid-item p-2 mb-1 border-bottom">
+                        <span class="fw-semibold text-dark">₹2,75,000</span>
+                        <span class="text-muted">Dealer_MHM***</span>
+                    </div>
+                    <div class="bid-item p-2 mb-1 border-bottom">
+                        <span class="fw-semibold text-dark">₹2,60,000</span>
+                        <span class="text-muted">RK_Motors***</span>
+                    </div>
+                </div>
+
+                <!-- Bidding Actions -->
+                <div class="p-4 bg-white border-top shadow-sm mt-auto z-3">
+                    <!-- Auto-bid Toggle (Only for Pro but shown for UI) -->
+                    <div class="d-flex justify-content-between align-items-center mb-3 p-2 border rounded bg-light" id="autoBidSection">
+                        <div class="form-check form-switch ps-0">
+                            <label class="form-check-label text-orange fw-bold ms-0" style="color:#d97706;"><i class="fas fa-robot me-2"></i>Enable Auto-Bid</label>
+                        </div>
+                        <div class="input-group input-group-sm w-auto">
+                            <span class="input-group-text bg-white border text-secondary">₹Max</span>
+                            <input type="number" class="form-control" style="max-width: 100px;" placeholder="300000" id="maxBidInput">
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2 mb-3">
+                        <button class="btn btn-outline-dark flex-grow-1 py-2 fw-bold quick-bid bg-light" data-inc="5000">+5k</button>
+                        <button class="btn btn-outline-dark flex-grow-1 py-2 fw-bold quick-bid bg-light" data-inc="10000">+10k</button>
+                        <button class="btn btn-outline-dark flex-grow-1 py-2 fw-bold quick-bid bg-light" data-inc="20000">+20k</button>
+                    </div>
+
+                    <div class="input-group mb-3 border border-2 rounded">
+                        <span class="input-group-text bg-light border-0 text-secondary fs-5 fw-bold">₹</span>
+                        <input type="number" class="form-control border-0 text-dark fs-5 fw-bold bg-light" id="manualBidAmt" value="290000">
+                    </div>
+                    
+                    <button class="btn btn-auction w-100 py-3 shadow fs-4" id="submitBidBtn">Bid ₹2,90,000</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alert Toast Positioned -->
+    <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3 mt-5" style="z-index: 1050;">
+        <div id="outbidToast" class="toast align-items-center text-white bg-danger border-0 shadow-lg" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body fw-bold fs-6">
+                    <i class="fas fa-exclamation-triangle me-2"></i> You have been outbid!
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let currentBid = 285000;
+        let myBid = false;
+        const bidBtn = document.getElementById('submitBidBtn');
+        const manualInput = document.getElementById('manualBidAmt');
+        const historyContainer = document.getElementById('liveBidHistory');
+
+        // Quick bid buttons
+        document.querySelectorAll('.quick-bid').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const inc = parseInt(btn.getAttribute('data-inc'));
+                manualInput.value = currentBid + inc;
+                bidBtn.textContent = `Bid ₹${(currentBid + inc).toLocaleString('en-IN')}`;
+            });
+        });
+
+        // Input change
+        manualInput.addEventListener('input', () => {
+            const val = parseInt(manualInput.value);
+            if(val > currentBid) {
+                bidBtn.textContent = `Bid ₹${val.toLocaleString('en-IN')}`;
+            }
+        });
+
+        // Submit Bid
+        bidBtn.addEventListener('click', () => {
+            const val = parseInt(manualInput.value);
+            if(val <= currentBid) return;
+
+            // Flash Screen
+            document.body.classList.add('flash-update');
+            setTimeout(() => document.body.classList.remove('flash-update'), 500);
+
+            currentBid = val;
+            myBid = true;
+            document.getElementById('liveBidDisplay').textContent = `₹${currentBid.toLocaleString('en-IN')}`;
+            
+            // Add to history
+            const newBidHTML = `
+                <div class="bid-item text-success fw-bold p-2 bg-success bg-opacity-10 rounded mb-2 border border-success border-opacity-25">
+                    <span class="text-success">₹${currentBid.toLocaleString('en-IN')}</span>
+                    <span class="text-success">You (Winning)</span>
+                </div>
+            `;
+            // Demote old winning bid
+            const firstBid = historyContainer.firstElementChild;
+            if(firstBid) {
+                firstBid.classList.remove('text-success', 'fw-bold', 'bg-success', 'bg-opacity-10', 'rounded', 'border', 'border-success', 'border-opacity-25');
+                firstBid.classList.add('border-bottom');
+                const p1 = firstBid.children[0];
+                const p2 = firstBid.children[1];
+                p1.classList.remove('text-success'); p1.classList.add('fw-semibold', 'text-dark');
+                p2.classList.remove('text-success'); p2.classList.add('text-muted');
+                p2.innerHTML = p2.innerHTML.replace('(Current)', '');
+                p2.innerHTML = p2.innerHTML.replace('You (Winning)', 'You');
+            }
+            
+            historyContainer.insertAdjacentHTML('afterbegin', newBidHTML);
+            
+            // Prepare next manual input
+            manualInput.value = currentBid + 5000;
+            bidBtn.textContent = `Bid ₹${(currentBid + 5000).toLocaleString('en-IN')}`;
+            btnSuccessState();
+
+            // Simulate someone else bidding after 3 seconds if not won yet
+            if(document.getElementById('liveTimer').textContent !== "00:00:00") {
+                setTimeout(simulateOtherBid, 3500);
+            }
+        });
+
+        function btnSuccessState() {
+            bidBtn.classList.replace('btn-auction', 'btn-success');
+            bidBtn.innerHTML = '<i class="fas fa-check"></i> Winning';
+            setTimeout(() => {
+                bidBtn.classList.replace('btn-success', 'btn-auction');
+                bidBtn.textContent = `Bid ₹${(currentBid + 5000).toLocaleString('en-IN')}`;
+            }, 1500);
+        }
+
+        // Simulate Other Bidder
+        function simulateOtherBid() {
+            if(!myBid) return;
+            
+            const maxBid = parseInt(document.getElementById('maxBidInput').value);
+            const otherBid = currentBid + 5000;
+
+            if(maxBid && otherBid <= maxBid) {
+                document.getElementById('autoBidBadge').style.display = 'inline-block';
+                currentBid = otherBid + 5000;
+                
+                const midLog = `<div class="bid-item p-2 mb-1 border-bottom"><span class="fw-semibold text-dark">₹${otherBid.toLocaleString('en-IN')}</span><span class="text-muted">Dealer_RX***</span></div>`;
+                const myLog = `<div class="bid-item text-success fw-bold p-2 bg-success bg-opacity-10 rounded mb-2 border border-success border-opacity-25"><span class="text-success">₹${currentBid.toLocaleString('en-IN')}</span><span class="text-success">You (Auto-Bid)</span></div>`;
+                
+                const firstBid = historyContainer.firstElementChild;
+                firstBid.classList.remove('text-success', 'fw-bold', 'bg-success', 'bg-opacity-10', 'rounded', 'border', 'border-success', 'border-opacity-25');
+                firstBid.classList.add('border-bottom');
+                firstBid.children[0].classList.replace('text-success', 'text-dark');
+                firstBid.children[1].classList.replace('text-success', 'text-muted');
+
+                historyContainer.insertAdjacentHTML('afterbegin', midLog);
+                historyContainer.insertAdjacentHTML('afterbegin', myLog);
+                
+                document.getElementById('liveBidDisplay').textContent = `₹${currentBid.toLocaleString('en-IN')}`;
+                manualInput.value = currentBid + 5000;
+                bidBtn.textContent = `Bid ₹${(currentBid + 5000).toLocaleString('en-IN')}`;
+                
+                setTimeout(() => document.getElementById('autoBidBadge').style.display = 'none', 2000);
+
+            } else {
+                myBid = false;
+                currentBid = otherBid;
+                document.getElementById('liveBidDisplay').textContent = `₹${currentBid.toLocaleString('en-IN')}`;
+                
+                const otherLog = `<div class="bid-item text-danger fw-bold p-2 bg-danger bg-opacity-10 rounded mb-2 border border-danger border-opacity-25"><span class="text-danger">₹${currentBid.toLocaleString('en-IN')}</span><span class="text-danger">Dealer_RX*** (Current)</span></div>`;
+                const firstBid = historyContainer.firstElementChild;
+                firstBid.classList.remove('text-success', 'fw-bold', 'bg-success', 'bg-opacity-10', 'rounded', 'border', 'border-success', 'border-opacity-25');
+                firstBid.classList.add('border-bottom');
+                firstBid.children[0].className = 'fw-semibold text-dark';
+                firstBid.children[1].className = 'text-muted';
+                firstBid.children[1].innerHTML = firstBid.children[1].innerHTML.replace('You (Winning)', 'You');
+                
+                historyContainer.insertAdjacentHTML('afterbegin', otherLog);
+                manualInput.value = currentBid + 5000;
+                bidBtn.textContent = `Bid ₹${(currentBid + 5000).toLocaleString('en-IN')}`;
+                
+                const toast = new bootstrap.Toast(document.getElementById('outbidToast'));
+                toast.show();
+            }
+        }
+
+        let duration = 6; 
+        const timerEl = document.getElementById('liveTimer');
+        const interval = setInterval(() => {
+            duration--;
+            if(duration <= 0) {
+                clearInterval(interval);
+                timerEl.textContent = "00:00:00";
+                
+                bidBtn.disabled = true;
+                bidBtn.classList.replace('btn-auction', 'btn-secondary');
+                bidBtn.classList.add('border', 'border-secondary', 'text-dark');
+                bidBtn.innerHTML = "Auction Closed";
+                
+                setTimeout(() => {
+                    const status = myBid ? 'win' : 'loss';
+                    window.location.href = `post-auction.html?status=${status}&amt=${currentBid}`;
+                }, 2000);
+                return;
+            }
+            let m = Math.floor(duration/60);
+            let s = duration % 60;
+            timerEl.textContent = `00:0${m}:${s<10?'0'+s:s}`;
+        }, 1000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dealer Onboarding | AutoHub Marketplace</title>
+<meta content="Grow your dealership sales with AutoHub Platform. Get verified leads, manage inventory easily, and increase revenue." name="description"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="css/main.css" rel="stylesheet"/>
+<link href="css/dealer.css" rel="stylesheet"/>
+
+<style id="super-mega-menu-css">
+        /* Mega Menu Styles */
+        .dropdown-mega { position: static; }
+        .mega-menu {
+            position: absolute; top: 100%; left: 0; right: 0; margin: 0 auto;
+            width: 96%; max-width: 1100px; background: #ffffff;
+            border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            padding: 30px; display: none; z-index: 1050; border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+        .dropdown-mega:hover .mega-menu { display: block; animation: fadeInMega 0.2s ease-in-out; }
+        .mega-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .mega-item h6 { font-weight: 700; margin-bottom: 15px; color: #111827; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
+        .mega-item p { font-size: 13px; color: #6b7280; line-height: 1.4; transition: color 0.2s; }
+        .mega-item a { transition: all 0.2s ease; border-radius: 6px; padding: 8px; margin: -8px; }
+        .mega-item a:hover { background-color: #f8fafc; }
+        .mega-item a:hover .fs-6 { color: var(--pink-accent, #ec4899); }
+        .mega-item a:hover p { color: #4b5563; }
+        @keyframes fadeInMega { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* Responsive Mobile Behavior */
+        @media (max-width: 991px) {
+            .mega-menu { position: static; width: 100%; box-shadow: none; padding: 15px; display: none; margin-top: 10px; }
+            .dropdown-mega.show .mega-menu { display: block; }
+            .mega-grid { grid-template-columns: 1fr; gap: 20px; }
+        }
+    </style>
+</head>
+<body class="dealer-page">
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg sticky-top dealer-navbar">
+<div class="container">
+<a class="navbar-brand" href="index.html" style="font-weight: 800; font-size: 1.5rem;">AutoHub <span style="color: var(--dealer-secondary);">Marketplace</span></a>
+<button class="navbar-toggler" data-bs-target="#dealerNav" data-bs-toggle="collapse" type="button">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="dealerNav">
+<ul class="navbar-nav me-auto ms-4">
+<!-- 1. BUY MENU -->
+<li class="nav-item dropdown-mega">
+<a class="nav-link text-main fw-bold" href="listing.html">Buy <i class="fas fa-chevron-down ms-1" style="font-size: 0.6em;"></i></a>
+<div class="mega-menu">
+<div class="mega-grid">
+<div class="mega-item">
+<h6>Explore Vehicles</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="listing.html"><div class="fw-bold fs-6">Search Vehicles</div><p class="mb-0">Browse all available vehicles</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="listing.html"><div class="fw-bold fs-6">Explore by Category</div><p class="mb-0">Cars, Commercial, EVs</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="listing.html"><div class="fw-bold fs-6">Featured Listings</div><p class="mb-0">Verified &amp; premium vehicles</p></a>
+</div>
+<div class="mega-item">
+<h6>Buying Tools</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">Compare Vehicles</div><p class="mb-0">Side-by-side comparison</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">EMI Calculator</div><p class="mb-0">Estimate monthly payments</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">Loan Assistance</div><p class="mb-0">Financing options available</p></a>
+</div>
+<div class="mega-item">
+<h6>Buyer Support</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">Book Test Drive</div><p class="mb-0">Schedule a visit</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">Buyer Guide</div><p class="mb-0">How Buying Works</p></a>
+<a class="d-block text-decoration-none text-dark mb-4" href="#"><div class="fw-bold fs-6">Verified Listings &amp; Trust</div><p class="mb-0">Quality assured</p></a>
+<a class="btn btn-pink w-100 fw-bold rounded text-white py-2" href="listing.html" style="margin:0; text-align:center;">Start Buying</a>
+</div>
+</div>
+</div>
+</li>
+<!-- 2. SELL MENU -->
+<li class="nav-item dropdown-mega">
+<a class="nav-link text-main fw-bold" href="sell-wizard.html">Sell <i class="fas fa-chevron-down ms-1" style="font-size: 0.6em;"></i></a>
+<div class="mega-menu">
+<div class="mega-grid">
+<div class="mega-item">
+<h6>Getting Started</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell-wizard.html"><div class="fw-bold fs-6">How Selling Works</div><p class="mb-0">List → Get Quotes → Close Deal</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell-wizard.html"><div class="fw-bold fs-6">Who Can Sell</div><p class="mb-0">Dealers, fleet owners, businesses</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell-wizard.html"><div class="fw-bold fs-6">Why Sell on AutoHub</div><p class="mb-0">Reach, pricing, trust</p></a>
+</div>
+<div class="mega-item">
+<h6>Seller Benefits</h6>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Access Verified Buyers</div></div>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Auction vs Direct Sale</div></div>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Smart Pricing Insights</div></div>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Secure Payments &amp; Escrow</div></div>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Documentation Support</div></div>
+</div>
+<div class="mega-item">
+<h6>Conversion</h6>
+<div class="bg-light p-3 rounded mb-4 text-start" style="margin:0; border: 1px solid rgba(0,0,0,0.1);">
+<div class="small fw-bold text-success mb-2"><i class="fas fa-shield-alt"></i> Trusted by dealers across India</div>
+<div class="small fw-bold text-dark"><i class="fas fa-car border p-1 rounded me-1 bg-white"></i> 10,000+ vehicles sold</div>
+</div>
+<a class="btn btn-dark w-100 fw-bold rounded mb-2 py-2 text-white" href="register.html" style="margin:0; text-align:center;">Become a Seller</a>
+<a class="btn btn-outline-dark w-100 fw-bold rounded py-2" href="#" style="margin:0; text-align:center;">Talk to Account Manager</a>
+</div>
+</div>
+</div>
+</li>
+<!-- 3. AUCTIONS MENU -->
+<li class="nav-item dropdown-mega">
+<a class="nav-link text-main fw-bold" href="auction-subscription.html">Auctions <i class="fas fa-chevron-down ms-1" style="font-size: 0.6em;"></i></a>
+<div class="mega-menu">
+<div class="mega-grid">
+<div class="mega-item">
+<h6>Discover Auctions</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Live Auctions</div><p class="mb-0">Bid in real-time</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Upcoming Events</div><p class="mb-0">Plan your purchases</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Past Auction Results</div><p class="mb-0">Market price discovery</p></a>
+</div>
+<div class="mega-item">
+<h6>Participate</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">How Auctions Work</div><p class="mb-0">Step-by-step guidance</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Join Auction Events</div><p class="mb-0">Register as a bidder</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Rules &amp; Eligibility</div><p class="mb-0">What you need to know</p></a>
+</div>
+<div class="mega-item">
+<h6>Seller Education</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell-wizard.html"><div class="fw-bold fs-6">List Vehicle in Auction</div><p class="mb-0">Reach massive audiences</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell-wizard.html"><div class="fw-bold fs-6">Auction Benefits</div><p class="mb-0">Faster liquidation</p></a>
+<a class="d-block text-decoration-none text-dark mb-4" href="sell-wizard.html"><div class="fw-bold fs-6">Pricing Transparency</div><p class="mb-0">Market-driven value</p></a>
+<a class="btn w-100 fw-bold rounded text-white py-2" href="auction-subscription.html" style="background-color: var(--orange-accent); margin:0; text-align:center;">View Live Auctions</a>
+</div>
+</div>
+</div>
+</li>
+<!-- 4. RESOURCES MENU -->
+<li class="nav-item dropdown-mega">
+<a class="nav-link text-main fw-bold" href="blogs.html">Resources <i class="fas fa-chevron-down ms-1" style="font-size: 0.6em;"></i></a>
+<div class="mega-menu">
+<div class="mega-grid">
+<div class="mega-item">
+<h6>Learn</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Buyer Guide</div><p class="mb-0">Procurement made easy</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Seller Guide</div><p class="mb-0">Maximize your margins</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Auction Guide</div><p class="mb-0">Bidding strategies</p></a>
+</div>
+<div class="mega-item">
+<h6>Support</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="support.html"><div class="fw-bold fs-6">Help Center</div><p class="mb-0">Get assistance</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="faqs.html"><div class="fw-bold fs-6">FAQs</div><p class="mb-0">Common questions</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="support.html"><div class="fw-bold fs-6">Contact Support</div><p class="mb-0">We are here to help</p></a>
+</div>
+<div class="mega-item">
+<h6>Insights</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Blogs &amp; Industry Insights</div><p class="mb-0">Latest automotive news</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Market Trends</div><p class="mb-0">Demand forecasting</p></a>
+<a class="d-block text-decoration-none text-dark mb-4" href="blogs.html"><div class="fw-bold fs-6">Price Reports</div><p class="mb-0">Valuation matrix</p></a>
+<a class="btn btn-primary w-100 fw-bold rounded text-white py-2" href="blogs.html" style="margin:0; text-align:center;">Explore Resources</a>
+</div>
+</div>
+</div>
+</li>
+
+<li class="nav-item"><a class="nav-link text-dark fw-medium" href="#features">Features</a></li>
+<li class="nav-item"><a class="nav-link text-dark fw-medium" href="#how-it-works">How it Works</a></li>
+<li class="nav-item"><a class="nav-link text-dark fw-medium" href="#pricing">Pricing</a></li>
+</ul>
+<div class="d-flex align-items-center mt-3 mt-lg-0">
+<a class="btn btn-link text-dark text-decoration-none fw-semibold me-3" href="login.html">Dealer Login</a>
+<a class="dealer-btn-primary" href="#register" style="padding: 0.5rem 1.5rem;">Start Selling</a>
+</div>
+</div>
+</div>
+</nav>
+<!-- Hero Section -->
+<section class="dealer-hero">
+<div class="container">
+<div class="row align-items-center">
+<div class="col-lg-6 mb-5 mb-lg-0">
+<span class="badge bg-primary bg-opacity-25 text-info mb-3 px-3 py-2 rounded-pill fw-semibold border border-info border-opacity-25">100% Verified Buyer Network</span>
+<h1 class="dealer-hero-title">
+                        Grow Your Dealership Sales with <span>AutoHub</span>
+</h1>
+<p class="dealer-hero-subtitle">
+                        Reach thousands of verified buyers, manage your inventory with ease, and accelerate your sales cycle on India's fastest-growing vehicle platform.
+                    </p>
+<div class="d-flex flex-column flex-sm-row">
+<a class="dealer-btn-primary mb-3 mb-sm-0" href="#register">
+                            Create Dealer Account <i class="fas fa-arrow-right ms-2"></i>
+</a>
+<a class="dealer-btn-outline" href="#demo">
+                            Request Demo
+                        </a>
+</div>
+<div class="mt-4 text-light opacity-75 small">
+<i class="fas fa-check-circle text-success me-1"></i> No setup fee. Fast approval. Dedicated support.
+                    </div>
+</div>
+<div class="col-lg-6">
+<div class="dealer-hero-img-wrap">
+<!-- Dashboard mockup placeholder -->
+<img alt="AutoHub Dealer Dashboard Mockup" class="img-fluid" src="dealer-dashboard.png"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Stats Ribbon -->
+<section class="dealer-stats-ribbon">
+<div class="container">
+<div class="row">
+<div class="col-md-4 dealer-stat-item border-md-end border-light">
+<div class="dealer-stat-number">10K+</div>
+<div class="dealer-stat-label">Active Buyers Monthly</div>
+</div>
+<div class="col-md-4 dealer-stat-item border-md-end border-light">
+<div class="dealer-stat-number">1,500+</div>
+<div class="dealer-stat-label">Registered Dealers</div>
+</div>
+<div class="col-md-4 dealer-stat-item">
+<div class="dealer-stat-number">₹500Cr+</div>
+<div class="dealer-stat-label">Vehicle Sales Processed</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Key Business Benefits -->
+<section class="dealer-benefits" id="features">
+<div class="container">
+<h2 class="dealer-section-title">Built for Dealership Success</h2>
+<p class="dealer-section-subtitle">AutoHub provides powerful tools to streamline your operations and maximize your ROI.</p>
+<div class="row g-4">
+<div class="col-md-4">
+<div class="dealer-benefit-card">
+<div class="dealer-benefit-icon"><i class="fas fa-users"></i></div>
+<h3 class="dealer-benefit-title">Verified Buyer Reach</h3>
+<p class="dealer-benefit-desc">Connect instantly with high-intent buyers looking for two-wheelers and cars in your geographical area. Say goodbye to cold leads.</p>
+</div>
+</div>
+<div class="col-md-4">
+<div class="dealer-benefit-card">
+<div class="dealer-benefit-icon"><i class="fas fa-layer-group"></i></div>
+<h3 class="dealer-benefit-title">Bulk Inventory Upload</h3>
+<p class="dealer-benefit-desc">Save hours of manual data entry. Upload your entire showroom inventory in minutes via CSV or our quick-add forms.</p>
+</div>
+</div>
+<div class="col-md-4">
+<div class="dealer-benefit-card">
+<div class="dealer-benefit-icon"><i class="fas fa-chart-line"></i></div>
+<h3 class="dealer-benefit-title">Smart Pricing Analytics</h3>
+<p class="dealer-benefit-desc">Get AI-driven pricing recommendations based on current market trends to ensure your vehicles sell faster at the best margins.</p>
+</div>
+</div>
+<div class="col-md-4">
+<div class="dealer-benefit-card">
+<div class="dealer-benefit-icon"><i class="fas fa-bolt"></i></div>
+<h3 class="dealer-benefit-title">Faster Turnover</h3>
+<p class="dealer-benefit-desc">Reduce your average days-in-inventory by 40% with premium visibility placements and targeted buyer alerts.</p>
+</div>
+</div>
+<div class="col-md-4">
+<div class="dealer-benefit-card">
+<div class="dealer-benefit-icon"><i class="fas fa-headset"></i></div>
+<h3 class="dealer-benefit-title">Dedicated Support</h3>
+<p class="dealer-benefit-desc">Get your own account manager who works closely with you to optimize listings and resolve disputes immediately.</p>
+</div>
+</div>
+<div class="col-md-4">
+<div class="dealer-benefit-card">
+<div class="dealer-benefit-icon"><i class="fas fa-filter"></i></div>
+<h3 class="dealer-benefit-title">Lead Management CRM</h3>
+<p class="dealer-benefit-desc">Track test drives, negotiations, and successful closures all in one single, easy-to-use dashboard.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- How It Works -->
+<section class="dealer-steps" id="how-it-works">
+<div class="container">
+<h2 class="dealer-section-title">Start Selling in 4 Simple Steps</h2>
+<p class="dealer-section-subtitle">Our streamlined onboarding process gets your vehicles in front of buyers in less than 24 hours.</p>
+<div class="row position-relative">
+<div class="col-lg-3 col-md-6 dealer-step-item">
+<div class="dealer-step-connector"></div>
+<div class="dealer-step-icon"><i class="fas fa-id-card"></i></div>
+<div class="dealer-step-title">1. Register Dealership</div>
+<div class="dealer-step-desc">Create your account and verify your business credentials for platform access.</div>
+</div>
+<div class="col-lg-3 col-md-6 dealer-step-item">
+<div class="dealer-step-connector"></div>
+<div class="dealer-step-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+<div class="dealer-step-title">2. Add Inventory</div>
+<div class="dealer-step-desc">Upload vehicle details, photos, and RC documents easily via our dashboard.</div>
+</div>
+<div class="col-lg-3 col-md-6 dealer-step-item">
+<div class="dealer-step-connector"></div>
+<div class="dealer-step-icon"><i class="fas fa-bell"></i></div>
+<div class="dealer-step-title">3. Receive Leads</div>
+<div class="dealer-step-desc">Get instant notifications when buyers request test drives or price quotes.</div>
+</div>
+<div class="col-lg-3 col-md-6 dealer-step-item">
+<div class="dealer-step-icon"><i class="fas fa-handshake"></i></div>
+<div class="dealer-step-title">4. Close Deals Faster</div>
+<div class="dealer-step-desc">Finalize sales quickly and track all your transaction history in one place.</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Dashboard & Tools Highlight -->
+<section class="dealer-features bg-white">
+<div class="container">
+<div class="row dealer-feature-row">
+<div class="col-lg-6 pe-lg-5 mb-4 mb-lg-0 dealer-feature-content">
+<h3>Everything you need to manage your digital footprint</h3>
+<p class="text-muted mb-4 fs-5">Say goodbye to messy spreadsheets. AutoHub gives you a modern toolkit to maintain an accurate view of your business.</p>
+<ul class="dealer-feature-list">
+<li><strong>Real-time Inventory Tracking:</strong> Know exactly what’s in stock, what's booked, and what’s sold.</li>
+<li><strong>Instant Chat &amp; Negotiations:</strong> Discuss directly with interested buyers through our secure platform.</li>
+<li><strong>Performance Analytics:</strong> See which vehicle models generate the most leads and optimize your stock.</li>
+<li><strong>Financial Management:</strong> Easily track advances, commissions, and total incoming revenue.</li>
+</ul>
+<a class="btn btn-primary mt-3 px-4 py-2 fw-semibold" href="#register" style="background-color: var(--dealer-secondary); border: none;">View All Features</a>
+</div>
+<div class="col-lg-6">
+<!-- Second mockup or feature image -->
+<div class="dealer-feature-img p-3 bg-light">
+<div class="bg-white rounded p-4 h-100 shadow-sm border">
+<h5 class="fw-bold mb-3 border-bottom pb-2">Recent Buyer Inquiries</h5>
+<div class="d-flex justify-content-between align-items-center mb-3 p-2 bg-light rounded">
+<div>
+<h6 class="mb-0 fw-bold">Royal Enfield Classic 350</h6>
+<small class="text-muted">Lead: Rahul Verma</small>
+</div>
+<span class="badge bg-warning text-dark">Pending Follow-up</span>
+</div>
+<div class="d-flex justify-content-between align-items-center mb-3 p-2 bg-light rounded">
+<div>
+<h6 class="mb-0 fw-bold">Honda Activa 6G</h6>
+<small class="text-muted">Lead: Priya Desai</small>
+</div>
+<span class="badge bg-success">Test Drive Booked</span>
+</div>
+<div class="d-flex justify-content-between align-items-center p-2 bg-light rounded">
+<div>
+<h6 class="mb-0 fw-bold">Bajaj Pulsar NS200</h6>
+<small class="text-muted">Lead: Amit Kumar</small>
+</div>
+<span class="badge bg-primary">Offer Received</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Trust & Credibility -->
+<section class="dealer-trust">
+<div class="container bg-light rounded-4 p-5">
+<h2 class="dealer-section-title">Trusted by Leading Dealerships</h2>
+<p class="dealer-section-subtitle mb-0">Join our growing network of successful partners.</p>
+<div class="row mt-5 g-4 justify-content-center">
+<div class="col-md-5">
+<div class="testimonial-card">
+<div class="mb-3 text-warning">
+<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+</div>
+<p class="testimonial-quote">"AutoHub transformed how we do business. Our average inventory hold time dropped from 45 days to just 18 days. The verified buyer intent is incredible."</p>
+<div class="testimonial-author">
+<div class="testimonial-avatar"><i class="fas fa-user-tie"></i></div>
+<div class="testimonial-info">
+<h4>Suresh Motors</h4>
+<p>Multi-brand Reseller, Bangalore</p>
+</div>
+</div>
+</div>
+</div>
+<div class="col-md-5">
+<div class="testimonial-card">
+<div class="mb-3 text-warning">
+<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+</div>
+<p class="testimonial-quote">"The bulk upload tool and pricing analytics are a game-changer. We've expanded our reach beyond our locality and increased overall revenue by 30%."</p>
+<div class="testimonial-author">
+<div class="testimonial-avatar"><i class="fas fa-user-tie"></i></div>
+<div class="testimonial-info">
+<h4>Metro Wheels</h4>
+<p>Premium Used Vehicles, Mumbai</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Pricing / Plans -->
+<section class="dealer-pricing" id="pricing">
+<div class="container">
+<h2 class="dealer-section-title">Transparent Pricing, No Hidden Fees</h2>
+<p class="dealer-section-subtitle">Choose the plan that fits your business volume. <strong>0% Commission on sales.</strong></p>
+<div class="row g-4 justify-content-center mt-4">
+<!-- Basic Plan -->
+<div class="col-lg-4 col-md-6">
+<div class="dealer-price-card">
+<h4 class="dealer-price-title">Starter</h4>
+<p class="dealer-price-desc">Perfect for small lots growing their online presence.</p>
+<div class="dealer-price-amount">₹2,999<span>/mo</span></div>
+<ul>
+<li><i class="fas fa-check"></i> Up to 20 Vehicle Listings</li>
+<li><i class="fas fa-check"></i> Basic Dealer Dashboard</li>
+<li><i class="fas fa-check"></i> 50 Verified Leads/mo</li>
+<li><i class="fas fa-check"></i> Email Support</li>
+<li class="disabled"><i class="fas fa-times"></i> Advanced Pricing Analytics</li>
+<li class="disabled"><i class="fas fa-times"></i> Premium Listing Placement</li>
+</ul>
+<a class="btn btn-outline-primary w-100 fw-bold py-2" href="#register" style="border-radius: 8px;">Select Starter</a>
+</div>
+</div>
+<!-- Pro Plan -->
+<div class="col-lg-4 col-md-6">
+<div class="dealer-price-card popular">
+<div class="popular-badge">Most Popular</div>
+<h4 class="dealer-price-title">Growth</h4>
+<p class="dealer-price-desc">For established dealers looking to scale operations.</p>
+<div class="dealer-price-amount">₹5,999<span>/mo</span></div>
+<ul>
+<li><i class="fas fa-check"></i> Up to 100 Vehicle Listings</li>
+<li><i class="fas fa-check"></i> Advanced Dealer CRM</li>
+<li><i class="fas fa-check"></i> Unlimited Verified Leads</li>
+<li><i class="fas fa-check"></i> Priority Phone &amp; Chat Support</li>
+<li><i class="fas fa-check"></i> Advanced Pricing Analytics</li>
+<li class="disabled"><i class="fas fa-times"></i> Premium Listing Placement</li>
+</ul>
+<a class="dealer-btn-primary w-100 py-2 d-block text-center mt-auto" href="#register" style="border-radius: 8px;">Start Free 14-Day Trial</a>
+</div>
+</div>
+<!-- Enterprise Plan -->
+<div class="col-lg-4 col-md-6">
+<div class="dealer-price-card">
+<h4 class="dealer-price-title">Enterprise</h4>
+<p class="dealer-price-desc">For multi-location large-scale dealerships.</p>
+<div class="dealer-price-amount">Custom</div>
+<ul>
+<li><i class="fas fa-check"></i> Unlimited Vehicle Listings</li>
+<li><i class="fas fa-check"></i> Multi-branch Management</li>
+<li><i class="fas fa-check"></i> Unlimited Verified Leads</li>
+<li><i class="fas fa-check"></i> Dedicated Account Manager</li>
+<li><i class="fas fa-check"></i> Advanced Pricing Analytics</li>
+<li><i class="fas fa-check"></i> Top-tier Premium Placements</li>
+</ul>
+<a class="btn btn-outline-primary w-100 fw-bold py-2 mt-auto" href="#demo" style="border-radius: 8px;">Contact Sales</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- FAQ -->
+<section class="dealer-faq" id="faq">
+<div class="container">
+<h2 class="dealer-section-title">Frequently Asked Questions</h2>
+<div class="row justify-content-center mt-5">
+<div class="col-lg-8">
+<div class="accordion dealer-accordion" id="faqAccordion">
+<div class="accordion-item">
+<h2 class="accordion-header" id="headingOne">
+<button class="accordion-button" data-bs-target="#collapseOne" data-bs-toggle="collapse" type="button">
+                                    How do I upload my inventory in bulk?
+                                </button>
+</h2>
+<div class="accordion-collapse collapse show" data-bs-parent="#faqAccordion" id="collapseOne">
+<div class="accordion-body">
+                                    Our platform supports CSV and API integrations. You can download our standardized CSV template, fill in your stock details, and upload it to the dashboard. Your listings will go live instantly.
+                                </div>
+</div>
+</div>
+<div class="accordion-item">
+<h2 class="accordion-header" id="headingTwo">
+<button class="accordion-button collapsed" data-bs-target="#collapseTwo" data-bs-toggle="collapse" type="button">
+                                    Do you charge a commission on every sale?
+                                </button>
+</h2>
+<div class="accordion-collapse collapse" data-bs-parent="#faqAccordion" id="collapseTwo">
+<div class="accordion-body">
+<strong>No.</strong> AutoHub operates strictly on a subscription model for dealerships. There are zero hidden fees and 0% commission on your sales. That's our promise.
+                                </div>
+</div>
+</div>
+<div class="accordion-item">
+<h2 class="accordion-header" id="headingThree">
+<button class="accordion-button collapsed" data-bs-target="#collapseThree" data-bs-toggle="collapse" type="button">
+                                    How are buyer leads verified and shared?
+                                </button>
+</h2>
+<div class="accordion-collapse collapse" data-bs-parent="#faqAccordion" id="collapseThree">
+<div class="accordion-body">
+                                    Every buyer registers using mobile OTP verification. When they request a quote or book a test drive for your vehicle, the lead details (name, matched phone number, chat access) are immediately pushed to your Dealer CRM instantly.
+                                </div>
+</div>
+</div>
+<div class="accordion-item">
+<h2 class="accordion-header" id="headingFour">
+<button class="accordion-button collapsed" data-bs-target="#collapseFour" data-bs-toggle="collapse" type="button">
+                                    Do you provide support during onboarding?
+                                </button>
+</h2>
+<div class="accordion-collapse collapse" data-bs-parent="#faqAccordion" id="collapseFour">
+<div class="accordion-body">
+                                    Absolutely! Every registered dealer gets an onboarding specialist who will train your team, help upload the initial inventory chunk, and configure your dashboard for optimal results within the first 48 hours.
+                                </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="dealer-cta" id="register">
+<div class="container">
+<h2 class="dealer-cta-title">Ready to Turbocharge Your Sales?</h2>
+<p class="dealer-cta-subtitle">Join thousands of dealerships across India trusting AutoHub to run and grow their business.</p>
+<div class="bg-white text-dark p-5 rounded-4 shadow mx-auto text-start" style="max-width: 600px;">
+<h4 class="mb-4 fw-bold">Register Dealership</h4>
+<form onsubmit="event.preventDefault(); alert('Registration submitted. Our team will contact you shortly.');">
+<div class="mb-3">
+<label class="form-label fw-semibold">Dealership Name</label>
+<input class="form-control" placeholder="e.g. Metro Automotive" required="" type="text"/>
+</div>
+<div class="row">
+<div class="col-md-6 mb-3">
+<label class="form-label fw-semibold">Contact Person</label>
+<input class="form-control" placeholder="Full Name" required="" type="text"/>
+</div>
+<div class="col-md-6 mb-3">
+<label class="form-label fw-semibold">Mobile Number</label>
+<input class="form-control" placeholder="10-digit number" required="" type="tel"/>
+</div>
+</div>
+<div class="mb-3">
+<label class="form-label fw-semibold">Email Address</label>
+<input class="form-control" placeholder="business@example.com" required="" type="email"/>
+</div>
+<div class="mb-4">
+<label class="form-label fw-semibold">City</label>
+<input class="form-control" placeholder="e.g. Bangalore" required="" type="text"/>
+</div>
+<button class="dealer-btn-primary w-100 py-3 fs-5 d-block text-center border-0" style="border-radius: 8px;" type="submit">Create Account</button>
+<p class="text-center text-muted mt-3 small mb-0">By registering, you agree to our <a href="#">Terms of Service</a> &amp; <a href="#">Privacy Policy</a>.</p>
+</form>
+</div>
+</div>
+</section>
+<footer class="bg-dark text-white py-4 mt-auto">
+<div class="container text-center text-md-start">
+<div class="row">
+<div class="col-md-6 mb-3 mb-md-0">
+<span class="fs-5 fw-bold mb-2 d-block">AutoHub <span style="color: var(--dealer-secondary);">Marketplace</span></span>
+<small class="text-white-50">© 2026 AutoHub. All rights reserved.</small>
+</div>
+<div class="col-md-6 text-md-end">
+<a class="text-white text-decoration-none me-3" href="#"><i class="fab fa-linkedin fs-4"></i></a>
+<a class="text-white text-decoration-none" href="#"><i class="fab fa-twitter fs-4"></i></a>
+</div>
+</div>
+</div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

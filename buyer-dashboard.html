@@ -1,200 +1,336 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buyer Dashboard - AutoHub</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/main.css">
-    <style>
-        body { background-color: #f8fafc; }
-        .dashboard-card { border: none; border-radius: 12px; transition: transform 0.2s; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Buyer Dashboard - AutoHub</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<link href="css/main.css" rel="stylesheet"/>
+<style>
+        body { background-color: var(--bg-secondary); color: var(--text-main); }
+        .dashboard-card { border: 1px solid var(--border-color); border-radius: 12px; transition: transform 0.2s; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); background-color: var(--bg-primary); }
         .dashboard-card:hover { transform: translateY(-3px); }
         .icon-circle { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; }
-        .table-custom th { background-color: #f1f5f9; color: #475569; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #e2e8f0; padding: 12px 16px; }
-        .table-custom td { padding: 16px; vertical-align: middle; color: #1e293b; font-size: 0.95rem; border-bottom: 1px solid #f1f5f9; }
+        .table-custom th { background-color: var(--bg-secondary); color: var(--text-muted); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid var(--border-color); padding: 12px 16px; }
+        .table-custom td { padding: 16px; vertical-align: middle; color: var(--text-main); font-size: 0.95rem; border-bottom: 1px solid var(--border-color); }
         .status-badge { padding: 4px 10px; border-radius: 6px; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; }
         .status-paid { background-color: #dcfce7; color: #166534; }
         .status-partial { background-color: #fef3c7; color: #92400e; }
         .status-pending { background-color: #f1f5f9; color: #475569; }
         .status-overdue { background-color: #fee2e2; color: #991b1b; }
     </style>
+
+<style id="super-mega-menu-css">
+        /* Mega Menu Styles */
+        .dropdown-mega { position: static; }
+        .mega-menu {
+            position: absolute; top: 100%; left: 0; right: 0; margin: 0 auto;
+            width: 96%; max-width: 1100px; background: #ffffff;
+            border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            padding: 30px; display: none; z-index: 1050; border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+        .dropdown-mega:hover .mega-menu { display: block; animation: fadeInMega 0.2s ease-in-out; }
+        .mega-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .mega-item h6 { font-weight: 700; margin-bottom: 15px; color: #111827; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
+        .mega-item p { font-size: 13px; color: #6b7280; line-height: 1.4; transition: color 0.2s; }
+        .mega-item a { transition: all 0.2s ease; border-radius: 6px; padding: 8px; margin: -8px; }
+        .mega-item a:hover { background-color: #f8fafc; }
+        .mega-item a:hover .fs-6 { color: var(--pink-accent, #ec4899); }
+        .mega-item a:hover p { color: #4b5563; }
+        @keyframes fadeInMega { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* Responsive Mobile Behavior */
+        @media (max-width: 991px) {
+            .mega-menu { position: static; width: 100%; box-shadow: none; padding: 15px; display: none; margin-top: 10px; }
+            .dropdown-mega.show .mega-menu { display: block; }
+            .mega-grid { grid-template-columns: 1fr; gap: 20px; }
+        }
+    </style>
 </head>
 <body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg sticky-top bg-theme-primary border-bottom border-theme">
+<div class="container">
+<a class="navbar-brand fw-bold text-main" href="index.html">AutoHub <span style="color: var(--pink-accent);">Marketplace</span></a>
+<button class="navbar-toggler" data-bs-target="#navbarContent" data-bs-toggle="collapse" type="button">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="navbarContent">
+<ul class="navbar-nav ms-auto align-items-center gap-3">
+<!-- 1. BUY MENU -->
+<li class="nav-item dropdown-mega">
+<a class="nav-link text-main fw-bold" href="listing.html">Buy <i class="fas fa-chevron-down ms-1" style="font-size: 0.6em;"></i></a>
+<div class="mega-menu">
+<div class="mega-grid">
+<div class="mega-item">
+<h6>Explore Vehicles</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="listing.html"><div class="fw-bold fs-6">Search Vehicles</div><p class="mb-0">Browse all available vehicles</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="listing.html"><div class="fw-bold fs-6">Explore by Category</div><p class="mb-0">Cars, Commercial, EVs</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="listing.html"><div class="fw-bold fs-6">Featured Listings</div><p class="mb-0">Verified &amp; premium vehicles</p></a>
+</div>
+<div class="mega-item">
+<h6>Buying Tools</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">Compare Vehicles</div><p class="mb-0">Side-by-side comparison</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">EMI Calculator</div><p class="mb-0">Estimate monthly payments</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">Loan Assistance</div><p class="mb-0">Financing options available</p></a>
+</div>
+<div class="mega-item">
+<h6>Buyer Support</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">Book Test Drive</div><p class="mb-0">Schedule a visit</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="#"><div class="fw-bold fs-6">Buyer Guide</div><p class="mb-0">How Buying Works</p></a>
+<a class="d-block text-decoration-none text-dark mb-4" href="#"><div class="fw-bold fs-6">Verified Listings &amp; Trust</div><p class="mb-0">Quality assured</p></a>
+<a class="btn btn-pink w-100 fw-bold rounded text-white py-2" href="listing.html" style="margin:0; text-align:center;">Start Buying</a>
+</div>
+</div>
+</div>
+</li>
+<!-- 2. SELL MENU -->
+<li class="nav-item dropdown-mega">
+<a class="nav-link text-main fw-bold" href="sell.html">Sell <i class="fas fa-chevron-down ms-1" style="font-size: 0.6em;"></i></a>
+<div class="mega-menu">
+<div class="mega-grid">
+<div class="mega-item">
+<h6>Getting Started</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell.html"><div class="fw-bold fs-6">How Selling Works</div><p class="mb-0">List → Get Quotes → Close Deal</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell.html"><div class="fw-bold fs-6">Who Can Sell</div><p class="mb-0">Dealers, fleet owners, businesses</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell.html"><div class="fw-bold fs-6">Why Sell on AutoHub</div><p class="mb-0">Reach, pricing, trust</p></a>
+</div>
+<div class="mega-item">
+<h6>Seller Benefits</h6>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Access Verified Buyers</div></div>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Auction vs Direct Sale</div></div>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Smart Pricing Insights</div></div>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Secure Payments &amp; Escrow</div></div>
+<div class="d-block text-dark mb-3 ps-2"><div class="fw-bold fs-6"><i class="fas fa-check text-success me-2"></i> Documentation Support</div></div>
+</div>
+<div class="mega-item">
+<h6>Conversion</h6>
+<div class="bg-light p-3 rounded mb-4 text-start" style="margin:0; border: 1px solid rgba(0,0,0,0.1);">
+<div class="small fw-bold text-success mb-2"><i class="fas fa-shield-alt"></i> Trusted by dealers across India</div>
+<div class="small fw-bold text-dark"><i class="fas fa-car border p-1 rounded me-1 bg-white"></i> 10,000+ vehicles sold</div>
+</div>
+<a class="btn btn-dark w-100 fw-bold rounded mb-2 py-2 text-white" href="register.html" style="margin:0; text-align:center;">Become a Seller</a>
+<a class="btn btn-outline-dark w-100 fw-bold rounded py-2" href="#" style="margin:0; text-align:center;">Talk to Account Manager</a>
+</div>
+</div>
+</div>
+</li>
+<!-- 3. AUCTIONS MENU -->
+<li class="nav-item dropdown-mega">
+<a class="nav-link text-main fw-bold" href="auction-subscription.html">Auctions <i class="fas fa-chevron-down ms-1" style="font-size: 0.6em;"></i></a>
+<div class="mega-menu">
+<div class="mega-grid">
+<div class="mega-item">
+<h6>Discover Auctions</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Live Auctions</div><p class="mb-0">Bid in real-time</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Upcoming Events</div><p class="mb-0">Plan your purchases</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Past Auction Results</div><p class="mb-0">Market price discovery</p></a>
+</div>
+<div class="mega-item">
+<h6>Participate</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">How Auctions Work</div><p class="mb-0">Step-by-step guidance</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Join Auction Events</div><p class="mb-0">Register as a bidder</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="auction-subscription.html"><div class="fw-bold fs-6">Rules &amp; Eligibility</div><p class="mb-0">What you need to know</p></a>
+</div>
+<div class="mega-item">
+<h6>Seller Education</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell.html"><div class="fw-bold fs-6">List Vehicle in Auction</div><p class="mb-0">Reach massive audiences</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="sell.html"><div class="fw-bold fs-6">Auction Benefits</div><p class="mb-0">Faster liquidation</p></a>
+<a class="d-block text-decoration-none text-dark mb-4" href="sell.html"><div class="fw-bold fs-6">Pricing Transparency</div><p class="mb-0">Market-driven value</p></a>
+<a class="btn w-100 fw-bold rounded text-white py-2" href="auction-subscription.html" style="background-color: var(--orange-accent); margin:0; text-align:center;">View Live Auctions</a>
+</div>
+</div>
+</div>
+</li>
+<!-- 4. RESOURCES MENU -->
+<li class="nav-item dropdown-mega">
+<a class="nav-link text-main fw-bold" href="blogs.html">Resources <i class="fas fa-chevron-down ms-1" style="font-size: 0.6em;"></i></a>
+<div class="mega-menu">
+<div class="mega-grid">
+<div class="mega-item">
+<h6>Learn</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Buyer Guide</div><p class="mb-0">Procurement made easy</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Seller Guide</div><p class="mb-0">Maximize your margins</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Auction Guide</div><p class="mb-0">Bidding strategies</p></a>
+</div>
+<div class="mega-item">
+<h6>Support</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="support.html"><div class="fw-bold fs-6">Help Center</div><p class="mb-0">Get assistance</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="faqs.html"><div class="fw-bold fs-6">FAQs</div><p class="mb-0">Common questions</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="support.html"><div class="fw-bold fs-6">Contact Support</div><p class="mb-0">We are here to help</p></a>
+</div>
+<div class="mega-item">
+<h6>Insights</h6>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Blogs &amp; Industry Insights</div><p class="mb-0">Latest automotive news</p></a>
+<a class="d-block text-decoration-none text-dark mb-3" href="blogs.html"><div class="fw-bold fs-6">Market Trends</div><p class="mb-0">Demand forecasting</p></a>
+<a class="d-block text-decoration-none text-dark mb-4" href="blogs.html"><div class="fw-bold fs-6">Price Reports</div><p class="mb-0">Valuation matrix</p></a>
+<a class="btn btn-primary w-100 fw-bold rounded text-white py-2" href="blogs.html" style="margin:0; text-align:center;">Explore Resources</a>
+</div>
+</div>
+</div>
+</li>
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg sticky-top bg-white border-bottom shadow-sm">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="index.html" style="color: var(--dark-bg);">AutoHub <span style="color: var(--pink-accent);">Marketplace</span></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarContent">
-                <ul class="navbar-nav ms-auto align-items-center gap-3">
-                    <li class="nav-item"><a class="nav-link fw-bold active" href="buyer-dashboard.html">Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link" href="orders.html">My Orders</a></li>
-                    <li class="nav-item"><a class="nav-link" href="outstanding-invoices.html">Outstanding Invoices</a></li>
-                    <li class="nav-item"><a class="nav-link" href="payment-transparency.html">Payment Flow</a></li>
-                    <li class="nav-item ms-3 border-start ps-3">
-                        <div class="d-flex align-items-center gap-2">
-                            <div class="icon-circle bg-light" style="width: 36px; height: 36px;"><i class="fas fa-user text-secondary"></i></div>
-                            <span class="fw-bold" style="color: var(--dark-bg);">Transport Inc.</span>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <div class="container py-5">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <div>
-                <h3 class="fw-bold text-dark mb-1">Financial Overview</h3>
-                <p class="text-secondary mb-0">Track your purchases, settled invoices, and outstanding balances.</p>
-            </div>
-            <div>
-                <a href="payment-transparency.html" class="btn btn-outline-primary fw-bold bg-white"><i class="fas fa-sitemap me-2"></i>View Platform Payment Flow</a>
-            </div>
-        </div>
-
-        <!-- Summary Cards -->
-        <div class="row g-4 mb-5">
-            <!-- Total Purchases -->
-            <div class="col-md col-sm-6">
-                <div class="card dashboard-card h-100 bg-white">
-                    <div class="card-body p-4">
-                        <div class="d-flex justify-content-between align-items-start mb-3">
-                            <div class="icon-circle text-primary" style="background-color: rgba(13, 110, 253, 0.1);"><i class="fas fa-shopping-bag"></i></div>
-                            <span class="badge bg-light text-secondary border">Lifetime</span>
-                        </div>
-                        <h3 class="fw-bold text-dark mb-1">12</h3>
-                        <p class="text-secondary small fw-semibold mb-0">Total Purchases</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Total Invoice Value -->
-            <div class="col-md col-sm-6">
-                <div class="card dashboard-card h-100 bg-white">
-                    <div class="card-body p-4">
-                        <div class="d-flex justify-content-between align-items-start mb-3">
-                            <div class="icon-circle text-info" style="background-color: rgba(13, 202, 240, 0.1);"><i class="fas fa-file-invoice-dollar"></i></div>
-                        </div>
-                        <h3 class="fw-bold text-dark mb-1">₹ 42.5 L</h3>
-                        <p class="text-secondary small fw-semibold mb-0">Total Invoice Value</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Total Amount Settled -->
-            <div class="col-md col-sm-6">
-                <div class="card dashboard-card h-100 bg-white">
-                    <div class="card-body p-4">
-                        <div class="d-flex justify-content-between align-items-start mb-3">
-                            <div class="icon-circle text-success" style="background-color: rgba(25, 135, 84, 0.1);"><i class="fas fa-check-circle"></i></div>
-                        </div>
-                        <h3 class="fw-bold text-dark mb-1">₹ 35.8 L</h3>
-                        <p class="text-secondary small fw-semibold mb-0">Total Amount Settled</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Outstanding Amount -->
-            <div class="col-md col-sm-6">
-                <div class="card dashboard-card h-100 bg-white">
-                    <div class="card-body p-4">
-                        <div class="d-flex justify-content-between align-items-start mb-3">
-                            <div class="icon-circle text-danger" style="background-color: rgba(220, 53, 69, 0.1);"><i class="fas fa-exclamation-circle"></i></div>
-                        </div>
-                        <h3 class="fw-bold text-danger mb-1">₹ 6.7 L</h3>
-                        <p class="text-secondary small fw-semibold mb-0">Outstanding Amount</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Active Orders -->
-            <div class="col-md col-sm-6">
-                <div class="card dashboard-card h-100 bg-white">
-                    <div class="card-body p-4">
-                        <div class="d-flex justify-content-between align-items-start mb-3">
-                            <div class="icon-circle text-warning" style="background-color: rgba(255, 193, 7, 0.1);"><i class="fas fa-truck-loading"></i></div>
-                        </div>
-                        <h3 class="fw-bold text-dark mb-1">3</h3>
-                        <p class="text-secondary small fw-semibold mb-0">Active Orders</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Recent Financial Activity -->
-        <div class="card dashboard-card bg-white">
-            <div class="card-header bg-white border-bottom py-3 d-flex justify-content-between align-items-center">
-                <h5 class="fw-bold text-dark mb-0">Recent Financial Activity</h5>
-                <a href="orders.html" class="btn btn-sm btn-link text-decoration-none fw-bold">View All Orders <i class="fas fa-arrow-right ms-1"></i></a>
-            </div>
-            <div class="card-body p-0">
-                <div class="table-responsive">
-                    <table class="table table-custom mb-0">
-                        <thead>
-                            <tr>
-                                <th>Order ID</th>
-                                <th>Product</th>
-                                <th>Dealer</th>
-                                <th>Invoice No.</th>
-                                <th>Invoice Amount</th>
-                                <th>Payment Status</th>
-                                <th class="text-end">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><span class="fw-bold text-primary">ORD-9021</span></td>
-                                <td>Tata Ace Gold</td>
-                                <td>Deshpande Commercials</td>
-                                <td><a href="invoice-viewer.html" class="text-decoration-none">INV-2023-0104</a></td>
-                                <td class="fw-bold">₹ 4,80,000</td>
-                                <td><span class="status-badge status-paid">Paid in Full</span></td>
-                                <td class="text-end">
-                                    <a href="invoice-viewer.html" class="btn btn-sm btn-light border fw-bold text-secondary"><i class="fas fa-file-invoice me-1"></i> Invoice</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><span class="fw-bold text-primary">ORD-9105</span></td>
-                                <td>Ashok Leyland Dost+</td>
-                                <td>Northwest Commercials</td>
-                                <td><a href="invoice-viewer.html" class="text-decoration-none">INV-2023-0145</a></td>
-                                <td class="fw-bold">₹ 7,50,000</td>
-                                <td><span class="status-badge status-partial">Partially Paid</span></td>
-                                <td class="text-end">
-                                    <a href="invoice-viewer.html" class="btn btn-sm btn-light border fw-bold text-secondary"><i class="fas fa-file-invoice me-1"></i> Invoice</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><span class="fw-bold text-primary">ORD-9112</span></td>
-                                <td>Eicher Pro 2049</td>
-                                <td>Global Heavy Equipments</td>
-                                <td><a href="invoice-viewer.html" class="text-decoration-none">INV-2023-0162</a></td>
-                                <td class="fw-bold">₹ 13,50,000</td>
-                                <td><span class="status-badge status-pending">Pending</span></td>
-                                <td class="text-end">
-                                    <a href="invoice-viewer.html" class="btn btn-sm btn-light border fw-bold text-secondary"><i class="fas fa-file-invoice me-1"></i> Invoice</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><span class="fw-bold text-primary">ORD-8854</span></td>
-                                <td>Toyota Innova (Fleet)</td>
-                                <td>Capital Motors</td>
-                                <td><a href="invoice-viewer.html" class="text-decoration-none">INV-2023-0089</a></td>
-                                <td class="fw-bold">₹ 29,50,000</td>
-                                <td><span class="status-badge status-overdue">Overdue</span></td>
-                                <td class="text-end">
-                                    <a href="invoice-viewer.html" class="btn btn-sm btn-light border fw-bold text-secondary"><i class="fas fa-file-invoice me-1"></i> Invoice</a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<li class="nav-item"><a class="nav-link fw-bold active text-main" href="buyer-dashboard.html">Dashboard</a></li>
+<li class="nav-item"><a class="nav-link text-main" href="orders.html">My Orders</a></li>
+<li class="nav-item"><a class="nav-link text-main" href="outstanding-invoices.html">Outstanding Invoices</a></li>
+<li class="nav-item"><a class="nav-link text-main" href="payment-transparency.html">Payment Flow</a></li>
+<li class="nav-item ms-3 border-start ps-3">
+<div class="d-flex align-items-center gap-2">
+<div class="icon-circle bg-theme-secondary" style="width: 36px; height: 36px;"><i class="fas fa-user text-secondary"></i></div>
+<span class="fw-bold text-main">Transport Inc.</span>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<div class="container py-5">
+<div class="d-flex justify-content-between align-items-center mb-4">
+<div>
+<h3 class="fw-bold text-main mb-1">Financial Overview</h3>
+<p class="text-muted mb-0">Track your purchases, settled invoices, and outstanding balances.</p>
+</div>
+<div>
+<a class="btn btn-outline-primary fw-bold bg-theme-primary" href="payment-transparency.html"><i class="fas fa-sitemap me-2"></i>View Platform Payment Flow</a>
+</div>
+</div>
+<!-- Summary Cards -->
+<div class="row g-4 mb-5">
+<!-- Total Purchases -->
+<div class="col-md col-sm-6">
+<div class="card dashboard-card h-100 bg-theme-primary">
+<div class="card-body p-4">
+<div class="d-flex justify-content-between align-items-start mb-3">
+<div class="icon-circle text-primary" style="background-color: rgba(13, 110, 253, 0.1);"><i class="fas fa-shopping-bag"></i></div>
+<span class="badge bg-theme-secondary text-muted border border-theme">Lifetime</span>
+</div>
+<h3 class="fw-bold text-main mb-1">12</h3>
+<p class="text-muted small fw-semibold mb-0">Total Purchases</p>
+</div>
+</div>
+</div>
+<!-- Total Invoice Value -->
+<div class="col-md col-sm-6">
+<div class="card dashboard-card h-100 bg-theme-primary">
+<div class="card-body p-4">
+<div class="d-flex justify-content-between align-items-start mb-3">
+<div class="icon-circle text-info" style="background-color: rgba(13, 202, 240, 0.1);"><i class="fas fa-file-invoice-dollar"></i></div>
+</div>
+<h3 class="fw-bold text-main mb-1">₹ 42.5 L</h3>
+<p class="text-muted small fw-semibold mb-0">Total Invoice Value</p>
+</div>
+</div>
+</div>
+<!-- Total Amount Settled -->
+<div class="col-md col-sm-6">
+<div class="card dashboard-card h-100 bg-theme-primary">
+<div class="card-body p-4">
+<div class="d-flex justify-content-between align-items-start mb-3">
+<div class="icon-circle text-success" style="background-color: rgba(25, 135, 84, 0.1);"><i class="fas fa-check-circle"></i></div>
+</div>
+<h3 class="fw-bold text-main mb-1">₹ 35.8 L</h3>
+<p class="text-muted small fw-semibold mb-0">Total Amount Settled</p>
+</div>
+</div>
+</div>
+<!-- Outstanding Amount -->
+<div class="col-md col-sm-6">
+<div class="card dashboard-card h-100 bg-theme-primary">
+<div class="card-body p-4">
+<div class="d-flex justify-content-between align-items-start mb-3">
+<div class="icon-circle text-danger" style="background-color: rgba(220, 53, 69, 0.1);"><i class="fas fa-exclamation-circle"></i></div>
+</div>
+<h3 class="fw-bold text-danger mb-1">₹ 6.7 L</h3>
+<p class="text-muted small fw-semibold mb-0">Outstanding Amount</p>
+</div>
+</div>
+</div>
+<!-- Active Orders -->
+<div class="col-md col-sm-6">
+<div class="card dashboard-card h-100 bg-theme-primary">
+<div class="card-body p-4">
+<div class="d-flex justify-content-between align-items-start mb-3">
+<div class="icon-circle text-warning" style="background-color: rgba(255, 193, 7, 0.1);"><i class="fas fa-truck-loading"></i></div>
+</div>
+<h3 class="fw-bold text-main mb-1">3</h3>
+<p class="text-muted small fw-semibold mb-0">Active Orders</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Financial Activity -->
+<div class="card dashboard-card bg-theme-primary">
+<div class="card-header bg-theme-secondary border-bottom border-theme py-3 d-flex justify-content-between align-items-center">
+<h5 class="fw-bold text-main mb-0">Recent Financial Activity</h5>
+<a class="btn btn-sm btn-link text-decoration-none fw-bold" href="orders.html">View All Orders <i class="fas fa-arrow-right ms-1"></i></a>
+</div>
+<div class="card-body p-0">
+<div class="table-responsive">
+<table class="table table-custom mb-0">
+<thead>
+<tr>
+<th>Order ID</th>
+<th>Product</th>
+<th>Dealer</th>
+<th>Invoice No.</th>
+<th>Invoice Amount</th>
+<th>Payment Status</th>
+<th class="text-end">Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="fw-bold text-primary">ORD-9021</span></td>
+<td>Tata Ace Gold</td>
+<td>Deshpande Commercials</td>
+<td><a class="text-decoration-none" href="invoice-viewer.html">INV-2023-0104</a></td>
+<td class="fw-bold">₹ 4,80,000</td>
+<td><span class="status-badge status-paid">Paid in Full</span></td>
+<td class="text-end">
+<a class="btn btn-sm btn-light border fw-bold text-secondary" href="invoice-viewer.html"><i class="fas fa-file-invoice me-1"></i> Invoice</a>
+</td>
+</tr>
+<tr>
+<td><span class="fw-bold text-primary">ORD-9105</span></td>
+<td>Ashok Leyland Dost+</td>
+<td>Northwest Commercials</td>
+<td><a class="text-decoration-none" href="invoice-viewer.html">INV-2023-0145</a></td>
+<td class="fw-bold">₹ 7,50,000</td>
+<td><span class="status-badge status-partial">Partially Paid</span></td>
+<td class="text-end">
+<a class="btn btn-sm btn-light border fw-bold text-secondary" href="invoice-viewer.html"><i class="fas fa-file-invoice me-1"></i> Invoice</a>
+</td>
+</tr>
+<tr>
+<td><span class="fw-bold text-primary">ORD-9112</span></td>
+<td>Eicher Pro 2049</td>
+<td>Global Heavy Equipments</td>
+<td><a class="text-decoration-none" href="invoice-viewer.html">INV-2023-0162</a></td>
+<td class="fw-bold">₹ 13,50,000</td>
+<td><span class="status-badge status-pending">Pending</span></td>
+<td class="text-end">
+<a class="btn btn-sm btn-light border fw-bold text-secondary" href="invoice-viewer.html"><i class="fas fa-file-invoice me-1"></i> Invoice</a>
+</td>
+</tr>
+<tr>
+<td><span class="fw-bold text-primary">ORD-8854</span></td>
+<td>Toyota Innova (Fleet)</td>
+<td>Capital Motors</td>
+<td><a class="text-decoration-none" href="invoice-viewer.html">INV-2023-0089</a></td>
+<td class="fw-bold">₹ 29,50,000</td>
+<td><span class="status-badge status-overdue">Overdue</span></td>
+<td class="text-end">
+<a class="btn btn-sm btn-light border fw-bold text-secondary" href="invoice-viewer.html"><i class="fas fa-file-invoice me-1"></i> Invoice</a>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

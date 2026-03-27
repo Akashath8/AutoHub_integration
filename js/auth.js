@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         dealerTrustStatus: 'Trusted Dealer', // Giving trusted status for easy UI flow
                         verificationStatus: 'Approved'
                     };
-                    redirectUrl = 'dealer-dashboard.html';
+                    redirectUrl = 'seller/dashboard.html';
                 } else if (email === 'test@buyer.com' && password === 'pass@123') {
                     userRole = 'Buyer';
                     mockUser = {
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             if (role === 'Dealer') {
                 alert('Registration Successful! Your dealer account is pending verification. Redirecting to dashboard...');
-                window.location.href = 'dealer-dashboard.html';
+                window.location.href = 'seller/onboarding.html';
             } else {
                 alert('Registration Successful! Redirecting...');
                 window.location.href = 'index.html';

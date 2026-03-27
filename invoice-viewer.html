@@ -8,11 +8,11 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/main.css">
     <style>
-        body { background-color: #f8fafc; }
-        .invoice-card { border: none; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
-        .invoice-table th { background-color: #f1f5f9; color: #475569; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; border-bottom: 2px solid #e2e8f0; }
-        .invoice-table td { padding: 16px; color: #1e293b; border-bottom: 1px solid #f1f5f9; }
-        .summary-card { background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; }
+        body { background-color: var(--bg-secondary); color: var(--text-main); }
+        .invoice-card { border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); background-color: var(--bg-primary); }
+        .invoice-table th { background-color: var(--bg-secondary); color: var(--text-muted); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; border-bottom: 2px solid var(--border-color); }
+        .invoice-table td { padding: 16px; color: var(--text-main); border-bottom: 1px solid var(--border-color); }
+        .summary-card { background-color: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; }
         .progress-bar-custom { height: 12px; border-radius: 6px; background-color: #e2e8f0; overflow: hidden; }
         .progress-filled { height: 100%; background-color: #3b82f6; }
         .status-badge { padding: 6px 14px; border-radius: 8px; font-weight: 600; font-size: 0.85rem; text-transform: uppercase; }

@@ -529,62 +529,199 @@
             font-size: 0.7rem;
             color: #94a3b8;
         }
+    
+        /* EXPANDABLE SIDEBAR STYLES */
+        .sidebar-mini {
+            width: var(--sidebar-width);
+            transition: width 0.3s ease;
+            overflow: hidden;
+            position: relative;
+        }
+        .sidebar-mini.expanded {
+            width: 240px;
+        }
+        .sidebar-mini .nav-item {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: calc(100% - 24px);
+            margin-left: 12px;
+            margin-right: 12px;
+            padding-left: 12px;
+            overflow: hidden;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        .sidebar-mini .nav-item i {
+            min-width: 24px;
+            text-align: center;
+        }
+        .sidebar-mini .nav-text {
+            margin-left: 15px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+        .sidebar-mini.expanded .nav-text {
+            opacity: 1;
+        }
+        .sidebar-toggle {
+            cursor: pointer;
+            margin-bottom: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            color: var(--text-muted);
+            transition: 0.2s;
+        }
+        .sidebar-mini.expanded .sidebar-toggle {
+            justify-content: flex-end;
+            padding-right: 20px;
+        }
+        .sidebar-toggle:hover {
+            color: var(--primary-blue);
+        }
+
+        /* DROPDOWN ENHANCEMENTS */
+        .profile-dropdown {
+            width: 260px;
+            border-radius: 12px;
+            animation: fadeIn 0.2s ease;
+            padding: 0;
+            overflow: hidden;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dropdown-header-custom {
+            padding: 20px;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-bottom: 1px solid var(--border-light);
+            text-align: center;
+        }
+        .dropdown-header-custom h6 {
+            margin: 0;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+        .dropdown-header-custom p {
+            margin: 0;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .profile-dropdown .dropdown-item {
+            padding: 12px 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .profile-dropdown .dropdown-item:hover {
+            background-color: #f8fafc;
+            color: var(--primary-blue);
+        }
+        .profile-dropdown .dropdown-item i {
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+            color: #94a3b8;
+        }
+        .profile-dropdown .dropdown-item:hover i {
+            color: var(--primary-blue);
+        }
+        .profile-dropdown .text-danger:hover {
+            background-color: #fef2f2;
+            color: #ef4444 !important;
+        }
+        .profile-dropdown .text-danger:hover i {
+            color: #ef4444;
+        }
+
     </style>
 </head>
 <body>
 <!-- THIN LEFT SIDEBAR -->
-<aside class="sidebar-mini">
-<div class="mb-4">
-<a class="nav-item active" href="#"><i class="fas fa-th-large"></i></a>
-</div>
-<a class="nav-item" href="inventory.html" title="Inventory"><i class="fas fa-car"></i></a>
-<a class="nav-item" href="quotations.html" title="Sales Leads"><i class="fas fa-briefcase"></i></a>
-<a class="nav-item" href="documents.html" title="Documents"><i class="fas fa-file-alt"></i></a>
-<a class="nav-item" href="profile.html" title="Settings"><i class="fas fa-cog"></i></a>
-<div class="sidebar-bottom">
-<a class="nav-item" href="#" title="Help"><i class="far fa-question-circle"></i></a>
-<a class="nav-item text-danger" href="#" id="logoutBtn" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
-</div>
-</aside>
+    <aside class="sidebar-mini">
+        <div class="sidebar-toggle" id="sidebarToggleBtn" title="Toggle Sidebar">
+            <i class="fas fa-bars fa-lg"></i>
+        </div>
+        <div class="mb-2 w-100 d-flex justify-content-center brand-icon-only">
+            <!-- Brand Icon -->
+            <div style="width:44px; height:44px; display:flex; align-items:center; justify-content:center; border-radius:12px; background:var(--primary-blue); color:white; margin-bottom: 12px;">
+                <i class="fas fa-car-side"></i>
+            </div>
+        </div>
+        <a href="dashboard.html" class="nav-item active" title="Dashboard">
+            <i class="fas fa-chart-pie"></i><span class="nav-text">Dashboard</span>
+        </a>
+        <a href="inventory.html" class="nav-item " title="Inventory">
+            <i class="fas fa-car"></i><span class="nav-text">Inventory</span>
+        </a>
+        <a href="quotations.html" class="nav-item " title="Quotations">
+            <i class="fas fa-file-invoice-dollar"></i><span class="nav-text">Quotations</span>
+        </a>
+        <a href="orders.html" class="nav-item " title="Orders">
+            <i class="fas fa-shopping-cart"></i><span class="nav-text">Orders</span>
+        </a>
+        <a href="payments.html" class="nav-item " title="Payments">
+            <i class="fas fa-wallet"></i><span class="nav-text">Payments</span>
+        </a>
+        <a href="documents.html" class="nav-item " title="Documents">
+            <i class="fas fa-file-alt"></i><span class="nav-text">Documents</span>
+        </a>
+        
+        <div class="sidebar-bottom w-100">
+            <a href="#" class="nav-item" title="Help">
+                <i class="far fa-question-circle"></i><span class="nav-text">Help</span>
+            </a>
+        </div>
+    </aside>
 <!-- MAIN WRAPPER -->
 <div class="main-wrapper">
 <!-- HEADER -->
-<header class="top-header">
-<div class="brand-logo">
-<i class="fas fa-car-side"></i>
-<div>
-<div>AUTOHUB</div>
-<span>DEALER PORTAL</span>
-</div>
-</div>
-<nav class="horizontal-nav">
-<a class="active" href="dashboard.html">Dashboard</a>
-<a href="inventory.html">Inventory</a>
-<a href="quotations.html">Sales Leads</a>
-<a href="#">Service</a>
-<a href="#">Reports</a>
-<a href="profile.html">Settings</a>
-</nav>
-<div class="header-actions">
-<div class="search-container">
-<i class="fas fa-search"></i>
-<input placeholder="Search Inventory, Leads..." type="text"/>
-</div>
-<button class="add-btn" title="Add Vehicle">+</button>
-<div class="notification-btn">
-<i class="far fa-bell"></i>
-<div class="notification-dot"></div>
-</div>
-<div aria-expanded="false" class="user-avatar dropdown-toggle" data-bs-toggle="dropdown">
+        <header class="top-header">
+            <div class="brand-logo">
+                <i class="fas fa-car-side" style="visibility: hidden; width: 0; margin:0;"></i>
+                <div>
+                    <div>AUTOHUB</div>
+                    <span>DEALER PORTAL</span>
+                </div>
+            </div>
+
+            <nav class="horizontal-nav">
+                <!-- Top Navbar Links Removed for Cleanliness -->
+            </nav>
+
+            <div class="header-actions">
+                <div class="search-container">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search Inventory, Leads...">
+                </div>
+                <div class="notification-btn me-2">
+                    <i class="far fa-bell"></i>
+                    <div class="notification-dot"></div>
+                </div>
+                <div class="user-avatar dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="border: 2px solid var(--primary-blue); background:#fff; color:var(--primary-blue);">
                     S.J.
                 </div>
-<ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
-<li><a class="dropdown-item py-2 fw-bold" href="profile.html"><i class="fas fa-user me-2 text-muted"></i>Profile</a></li>
-<li><hr class="dropdown-divider"/></li>
-<li><a class="dropdown-item py-2 text-danger fw-bold" href="#" onclick="document.getElementById('logoutBtn').click()"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
-</ul>
-</div>
-</header>
+                <!-- ENHANCED PROFILE DROPDOWN -->
+                <ul class="dropdown-menu dropdown-menu-end shadow border-0 profile-dropdown mt-2">
+                    <div class="dropdown-header-custom">
+                        <div class="user-avatar mx-auto mb-2" style="width:48px; height:48px; font-size:1.1rem; background: var(--primary-blue); color: white;">SJ</div>
+                        <h6>Sarah Jenkins</h6>
+                        <p>sarah.j@autohub.com</p>
+                    </div>
+                    <li><a class="dropdown-item" href="profile.html"><i class="fas fa-user-circle"></i> My Profile</a></li>
+                    <li><a class="dropdown-item" href="profile.html"><i class="fas fa-cog"></i> Settings</a></li>
+                    <li><hr class="dropdown-divider m-0"></li>
+                    <li><a class="dropdown-item text-danger" href="#" onclick="document.getElementById('logoutBtn') ? document.getElementById('logoutBtn').click() : window.location.href='../login.html'"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </div>
+        </header>
 <!-- DASHBOARD CONTENT -->
 <main class="page-content">
 <div class="page-header">
@@ -947,6 +1084,19 @@
         // Match base
         if(currentPath === 'dashboard.html') {
             document.querySelector('.horizontal-nav a[href="dashboard.html"]')?.classList.add('active');
+        }
+    });
+</script>
+
+<!-- Sidebar Toggle JS -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sidebar = document.querySelector('.sidebar-mini');
+        const toggleBtn = document.getElementById('sidebarToggleBtn');
+        if (sidebar && toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('expanded');
+            });
         }
     });
 </script>

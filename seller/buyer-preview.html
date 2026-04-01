@@ -525,6 +525,118 @@
             font-size: 0.7rem;
             color: #94a3b8;
         }
+    
+        /* EXPANDABLE SIDEBAR STYLES */
+        .sidebar-mini {
+            width: var(--sidebar-width);
+            transition: width 0.3s ease;
+            overflow: hidden;
+            position: relative;
+        }
+        .sidebar-mini.expanded {
+            width: 240px;
+        }
+        .sidebar-mini .nav-item {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: calc(100% - 24px);
+            margin-left: 12px;
+            margin-right: 12px;
+            padding-left: 12px;
+            overflow: hidden;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        .sidebar-mini .nav-item i {
+            min-width: 24px;
+            text-align: center;
+        }
+        .sidebar-mini .nav-text {
+            margin-left: 15px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+        .sidebar-mini.expanded .nav-text {
+            opacity: 1;
+        }
+        .sidebar-toggle {
+            cursor: pointer;
+            margin-bottom: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            color: var(--text-muted);
+            transition: 0.2s;
+        }
+        .sidebar-mini.expanded .sidebar-toggle {
+            justify-content: flex-end;
+            padding-right: 20px;
+        }
+        .sidebar-toggle:hover {
+            color: var(--primary-blue);
+        }
+
+        /* DROPDOWN ENHANCEMENTS */
+        .profile-dropdown {
+            width: 260px;
+            border-radius: 12px;
+            animation: fadeIn 0.2s ease;
+            padding: 0;
+            overflow: hidden;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dropdown-header-custom {
+            padding: 20px;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-bottom: 1px solid var(--border-light);
+            text-align: center;
+        }
+        .dropdown-header-custom h6 {
+            margin: 0;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+        .dropdown-header-custom p {
+            margin: 0;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .profile-dropdown .dropdown-item {
+            padding: 12px 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .profile-dropdown .dropdown-item:hover {
+            background-color: #f8fafc;
+            color: var(--primary-blue);
+        }
+        .profile-dropdown .dropdown-item i {
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+            color: #94a3b8;
+        }
+        .profile-dropdown .dropdown-item:hover i {
+            color: var(--primary-blue);
+        }
+        .profile-dropdown .text-danger:hover {
+            background-color: #fef2f2;
+            color: #ef4444 !important;
+        }
+        .profile-dropdown .text-danger:hover i {
+            color: #ef4444;
+        }
+
     </style></head>
 <body>
 <!-- Seller Control Toolbar -->
@@ -648,6 +760,19 @@
         // Match base
         if(currentPath === 'dashboard.html') {
             document.querySelector('.horizontal-nav a[href="dashboard.html"]')?.classList.add('active');
+        }
+    });
+</script>
+
+<!-- Sidebar Toggle JS -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sidebar = document.querySelector('.sidebar-mini');
+        const toggleBtn = document.getElementById('sidebarToggleBtn');
+        if (sidebar && toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('expanded');
+            });
         }
     });
 </script>

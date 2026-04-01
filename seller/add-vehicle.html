@@ -523,189 +523,518 @@
             font-size: 0.7rem;
             color: #94a3b8;
         }
+    
+        /* EXPANDABLE SIDEBAR STYLES */
+        .sidebar-mini {
+            width: var(--sidebar-width);
+            transition: width 0.3s ease;
+            overflow: hidden;
+            position: relative;
+        }
+        .sidebar-mini.expanded {
+            width: 240px;
+        }
+        .sidebar-mini .nav-item {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: calc(100% - 24px);
+            margin-left: 12px;
+            margin-right: 12px;
+            padding-left: 12px;
+            overflow: hidden;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        .sidebar-mini .nav-item i {
+            min-width: 24px;
+            text-align: center;
+        }
+        .sidebar-mini .nav-text {
+            margin-left: 15px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+        .sidebar-mini.expanded .nav-text {
+            opacity: 1;
+        }
+        .sidebar-toggle {
+            cursor: pointer;
+            margin-bottom: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            color: var(--text-muted);
+            transition: 0.2s;
+        }
+        .sidebar-mini.expanded .sidebar-toggle {
+            justify-content: flex-end;
+            padding-right: 20px;
+        }
+        .sidebar-toggle:hover {
+            color: var(--primary-blue);
+        }
+
+        /* DROPDOWN ENHANCEMENTS */
+        .profile-dropdown {
+            width: 260px;
+            border-radius: 12px;
+            animation: fadeIn 0.2s ease;
+            padding: 0;
+            overflow: hidden;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dropdown-header-custom {
+            padding: 20px;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-bottom: 1px solid var(--border-light);
+            text-align: center;
+        }
+        .dropdown-header-custom h6 {
+            margin: 0;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+        .dropdown-header-custom p {
+            margin: 0;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .profile-dropdown .dropdown-item {
+            padding: 12px 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .profile-dropdown .dropdown-item:hover {
+            background-color: #f8fafc;
+            color: var(--primary-blue);
+        }
+        .profile-dropdown .dropdown-item i {
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+            color: #94a3b8;
+        }
+        .profile-dropdown .dropdown-item:hover i {
+            color: var(--primary-blue);
+        }
+        .profile-dropdown .text-danger:hover {
+            background-color: #fef2f2;
+            color: #ef4444 !important;
+        }
+        .profile-dropdown .text-danger:hover i {
+            color: #ef4444;
+        }
+
     </style></head>
-<body><aside class="sidebar-mini">
-<div class="mb-4">
-<a class="nav-item" href="#"><i class="fas fa-th-large"></i></a>
-</div>
-<a class="nav-item" href="inventory.html" title="Inventory"><i class="fas fa-car"></i></a>
-<a class="nav-item" href="quotations.html" title="Sales Leads"><i class="fas fa-briefcase"></i></a>
-<a class="nav-item" href="documents.html" title="Documents"><i class="fas fa-file-alt"></i></a>
-<a class="nav-item" href="profile.html" title="Settings"><i class="fas fa-cog"></i></a>
-<div class="sidebar-bottom">
-<a class="nav-item" href="#" title="Help"><i class="far fa-question-circle"></i></a>
-<a class="nav-item text-danger" href="#" id="logoutBtn" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
-</div>
-</aside><div class="main-wrapper">
-<header class="top-header">
-<div class="brand-logo">
-<i class="fas fa-car-side"></i>
-<div>
-<div>AUTOHUB</div>
-<span>DEALER PORTAL</span>
-</div>
-</div>
-<nav class="horizontal-nav">
-<a class="" href="dashboard.html">Dashboard</a>
-<a href="inventory.html">Inventory</a>
-<a href="quotations.html">Sales Leads</a>
-<a href="#">Service</a>
-<a href="#">Reports</a>
-<a href="profile.html">Settings</a>
-</nav>
-<div class="header-actions">
-<div class="search-container">
-<i class="fas fa-search"></i>
-<input placeholder="Search Inventory, Leads..." type="text"/>
-</div>
-<button class="add-btn" title="Add Vehicle">+</button>
-<div class="notification-btn">
-<i class="far fa-bell"></i>
-<div class="notification-dot"></div>
-</div>
-<div aria-expanded="false" class="user-avatar dropdown-toggle" data-bs-toggle="dropdown">
+<body><!-- THIN LEFT SIDEBAR -->
+    <aside class="sidebar-mini">
+        <div class="sidebar-toggle" id="sidebarToggleBtn" title="Toggle Sidebar">
+            <i class="fas fa-bars fa-lg"></i>
+        </div>
+        <div class="mb-2 w-100 d-flex justify-content-center brand-icon-only">
+            <!-- Brand Icon -->
+            <div style="width:44px; height:44px; display:flex; align-items:center; justify-content:center; border-radius:12px; background:var(--primary-blue); color:white; margin-bottom: 12px;">
+                <i class="fas fa-car-side"></i>
+            </div>
+        </div>
+        <a href="dashboard.html" class="nav-item " title="Dashboard">
+            <i class="fas fa-chart-pie"></i><span class="nav-text">Dashboard</span>
+        </a>
+        <a href="inventory.html" class="nav-item " title="Inventory">
+            <i class="fas fa-car"></i><span class="nav-text">Inventory</span>
+        </a>
+        <a href="quotations.html" class="nav-item " title="Quotations">
+            <i class="fas fa-file-invoice-dollar"></i><span class="nav-text">Quotations</span>
+        </a>
+        <a href="orders.html" class="nav-item " title="Orders">
+            <i class="fas fa-shopping-cart"></i><span class="nav-text">Orders</span>
+        </a>
+        <a href="payments.html" class="nav-item " title="Payments">
+            <i class="fas fa-wallet"></i><span class="nav-text">Payments</span>
+        </a>
+        <a href="documents.html" class="nav-item " title="Documents">
+            <i class="fas fa-file-alt"></i><span class="nav-text">Documents</span>
+        </a>
+        
+        <div class="sidebar-bottom w-100">
+            <a href="#" class="nav-item" title="Help">
+                <i class="far fa-question-circle"></i><span class="nav-text">Help</span>
+            </a>
+        </div>
+    </aside><div class="main-wrapper">
+<!-- HEADER -->
+        <header class="top-header">
+            <div class="brand-logo">
+                <i class="fas fa-car-side" style="visibility: hidden; width: 0; margin:0;"></i>
+                <div>
+                    <div>AUTOHUB</div>
+                    <span>DEALER PORTAL</span>
+                </div>
+            </div>
+
+            <nav class="horizontal-nav">
+                <!-- Top Navbar Links Removed for Cleanliness -->
+            </nav>
+
+            <div class="header-actions">
+                <div class="search-container">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search Inventory, Leads...">
+                </div>
+                <div class="notification-btn me-2">
+                    <i class="far fa-bell"></i>
+                    <div class="notification-dot"></div>
+                </div>
+                <div class="user-avatar dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="border: 2px solid var(--primary-blue); background:#fff; color:var(--primary-blue);">
                     S.J.
                 </div>
-<ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
-<li><a class="dropdown-item py-2 fw-bold" href="profile.html"><i class="fas fa-user me-2 text-muted"></i>Profile</a></li>
-<li><hr class="dropdown-divider"/></li>
-<li><a class="dropdown-item py-2 text-danger fw-bold" href="#" onclick="document.getElementById('logoutBtn').click()"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
-</ul>
-</div>
-</header>
-<main class="page-content">
-<!-- Contextual Right Nav for complex forms -->
-<div class="form-nav flex-shrink-0">
-<div class="small fw-bold text-uppercase text-muted mb-3 px-3">Listing Sections</div>
-<nav>
-<a class="form-nav-link active" href="#sec-basic">1. Basic Info</a>
-<a class="form-nav-link" href="#sec-specs">2. Specifications</a>
-<a class="form-nav-link" href="#sec-owner">3. Ownership &amp; RC</a>
-<a class="form-nav-link text-primary" href="#sec-channel"><i class="fas fa-random me-1"></i> 4. Sale Channel</a>
-<a class="form-nav-link" href="#sec-price">5. Pricing &amp; Finance</a>
-<a class="form-nav-link" href="#sec-media">6. Media &amp; Docs</a>
-</nav>
-<div class="mt-4 p-3 bg-white rounded border border-success border-opacity-50">
-<div class="small fw-bold text-success mb-1"><i class="fas fa-check-circle me-1"></i> Completeness: 20%</div>
-<div class="progress" style="height:4px;"><div class="progress-bar bg-success" style="width: 20%"></div></div>
-</div>
-</div>
-<!-- Form Content -->
-<div class="flex-grow-1" style="max-width: 800px;">
-<form>
-<!-- Section 1 -->
-<div class="form-section" id="sec-basic">
-<div class="section-header">1. Basic Information (RTO Verification)</div>
-<div class="row g-3">
-<div class="col-md-6">
-<label class="form-label fw-bold small text-muted">Registration Number *</label>
-<div class="input-group">
-<input class="form-control fw-bold" placeholder="MH-12-AB-3456" style="text-transform: uppercase;" type="text"/>
-<button class="btn btn-dark fw-bold" type="button">Verify VAHAN</button>
-</div>
-<div class="form-text">Auto-fills specifications if RC is verified</div>
-</div>
-<div class="col-md-6">
-<label class="form-label fw-bold small text-muted">Gross Vehicle Weight (GVW)</label>
-<input class="form-control" placeholder="e.g. 3500 kg" type="number"/>
-</div>
-</div>
-</div>
-<!-- Section 2 -->
-<div class="form-section" id="sec-specs">
-<div class="section-header">2. Specifications &amp; Condition</div>
-<div class="row g-3">
-<div class="col-md-4">
-<label class="form-label fw-bold small text-muted">Make *</label>
-<select class="form-select"><option>Tata Motors</option></select>
-</div>
-<div class="col-md-4">
-<label class="form-label fw-bold small text-muted">Model *</label>
-<select class="form-select"><option>Ace Gold</option></select>
-</div>
-<div class="col-md-4">
-<label class="form-label fw-bold small text-muted">Variant *</label>
-<select class="form-select"><option>CX Diesel</option></select>
-</div>
-<div class="col-md-4">
-<label class="form-label fw-bold small text-muted">Manufacturing Year *</label>
-<input class="form-control" type="number" value="2021"/>
-</div>
-<div class="col-md-4">
-<label class="form-label fw-bold small text-muted">Odometer (KMs) *</label>
-<input class="form-control" placeholder="45,000" type="number"/>
-</div>
-<div class="col-md-4">
-<label class="form-label fw-bold small text-muted">Fuel Type</label>
-<select class="form-select"><option>Diesel</option><option>CNG</option></select>
-</div>
-</div>
-</div>
-<!-- Section 4: Channel Toggle (CRITICAL FOR ASSIGNMENT) -->
-<div class="form-section border-primary" id="sec-channel">
-<div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
-<div class="fs-5 fw-bold text-dark"><i class="fas fa-store me-2 text-primary"></i> 4. Sale Channel</div>
-</div>
-<div class="row g-3">
-<div class="col-md-6">
-<div class="border rounded p-3 bg-light border-primary d-flex gap-3 cursor-pointer">
-<input checked="" class="form-check-input fs-5 mt-1 border-primary" name="channel" type="radio"/>
-<div>
-<div class="fw-bold text-dark mb-1">Direct Marketplace</div>
-<div class="text-muted small">List on AutoHub for 30 days. Buyers can inspect and negotiate directly.</div>
-</div>
-</div>
-</div>
-<div class="col-md-6">
-<div class="border rounded p-3 d-flex gap-3 cursor-pointer opacity-75 hover-opacity-100">
-<input class="form-check-input fs-5 mt-1" name="channel" type="radio"/>
-<div>
-<div class="fw-bold text-dark mb-1">Live Auction Event</div>
-<div class="text-muted small">Liquidate faster. Requires a Seller Plan. Vehicle goes under the hammer.</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Dynamic IF MARKETPLACE -->
-<div class="mt-4 p-3 bg-light border rounded">
-<h6 class="fw-bold text-dark mb-3">Marketplace Pricing Rules</h6>
-<div class="row g-3">
-<div class="col-md-6">
-<label class="form-label fw-bold small text-muted">Ask Price (₹) *</label>
-<input class="form-control fw-bold text-dark bg-white" placeholder="2,85,000" type="number"/>
-</div>
-<div class="col-md-6">
-<label class="form-label fw-bold small text-muted">Negotiation</label>
-<select class="form-select bg-white"><option>Open to Offers</option><option>Fixed Price (No Neg)</option></select>
-</div>
-</div>
-</div>
-<!-- Dynamic IF AUCTION (Hidden by default, shown for reference) -->
-<div class="mt-4 p-3 bg-warning bg-opacity-10 border border-warning rounded d-none">
-<h6 class="fw-bold text-dark mb-3">Auction Parameters</h6>
-<div class="row g-3">
-<div class="col-md-12">
-<label class="form-label fw-bold small text-muted">Select Event *</label>
-<select class="form-select bg-white"><option>Mega LCV Liquidation (Oct 14-16)</option></select>
-</div>
-<div class="col-md-6">
-<label class="form-label fw-bold small text-muted">Reserve Price (₹) *</label>
-<input class="form-control fw-bold text-danger bg-white" placeholder="Minimum accepted bid" type="number"/>
-</div>
-<div class="col-md-6">
-<label class="form-label fw-bold small text-muted">Bid Increment (₹)</label>
-<select class="form-select bg-white"><option>₹ 2,000</option><option>₹ 5,000</option></select>
-</div>
-</div>
-</div>
-</div>
-<!-- Preview & Publish Footer -->
-<div class="d-flex justify-content-end gap-3 py-4">
-<a class="btn btn-outline-dark fw-bold px-4" href="buyer-preview.html">See Buyer Preview</a>
-<button class="btn btn-primary fw-bold px-5">Publish to Marketplace</button>
-</div>
-</form>
-</div>
+                <!-- ENHANCED PROFILE DROPDOWN -->
+                <ul class="dropdown-menu dropdown-menu-end shadow border-0 profile-dropdown mt-2">
+                    <div class="dropdown-header-custom">
+                        <div class="user-avatar mx-auto mb-2" style="width:48px; height:48px; font-size:1.1rem; background: var(--primary-blue); color: white;">SJ</div>
+                        <h6>Sarah Jenkins</h6>
+                        <p>sarah.j@autohub.com</p>
+                    </div>
+                    <li><a class="dropdown-item" href="profile.html"><i class="fas fa-user-circle"></i> My Profile</a></li>
+                    <li><a class="dropdown-item" href="profile.html"><i class="fas fa-cog"></i> Settings</a></li>
+                    <li><hr class="dropdown-divider m-0"></li>
+                    <li><a class="dropdown-item text-danger" href="#" onclick="document.getElementById('logoutBtn') ? document.getElementById('logoutBtn').click() : window.location.href='../login.html'"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </div>
+        </header>
+<main class="page-content bg-light p-0 d-flex flex-column h-100">
+    <div class="page-header px-4 py-3 bg-white border-bottom flex-shrink-0 mb-0">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h4 class="fw-bold mb-1">Add New Vehicle</h4>
+                <p class="text-muted mb-0 small">Complete the listing details to publish your vehicle.</p>
+            </div>
+            <div>
+                <button class="btn btn-outline-secondary fw-bold me-2">Save Draft</button>
+                <a href="inventory.html" class="btn btn-light border fw-bold">Cancel</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex flex-grow-1 overflow-hidden">
+        <!-- Left Side Navigation (Vertical Stepper) -->
+        <div class="bg-white border-end flex-shrink-0 overflow-y-auto" style="width: 260px;">
+            <div class="p-4">
+                <div class="small fw-bold text-uppercase text-muted mb-3">Steps</div>
+                <div class="nav flex-column nav-pills" id="wizard-tabs" aria-orientation="vertical">
+                    <button class="nav-link active text-start fw-bold mb-2 p-3 rounded-3" id="step-1-tab" data-step="1" type="button">
+                        <i class="fas fa-info-circle me-2"></i> 1. Basic Details
+                    </button>
+                    <button class="nav-link text-start fw-bold mb-2 p-3 rounded-3 text-muted" id="step-2-tab" data-step="2" type="button" disabled>
+                        <i class="fas fa-cogs me-2"></i> 2. Specifications
+                    </button>
+                    <button class="nav-link text-start fw-bold mb-2 p-3 rounded-3 text-muted" id="step-3-tab" data-step="3" type="button" disabled>
+                        <i class="fas fa-tag me-2"></i> 3. Pricing
+                    </button>
+                    <button class="nav-link text-start fw-bold mb-2 p-3 rounded-3 text-muted" id="step-4-tab" data-step="4" type="button" disabled>
+                        <i class="fas fa-images me-2"></i> 4. Images
+                    </button>
+                    <button class="nav-link text-start fw-bold mb-2 p-3 rounded-3 text-muted" id="step-5-tab" data-step="5" type="button" disabled>
+                        <i class="fas fa-list-alt me-2"></i> 5. Additional Info
+                    </button>
+                    <button class="nav-link text-start fw-bold mb-2 p-3 rounded-3 text-muted" id="step-6-tab" data-step="6" type="button" disabled>
+                        <i class="fas fa-file-contract me-2"></i> 6. Documents
+                    </button>
+                    <button class="nav-link text-start fw-bold mb-0 p-3 rounded-3 text-muted" id="step-7-tab" data-step="7" type="button" disabled>
+                        <i class="fas fa-check-circle me-2"></i> 7. Review
+                    </button>
+                </div>
+                
+                <div class="mt-5 p-3 bg-light rounded-3 border">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="small fw-bold text-muted">Progress</span>
+                        <span class="small fw-bold text-primary" id="progress-text">14%</span>
+                    </div>
+                    <div class="progress" style="height: 6px;">
+                        <div class="progress-bar" id="progress-bar" role="progressbar" style="width: 14%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Content Area -->
+        <div class="flex-grow-1 overflow-y-auto p-4 p-md-5">
+            <div class="mx-auto" style="max-width: 800px;">
+                <form id="add-vehicle-form">
+                    
+                    <!-- STEP 1: Basic Details -->
+                    <div class="wizard-step" id="step-1">
+                        <h5 class="fw-bold mb-4">Basic Information</h5>
+                        <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+                            <div class="row g-4">
+                                <div class="col-12">
+                                    <label class="form-label fw-bold text-dark">RTO Registration Number <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control form-control-lg bg-light" placeholder="e.g. MH12AB1234" style="text-transform: uppercase;">
+                                        <button class="btn btn-dark fw-bold px-4" type="button"><i class="fas fa-search me-2"></i>Verify VAHAN</button>
+                                    </div>
+                                    <div class="form-text text-success fw-semibold mt-2"><i class="fas fa-lightbulb text-warning me-1"></i> Entering your RC number will auto-fill most details instantly.</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold small text-muted">Vehicle Category <span class="text-danger">*</span></label>
+                                    <select class="form-select form-select-lg bg-light"><option>Car</option><option>Commercial Vehicle</option><option>Two Wheeler</option></select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold small text-muted">Brand / Make <span class="text-danger">*</span></label>
+                                    <select class="form-select form-select-lg bg-light"><option>Select Brand</option><option>Maruti Suzuki</option><option>Hyundai</option><option>Tata</option></select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold small text-muted">Model <span class="text-danger">*</span></label>
+                                    <select class="form-select form-select-lg bg-light"><option>Select Model</option></select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold small text-muted">Manufacturing Year <span class="text-danger">*</span></label>
+                                    <select class="form-select form-select-lg bg-light"><option>2024</option><option>2023</option><option>2022</option><option>2021</option></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: Specifications -->
+                    <div class="wizard-step d-none" id="step-2">
+                        <h5 class="fw-bold mb-4">Specifications & Condition</h5>
+                        <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold small text-muted">Odometer (KMs) <span class="text-danger">*</span></label>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control form-control-lg bg-light" placeholder="e.g. 45000">
+                                        <span class="input-group-text bg-white">km</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold small text-muted">Fuel Type <span class="text-danger">*</span></label>
+                                    <select class="form-select form-select-lg bg-light"><option>Petrol</option><option>Diesel</option><option>CNG</option><option>EV</option></select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold small text-muted">Transmission <span class="text-danger">*</span></label>
+                                    <select class="form-select form-select-lg bg-light"><option>Manual</option><option>Automatic</option></select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold small text-muted">Ownership <span class="text-danger">*</span></label>
+                                    <select class="form-select form-select-lg bg-light"><option>1st Owner</option><option>2nd Owner</option><option>3rd Owner</option></select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold small text-muted">RTO Location (City, State) <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control form-control-lg bg-light" placeholder="e.g. Pune, Maharashtra">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold small text-muted">Insurance Validity <span class="text-danger">*</span></label>
+                                    <select class="form-select form-select-lg bg-light"><option>Comprehensive (Valid)</option><option>Third Party (Valid)</option><option>Expired</option></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: Pricing -->
+                    <div class="wizard-step d-none" id="step-3">
+                        <h5 class="fw-bold mb-4">Pricing Details</h5>
+                        <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+                            <div class="row g-4">
+                                <div class="col-md-12">
+                                    <label class="form-label fw-bold small text-muted">Expected Selling Price (₹) <span class="text-danger">*</span></label>
+                                    <div class="input-group input-group-lg">
+                                        <span class="input-group-text bg-white fw-bold">₹</span>
+                                        <input type="number" class="form-control fw-bold fs-4 text-dark bg-light" placeholder="0">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold small text-muted">Price Negotiation <span class="text-danger">*</span></label>
+                                    <select class="form-select form-select-lg bg-light"><option>Negotiable</option><option>Fixed Price</option></select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold small text-muted">Minimum Acceptable Price (₹)</label>
+                                    <input type="number" class="form-control form-control-lg bg-light" placeholder="Optional">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card border border-primary bg-primary bg-opacity-10 rounded-4 p-4">
+                            <div class="form-check form-switch mb-0 d-flex align-items-center gap-3">
+                                <input class="form-check-input" type="checkbox" role="switch" id="financeToggle" style="width:40px;height:20px;" checked>
+                                <label class="form-check-label fw-bold text-primary mb-0" for="financeToggle">Offer financing to buyers for this vehicle</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- STEP 4: Images -->
+                    <div class="wizard-step d-none" id="step-4">
+                        <h5 class="fw-bold mb-4">Vehicle Images</h5>
+                        <div class="card border-0 shadow-sm rounded-4 p-4 mb-4 text-center border-dashed" style="border: 2px dashed #cbd5e1 !important;">
+                            <div class="py-5">
+                                <i class="fas fa-cloud-upload-alt text-primary mb-3" style="font-size: 3rem;"></i>
+                                <h5 class="fw-bold text-dark">Drag & Drop Images Here</h5>
+                                <p class="text-muted small mb-4">Upload at least 5 images including Front, Back, Left, Right and Interior.</p>
+                                <button type="button" class="btn btn-primary fw-bold px-4">Browse Files</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 5: Additional Info -->
+                    <div class="wizard-step d-none" id="step-5">
+                        <h5 class="fw-bold mb-4">Additional Information</h5>
+                        <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+                            <div class="row g-4">
+                                <div class="col-12">
+                                    <label class="form-label fw-bold small text-muted">Condition Highlights</label>
+                                    <div class="d-flex flex-wrap gap-2">
+                                        <button type="button" class="btn btn-outline-secondary rounded-pill btn-sm fw-bold">Non-Accidental</button>
+                                        <button type="button" class="btn btn-outline-secondary rounded-pill btn-sm fw-bold">Original Paint</button>
+                                        <button type="button" class="btn btn-outline-secondary rounded-pill btn-sm fw-bold">Company Serviced</button>
+                                        <button type="button" class="btn btn-outline-secondary rounded-pill btn-sm fw-bold">New Tyres</button>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label fw-bold small text-muted">Detailed Description</label>
+                                    <textarea class="form-control bg-light" rows="5" placeholder="Write any specific details about the vehicle that buyers should know..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 6: Documents -->
+                    <div class="wizard-step d-none" id="step-6">
+                        <h5 class="fw-bold mb-4">Upload Documents (Optional)</h5>
+                        <div class="card border-0 shadow-sm rounded-4 mb-4">
+                            <ul class="list-group list-group-flush rounded-4">
+                                <li class="list-group-item p-4 d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="fw-bold mb-1">Registration Certificate (RC)</h6>
+                                        <p class="small text-muted mb-0">Front and Back</p>
+                                    </div>
+                                    <button type="button" class="btn btn-light border fw-bold text-primary"><i class="fas fa-upload me-2"></i>Upload</button>
+                                </li>
+                                <li class="list-group-item p-4 d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="fw-bold mb-1">Insurance Policy</h6>
+                                        <p class="small text-muted mb-0">Valid insurance document</p>
+                                    </div>
+                                    <button type="button" class="btn btn-light border fw-bold text-primary"><i class="fas fa-upload me-2"></i>Upload</button>
+                                </li>
+                                <li class="list-group-item p-4 d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="fw-bold mb-1">PUC Certificate</h6>
+                                        <p class="small text-muted mb-0">Valid emission certificate</p>
+                                    </div>
+                                    <button type="button" class="btn btn-light border fw-bold text-primary"><i class="fas fa-upload me-2"></i>Upload</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- STEP 7: Review -->
+                    <div class="wizard-step d-none" id="step-7">
+                        <h5 class="fw-bold mb-4">Review Listing</h5>
+                        <div class="alert alert-info rounded-3 mb-4 border-info">
+                            <i class="fas fa-info-circle me-2"></i> Please review your vehicle details before publishing. You can edit these details later from the inventory dashboard.
+                        </div>
+                        <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+                            <h6 class="fw-bold text-muted mb-3 text-uppercase small">Summary</h6>
+                            <div class="row g-3">
+                                <div class="col-6"><span class="text-muted small">Brand & Model:</span> <div class="fw-bold text-dark">Maruti Suzuki Swift VXI</div></div>
+                                <div class="col-6"><span class="text-muted small">Year:</span> <div class="fw-bold text-dark">2019</div></div>
+                                <div class="col-6"><span class="text-muted small">Reg No:</span> <div class="fw-bold text-dark">MH-12-AB-3456</div></div>
+                                <div class="col-6"><span class="text-muted small">Price:</span> <div class="fw-bold text-primary">₹5,20,000</div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Buttons -->
+                    <div class="d-flex justify-content-between pt-4 mt-4 border-top">
+                        <button type="button" class="btn btn-light border fw-bold px-4 d-none" id="prev-btn">Back</button>
+                        <div class="ms-auto d-flex gap-3">
+                            <button type="button" class="btn btn-primary fw-bold px-5" id="next-btn">Next Step <i class="fas fa-arrow-right ms-2"></i></button>
+                            <button type="button" class="btn btn-success fw-bold px-5 d-none" id="submit-btn" onclick="window.location.href='inventory.html'">Publish Listing <i class="fas fa-check ms-2"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let currentStep = 1;
+            const totalSteps = 7;
+            
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const submitBtn = document.getElementById('submit-btn');
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            
+            function updateUI() {
+                // Hide all steps
+                document.querySelectorAll('.wizard-step').forEach(el => el.classList.add('d-none'));
+                // Show current step
+                document.getElementById(`step-${currentStep}`).classList.remove('d-none');
+                
+                // Update tabs
+                document.querySelectorAll('#wizard-tabs .nav-link').forEach((tab, index) => {
+                    const stepNum = index + 1;
+                    tab.classList.remove('active', 'text-muted');
+                    if (stepNum === currentStep) {
+                        tab.classList.add('active');
+                    } else if (stepNum < currentStep) {
+                        // Completed step styling
+                        tab.classList.add('text-dark');
+                        tab.classList.remove('text-muted');
+                    } else {
+                        tab.classList.add('text-muted');
+                    }
+                });
+                
+                // Update progress
+                const perc = Math.round((currentStep / totalSteps) * 100);
+                progressBar.style.width = `${perc}%`;
+                progressText.innerText = `${perc}%`;
+                
+                // Update buttons
+                if (currentStep === 1) {
+                    prevBtn.classList.add('d-none');
+                } else {
+                    prevBtn.classList.remove('d-none');
+                }
+                
+                if (currentStep === totalSteps) {
+                    nextBtn.classList.add('d-none');
+                    submitBtn.classList.remove('d-none');
+                } else {
+                    nextBtn.classList.remove('d-none');
+                    submitBtn.classList.add('d-none');
+                }
+            }
+            
+            nextBtn.addEventListener('click', () => {
+                if (currentStep < totalSteps) {
+                    currentStep++;
+                    updateUI();
+                }
+            });
+            
+            prevBtn.addEventListener('click', () => {
+                if (currentStep > 1) {
+                    currentStep--;
+                    updateUI();
+                }
+            });
+            
+            updateUI();
+        });
+    </script>
 </main>
 </div>
 <script>
@@ -756,6 +1085,19 @@
         // Match base
         if(currentPath === 'dashboard.html') {
             document.querySelector('.horizontal-nav a[href="dashboard.html"]')?.classList.add('active');
+        }
+    });
+</script>
+
+<!-- Sidebar Toggle JS -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sidebar = document.querySelector('.sidebar-mini');
+        const toggleBtn = document.getElementById('sidebarToggleBtn');
+        if (sidebar && toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('expanded');
+            });
         }
     });
 </script>

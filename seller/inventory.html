@@ -524,119 +524,506 @@
             font-size: 0.7rem;
             color: #94a3b8;
         }
+    
+        /* EXPANDABLE SIDEBAR STYLES */
+        .sidebar-mini {
+            width: var(--sidebar-width);
+            transition: width 0.3s ease;
+            overflow: hidden;
+            position: relative;
+        }
+        .sidebar-mini.expanded {
+            width: 240px;
+        }
+        .sidebar-mini .nav-item {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: calc(100% - 24px);
+            margin-left: 12px;
+            margin-right: 12px;
+            padding-left: 12px;
+            overflow: hidden;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        .sidebar-mini .nav-item i {
+            min-width: 24px;
+            text-align: center;
+        }
+        .sidebar-mini .nav-text {
+            margin-left: 15px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+        .sidebar-mini.expanded .nav-text {
+            opacity: 1;
+        }
+        .sidebar-toggle {
+            cursor: pointer;
+            margin-bottom: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            color: var(--text-muted);
+            transition: 0.2s;
+        }
+        .sidebar-mini.expanded .sidebar-toggle {
+            justify-content: flex-end;
+            padding-right: 20px;
+        }
+        .sidebar-toggle:hover {
+            color: var(--primary-blue);
+        }
+
+        /* DROPDOWN ENHANCEMENTS */
+        .profile-dropdown {
+            width: 260px;
+            border-radius: 12px;
+            animation: fadeIn 0.2s ease;
+            padding: 0;
+            overflow: hidden;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .dropdown-header-custom {
+            padding: 20px;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-bottom: 1px solid var(--border-light);
+            text-align: center;
+        }
+        .dropdown-header-custom h6 {
+            margin: 0;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+        .dropdown-header-custom p {
+            margin: 0;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .profile-dropdown .dropdown-item {
+            padding: 12px 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .profile-dropdown .dropdown-item:hover {
+            background-color: #f8fafc;
+            color: var(--primary-blue);
+        }
+        .profile-dropdown .dropdown-item i {
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+            color: #94a3b8;
+        }
+        .profile-dropdown .dropdown-item:hover i {
+            color: var(--primary-blue);
+        }
+        .profile-dropdown .text-danger:hover {
+            background-color: #fef2f2;
+            color: #ef4444 !important;
+        }
+        .profile-dropdown .text-danger:hover i {
+            color: #ef4444;
+        }
+
     </style></head>
-<body><aside class="sidebar-mini">
-<div class="mb-4">
-<a class="nav-item" href="#"><i class="fas fa-th-large"></i></a>
-</div>
-<a class="nav-item" href="inventory.html" title="Inventory"><i class="fas fa-car"></i></a>
-<a class="nav-item" href="quotations.html" title="Sales Leads"><i class="fas fa-briefcase"></i></a>
-<a class="nav-item" href="documents.html" title="Documents"><i class="fas fa-file-alt"></i></a>
-<a class="nav-item" href="profile.html" title="Settings"><i class="fas fa-cog"></i></a>
-<div class="sidebar-bottom">
-<a class="nav-item" href="#" title="Help"><i class="far fa-question-circle"></i></a>
-<a class="nav-item text-danger" href="#" id="logoutBtn" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
-</div>
-</aside><div class="main-wrapper">
-<header class="top-header">
-<div class="brand-logo">
-<i class="fas fa-car-side"></i>
-<div>
-<div>AUTOHUB</div>
-<span>DEALER PORTAL</span>
-</div>
-</div>
-<nav class="horizontal-nav">
-<a class="" href="dashboard.html">Dashboard</a>
-<a href="inventory.html">Inventory</a>
-<a href="quotations.html">Sales Leads</a>
-<a href="#">Service</a>
-<a href="#">Reports</a>
-<a href="profile.html">Settings</a>
-</nav>
-<div class="header-actions">
-<div class="search-container">
-<i class="fas fa-search"></i>
-<input placeholder="Search Inventory, Leads..." type="text"/>
-</div>
-<button class="add-btn" title="Add Vehicle">+</button>
-<div class="notification-btn">
-<i class="far fa-bell"></i>
-<div class="notification-dot"></div>
-</div>
-<div aria-expanded="false" class="user-avatar dropdown-toggle" data-bs-toggle="dropdown">
+<body><!-- THIN LEFT SIDEBAR -->
+    <aside class="sidebar-mini">
+        <div class="sidebar-toggle" id="sidebarToggleBtn" title="Toggle Sidebar">
+            <i class="fas fa-bars fa-lg"></i>
+        </div>
+        <div class="mb-2 w-100 d-flex justify-content-center brand-icon-only">
+            <!-- Brand Icon -->
+            <div style="width:44px; height:44px; display:flex; align-items:center; justify-content:center; border-radius:12px; background:var(--primary-blue); color:white; margin-bottom: 12px;">
+                <i class="fas fa-car-side"></i>
+            </div>
+        </div>
+        <a href="dashboard.html" class="nav-item " title="Dashboard">
+            <i class="fas fa-chart-pie"></i><span class="nav-text">Dashboard</span>
+        </a>
+        <a href="inventory.html" class="nav-item active" title="Inventory">
+            <i class="fas fa-car"></i><span class="nav-text">Inventory</span>
+        </a>
+        <a href="quotations.html" class="nav-item " title="Quotations">
+            <i class="fas fa-file-invoice-dollar"></i><span class="nav-text">Quotations</span>
+        </a>
+        <a href="orders.html" class="nav-item " title="Orders">
+            <i class="fas fa-shopping-cart"></i><span class="nav-text">Orders</span>
+        </a>
+        <a href="payments.html" class="nav-item " title="Payments">
+            <i class="fas fa-wallet"></i><span class="nav-text">Payments</span>
+        </a>
+        <a href="documents.html" class="nav-item " title="Documents">
+            <i class="fas fa-file-alt"></i><span class="nav-text">Documents</span>
+        </a>
+        
+        <div class="sidebar-bottom w-100">
+            <a href="#" class="nav-item" title="Help">
+                <i class="far fa-question-circle"></i><span class="nav-text">Help</span>
+            </a>
+        </div>
+    </aside><div class="main-wrapper">
+<!-- HEADER -->
+        <header class="top-header">
+            <div class="brand-logo">
+                <i class="fas fa-car-side" style="visibility: hidden; width: 0; margin:0;"></i>
+                <div>
+                    <div>AUTOHUB</div>
+                    <span>DEALER PORTAL</span>
+                </div>
+            </div>
+
+            <nav class="horizontal-nav">
+                <!-- Top Navbar Links Removed for Cleanliness -->
+            </nav>
+
+            <div class="header-actions">
+                <div class="search-container">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search Inventory, Leads...">
+                </div>
+                <div class="notification-btn me-2">
+                    <i class="far fa-bell"></i>
+                    <div class="notification-dot"></div>
+                </div>
+                <div class="user-avatar dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="border: 2px solid var(--primary-blue); background:#fff; color:var(--primary-blue);">
                     S.J.
                 </div>
-<ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
-<li><a class="dropdown-item py-2 fw-bold" href="profile.html"><i class="fas fa-user me-2 text-muted"></i>Profile</a></li>
-<li><hr class="dropdown-divider"/></li>
-<li><a class="dropdown-item py-2 text-danger fw-bold" href="#" onclick="document.getElementById('logoutBtn').click()"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
-</ul>
-</div>
-</header>
-<main class="page-content">
-<div class="bg-white border-bottom sticky-top z-2" style="top:0;">
-<ul class="nav nav-tabs inventory-tabs px-4 border-0">
-<li class="nav-item"><a class="nav-link active" href="#">Active Lots <span class="badge bg-dark ms-1">104</span></a></li>
-<li class="nav-item"><a class="nav-link" href="#">Drafts <span class="badge bg-secondary ms-1">8</span></a></li>
-<li class="nav-item"><a class="nav-link" href="#">Sold <span class="badge bg-success ms-1">30</span></a></li>
-<li class="nav-item"><a class="nav-link" href="#">Rejected <span class="badge bg-danger ms-1">2</span></a></li>
-</ul>
-<div class="p-3 bg-light border-top d-flex justify-content-between align-items-center">
-<div class="d-flex gap-2 align-items-center">
-<select class="form-select form-select-sm fw-bold w-auto border-secondary"><option>Bulk Actions...</option><option>Mark Pricing -10%</option></select>
-<button class="btn btn-sm btn-dark">Apply</button>
-</div>
-<div class="d-flex gap-2">
-<select class="form-select w-auto form-select-sm bg-white"><option>All Channels</option><option>Marketplace</option><option>Auction Event</option></select>
-<input class="form-control form-control-sm w-auto" placeholder="Search VIN, Make, Lot..." type="text"/>
-</div>
-</div>
-</div>
-<div class="bg-white">
-<table class="table table-hover align-middle mb-0">
-<thead class="table-light table-th">
-<tr>
-<th class="ps-4" style="width:40px;"><input class="form-check-input" type="checkbox"/></th>
-<th>Vehicle Identification</th>
-<th>Pricing / Commercials</th>
-<th>Sale Channel &amp; Status</th>
-<th>Buyer Engagement</th>
-<th class="text-end pe-4">Actions</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="ps-4"><input class="form-check-input" type="checkbox"/></td>
-<td>
-<div class="d-flex align-items-center gap-3">
-<img alt="vehicle" class="inv-image" src="https://images.unsplash.com/photo-1590362891991-f20bc081e533?auto=format&amp;fit=crop&amp;q=80&amp;w=150&amp;h=100"/>
-<div>
-<a class="fw-bold mb-0 text-dark text-decoration-none" href="buyer-preview.html">2021 Tata Ace Gold CX</a>
-<div class="text-muted small">VIN: MH12AB*** • Diesel • 45k km</div>
-</div>
-</div>
-</td>
-<td>
-<div class="fw-bold fs-6 text-dark">₹2,85,000</div>
-<div class="badge bg-light text-dark border mt-1">Negotiable</div>
-</td>
-<td>
-<div class="mb-1"><span class="badge bg-success bg-opacity-10 text-success border border-success"><i class="fas fa-store me-1"></i> Live: Marketplace</span></div>
-</td>
-<td>
-<div class="small fw-semibold">
-<div class="text-muted mb-1"><i class="fas fa-eye me-1"></i> 1,204 Views</div>
-<div class="text-primary"><a class="text-decoration-none" href="quotations.html"><i class="fas fa-comment-dots me-1"></i> 3 Active Quotes</a></div>
-</div>
-</td>
-<td class="text-end pe-4">
-<a class="btn btn-sm btn-light border fw-bold" href="add-vehicle.html">Manage</a>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
+                <!-- ENHANCED PROFILE DROPDOWN -->
+                <ul class="dropdown-menu dropdown-menu-end shadow border-0 profile-dropdown mt-2">
+                    <div class="dropdown-header-custom">
+                        <div class="user-avatar mx-auto mb-2" style="width:48px; height:48px; font-size:1.1rem; background: var(--primary-blue); color: white;">SJ</div>
+                        <h6>Sarah Jenkins</h6>
+                        <p>sarah.j@autohub.com</p>
+                    </div>
+                    <li><a class="dropdown-item" href="profile.html"><i class="fas fa-user-circle"></i> My Profile</a></li>
+                    <li><a class="dropdown-item" href="profile.html"><i class="fas fa-cog"></i> Settings</a></li>
+                    <li><hr class="dropdown-divider m-0"></li>
+                    <li><a class="dropdown-item text-danger" href="#" onclick="document.getElementById('logoutBtn') ? document.getElementById('logoutBtn').click() : window.location.href='../login.html'"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </div>
+        </header>
+<main class="page-content bg-light p-0">
+    <!-- Header Area -->
+    <div class="page-header px-4 pt-4 pb-3 bg-white border-bottom mb-0">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h3 class="fw-bold mb-1">Inventory Management</h3>
+                <p class="text-muted mb-0 small">Manage, filter, and track your vehicle listings.</p>
+            </div>
+            <a href="add-vehicle.html" class="btn btn-primary fw-bold px-4"><i class="fas fa-plus me-2"></i>Add Vehicle</a>
+        </div>
+        
+        <!-- Insight Cards -->
+        <div class="row g-3 mb-2">
+            <div class="col">
+                <div class="card border-0 shadow-sm h-100 p-3" style="border-radius:12px">
+                    <div class="d-flex justify-content-between">
+                        <span class="text-muted small fw-bold">Total Listings</span>
+                        <div class="text-primary bg-primary bg-opacity-10 rounded p-1 px-2"><i class="fas fa-car"></i></div>
+                    </div>
+                    <div class="mt-2">
+                        <h4 class="fw-bold mb-0">142</h4>
+                        <div class="small text-success mt-1 fw-bold"><i class="fas fa-arrow-up"></i> 5% <span class="text-muted fw-normal">vs last month</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-0 shadow-sm h-100 p-3" style="border-radius:12px">
+                    <div class="d-flex justify-content-between">
+                        <span class="text-muted small fw-bold">Active (Live)</span>
+                        <div class="text-success bg-success bg-opacity-10 rounded p-1 px-2"><i class="fas fa-circle-check"></i></div>
+                    </div>
+                    <div class="mt-2">
+                        <h4 class="fw-bold mb-0">86</h4>
+                        <div class="small text-success mt-1 fw-bold"><i class="fas fa-arrow-up"></i> 2% <span class="text-muted fw-normal">vs last month</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-0 shadow-sm h-100 p-3" style="border-radius:12px">
+                    <div class="d-flex justify-content-between">
+                        <span class="text-muted small fw-bold">Drafts</span>
+                        <div class="text-secondary bg-secondary bg-opacity-10 rounded p-1 px-2"><i class="fas fa-file-alt"></i></div>
+                    </div>
+                    <div class="mt-2">
+                        <h4 class="fw-bold mb-0">14</h4>
+                        <div class="small text-muted mt-1">Ready to complete</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-0 shadow-sm h-100 p-3" style="border-radius:12px">
+                    <div class="d-flex justify-content-between">
+                        <span class="text-muted small fw-bold">Pending Approval</span>
+                        <div class="text-warning bg-warning bg-opacity-10 rounded p-1 px-2"><i class="fas fa-clock"></i></div>
+                    </div>
+                    <div class="mt-2">
+                        <h4 class="fw-bold mb-0">9</h4>
+                        <div class="small text-danger mt-1 fw-bold"><i class="fas fa-arrow-down"></i> 1% <span class="text-muted fw-normal">vs last week</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-0 shadow-sm h-100 p-3" style="border-radius:12px">
+                    <div class="d-flex justify-content-between">
+                        <span class="text-muted small fw-bold">Sold Vehicles</span>
+                        <div class="text-info bg-info bg-opacity-10 rounded p-1 px-2"><i class="fas fa-handshake"></i></div>
+                    </div>
+                    <div class="mt-2">
+                        <h4 class="fw-bold mb-0">33</h4>
+                        <div class="small text-success mt-1 fw-bold"><i class="fas fa-arrow-up"></i> 12% <span class="text-muted fw-normal">vs last month</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sticky Filter Banner -->
+    <div class="bg-white px-4 py-3 sticky-top border-bottom z-2 d-flex gap-2 align-items-center flex-wrap" style="top:0; box-shadow: 0 4px 6px -4px rgba(0,0,0,0.05);">
+        <div class="position-relative" style="width:240px;">
+            <i class="fas fa-search position-absolute text-muted" style="left:12px; top:10px;"></i>
+            <input type="text" class="form-control form-control-sm ps-4 border-secondary border-opacity-25 bg-light" placeholder="Search vehicle or Reg. No.">
+        </div>
+        
+        <select class="form-select form-select-sm w-auto border-secondary border-opacity-25 bg-light"><option>All Vehicle Types</option><option>Car</option><option>Commercial</option><option>Bike</option></select>
+        <select class="form-select form-select-sm w-auto border-secondary border-opacity-25 bg-light"><option>All Brands</option><option>Hyundai</option><option>Maruti Suzuki</option><option>Tata</option></select>
+        <select class="form-select form-select-sm w-auto border-secondary border-opacity-25 bg-light"><option>Fuel Type</option><option>Petrol</option><option>Diesel</option><option>EV</option><option>CNG</option></select>
+        <select class="form-select form-select-sm w-auto border-secondary border-opacity-25 bg-light"><option>Status</option><option>Live</option><option>Draft</option><option>Pending</option><option>Sold</option><option>Rejected</option></select>
+        
+        <div class="ms-auto d-flex gap-2 align-items-center">
+            <span class="small text-muted fw-bold">Sort by:</span>
+            <select class="form-select form-select-sm w-auto border-0 fw-bold"><option>Recently Added</option><option>Price: High to Low</option><option>Price: Low to High</option><option>KM: Low to High</option></select>
+            <button class="btn btn-sm btn-light border"><i class="fas fa-filter text-muted"></i> More Filters</button>
+        </div>
+    </div>
+
+    <!-- Table Section -->
+    <div class="p-4">
+        <div class="bg-white rounded-4 border shadow-sm overflow-hidden line-height-tight">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0" style="min-width: 1100px;">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-3 py-3 text-muted small text-uppercase fw-bold" style="width: 40px;"><input type="checkbox" class="form-check-input"></th>
+                            <th class="py-3 text-muted small text-uppercase fw-bold">Vehicle Details</th>
+                            <th class="py-3 text-muted small text-uppercase fw-bold">Specs</th>
+                            <th class="py-3 text-muted small text-uppercase fw-bold">Price & Location</th>
+                            <th class="py-3 text-muted small text-uppercase fw-bold">Status</th>
+                            <th class="py-3 text-muted small text-uppercase fw-bold">Date Added</th>
+                            <th class="py-3 text-end pe-4 text-muted small text-uppercase fw-bold" style="width: 80px;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Row 1: Live -->
+                        <tr>
+                            <td class="ps-3"><input type="checkbox" class="form-check-input"></td>
+                            <td>
+                                <div class="d-flex align-items-center gap-3">
+                                    <img src="https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=100&h=75&fit=crop" class="border rounded-2 object-fit-cover" style="width:68px; height:48px;" alt="Car">
+                                    <div>
+                                        <div class="fw-bold text-dark text-truncate" style="max-width:200px;">2022 Hyundai Creta SX</div>
+                                        <div class="small text-muted">MH12-AB-1234 • Car</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="small fw-semibold text-dark">Petrol • Manual</div>
+                                <div class="small text-muted">28,500 km</div>
+                            </td>
+                            <td>
+                                <div class="fw-bold">₹12,50,000</div>
+                                <div class="small text-muted">Pune, MH</div>
+                            </td>
+                            <td><span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-2 py-1"><i class="fas fa-check-circle me-1"></i>Live</span></td>
+                            <td>
+                                <div class="small fw-semibold text-dark">Oct 29, 2024</div>
+                                <div class="small text-muted">Updated 2h ago</div>
+                            </td>
+                            <td class="text-end pe-4">
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-light border rounded-circle" data-bs-toggle="dropdown"><i class="fas fa-ellipsis-v px-1 text-muted"></i></button>
+                                    <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+                                        <li><a class="dropdown-item fw-semibold" href="#"><i class="fas fa-eye text-muted me-2"></i>View Details</a></li>
+                                        <li><a class="dropdown-item fw-semibold" href="#"><i class="fas fa-edit text-muted me-2"></i>Edit Listing</a></li>
+                                        <li><a class="dropdown-item fw-semibold" href="#"><i class="fas fa-handshake text-info me-2"></i>Mark as Sold</a></li>
+                                        <li><a class="dropdown-item fw-semibold" href="#"><i class="fas fa-copy text-muted me-2"></i>Duplicate</a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><a class="dropdown-item text-danger fw-semibold" href="#"><i class="fas fa-trash-alt me-2"></i>Delete</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Row 2: Draft -->
+                        <tr>
+                            <td class="ps-3"><input type="checkbox" class="form-check-input"></td>
+                            <td>
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="bg-light border rounded-2 d-flex align-items-center justify-content-center text-muted" style="width:68px; height:48px;"><i class="fas fa-camera"></i></div>
+                                    <div>
+                                        <div class="fw-bold text-dark text-truncate" style="max-width:200px;">2019 Maruti Swift VXI</div>
+                                        <div class="small text-muted">Missing Reg No • Car</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="small fw-semibold text-dark">Petrol • Manual</div>
+                                <div class="small text-muted">42,000 km</div>
+                            </td>
+                            <td>
+                                <div class="fw-bold">₹5,20,000</div>
+                                <div class="small text-muted">Mumbai, MH</div>
+                            </td>
+                            <td><span class="badge bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-25 px-2 py-1"><i class="fas fa-file-alt me-1"></i>Draft</span></td>
+                            <td>
+                                <div class="small fw-semibold text-dark">Oct 30, 2024</div>
+                                <div class="small text-muted">Updated 1d ago</div>
+                            </td>
+                            <td class="text-end pe-4">
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-light border rounded-circle" data-bs-toggle="dropdown"><i class="fas fa-ellipsis-v px-1 text-muted"></i></button>
+                                    <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+                                        <li><a class="dropdown-item fw-semibold text-primary" href="add-vehicle.html"><i class="fas fa-edit me-2"></i>Complete Draft</a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><a class="dropdown-item text-danger fw-semibold" href="#"><i class="fas fa-trash-alt me-2"></i>Delete</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Row 3: Pending -->
+                        <tr>
+                            <td class="ps-3"><input type="checkbox" class="form-check-input"></td>
+                            <td>
+                                <div class="d-flex align-items-center gap-3">
+                                    <img src="https://images.unsplash.com/photo-1590362891991-f20bc081e533?w=100&h=75&fit=crop" class="border rounded-2 object-fit-cover" style="width:68px; height:48px;" alt="Truck">
+                                    <div>
+                                        <div class="fw-bold text-dark text-truncate" style="max-width:200px;">2021 Tata Ace Gold</div>
+                                        <div class="small text-muted">MH14-XY-9087 • Commercial</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="small fw-semibold text-dark">Diesel • Manual</div>
+                                <div class="small text-muted">55,000 km</div>
+                            </td>
+                            <td>
+                                <div class="fw-bold">₹3,15,000</div>
+                                <div class="small text-muted">Thane, MH</div>
+                            </td>
+                            <td><span class="badge bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25 px-2 py-1"><i class="fas fa-clock me-1"></i>Pending</span></td>
+                            <td>
+                                <div class="small fw-semibold text-dark">Nov 01, 2024</div>
+                                <div class="small text-muted">Updated 3h ago</div>
+                            </td>
+                            <td class="text-end pe-4">
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-light border rounded-circle" data-bs-toggle="dropdown"><i class="fas fa-ellipsis-v px-1 text-muted"></i></button>
+                                    <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+                                        <li><a class="dropdown-item fw-semibold" href="#"><i class="fas fa-eye text-muted me-2"></i>View Details</a></li>
+                                        <li><a class="dropdown-item fw-semibold" href="#"><i class="fas fa-edit text-muted me-2"></i>Edit Listing</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Row 4: Rejected (Showcase) -->
+                        <tr>
+                            <td class="ps-3"><input type="checkbox" class="form-check-input"></td>
+                            <td>
+                                <div class="d-flex align-items-center gap-3">
+                                    <img src="https://images.unsplash.com/photo-1563720225384-9c0f129cedc6?w=100&h=75&fit=crop" class="border rounded-2 object-fit-cover opacity-75" style="width:68px; height:48px;" alt="Car">
+                                    <div>
+                                        <div class="fw-bold text-dark text-truncate" style="max-width:200px;">2018 Honda City V</div>
+                                        <div class="small text-danger fw-bold"><i class="fas fa-exclamation-triangle"></i> Blurred Images</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="small fw-semibold text-dark">Petrol • Auto</div>
+                                <div class="small text-muted">60,000 km</div>
+                            </td>
+                            <td>
+                                <div class="fw-bold">₹7,20,000</div>
+                                <div class="small text-muted">DL, Delhi</div>
+                            </td>
+                            <td><span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 px-2 py-1"><i class="fas fa-times-circle me-1"></i>Rejected</span></td>
+                            <td>
+                                <div class="small fw-semibold text-dark">Nov 03, 2024</div>
+                                <div class="small text-muted">Updated 1h ago</div>
+                            </td>
+                            <td class="text-end pe-4">
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-light border rounded-circle" data-bs-toggle="dropdown"><i class="fas fa-ellipsis-v px-1 text-muted"></i></button>
+                                    <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+                                        <li><a class="dropdown-item fw-semibold text-primary" href="add-vehicle.html"><i class="fas fa-wrench me-2"></i>Fix Issues</a></li>
+                                        <li><a class="dropdown-item fw-semibold" href="#"><i class="fas fa-eye text-muted me-2"></i>View Details</a></li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li><a class="dropdown-item text-danger fw-semibold" href="#"><i class="fas fa-trash-alt me-2"></i>Delete</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        <!-- Row 5: Sold (Showcase) -->
+                        <tr>
+                            <td class="ps-3"><input type="checkbox" class="form-check-input"></td>
+                            <td>
+                                <div class="d-flex align-items-center gap-3">
+                                    <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?w=100&h=75&fit=crop" class="border rounded-2 object-fit-cover opacity-50" style="width:68px; height:48px;" alt="Car">
+                                    <div>
+                                        <div class="fw-bold text-muted text-truncate text-decoration-line-through" style="max-width:200px;">2023 BMW 3 Series</div>
+                                        <div class="small text-muted">MH02-DE-5678 • Car</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="small fw-semibold text-muted">Diesel • Auto</div>
+                                <div class="small text-muted">12,000 km</div>
+                            </td>
+                            <td>
+                                <div class="fw-bold text-muted">₹45,00,000</div>
+                                <div class="small text-muted">Navi Mumbai</div>
+                            </td>
+                            <td><span class="badge bg-info bg-opacity-10 text-info border border-info border-opacity-25 px-2 py-1"><i class="fas fa-handshake me-1"></i>Sold</span></td>
+                            <td>
+                                <div class="small fw-semibold text-muted">Sep 15, 2024</div>
+                                <div class="small text-muted">Sold on Oct 10</div>
+                            </td>
+                            <td class="text-end pe-4">
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-light border rounded-circle" data-bs-toggle="dropdown"><i class="fas fa-ellipsis-v px-1 text-muted"></i></button>
+                                    <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
+                                        <li><a class="dropdown-item fw-semibold" href="#"><i class="fas fa-file-invoice text-muted me-2"></i>View Invoice</a></li>
+                                        <li><a class="dropdown-item fw-semibold" href="#"><i class="fas fa-copy text-muted me-2"></i>Duplicate Listing</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="p-3 border-top d-flex justify-content-between align-items-center bg-light">
+                <span class="small text-muted fw-bold">Showing 1-5 of 142 vehicles</span>
+                <nav>
+                    <ul class="pagination pagination-sm mb-0 shadow-sm">
+                        <li class="page-item disabled"><a class="page-link text-muted fw-bold" href="#">Prev</a></li>
+                        <li class="page-item active"><a class="page-link bg-primary border-primary fw-bold" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link text-muted fw-bold" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link text-muted fw-bold" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link text-muted fw-bold" href="#">Next</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
 </main>
 </div>
 <script>
@@ -687,6 +1074,19 @@
         // Match base
         if(currentPath === 'dashboard.html') {
             document.querySelector('.horizontal-nav a[href="dashboard.html"]')?.classList.add('active');
+        }
+    });
+</script>
+
+<!-- Sidebar Toggle JS -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sidebar = document.querySelector('.sidebar-mini');
+        const toggleBtn = document.getElementById('sidebarToggleBtn');
+        if (sidebar && toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('expanded');
+            });
         }
     });
 </script>
